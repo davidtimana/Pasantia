@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Producto" table="Producto" catalog="CasinoPasantia">
+        <id name="idProducto" type="java.lang.Integer">
+            <column name="idProducto" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select">
+            <column name="fk_id_casino" not-null="true" />
+        </many-to-one>
+        <many-to-one name="categoria" class="com.pasantia.entidades.Categoria" fetch="select">
+            <column name="fk_id_categoria" not-null="true" />
+        </many-to-one>
+        <many-to-one name="precioCompra" class="com.pasantia.entidades.PrecioCompra" fetch="select">
+            <column name="fk_id_precio_compra" not-null="true" />
+        </many-to-one>
+        <many-to-one name="ubicacion" class="com.pasantia.entidades.Ubicacion" fetch="select">
+            <column name="fk_id_ubicacion" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="45" not-null="true" />
+        </property>
+        <property name="cantidadActual" type="int">
+            <column name="cantidad_actual" not-null="true" />
+        </property>
+        <property name="precioVenta1" type="long">
+            <column name="precio_venta1" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="precioVenta2" type="java.lang.Long">
+            <column name="precio_venta2" precision="10" scale="0" />
+        </property>
+        <property name="iva" type="long">
+            <column name="iva" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="codigoBarras" type="string">
+            <column name="codigo_barras" length="45" not-null="true" />
+        </property>
+        <property name="cantidadMinima" type="int">
+            <column name="cantidad_minima" not-null="true" />
+        </property>
+        <property name="imagen" type="string">
+            <column name="imagen" />
+        </property>
+        <set name="detalleVentas" inverse="true">
+            <key>
+                <column name="fk_id_producto" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.DetalleVenta" />
+        </set>
+        <set name="detalleCompras" inverse="true">
+            <key>
+                <column name="fk_id_productos" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.DetalleCompra" />
+        </set>
+    </class>
+</hibernate-mapping>

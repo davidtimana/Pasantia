@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        
+        <p:dialog header="Creacion de un nueva division" widgetVar="dlgNuevo" resizable="false" 
+                              id="dlgNuevo" showEffect="explode" hideEffect="explode"  modal="false"  width="600" height="140" 
+                              minimizable="true" binding="#{agregarDivisionesBean.dlgNuevo}" >
+            
+            <!--<p:growl id="growl"  sticky="true"  />
+                        <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  /> -->
+                       <p:panel header="Agregar Division" toggleable="true" toggleOrientation="horizontal">  
+                            <h:panelGrid id="espacio1" columns="2" cellpadding="2" style="margin:0 auto;">                             
+                                <p:outputLabel value="Nombre De la División" />
+                                <p:inputText id="des"  value="#{agregarDivisionesBean.descripcion}"   style="width: 300px" 
+                                              />
+                                <p:commandButton  update=":frmdivision:datatable,:frmnuevadivision:des"                                                 
+                                          action="#{agregarDivisionesBean.guardarNuevaDivision()}"  value="Agregar Division" 
+                                          title="Agregar Division" image="icon-add" />                        
+                                <p:commandButton  update=":frmdivision:datatable,:frmnuevadivision:dlgNuevo"                                                 
+                                                  action="#{agregarDivisionesBean.cancelarNuevaDivision()}"  value="Cancelar" 
+                                          title="Cancelar" image="icon-cancel" />                        
+                            </h:panelGrid>
+                       </p:panel>  
+        </p:dialog>
+                    
+                    
+    </ui:composition>
+</html>

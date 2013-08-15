@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Inicio - SICOVI</title>
+        <h:outputStylesheet name="css/estilos.css"/>
+    </h:head>
+    <h:body>
+        
+        <h:form id="frminicio">
+                <p:layout fullPage="true">  
+  
+                    <p:layoutUnit position="north" size="140" header="Top">  
+                        <h:outputText value="North unit content." />  
+                    </p:layoutUnit>  
+
+                    <p:layoutUnit position="south" size="50" header="Reservados Todos Los Derechos Ingeniero David Orlando Timana &copy;" >  
+                        
+                    </p:layoutUnit>  
+
+                    <p:layoutUnit position="west" size="240" header="Left">  
+                        <h:outputText value="West unit content." />  
+                    </p:layoutUnit>  
+
+                    <p:layoutUnit id="lyuiniciar" position="east" size="350" header="Iniciar Sesión" effect="drop">
+                        <br/>
+                        <p:panel id="panel" > 
+                        
+                        <p:spacer width="10" height="8" />
+                        <h:outputLabel for="cedula" value="Cedula: *" /><p:spacer width="30" height="8" />
+                        <p:inputText id="cedula" required="true" title="Ingrese su cedula" label="Cedula">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>    
+                        <br/>
+                        <p:message for="cedula" /> 
+                        <br/>                        
+                        <p:spacer width="10" height="8" />
+                        <h:outputLabel for="contrasena" value="Password: *"/><p:spacer width="10" height="8" />
+                        <p:password id="contrasena" feedback="true" promptLabel="Ingrese Su Contraseña" 
+                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" strongLabel="Seguridad: Alta" 
+                                    required="true" label="Contraseña" />
+                        <br/>
+                        <p:message for="contrasena" />
+                        </p:panel>
+                        <p:separator id="customSeparator" style="width:320px;height:8px" />
+                        <p:spacer width="130" height="8" />
+                        <p:commandButton value="Entrar" update="panel" id="ajax" styleClass="ui-priority-primary"
+                                         title="Click aqui para entrar" />
+                        <br/>
+                        <br/>
+                        <p:spacer width="10" height="8" />
+                        <p:commandLink style="margin-right:20px;" oncomplete="dlgEditar.show();">  
+                            <h:outputText value="Olvide Mi Contraseña" title="titulo"  />  
+                        </p:commandLink>
+                        
+                    </p:layoutUnit>  
+
+                    <p:layoutUnit position="center">  
+                        <h:form>  
+                            
+                            <h:link value="Mientras se construye clic aqui.." outcome="paginas/menu/menuInicial" />                           
+                            
+                        </h:form>  
+                    </p:layoutUnit>  
+  
+                </p:layout>  
+           
+        
+        </h:form>
+        
+        <!--Form: Editar Rol -->
+        <h:form id="frmrecuperar">
+            <p:dialog header="Recuperacion De Contraseña" widgetVar="dlgEditar" resizable="false" 
+                      id="dlgEditar" modal="true">  
+              <!--  <p:growl id="growlEditar"  sticky="true" />  -->
+                    <h:panelGrid id="pgEditar" columns="2" cellpadding="4" style="margin:0 auto;">  
+                        <h:outputText value="Cedula:" />                          
+                        <p:inputText value="#{rolBean.rol.descripcion}" style="width: 200px" />
+                        
+                        <h:outputText value="Email" />                      
+                        <p:inputText value="#{rolBean.rol.descripcion}" style="width: 200px" />
+
+                </h:panelGrid>  
+                <p:separator id="customSeparatord" style="width:500px;height:8px" />
+                <p:commandButton  oncomplete="dlgEditar.hide()" 
+                                  actionListener="#{rolBean.actualizarRol()}" value="Recuperar" 
+                                  title="&nbsp;Actualizar" image="icon-guardar" />
+                <p:commandButton  oncomplete="dlgEditar.hide()" value="Cancelar" title="&nbsp;Cancelar" 
+                                  image="icon-cancel" />  
+            </p:dialog>
+        </h:form>
+        
+       
+    </h:body>
+</html>
+

@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="titulo">
+        Gestion De Divisiones - SICOVI
+    </ui:define>
+
+    <ui:define name="abajo">
+        <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />     
+    </ui:define>
+
+    <ui:define name="izquierda">
+        izquierda
+    </ui:define>
+
+    <ui:define name="derecha">
+        derecha
+    </ui:define>
+
+    <ui:define name="cuerpo">
+
+        <p:growl id="growl"  sticky="true"  />
+        <h:form>                    
+            <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
+                <h:panelGrid columns="2" cellpadding="6">  
+                    <p:commandButton value="&nbsp;Nueva Division" title="Crear Una Nueva Division" image="icon-add"
+                                     actionListener="#{agregarDivisionesBean.prepararGuardadoDelasDivisiones()}" 
+                                     update=":frmnuevadivision:dlgNuevo"/>                                                       
+                                                                         
+                </h:panelGrid>  
+            </p:fieldset>  
+        </h:form><br/>
+
+
+        <!--Form: Tabla De Divisiones -->                           
+        <h:form id="frmdivision">        
+            <p:dataTable id="datatable" var="divisiones" value="#{divisionesBean.divisioneslista}" sortMode="multiple"  emptyMessage="No hay Divisiones disponibles"
+                         paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  >
+
+                <f:facet name="header">  
+                    Lista de Divisiones 
+                </f:facet>
+                <p:ajax event="rowToggle" listener="#{divisionesBean.desplegarFila(divisiones)}" update=":frmdivision:datatable:tblexpandible" />  
+                <p:column style="width:2%">  
+                    <p:rowToggler />  
+                </p:column>  
+                <p:column headerText="ID" style="4%; text-align: center" sortBy="#{divisiones.idDivisiones}" filterBy="#{divisiones.idDivisiones}"  
+                >
+                    <f:facet name="header">  
+                        Codigo Division 
+                    </f:facet>  
+                    <h:outputText value="#{divisiones.idDivisiones}" />  
+                </p:column>
+                <p:column headerText="Descripcion" style="14%; text-align: center" sortBy="#{divisiones.nombreDivision}" filterBy="#{divisiones.nombreDivision}">  
+                    <h:outputText value="#{divisiones.nombreDivision}"  />  
+                </p:column>
+                <p:column headerText="Ubicación " style="4%; text-align: center" >  
+                    <p:commandButton  title="&nbsp;Visualizar Ubicaciones" binding="#{controlMapaBean.btngeolocalizacion}"  
+                                      actionListener="#{controlMapaBean.prepararCargaGeolocalizacion(divisiones.idDivisiones)}"
+                                      oncomplete="dlgMapa.show();" update=":frmubicacionMapa,:frmubicacionMapa:mapa1" 
+                                      icon="ui-icon-pin-s" >
+                    </p:commandButton>
+
+                </p:column>
+
+                <p:column headerText="Acciones" style="6%; text-align: center">
+                    <p:commandButton update=":frmeditardivisiones:dlgEditardivision" 
+                                     actionListener="#{editarDivisionesBean.cargarEdicion(divisiones.idDivisiones)}"   
+                                     title="&nbsp;Editar" image="icon-edit"  />          
+                    <p:commandButton update=":frmeliminardivisiones:dlgEliminardivision" 
+                                     actionListener="#{eliminarDivisionesPriBean.cargarEliminadoDivision(divisiones)}"   
+                                     title="&nbsp;Eliminar" image="icon-delete" />
+                    
+                    <p:commandButton id="btnasig" update=":asignarDepartamentosaDivision:dlgasignar,:asignarDepartamentosaDivision:tbldepartamentos" 
+                                     actionListener="#{asignarDepartamentosaDivision.cargarAsignacion(divisiones)}"   
+                                     title="Asignar Departamentos" image="icon-add" >                        
+                    </p:commandButton>
+                    
+                </p:column>
+                
+                <p:rowExpansion> 
+
+                    
+                    <p:dataTable id="tblexpandible"
+                                 var="ubic" 
+                                 value="#{divisionesBean.departamentosAsociados}"  
+                                 emptyMessage="No hay Ubicaciones disponibles"
+                                 style="width:100%;" 
+                                 paginator="true" 
+                                 rows="3" 
+                                 paginatorPosition="bottom" 
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                                    {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                                    {LastPageLink} {RowsPerPageDropdown}">
+                        <p:column headerText="Id " style="4%; text-align: center" >  
+                            <h:outputText  value="#{ubic.idDepartamento}" />  
+                        </p:column>
+                        <p:column headerText="Nombre Departamento" style="4%; text-align: center" >  
+                            <h:outputText  value="#{ubic.nombreDepartamento}" /> 
+                        </p:column>
+                        <f:facet name="footer">  
+                            En total hay #{divisionesBean.totalUbicaciones()} ubicaciones.  
+                </f:facet>
+                    </p:dataTable>                    
+
+                </p:rowExpansion>  
+                <f:facet name="footer">  
+                    En total hay #{divisionesBean.totalDivisiones()} divisiones.  
+                </f:facet>
+            </p:dataTable>      
+        </h:form>
+
+        <!--Form: Nuevo Cargo -->          
+        <h:form id="frmnuevadivision">
+            <ui:include src="frmagregardivision.xhtml" />
+        </h:form>
+
+        <!--formulario ubicacion en mapa-->
+        <h:form id="frmubicacionMapa">
+            <ui:include src="UbicacionMapa.xhtml"  />           
+        </h:form>
+
+        <!-- Formulario editar divisiones -->            
+        <h:form id="frmeditardivisiones" >                
+            <ui:include src="frmeditardivision.xhtml" />                
+        </h:form>
+
+        <!-- Formulario eliminar divisiones -->
+        <h:form id="frmeliminardivisiones">                                
+            <ui:include src="frmeliminardivision.xhtml"/>
+        </h:form>
+        
+        <!-- Formulario asignar departamentos a division -->
+        <h:form id="asignarDepartamentosaDivision">
+            <ui:include src="asignarDepartamentosaDivision.xhtml" />
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,21 @@
+.ui-state-default .icon-add{
+    background-image:url(../img/document_add_16.png);
+}
+.ui-state-default .icon-edit{
+    background-image:url(../img/brush_16.png);
+}
+.ui-state-default .icon-delete{
+    background-image:url(../img/recycle_16.png);
+}
+.ui-state-default .icon-cancel{
+    background-image:url(../img/close_16.png);
+}
+.ui-state-default .icon-guardar{
+    background-image:url(../img/disc_16.png);
+}
+.campo {color: #757575}
+
+.addDialog {
+    z-index: 2000 !important;
+}
+

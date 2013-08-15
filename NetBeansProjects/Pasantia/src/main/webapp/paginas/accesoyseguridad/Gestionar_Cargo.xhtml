@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="titulo">
+        Gestion De Cargos - SICOVI
+    </ui:define>
+
+    <ui:define name="abajo">
+        abajo
+    </ui:define>
+
+    <ui:define name="izquierda">
+        izquierda
+    </ui:define>
+
+    <ui:define name="derecha">
+        derecha
+    </ui:define>
+
+    <ui:define name="cuerpo">
+        
+        <p:spacer width="10" height="5" /><br/>
+                <h:form>                    
+                    <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <p:commandButton value="&nbsp;Nuevo Cargo" title="Crear Una Nueva Categoria" image="icon-add" onclick="dlgNuevo.show();"
+                                     actionListener="#{cargoBean.prepararGuardadoDelCargo()}"/>
+                            <h:outputText value="Agregar un nuevo cargo para las personas."/>
+                        </h:panelGrid>  
+                    </p:fieldset>  
+                </h:form><br/>
+                <p:spacer width="10" height="5" />
+                
+                <!--Form: Tabla De Cargos -->                           
+                <h:form id="frmcargo">        
+                    <p:dataTable id="datatable" var="cargo" value="#{cargoBean.cargos}" sortMode="multiple"  emptyMessage="No hay Cargos disponibles"
+                                 paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                 {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                        
+                        <f:facet name="header">  
+                            Lista de Cargos 
+                        </f:facet> 
+                        <p:column headerText="ID" style="text-align: center" sortBy="#{cargo.idCargo}" filterBy="#{cargo.idCargo}">
+                            <f:facet name="header">  
+                                Codigo Cargo 
+                            </f:facet>  
+                            <h:outputText value="#{cargo.idCargo}" />  
+                        </p:column>
+                        <p:column headerText="Descripcion" style="text-align: center" sortBy="#{cargo.descripcion}" filterBy="#{cargo.descripcion}">  
+                            <h:outputText value="#{cargo.descripcion}"  />  
+                        </p:column>
+                        <p:column headerText="Acciones" style="width:8%; text-align: center">
+                            <p:commandButton  update=":frmeditarcargo"   actionListener="#{cargoBean.prepararActualizadoDeCategoria(cargo.idCargo, cargo.descripcion)}" 
+                                      title="&nbsp;Editar" image="icon-edit" />
+                            <p:commandButton  update=":frmEliminar" title="&nbsp;Eliminar" image="icon-delete" actionListener="#{cargoBean.prepararEliminarCargo(cargo.idCargo, cargo.descripcion)}" 
+                                      />  
+                        </p:column>
+                        <f:facet name="footer">  
+                            En total hay #{cargoBean.totalCargo()} cargos.  
+                        </f:facet>
+                   </p:dataTable>      
+                </h:form>
+                
+                <!--Form: Nuevo Cargo -->          
+                  <h:form id="frmnuevocargo">
+                    <p:dialog header="Creacion de un nuevo cargo de los Usuarios" widgetVar="dlgNuevo" resizable="false" 
+                              id="dlgNuevo" showEffect="explode" hideEffect="explode"  modal="false"  width="550" binding="#{cargoBean.dlgNuevoCargo}">  
+                        <p:growl id="growl"  sticky="true"  />
+                        <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  /> 
+                            <h:panelGrid id="pgNuevo" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                               
+                                <h:outputText value="Descripción Del Cargo" />  
+
+                                <p:inputText value="#{cargoBean.descripcion}" style="width: 200px" binding="#{cargoBean.txtdescripcioning}" />
+
+
+
+                        </h:panelGrid>  
+                        <p:separator id="customSeparator2" style="width:500px;height:8px" />
+                        <p:commandButton  update=":frmcargo:datatable,growl,dlgNuevo"  
+                                          action="#{cargoBean.guardarNuevoCargo()}" value="Guardar" 
+                                          title="&nbsp;Guardar" image="icon-guardar" />
+                        <p:commandButton  update=":frmcargo" onclick="dlgNuevo.hide();" value="Cancelar" title="&nbsp;Cancelar" 
+                                          image="icon-cancel" />   
+                       
+                    </p:dialog>
+                </h:form> 
+                
+                        <!--Form: Editar Categoria -->
+        <h:form id="frmeditarcargo">
+            <p:dialog header="Edicion De Un Cargo Para Los Usuarios" widgetVar="dlgEditar" resizable="false" 
+                      id="dlgEditar" modal="false" binding="#{cargoBean.dlgeditarcargo}">  
+                <p:growl id="growlEditar"  sticky="true" />  
+                <p:messages id="messageseditar" showDetail="true" autoUpdate="true" closable="true" /> 
+                    <h:panelGrid id="pgEditar" columns="2" cellpadding="4" style="margin:0 auto;">  
+                        
+                     
+                        <h:outputText value="Id Del Cargo" /> 
+                        <h:outputText value="Descripción Del Cargo" />  
+                        
+                        <p:inputText value="#{cargoBean.id}" style="width: 200px" binding="#{cargoBean.txtideditar}"/>                       
+                        <p:inputText value="#{cargoBean.descripcion}" style="width: 200px"  binding="#{cargoBean.txtdescripcioneditar}" />
+                        
+                        
+                </h:panelGrid>  
+                <p:separator id="customSeparator" style="width:500px;height:8px" />
+                <p:commandButton  update=":frmcargo:datatable,growlEditar,dlgEditar" 
+                                  actionListener="#{cargoBean.actualizarCargo()}" value="Actualizar" 
+                                  title="&nbsp;Actualizar" image="icon-guardar" />
+                <p:commandButton  update=":frmcargo:datatable"  onclick="dlgEditar.hide();" value="Cancelar" title="&nbsp;Cancelar" 
+                                  image="icon-cancel" />  
+            </p:dialog>
+        </h:form>
+                        
+                <!--Form: Eliminar Cargo -->                    
+        <h:form id="frmEliminar">  
+                      
+            <p:growl id="growlEliminar"  sticky="true" />  
+            
+            <p:dialog id="dlgEliminar"  
+                      header="Eliminar Cargo" widgetVar="dlgEliminar" showEffect="explode" hideEffect="explode" binding="#{cargoBean.dlgeliminarcomfirmar}">  
+                <h:panelGrid id="pgEliminar" columns="2" cellpadding="2" style="margin:0 auto;">  
+                    <h:outputText value="Id Del Cargo" /> 
+                    <p:inputText value="#{cargoBean.id}" style="width: 200px" binding="#{cargoBean.txtideliminar}"/>
+                </h:panelGrid>
+                <p:commandButton  update=":frmcargo:datatable,growlEliminar,dlgEliminar" 
+                                  actionListener="#{cargoBean.eliminarCategoria()}" value="Eliminar" 
+                                  title="&nbsp;Actualizar" image="icon-guardar" />
+                <p:commandButton  update=":frmcargo:datatable" onclick="dlgEliminar.hide();"  value="Cancelar" title="&nbsp;Cancelar" 
+                                  image="icon-cancel" />                       
+            </p:dialog>  
+            
+        </h:form>      
+        
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.CargadosCsv" table="cargadosCSV" catalog="CasinoPasantia">
+        <id name="idnewTable" type="java.lang.Integer">
+            <column name="idnew_table" />
+            <generator class="identity" />
+        </id>
+        <property name="divipola" type="java.lang.Integer">
+            <column name="DIVIPOLA" />
+        </property>
+        <property name="codDepto" type="java.lang.Integer">
+            <column name="COD_DEPTO" />
+        </property>
+        <property name="codMpio" type="java.lang.Integer">
+            <column name="COD_MPIO" />
+        </property>
+        <property name="dpto" type="string">
+            <column name="DPTO" />
+        </property>
+        <property name="nomMpio" type="string">
+            <column name="NOM_MPIO" />
+        </property>
+        <property name="nomPoblad" type="string">
+            <column name="NOM_POBLAD" />
+        </property>
+    </class>
+</hibernate-mapping>

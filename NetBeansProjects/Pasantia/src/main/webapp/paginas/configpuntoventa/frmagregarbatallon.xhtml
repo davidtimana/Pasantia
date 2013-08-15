@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+
+        <!-- .errorCajaTexto{
+            border-color: #e9322d;
+            -webkit-box-shadow: 0 0 6px #f8b9b7;
+            -moz-box-shadow: 0 0 6px #f8b9b7;
+            box-shadow: 0 0 6px #f8b9b7;
+        } -->
+        <p:dialog header="Creacion de un nuevo batallon" widgetVar="dlgNuevo" resizable="false" 
+                  id="dlgNuevo" showEffect="explode" hideEffect="explode"  modal="false"  width="1100" height="300" 
+                  minimizable="true" binding="#{agregarBatallonesBean.dlgnuevobatallon}" onHide="#{agregarBatallonesBean.cerrarGuardado()}">
+
+
+            <p:accordionPanel>  
+                
+                <p:tab title="Datos Batallon" id="pruebatab">  
+                    <h:panelGrid  columns="2" cellpadding="2" style="margin:0 auto;" id="datosbatallon">                             
+                        <p:outputLabel value="Nombre Batallón: * "/>
+                        <p:inputTextarea rows="2"
+                                         cols="50"
+                                         counterTemplate="{0} Letras Restantes." 
+                                         counter="contador"  
+                                         maxlength="255"
+                                         value="#{agregarBatallonesBean.nombre_batallon}"
+                                         />                    
+
+                        <p:spacer width="70" height="1" /><h:outputText id="contador" />             
+                    </h:panelGrid> 
+                </p:tab>  
+                <p:tab title="Datos de Contacto">  
+                    <h:panelGrid columns="4" cellpadding="4" style="margin:0 auto;"> 
+                        <p:outputLabel value="Dirección: * "/>
+                        <p:inputText value="#{agregarBatallonesBean.direccion}" />                   
+                        <p:outputLabel value="Barrio: * "/>
+                        <p:inputText value="#{agregarBatallonesBean.barrio}" />
+                        <p:outputLabel value="Telefono 1: * "/>
+                        <p:inputText value="#{agregarBatallonesBean.telefono1}" />
+                        <p:outputLabel value="Telefono 2: "/>
+                        <p:inputText value="#{agregarBatallonesBean.telefono2}" />
+
+
+                    </h:panelGrid>
+                </p:tab>  
+                <p:tab title="Comandante a Cargo">  
+                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%"> 
+
+                         <p:outputLabel value="División Perteneciente : * "/>
+                         <p:selectOneMenu id="division" value="#{agregarBatallonesBean.divisionSeleccionada}"  
+                                         validatorMessage="Debe seleccionar División" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith" 
+                                         style="width: 100%">  
+                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                            <f:selectItems value="#{agregarBatallonesBean.comboDivisionesAsociadas}"  />           
+                        </p:selectOneMenu>  
+                         
+
+
+                    </h:panelGrid>
+                </p:tab>  
+                <p:tab title="Ubicación Batallón">  
+                    <h:panelGrid columns="6" cellpadding="1" style="width: 100%"> 
+
+                          <p:outputLabel value="Pais : * "/>
+                          <p:selectOneMenu id="pais" value="#{agregarBatallonesBean.paisSeleccionado}"  
+                                         validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith"  
+                                         style="width: 100%">  
+                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                            <f:selectItems value="#{agregarBatallonesBean.combopaises}"  />
+                            <p:ajax listener="#{agregarBatallonesBean.cargarDepartamentosxPais()}" update="departamento,ciudad" />
+                        </p:selectOneMenu>
+                          
+                          <p:outputLabel value="Departamento : * "/>
+                          <p:selectOneMenu id="departamento" value="#{agregarBatallonesBean.departamentoSeleccionado}"  
+                                         validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith"
+                                         disabled="#{agregarBatallonesBean.deshabilitarDepartamento}"
+                                         style="width: 100%">  
+                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                            <f:selectItems value="#{agregarBatallonesBean.combodepartamentos}"  />
+                            <p:ajax listener="#{agregarBatallonesBean.cargarCiudadesxDepartamento()}" update="ciudad" />
+                        </p:selectOneMenu>
+                          
+                          <p:outputLabel value="Ciudad : * "/>
+                          <p:selectOneMenu id="ciudad" value="#{agregarBatallonesBean.ciudadSeleccionada}"  
+                                         validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith"
+                                         disabled="#{agregarBatallonesBean.deshabilitarCiudad}"
+                                         style="width: 100%">  
+                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                            <f:selectItems value="#{agregarBatallonesBean.combociudades}"  />           
+                        </p:selectOneMenu>
+                         
+
+
+                    </h:panelGrid>
+                </p:tab>  
+            </p:accordionPanel>
+            <p:separator  style="width:1000px;height:8px"  />
+            <h:panelGrid columns="2" cellpadding="1" >                             
+                <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
+                                 action="#{agregarBatallonesBean.guardarBatallon()}" 
+                                 icon="icon-add" 
+                                 update=":frmagregarbatallon:dlgNuevo"/>           
+                <p:commandButton value="Cancelar" title="Cancelar" icon="icon-cancel"
+                                 actionListener="#{agregarBatallonesBean.cerrarGuardado()}"
+                                 update=":frmagregarbatallon:dlgNuevo"/>                               
+
+            </h:panelGrid>
+        </p:dialog>
+
+
+
+
+
+    </ui:composition>
+</html>

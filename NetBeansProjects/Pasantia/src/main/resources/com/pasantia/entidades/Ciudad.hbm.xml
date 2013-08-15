@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Ciudad" table="Ciudad" catalog="CasinoPasantia">
+        <id name="idCiudad" type="java.lang.Integer">
+            <column name="idCiudad" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="departamento" class="com.pasantia.entidades.Departamento" fetch="select">
+            <column name="secdepartamento" not-null="true" />
+        </many-to-one>
+        <property name="nombreCiudad" type="string">
+            <column name="nombre_ciudad" length="45" not-null="true" />
+        </property>
+        <property name="latitud" type="java.lang.Double">
+            <column name="latitud" precision="22" scale="0" />
+        </property>
+        <property name="longitud" type="java.lang.Double">
+            <column name="longitud" precision="22" scale="0" />
+        </property>
+        <set name="personas" inverse="true">
+            <key>
+                <column name="SECCIUDAD" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Persona" />
+        </set>
+        <set name="batallons" inverse="true">
+            <key>
+                <column name="secciudad" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Batallon" />
+        </set>
+    </class>
+</hibernate-mapping>

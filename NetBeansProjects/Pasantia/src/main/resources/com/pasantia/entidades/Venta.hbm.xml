@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Venta" table="Venta" catalog="CasinoPasantia">
+        <id name="idVenta" type="java.lang.Integer">
+            <column name="idVenta" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="detalleVenta" class="com.pasantia.entidades.DetalleVenta" fetch="select">
+            <column name="fk_id_detalle_venta" not-null="true" />
+        </many-to-one>
+        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select">
+            <column name="fk_id_persona" not-null="true" />
+        </many-to-one>
+        <property name="fechaVenta" type="timestamp">
+            <column name="fecha_venta" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

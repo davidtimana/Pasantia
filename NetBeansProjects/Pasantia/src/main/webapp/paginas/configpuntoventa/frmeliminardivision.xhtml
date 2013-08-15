@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <p:dialog header="Seguro que desea eliminar la division: #{eliminarDivisionesPriBean.division.nombreDivision}" widgetVar="dlgEliminardivision" resizable="false" 
+                  id="dlgEliminardivision" modal="false" binding="#{eliminarDivisionesPriBean.dlgeliminarDivisiones}" width="600" height="140" minimizable="true" 
+                  onHide="#{eliminarDivisionesPriBean.cancelarEliminar()}">  
+            <p:panel header="Eliminar Division" toggleable="true" toggleOrientation="horizontal">  
+                <h:panelGrid id="espacio1" columns="2" cellpadding="2" style="margin:0 auto;">                                                 
+                    <p:outputLabel value="Id:" />
+                    <p:outputLabel value="#{eliminarDivisionesPriBean.division.idDivisiones}" />
+                    <p:outputLabel value="Nombre De la División:"/>
+                    <p:outputLabel value="#{eliminarDivisionesPriBean.division.nombreDivision}" />
+                </h:panelGrid>
+                <h:panelGrid id="espacio2" columns="2" cellpadding="1" style="margin:0 auto;">
+                    <p:commandButton id="elim" value="Elilminar División" title="Eliminar División" 
+                                     actionListener="#{eliminarDivisionesPriBean.eliminarDivision()}"                                                 
+                                     image="icon-delete"                                     
+                                     update=":frmeliminardivisiones:dlgEliminardivision,:frmdivision:datatable"/>  
+                    <p:commandButton id="canceleli" value="Cancelar" title="Cancelar" 
+                                     actionListener="#{eliminarDivisionesPriBean.cancelarEliminar()}"                                                 
+                                     image="icon-cancel"
+                                     update=":frmeliminardivisiones:dlgEliminardivision,:frmdivision:datatable"/>  
+
+                </h:panelGrid>
+
+            </p:panel>
+
+        </p:dialog>   
+
+    </ui:composition>
+</html>

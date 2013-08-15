@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+        <p:dialog header="Edicion De Una Ubicaciòn Para Las Divisiones" widgetVar="dlgEditar" resizable="false" 
+                  id="dlgEditardivision" modal="false" binding="#{editarDivisionesBean.dlgeditarDivisiones}" width="600" height="140" minimizable="true" onHide="#{editarDivisionesBean.cancelarEdicion()}">  
+            <p:panel header="Agregar Division" toggleable="true" toggleOrientation="horizontal">  
+                <h:panelGrid id="espacio1" columns="2" cellpadding="1" style="margin:0 auto;">                             
+                    <p:outputLabel value="Nombre De la División"/>
+                    <p:inputText id="des1"  value="#{editarDivisionesBean.nombreDivision}"   style="width: 300px" 
+                                 binding="#{editarDivisionesBean.txtnombreDivision}" />                                
+
+                </h:panelGrid>
+
+                <h:panelGrid id="espacio2" columns="3" cellpadding="1" style="margin:0 auto;">                             
+
+                    <p:commandButton id="editar" value="Editar División" title="Editar División" 
+                                     actionListener="#{editarDivisionesBean.habilitarEdicion()}"
+                                     update="frmeditardivisiones:espacio1,frmeditardivisiones:espacio2"
+                                     image="icon-edit"
+                                     binding="#{editarDivisionesBean.btneditar}"/>
+                    <p:commandButton id="guardar" value="Guardar División" title="Guardar División" 
+                                     actionListener="#{editarDivisionesBean.editarDivision()}"                                                 
+                                     image="icon-add"
+                                     binding="#{editarDivisionesBean.btnguardar}"
+                                     update=":frmeditardivisiones:dlgEditardivision,:frmdivision:datatable"/>  
+                    <p:commandButton id="cancelar" value="Cancelar" title="Cancelar" 
+                                     actionListener="#{editarDivisionesBean.cancelarEdicion()}"                                                 
+                                     image="icon-cancel"
+                                     update="frmeditardivisiones:espacio1,frmeditardivisiones:espacio2,:frmeditardivisiones:dlgEditardivision"/>  
+
+                </h:panelGrid>    
+            </p:panel>
+                
+            </p:dialog>       
+        </ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Divisiones" table="Divisiones" catalog="CasinoPasantia">
+        <id name="idDivisiones" type="java.lang.Integer">
+            <column name="idDivisiones" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreDivision" type="string">
+            <column name="nombre_division" not-null="true" />
+        </property>
+        <set name="batallons" inverse="true">
+            <key>
+                <column name="secdivision" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Batallon" />
+        </set>
+        <set name="divisionesUbicacions" inverse="true">
+            <key>
+                <column name="secdivision" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.DivisionesUbicacion" />
+        </set>
+    </class>
+</hibernate-mapping>

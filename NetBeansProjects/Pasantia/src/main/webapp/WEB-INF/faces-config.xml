@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+
+    <application>
+        <resource-bundle>
+            <base-name>com.pasantia.propiedades/espanol</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+    </application>
+    <managed-bean>
+        <managed-bean-name>Navegacion</managed-bean-name>
+        <managed-bean-class>com.pasantia.bean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestion_Articulos()}</from-action> 
+            <from-outcome>gestionararticulos</from-outcome>
+            <to-view-id>/paginas/articulos/Gestion_Articulos.xhtml</to-view-id>
+        </navigation-case>
+             <navigation-case>
+            <from-action>#{navegacion.ir_a_Listar_Articulos()}</from-action> 
+            <from-outcome>listararticulos</from-outcome>
+            <to-view-id>/paginas/articulos/Listar_Articulos.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestion_Ubicaciones()}</from-action> 
+            <from-outcome>gestionubicaciones</from-outcome>
+            <to-view-id>/paginas/articulos/Gestionar_Ubicaciones.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Listar_Ubicaciones()}</from-action> 
+            <from-outcome>listarubicaciones</from-outcome>
+            <to-view-id>/paginas/articulos/Listar_Ubicaciones.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestion_Categorias()}</from-action> 
+            <from-outcome>gestionarcategorias</from-outcome>
+            <to-view-id>/paginas/articulos/Gestionar_Categorias.xhtml</to-view-id>
+        </navigation-case>
+      <navigation-case>
+            <from-action>#{navegacion.ir_a_Listar_Categorias()}</from-action> 
+            <from-outcome>listarcategorias</from-outcome>
+            <to-view-id>/paginas/articulos/Listar_Categorias.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestion_Precios_Compra()}</from-action> 
+            <from-outcome>gestionarprecioscompra</from-outcome>
+            <to-view-id>/paginas/articulos/Gestionar_Precios.xhtml</to-view-id>
+        </navigation-case>
+              
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Listar_Variaciones()}</from-action> 
+            <from-outcome>listarvariaciones</from-outcome>
+            <to-view-id>/paginas/articulos/Listar_Variaciones.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestionar_Roles()}</from-action> 
+            <from-outcome>gestionarroles</from-outcome>
+            <to-view-id>/paginas/accesoyseguridad/Gestionar_Roles.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Listar_Roles()}</from-action> 
+            <from-outcome>listarroles</from-outcome>
+            <to-view-id>/paginas/accesoyseguridad/Listar_Roles.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestionar_Cargos()}</from-action> 
+            <from-outcome>gestionarcargos</from-outcome>
+            <to-view-id>/paginas/accesoyseguridad/Gestionar_Cargo.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestionar_Usuario()}</from-action> 
+            <from-outcome>gestionarusuarios</from-outcome>
+            <to-view-id>/paginas/usuariossistema/GestionarUsuarios.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestionar_Divisiones()}</from-action> 
+            <from-outcome>gestionardivisiones</from-outcome>
+            <to-view-id>/paginas/configpuntoventa/GestionarDivisiones.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestionar_Batallones()}</from-action> 
+            <from-outcome>gestionarbatallones</from-outcome>
+            <to-view-id>/paginas/configpuntoventa/GestionarBatallones.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_Gestionar_Casinos()}</from-action> 
+            <from-outcome>gestionarcasinos</from-outcome>
+            <to-view-id>/paginas/configpuntoventa/GestionarCasinos.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>UbicacionBean</managed-bean-name>
+        <managed-bean-class>com.pasantia.bean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+</faces-config>

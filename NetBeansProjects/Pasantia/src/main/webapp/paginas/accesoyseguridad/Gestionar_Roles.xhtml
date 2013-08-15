@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Roles De Usuario</title>
+        <h:outputStylesheet name="css/estilos.css"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../../plantillas/plantillaprincipal.xhtml">
+            
+            
+        <ui:define  name="cuerpo">
+        
+        <h:form>
+            <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
+                        <h:panelGrid columns="2" cellpadding="10">  
+                            <p:commandButton value="&nbsp;Nuevo Rol" title="Crear Un Nuevo Rol" image="icon-add" onclick="dlgNuevo.show()" 
+                             actionListener="#{rolBean.prepararGuardadoDelRol()}"  />      
+                            <h:outputText value="Agregar un nuevo rol para los usuarios."/>
+                        </h:panelGrid>  
+                    </p:fieldset>  
+            
+        
+        </h:form><br/>
+        
+        <!--Form: Tabla Roles -->
+        <h:form id="frmroles">        
+            <p:dataTable id="datatable" var="rol" value="#{rolBean.roles}" emptyMessage="No hay roles disponibles"
+                         paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " 
+                          >
+                <f:facet name="header">  
+                   Lista de Roles 
+                </f:facet> 
+                <p:column headerText="ID" style="text-align: center" filterBy="#{rol.idRol}">  
+                    <f:facet name="header">  
+                        Codigo Rol 
+                    </f:facet>  
+                    <h:outputText value="#{rol.idRol}" />  
+                </p:column>
+                <p:column headerText="Descripcion" style="text-align: center" filterBy="#{rol.descripcion}">  
+                    <h:outputText value="#{rol.descripcion}"  />  
+                </p:column>
+                <p:column headerText="Acciones" style="width:8%; text-align: center">
+                    <p:commandButton  update=":frmeditar" onclick="dlgEditar.show();" actionListener="#{rolBean.prepararActualizadoDelRol(rol.idRol)}" 
+                                      title="&nbsp;Editar" image="icon-edit"  />
+                    <p:commandButton  update=":frmEliminar" onclick="dlgEliminar.show();" actionListener="#{rolBean.prepararEliminarDelRol(rol.idRol)}"
+                                      title="&nbsp;Eliminar" image="icon-delete" />  
+                </p:column>
+                <f:facet name="footer" >  
+                    En total hay #{rolBean.totalRoles()} roles.  
+                 </f:facet>
+           </p:dataTable>      
+        </h:form>
+        
+        <!--Form: Nuevo Rol -->
+        <h:form id="frmnuevo" >
+            <p:dialog header="Creacion De Un Nuevo Rol Para Los Usuarios" widgetVar="dlgNuevo" resizable="false" 
+                      id="dlgNuevo" modal="false" minimizable="true">  
+                <p:growl id="growl"  sticky="true" />  
+                    <h:panelGrid id="pgNuevo" columns="2" cellpadding="4" style="margin:0 auto;">  
+                        
+                     
+
+                        <h:outputText value="Descripción Del Rol:" />  
+                        
+                        <p:inputText value="#{rolBean.rol.descripcion}" style="width: 200px" required="true" />
+                        
+                        
+
+                </h:panelGrid>  
+                <p:separator id="customSeparatoruno" style="width:500px;height:8px" />
+                <p:commandButton  update=":frmroles:datatable,growl,dlgNuevo" onclick="dlgNuevo.hide()" 
+                                  actionListener="#{rolBean.guardarNuevoRol()}" value="Guardar" 
+                                  title="&nbsp;Guardar" image="icon-guardar" />
+                <p:commandButton  update=":frmroles" onclick="dlgNuevo.hide();" value="Cancelar" title="&nbsp;Cancelar" 
+                                  image="icon-cancel" />  
+            </p:dialog>
+        </h:form>
+        
+        <!--Form: Editar Rol -->
+        <h:form id="frmeditar">
+            <p:dialog header="Edicion De Un Rol Para Los Usuarios"  widgetVar="dlgEditar" resizable="false" 
+                      id="dlgEditar" modal="false" binding="#{rolBean.dlgeditar}">  
+                <p:growl id="growlEditar"  sticky="true" />  
+                    <h:panelGrid id="pgEditar" columns="2" cellpadding="4" style="margin:0 auto;">  
+                        
+                     
+
+                        <h:outputText value="Descripción Del Rol:" />  
+                        
+                        <p:inputText value="#{rolBean.rol.descripcion}" style="width: 200px" />
+                        
+                        
+
+                </h:panelGrid>  
+                <p:separator id="customSeparatordos" style="width:500px;height:8px" />
+                <p:commandButton  update=":frmroles:datatable,growlEditar,dlgEditar"  
+                                  actionListener="#{rolBean.actualizarRol()}" value="Actualizar" 
+                                  title="&nbsp;Actualizar" image="icon-guardar" />
+                <p:commandButton  update=":frmroles:datatable" oncomplete="dlgEditar.hide()" value="Cancelar" title="&nbsp;Cancelar" 
+                                  image="icon-cancel" />  
+            </p:dialog>
+        </h:form>
+            
+        <!--Form: Eliminar Rol -->
+        <h:form id="frmEliminar">  
+                      
+            <p:growl id="growlEliminar"  sticky="true" />  
+            
+            <p:confirmDialog id="dlgEliminar" message="¿Desea Eliminar Este Rol?"  
+                        header="Eliminar Rol" severity="alert" widgetVar="dlgEliminar" >                
+                <p:commandButton  update=":frmroles:datatable,growlEliminar,dlgEliminar" oncomplete="dlgEliminar.hide()" 
+                                  actionListener="#{rolBean.eliminarRol()}" value="Eliminar" 
+                                  title="&nbsp;Actualizar" image="icon-guardar" />
+                <p:commandButton  update=":frmroles:datatable" oncomplete="dlgEliminar.hide()" value="Cancelar" title="&nbsp;Cancelar" 
+                                  image="icon-cancel" />                       
+            </p:confirmDialog>  
+  
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+
+

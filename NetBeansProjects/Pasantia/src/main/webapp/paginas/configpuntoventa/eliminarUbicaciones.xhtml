@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+        <h:form id="comelimiubi" >
+            
+            <p:dialog id="dlgEliminarAsig" header="¿Desea eliminar la ubicación seleccionada?"  widgetVar="dlgEliminarAsig" 
+                      binding="#{eliminarDivisionesBean.dlgcomfireliminarubic}" modal="true" closable="false" resizable="false" styleClass="addDialog" appendToBody="true"  >                
+                <p:commandButton  update=":frmnuevadivision:tablaasig,:frmnuevadivision:departamento" oncomplete="dlgEliminarAsig.hide()" 
+                                  actionListener="#{eliminarDivisionesBean.eliminarUbicacion()}" value="Eliminar" 
+                                  title="Actualizar" image="icon-guardar"  />
+                <p:commandButton  onclick="dlgEliminarAsig.hide();" value="Cancelar" 
+                                  title="Cancelar" image="icon-cancel" />                       
+            </p:dialog>  
+        
+      </h:form>
+    </ui:composition>
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+        <p:dialog header="Asignar Departamentos a Division: #{asignarDepartamentosaDivision.division.nombreDivision}" widgetVar="dlgasignar" resizable="false" 
+                  id="dlgasignar" showEffect="explode" hideEffect="explode"  modal="false"  width="#{asignarDepartamentosaDivision.width}" height="#{asignarDepartamentosaDivision.height}" 
+                  minimizable="true" binding="#{asignarDepartamentosaDivision.dlgasignar}" onHide="#{asignarDepartamentosaDivision.cancelarAsignacion()}">
+
+            <h:panelGrid  id="espacio1" columns="2" cellpadding="1" style="margin:0 auto"  >
+                <p:outputLabel value="País" binding="#{asignarDepartamentosaDivision.lblpais}" />
+                <p:selectOneMenu id="pais" value="#{asignarDepartamentosaDivision.pais.idPais}"  
+                                 validatorMessage="Debe seleccionar Pais" effect="fold" filter="true" 
+                                 filterMatchMode="startsWith" 
+                                 binding="#{asignarDepartamentosaDivision.sompaises}">  
+                    <f:selectItem itemLabel="...Seleccione..." itemValue="" />  
+                    <f:selectItems value="#{asignarDepartamentosaDivision.paisescombo}"  />
+                    <p:ajax update="asignarDepartamentosaDivision:tbldepartamentos,asignarDepartamentosaDivision:dlgasignar" 
+                            listener="#{asignarDepartamentosaDivision.cargarDepartamentosxPais()}" />                                                                  
+
+                </p:selectOneMenu>   
+            </h:panelGrid>
+
+            <p:dataTable id="tbldepartamentos" value="#{asignarDepartamentosaDivision.modeloDatosDepartamento}" var="d"
+                         emptyMessage="Todos los departamentos asignados." paginator="true" 
+                         rows="15" paginatorPosition="bottom" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         selection="#{asignarDepartamentosaDivision.departamentosSeleccionados}" binding="#{asignarDepartamentosaDivision.tblDepartamentos}">
+                <f:facet name="header">  
+                    Seleccione  
+                </f:facet>  
+
+                <p:column selectionMode="multiple" style="width:2%" /> 
+
+                <f:facet name="header">  
+                    Lista de Departamentos Disponibles para asignar a la división seleccionada.
+                </f:facet> 
+
+                <p:column headerText="Codigo Departamento " style="display: none"  >
+                    <f:facet name="header">  
+                        Codigo Departamento 
+                    </f:facet>  
+                    <h:outputText value="#{d.idDepartamento}" />  
+                </p:column>
+
+                <p:column headerText="Nombre Departamento"  >
+                    <f:facet name="header">  
+                        Nombre Departamento
+                    </f:facet>  
+                    <h:outputText value="#{d.nombreDepartamento}" />  
+                </p:column>
+
+                <p:column headerText="Pais del departamento"  >
+                    <f:facet name="header">  
+                        Pais del departamento
+                    </f:facet>  
+                    <h:outputText value="#{d.pais.nombrePais}" />  
+                </p:column>
+                <f:facet name="footer">  
+                    En total hay #{asignarDepartamentosaDivision.totalDepartamentos()} departamentos.  
+                </f:facet>
+
+            </p:dataTable>
+            
+            <h:panelGrid  id="espacio2" columns="2" cellpadding="1" style="margin:0 auto"  >
+                                                                            
+                    <p:commandButton id="cancelasig" value="Cancelar" title="Cancelar" 
+                                     actionListener="#{asignarDepartamentosaDivision.cancelarAsignacion()}"                                                 
+                                     image="icon-cancel"
+                                     update=":asignarDepartamentosaDivision:tbldepartamentos,asignarDepartamentosaDivision:dlgasignar,:frmdivision:datatable:tblexpandible"/>  
+                    <p:commandButton id="guardarasig" value="Guardar Asignación" title="Guardar Asignación" 
+                                     actionListener="#{asignarDepartamentosaDivision.guardarAsignacion()}"                                                 
+                                     image="icon-add"
+                                     update=":asignarDepartamentosaDivision:tbldepartamentos,:frmdivision:datatable:tblexpandible"
+                                     binding="#{asignarDepartamentosaDivision.btnguardarAsig}"/>                               
+
+
+
+            </h:panelGrid>
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

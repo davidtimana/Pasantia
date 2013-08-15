@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">>
+
+    <ui:define name="titulo">
+        Gestion De Batallones - SICOVI prueba
+    </ui:define>
+
+    <ui:define name="abajo">
+        <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />    
+    </ui:define>
+
+    <ui:define name="izquierda">
+        izquierda
+    </ui:define>
+
+    <ui:define name="derecha">
+        derecha
+    </ui:define>
+
+    <ui:define name="cuerpo">
+        <h:form>                    
+            <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
+                <h:panelGrid columns="2" cellpadding="6">  
+                    <p:commandButton value="Nuevo Batallon" title="Crear un nuevo batallon" image="icon-add" update=":frmagregarbatallon:dlgNuevo"
+                                     actionListener="#{agregarBatallonesBean.cargarGuardadoBatallon()}" 
+                                     />                                                       
+                                                                         
+                </h:panelGrid>  
+            </p:fieldset>  
+        </h:form>
+        
+        <h:form id="frmagregarbatallon">            
+            <ui:include src="frmagregarbatallon.xhtml" />        
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>

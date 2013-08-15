@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.CoordenadasCiudad" table="CoordenadasCiudad" catalog="CasinoPasantia">
+        <id name="idCoordenadasCiudad" type="int">
+            <column name="idCoordenadasCiudad" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombreCiudad" type="string">
+            <column name="nombre_ciudad" length="45" />
+        </property>
+        <property name="latitud" type="java.lang.Double">
+            <column name="latitud" precision="22" scale="0" />
+        </property>
+        <property name="longitud" type="java.lang.Double">
+            <column name="longitud" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,96 +1,95 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="com.pasantia.entidades.Persona" table="Persona" catalog="CasinoPasantia">
-        <id name="idTblpersona" type="java.lang.Integer">
-            <column name="idTBLPERSONA" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="catalogoVenta" class="com.pasantia.entidades.CatalogoVenta" fetch="select">
-            <column name="SECCATALOGO_VENTA" />
-        </many-to-one>
-        <many-to-one name="cargo" class="com.pasantia.entidades.Cargo" fetch="select">
-            <column name="SECCARGO" />
-        </many-to-one>
-        <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select">
-            <column name="SECCIUDAD" not-null="true" />
-        </many-to-one>
-        <many-to-one name="tipoIdentificacion" class="com.pasantia.entidades.TipoIdentificacion" fetch="select">
-            <column name="SECTIPO_IDENTIFICACION" not-null="true" />
-        </many-to-one>
-        <many-to-one name="sexo" class="com.pasantia.entidades.Sexo" fetch="select">
-            <column name="SECSEXO" not-null="true" />
-        </many-to-one>
-        <many-to-one name="tipoPersona" class="com.pasantia.entidades.TipoPersona" fetch="select">
-            <column name="SECTIPO_PERSONA" not-null="true" />
-        </many-to-one>
-        <property name="pnombre" type="string">
-            <column name="PNOMBRE" length="45" not-null="true" />
-        </property>
-        <property name="snombre" type="string">
-            <column name="SNOMBRE" length="45" />
-        </property>
-        <property name="papellido" type="string">
-            <column name="PAPELLIDO" length="45" not-null="true" />
-        </property>
-        <property name="sapellido" type="string">
-            <column name="SAPELLIDO" length="45" />
-        </property>
-        <property name="cedula" type="string">
-            <column name="CEDULA" length="45" not-null="true" />
-        </property>
-        <property name="fechaNacimiento" type="date">
-            <column name="FECHA_NACIMIENTO" length="10" not-null="true" />
-        </property>
-        <property name="email" type="string">
-            <column name="EMAIL" length="45" />
-        </property>
-        <property name="telefono" type="string">
-            <column name="TELEFONO" length="45" />
-        </property>
-        <property name="movil" type="string">
-            <column name="MOVIL" length="45" />
-        </property>
-        <property name="foto" type="string">
-            <column name="FOTO" />
-        </property>
-        <property name="direccion" type="string">
-            <column name="DIRECCION" length="45" not-null="true" />
-        </property>
-        <property name="barrio" type="string">
-            <column name="BARRIO" length="45" not-null="true" />
-        </property>
-        <set name="batallons" inverse="true">
-            <key>
-                <column name="seccoronel" />
-            </key>
-            <one-to-many class="com.pasantia.entidades.Batallon" />
-        </set>
-        <set name="usuarios" inverse="true">
-            <key>
-                <column name="secpersona" not-null="true" />
-            </key>
-            <one-to-many class="com.pasantia.entidades.Usuario" />
-        </set>
-        <set name="proveedors" inverse="true">
-            <key>
-                <column name="fk_persona" not-null="true" />
-            </key>
-            <one-to-many class="com.pasantia.entidades.Proveedor" />
-        </set>
-        <set name="ventas" inverse="true">
-            <key>
-                <column name="fk_id_persona" not-null="true" />
-            </key>
-            <one-to-many class="com.pasantia.entidades.Venta" />
-        </set>
-        <set name="casinos" inverse="true">
-            <key>
-                <column name="fk_id_persona" />
-            </key>
-            <one-to-many class="com.pasantia.entidades.Casino" />
-        </set>
-    </class>
+  <class catalog="CasinoPasantia" name="com.pasantia.entidades.Persona" table="Persona">
+    <id name="idTblpersona" type="java.lang.Integer">
+      <column name="idTBLPERSONA"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.pasantia.entidades.CatalogoVenta" fetch="select" name="catalogoVenta">
+      <column name="SECCATALOGO_VENTA"/>
+    </many-to-one>
+    <many-to-one class="com.pasantia.entidades.Cargo" fetch="select" name="cargo">
+      <column name="SECCARGO"/>
+    </many-to-one>
+    <many-to-one class="com.pasantia.entidades.Ciudad" fetch="select" name="ciudad">
+      <column name="SECCIUDAD" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.pasantia.entidades.TipoIdentificacion" fetch="select" name="tipoIdentificacion">
+      <column name="SECTIPO_IDENTIFICACION" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.pasantia.entidades.Sexo" fetch="select" name="sexo">
+      <column name="SECSEXO" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.pasantia.entidades.TipoPersona" fetch="select" name="tipoPersona">
+      <column name="SECTIPO_PERSONA" not-null="true"/>
+    </many-to-one>
+    <property name="pnombre" type="string">
+      <column length="45" name="PNOMBRE" not-null="true"/>
+    </property>
+    <property name="snombre" type="string">
+      <column length="45" name="SNOMBRE"/>
+    </property>
+    <property name="papellido" type="string">
+      <column length="45" name="PAPELLIDO" not-null="true"/>
+    </property>
+    <property name="sapellido" type="string">
+      <column length="45" name="SAPELLIDO"/>
+    </property>
+    <property name="cedula" type="string">
+      <column length="45" name="CEDULA" not-null="true"/>
+    </property>
+    <property name="fechaNacimiento" type="date">
+      <column length="10" name="FECHA_NACIMIENTO" not-null="true"/>
+    </property>
+    <property name="email" type="string">
+      <column length="45" name="EMAIL"/>
+    </property>
+    <property name="telefono" type="string">
+      <column length="45" name="TELEFONO"/>
+    </property>
+    <property name="movil" type="string">
+      <column length="45" name="MOVIL"/>
+    </property>
+    <property name="foto" type="string">
+      <column name="FOTO"/>
+    </property>
+    <property name="direccion" type="string">
+      <column length="45" name="DIRECCION" not-null="true"/>
+    </property>
+    <property name="barrio" type="string">
+      <column length="45" name="BARRIO" not-null="true"/>
+    </property>
+    <set inverse="true" name="batallons">
+      <key>
+        <column name="seccoronel"/>
+      </key>
+      <one-to-many class="com.pasantia.entidades.Batallon"/>
+    </set>
+    <set inverse="true" name="usuarios">
+      <key>
+        <column name="secpersona" not-null="true"/>
+      </key>
+      <one-to-many class="com.pasantia.entidades.Usuario"/>
+    </set>
+    <set inverse="true" name="proveedors">
+      <key>
+        <column name="fk_persona" not-null="true"/>
+      </key>
+      <one-to-many class="com.pasantia.entidades.Proveedor"/>
+    </set>
+    <set inverse="true" name="ventas">
+      <key>
+        <column name="fk_id_persona" not-null="true"/>
+      </key>
+      <one-to-many class="com.pasantia.entidades.Venta"/>
+    </set>
+    <set inverse="true" name="casinos">
+      <key>
+        <column name="fk_id_persona"/>
+      </key>
+      <one-to-many class="com.pasantia.entidades.Casino"/>
+    </set>
+  </class>
 </hibernate-mapping>

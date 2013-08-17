@@ -1,21 +1,20 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/08/2013 10:50:14 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="com.pasantia.entidades.Inventario" table="Inventario" catalog="CasinoPasantia">
-        <id name="idInventario" type="java.lang.Integer">
-            <column name="idInventario" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="detalleVenta" class="com.pasantia.entidades.DetalleVenta" fetch="select">
-            <column name="fk_id_venta_detalle" not-null="true" />
-        </many-to-one>
-        <many-to-one name="detalleCompra" class="com.pasantia.entidades.DetalleCompra" fetch="select">
-            <column name="fk_id_compra_detalle" not-null="true" />
-        </many-to-one>
-        <property name="cantidad" type="int">
-            <column name="cantidad" not-null="true" />
-        </property>
-    </class>
+  <class catalog="CasinoPasantia" name="com.pasantia.entidades.Inventario" table="Inventario">
+    <id name="idInventario" type="java.lang.Integer">
+      <column name="idInventario"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.pasantia.entidades.DetalleVenta" fetch="select" name="detalleVenta">
+      <column name="fk_id_venta_detalle" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.pasantia.entidades.DetalleCompra" fetch="select" name="detalleCompra">
+      <column name="fk_id_compra_detalle" not-null="true"/>
+    </many-to-one>
+    <property name="cantidad" type="int">
+      <column name="cantidad" not-null="true"/>
+    </property>
+  </class>
 </hibernate-mapping>

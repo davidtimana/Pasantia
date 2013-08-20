@@ -31,14 +31,22 @@
                 </h:panelGrid>  
             </p:fieldset>  
         </h:form>
-        <p:dataTable id="datatable" var="batallones"
+             
+
+
+
+        <h:form id="frmbatallones">
+            
+            <p:dataTable id="datatable" var="batallones"
                      value="#{editarBatallonesBean.batallones}"
                      emptyMessage="No hay Batallones disponibles"
                      paginator="true" rows="10" paginatorPosition="bottom"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                      {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      resizableColumns="true" sortMode="multiple"
-                     filteredValue="#{editarBatallonesBean.batallonesEncontrados}">        
+                     filteredValue="#{editarBatallonesBean.batallonesEncontrados}"
+                     draggableColumns="true"
+                     >        
             <p:ajax event="filter" listener="#{editarBatallonesBean.prueba()}"/>
             <f:facet name="header">  
                 Lista de Batallones 
@@ -52,7 +60,7 @@
                      <p:column colspan="2" headerText="Entes De Control" />
                  </p:row>
             <p:row>                  
-                <p:column  headerText="Nombre" filterBy="#{batallones.nombreBatallon}"/>  
+                <p:column  headerText="Nombre" filterBy="#{batallones.nombreBatallon}" style="width: 100%"/>  
                 <p:column  headerText="Dirección" sortBy="#{batallones.direccion}"/>  
                 <p:column  headerText="Barrio"  sortBy="#{batallones.barrio}"/>  
                 <p:column  headerText="Telefono 1"  sortBy="#{batallones.telefono1}"/>  
@@ -65,7 +73,7 @@
             </p:row>            
         </p:columnGroup>
 
-            <p:column>                   
+            <p:column style="width: 100%">                   
                 <h:outputText value="#{batallones.nombreBatallon}" />  
             </p:column>
 
@@ -110,11 +118,7 @@
             <f:facet name="footer">  
                 En total hay #{editarBatallonesBean.totalBatallones()}  batallones.  
             </f:facet>
-        </p:dataTable>      
-
-
-
-        <h:form id="frmbatallones">
+        </p:dataTable> 
 
 
         </h:form>

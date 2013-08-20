@@ -7,7 +7,7 @@
       <column name="idDepartamento"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="com.pasantia.entidades.Pais" fetch="select" name="pais">
+    <many-to-one class="com.pasantia.entidades.Pais" fetch="select" name="pais" lazy="false">
       <column name="secpais" not-null="true"/>
     </many-to-one>
     <property name="nombreDepartamento" type="string">

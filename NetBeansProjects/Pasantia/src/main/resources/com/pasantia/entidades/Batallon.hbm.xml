@@ -7,13 +7,13 @@
       <column name="idBatallon"/>
       <generator class="identity"/>
     </id>
-    <many-to-one class="com.pasantia.entidades.Ciudad" fetch="select" name="ciudad">
+    <many-to-one class="com.pasantia.entidades.Ciudad" fetch="select" name="ciudad" lazy="false" >
       <column name="secciudad" not-null="true"/>
     </many-to-one>
-    <many-to-one class="com.pasantia.entidades.Divisiones" fetch="select" name="divisiones">
+    <many-to-one class="com.pasantia.entidades.Divisiones" fetch="select" name="divisiones" lazy="false">
       <column name="secdivision" not-null="true"/>
     </many-to-one>
-    <many-to-one class="com.pasantia.entidades.Persona" fetch="select" name="persona">
+    <many-to-one class="com.pasantia.entidades.Persona" fetch="select" name="persona" lazy="false" >
       <column name="seccoronel"/>
     </many-to-one>
     <property name="nombreBatallon" type="string">

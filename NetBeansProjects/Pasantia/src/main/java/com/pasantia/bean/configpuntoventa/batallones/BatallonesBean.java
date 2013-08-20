@@ -22,9 +22,11 @@ public class BatallonesBean implements Serializable{
 
     private List<Batallon> batallones;
     private BatallonDAO batallonDAO;
+    private Boolean panel;
     
     public BatallonesBean() {
         batallonDAO = new BatallonDAOImpl();
+        panel=false;
         cargarBatallones();
     }
     
@@ -43,6 +45,16 @@ public class BatallonesBean implements Serializable{
     public void setBatallones(List<Batallon> batallones) {
         this.batallones = batallones;
     }
+
+    public Boolean getPanel() {
+        return panel;
+    }
+
+    public void setPanel(Boolean panel) {
+        this.panel = panel;
+    }
+    
+    
     
     
     

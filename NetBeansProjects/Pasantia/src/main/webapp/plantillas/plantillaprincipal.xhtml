@@ -37,13 +37,18 @@
 
     <h:body>
 
-        <!--<p:log />-->
-        <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />  
-
+        <!-- Dialog para la espera de las peticiones ajax -->
+        <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />          
         <p:dialog modal="true" widgetVar="statusDialog" header="...Cargando..."   
                   draggable="false" closable="false" resizable="false">  
             <p:graphicImage value="../../resources/img/cargando.gif" />  
         </p:dialog> 
+        
+        <!-- Dialog para comfirmar la eliminacion de los batallones -->
+        <h:form id="dialog">        
+            <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" />
+        </h:form>
+        
 
         <p:layout fullPage="true" >
 
@@ -149,7 +154,7 @@
 
                     </ui:insert>
                 </p:panel> 
-
+                
             </p:layoutUnit>
 
             <!--<p:layoutUnit id="left" position="west" 
@@ -189,11 +194,11 @@
                         <h:outputText value="Menu 3 Content" />
                     </p:tab>
                 </p:accordionPanel>
-
+                
                 <ui:insert name="derecha">
 
                 </ui:insert>
-
+                
             </p:layoutUnit>
 
             <p:layoutUnit id="center" position="center">
@@ -204,10 +209,7 @@
 
         </p:layout>
 
-        <p:dialog header="Basic Dialog" widgetVar="dlg1" modal="true">
-            <h:outputText value="Resistance to PrimeFaces is futile!" />
-        </p:dialog>
-
+        
     </h:body>
 
 

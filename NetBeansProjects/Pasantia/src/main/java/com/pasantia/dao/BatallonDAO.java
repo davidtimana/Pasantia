@@ -6,11 +6,13 @@ package com.pasantia.dao;
 
 import com.pasantia.entidades.Batallon;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author root
  */
+@Local
 public interface BatallonDAO {
     
         /**
@@ -27,5 +29,21 @@ public interface BatallonDAO {
      * @return verdadero o falso
      */
     public Boolean insertarBatallon(Batallon batallon);
+    
+    /**
+     *Metodo que se encarga de
+     * actualizar los batallones
+     * @param batallon 
+     * @return verdadero o falso
+     */
+    public Boolean actualizarBatallon(Batallon batallon);
+    
+    /**
+     *Metodo que se encarga de
+     * eliminar los batallones
+     * @param batallon 
+     * @return verdadero o falso
+     */
+    public Boolean eliminarBatallon(Batallon batallon);
     
 }

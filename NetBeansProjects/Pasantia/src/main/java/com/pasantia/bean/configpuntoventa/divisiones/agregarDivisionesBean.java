@@ -11,6 +11,7 @@ import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import org.primefaces.component.dialog.Dialog;
 
 
@@ -48,6 +49,7 @@ public class agregarDivisionesBean implements Serializable{
             divisiones.setNombreDivision(descripcion);               
                 if(divisionesDAO.insertarDivisiones(divisiones)){
                     Utilidad.mensajeInfo("Guardado Exitoso.", "Division guardada Exitosamente.");          
+                   
                 }                
                 else{
                     Utilidad.mensajeFatal("Guardado Incorrecto.", "...ERROR... al guardar.");          

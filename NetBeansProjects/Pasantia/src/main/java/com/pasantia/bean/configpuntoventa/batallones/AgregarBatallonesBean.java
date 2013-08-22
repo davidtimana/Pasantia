@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.dialog.Dialog;
 import org.primefaces.context.RequestContext;
@@ -61,6 +62,9 @@ public class AgregarBatallonesBean implements Serializable{
     private Ciudad ciudad;
     private BatallonDAO batallonDAO;
     
+    @Inject
+    BatallonesBean batallonesBean;
+    
     
 
     public void cargarGuardadoBatallon() {
@@ -82,6 +86,8 @@ public class AgregarBatallonesBean implements Serializable{
             System.err.println("...ERROR...EN LA VALIDACIÓN DE DATOS");
         }   
         Utilidad.abrirDialog("dlgNuevo");
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+        batallonesBean.cargarBatallones();
     }
     
     public void limpiarCampos(){
@@ -201,6 +207,8 @@ public class AgregarBatallonesBean implements Serializable{
     public void cerrarGuardado(){
         dlgnuevobatallon.setVisible(false);
         limpiarCampos();
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+        batallonesBean.cargarBatallones();
     }
     
     public void cargarPaises(){

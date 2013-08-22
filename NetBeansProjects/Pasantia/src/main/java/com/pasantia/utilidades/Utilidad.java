@@ -4,7 +4,9 @@
  */
 package com.pasantia.utilidades;
 
+import java.util.Iterator;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
@@ -40,7 +42,30 @@ public class Utilidad {
         String comando=idDialog+".show()";
         RequestContext.getCurrentInstance().execute(comando);        
     }
+    
+    public static UIComponent buscarHtmlComponete(String idComponete) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (null != context) {
+            return buscarHtmlComponete(context.getViewRoot(), idComponete);
+        }
+        return null;
+    } 
 
+    public static UIComponent buscarHtmlComponete(UIComponent parent,
+            String idComponete) {
+        if (idComponete.equals(parent.getId())) {
+            return parent;
+        }
+        Iterator<UIComponent> kids = parent.getFacetsAndChildren();
+        while (kids.hasNext()) {
+            UIComponent kid = kids.next();
+            UIComponent found = buscarHtmlComponete(kid, idComponete);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
+    }
     
     
     

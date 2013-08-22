@@ -9,12 +9,14 @@ import com.pasantia.dao.UbicacionDAO;
 import com.pasantia.entidades.Rol;
 import com.pasantia.entidades.Ubicacion;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author david
  */
+@Stateless
 public class UbicacionDAOImpl implements UbicacionDAO{
 
     @Override

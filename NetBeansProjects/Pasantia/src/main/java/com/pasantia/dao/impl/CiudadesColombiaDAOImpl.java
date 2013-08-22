@@ -8,6 +8,7 @@ import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.CiudadesColombiaDAO;
 import com.pasantia.entidades.CiudadesColombia;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -15,6 +16,7 @@ import org.hibernate.Session;
  *
  * @author root
  */
+@Stateless
 public class CiudadesColombiaDAOImpl implements CiudadesColombiaDAO{
 
     @Override

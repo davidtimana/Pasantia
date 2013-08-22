@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        
+        
+        <p:confirmDialog message="Esta seguro que desea eliminar el batallon: #{editarBatallonesBean.batallon.nombreBatallon}?" 
+                             header="Eliminar Batallones" severity="alert" 
+                             widgetVar="dlg1" id="dlg1"
+                             visible="#{editarBatallonesBean.abrirComfirmar}" >	
+                <p:commandButton value="Eliminar" icon="icon-delete"  actionListener="#{editarBatallonesBean.eliminarBatallon()}" update="dlg1"/>	
+                <p:commandButton value="Cancelar" icon="icon-cancel" onclick="dlg1.hide();" immediate="true" actionListener="#{editarBatallonesBean.cancelarEliminado()}" type="button" />
+            </p:confirmDialog>
+        
+        
+    </ui:composition>
+</html>

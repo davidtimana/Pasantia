@@ -6,11 +6,13 @@ package com.pasantia.dao;
 
 import com.pasantia.entidades.Pais;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author root
  */
+@Local
 public interface PaisDAO {
     
     /**

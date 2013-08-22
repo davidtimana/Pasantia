@@ -13,6 +13,7 @@ import com.pasantia.dao.impl.DivisionesUbicacionDAOImpl;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.DivisionesUbicacion;
+import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.primefaces.component.dialog.Dialog;
 import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.component.selectonelistbox.SelectOneListbox;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -126,6 +128,8 @@ public class ControlMapaBean implements Serializable{
        }else{
            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "...ERROR...", "No se pudo obtener la ubicación."));            
        }
+       
+       RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("mapa1").getClientId(FacesContext.getCurrentInstance()));
    }
    
    public void mensajeAyuda(){

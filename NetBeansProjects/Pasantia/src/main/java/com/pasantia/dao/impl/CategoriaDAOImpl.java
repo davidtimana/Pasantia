@@ -8,12 +8,14 @@ import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.CategoriaDAO;
 import com.pasantia.entidades.Categoria;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author root
  */
+@Stateless
 public class CategoriaDAOImpl implements CategoriaDAO{
 
     @Override

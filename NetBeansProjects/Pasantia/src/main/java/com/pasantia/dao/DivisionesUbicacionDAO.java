@@ -8,11 +8,13 @@ import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.DivisionesUbicacion;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author david
  */
+@Local
 public interface DivisionesUbicacionDAO {
 
     /**

@@ -6,11 +6,13 @@ package com.pasantia.dao;
 
 import com.pasantia.entidades.Ciudad;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author root
  */
+@Local
 public interface CiudadDAO {
     
     public List<Ciudad> cargarCoordenadas();

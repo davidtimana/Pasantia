@@ -50,17 +50,17 @@
                 <p:column style="width:2%">  
                     <p:rowToggler />  
                 </p:column>  
-                <p:column headerText="ID" style="4%; text-align: center" sortBy="#{divisiones.idDivisiones}" filterBy="#{divisiones.idDivisiones}"  
+                <p:column headerText="ID" style="width: 4%; text-align: center" sortBy="#{divisiones.idDivisiones}" filterBy="#{divisiones.idDivisiones}"  
                 >
                     <f:facet name="header">  
                         Codigo Division 
                     </f:facet>  
                     <h:outputText value="#{divisiones.idDivisiones}" />  
                 </p:column>
-                <p:column headerText="Descripcion" style="14%; text-align: center" sortBy="#{divisiones.nombreDivision}" filterBy="#{divisiones.nombreDivision}">  
+                <p:column headerText="Descripcion" style="width: 14%; text-align: center" sortBy="#{divisiones.nombreDivision}" filterBy="#{divisiones.nombreDivision}">  
                     <h:outputText value="#{divisiones.nombreDivision}"  />  
                 </p:column>
-                <p:column headerText="Ubicación " style="4%; text-align: center" >  
+                <p:column headerText="Ubicación " style="width: 4%; text-align: center" >  
                     <p:commandButton  title="&nbsp;Visualizar Ubicaciones" binding="#{controlMapaBean.btngeolocalizacion}"  
                                       actionListener="#{controlMapaBean.prepararCargaGeolocalizacion(divisiones.idDivisiones)}"
                                       oncomplete="dlgMapa.show();" update=":frmubicacionMapa,:frmubicacionMapa:mapa1" 
@@ -69,7 +69,7 @@
 
                 </p:column>
 
-                <p:column headerText="Acciones" style="6%; text-align: center">
+                <p:column headerText="Acciones" style="width: 6%; text-align: center">
                     <p:commandButton update=":frmeditardivisiones:dlgEditardivision" 
                                      actionListener="#{editarDivisionesBean.cargarEdicion(divisiones.idDivisiones)}"   
                                      title="&nbsp;Editar" image="icon-edit"  />          
@@ -98,10 +98,10 @@
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                                                     {PreviousPageLink} {PageLinks} {NextPageLink} 
                                                     {LastPageLink} {RowsPerPageDropdown}">
-                        <p:column headerText="Id " style="4%; text-align: center" >  
+                        <p:column headerText="Id " style="width: 4%; text-align: center" >  
                             <h:outputText  value="#{ubic.idDepartamento}" />  
                         </p:column>
-                        <p:column headerText="Nombre Departamento" style="4%; text-align: center" >  
+                        <p:column headerText="Nombre Departamento" style="width: 4%; text-align: center" >  
                             <h:outputText  value="#{ubic.nombreDepartamento}" /> 
                         </p:column>
                         <f:facet name="footer">  

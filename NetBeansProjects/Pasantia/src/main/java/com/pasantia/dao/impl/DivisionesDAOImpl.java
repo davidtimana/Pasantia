@@ -10,6 +10,7 @@ import com.pasantia.dao.PaisDAO;
 import com.pasantia.entidades.Divisiones;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -17,6 +18,7 @@ import org.hibernate.Session;
  *
  * @author root
  */
+@Stateless
 public class DivisionesDAOImpl implements DivisionesDAO{
 
     @Override

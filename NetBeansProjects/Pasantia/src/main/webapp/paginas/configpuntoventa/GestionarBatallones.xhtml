@@ -37,7 +37,7 @@
 
         <h:form id="frmbatallones">
 
-            <p:dataTable id="datatable" var="batallones"
+            <p:dataTable id="tblbatallones" var="batallones"
                          value="#{editarBatallonesBean.batallones}"
                          emptyMessage="No hay Batallones disponibles"
                          paginator="true" rows="10" paginatorPosition="bottom"
@@ -50,8 +50,7 @@
                 <f:facet name="header">  
                     Lista de Batallones 
                 </f:facet>
-                <p:ajax event="rowEdit" listener="#{editarBatallonesBean.editarBatallon(batallones)}" immediate="true" />
-                
+                <p:ajax event="rowEdit" listener="#{editarBatallonesBean.editarBatallon(batallones)}" update="tblbatallones" />
                 
                 <p:columnGroup type="header">
                     <p:row>
@@ -77,6 +76,8 @@
                     </p:row>            
                 </p:columnGroup>
                 
+               
+                
                 <p:column> 
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -87,7 +88,7 @@
                         </f:facet>  
                     </p:cellEditor> 
                 </p:column>
-
+                
                 <p:column>                      
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -98,7 +99,7 @@
                         </f:facet>  
                     </p:cellEditor> 
                 </p:column>
-
+                
                 <p:column>                
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -109,7 +110,7 @@
                         </f:facet>  
                     </p:cellEditor> 
                 </p:column>
-
+                
                 <p:column>                                       
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -120,7 +121,7 @@
                         </f:facet>  
                     </p:cellEditor> 
                 </p:column>
-
+                
                 <p:column>                 
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -131,7 +132,7 @@
                         </f:facet>  
                     </p:cellEditor> 
                 </p:column>
-
+                
                 <p:column>                 
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -142,7 +143,7 @@
                         </f:facet>  
                     </p:cellEditor>
                 </p:column>
-
+                
                 <p:column>                   
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -153,7 +154,7 @@
                         </f:facet>  
                     </p:cellEditor>
                 </p:column>
-
+                
                 <p:column>                  
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -164,7 +165,7 @@
                         </f:facet>  
                     </p:cellEditor>
                 </p:column>
-
+                
                 <p:column>                  
                     <p:cellEditor>  
                         <f:facet name="output">  
@@ -175,26 +176,30 @@
                         </f:facet>  
                     </p:cellEditor>
                 </p:column>
-
-                <p:column>                   
-                    
+                
+                <p:column>                  
                     <p:cellEditor>  
                         <f:facet name="output">  
-                            <h:outputText value="#{batallones.persona.pnombre} #{batallones.persona.papellido}" />  
+                            <h:outputText value="#{batallones.divisiones.nombreDivision}" />  
                         </f:facet>  
                         <f:facet name="input">  
-                            <p:inputText value="#{batallones.persona.pnombre} #{batallones.persona.papellido}" style="width:100%"/>  
+                            <p:inputText value="#{batallones.divisiones.nombreDivision}" style="width:100%"/>  
                         </f:facet>  
                     </p:cellEditor>
-                </p:column>
+                </p:column>         
 
                 <p:column style="width:4%">  
                     <p:rowEditor />  
                 </p:column> 
                 
-                <p:column style="width:4%">  
-                    Eliminar
+                <p:column>  
+                    <p:commandButton actionListener="#{editarBatallonesBean.cargarEliminarBatallon(batallones)}"   
+                                     title="&nbsp;Eliminar" image="icon-delete" update=":dialog:dlg1" />
+                         
+                    
                 </p:column>
+                
+           
 
 
                 <f:facet name="footer">  

@@ -7,11 +7,13 @@ package com.pasantia.dao.impl;
 import com.pasantia.dao.PersonaDAO;
 import com.pasantia.entidades.Persona;
 import java.util.List;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author david
  */
+@Stateless
 public class PersonaDAOImpl  implements PersonaDAO{
 
     @Override

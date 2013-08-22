@@ -8,12 +8,14 @@ import com.pasantia.dao.RolDAO;
 import com.pasantia.entidades.Rol;
 import com.pasantia.conexion.ConexionHibernate;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author david
  */
+@Stateless
 public class RolDAOImpl implements RolDAO{
 
     

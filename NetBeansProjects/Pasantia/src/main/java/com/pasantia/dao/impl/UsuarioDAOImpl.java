@@ -8,12 +8,14 @@ import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.UsuarioDAO;
 import com.pasantia.entidades.Usuario;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author david
  */
+@Stateless
 public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override

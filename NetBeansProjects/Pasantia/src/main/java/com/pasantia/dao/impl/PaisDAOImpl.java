@@ -8,12 +8,14 @@ import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.PaisDAO;
 import com.pasantia.entidades.Pais;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author root
  */
+@Stateless
 public class PaisDAOImpl implements PaisDAO{
 
     @Override

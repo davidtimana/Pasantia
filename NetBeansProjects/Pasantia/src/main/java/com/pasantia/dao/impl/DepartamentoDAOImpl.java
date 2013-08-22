@@ -9,6 +9,7 @@ import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Pais;
 import java.util.List;
+import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import org.hibernate.Query;
@@ -18,6 +19,7 @@ import org.hibernate.Session;
  *
  * @author root
  */
+@Stateless
 public class DepartamentoDAOImpl implements DepartamentoDAO{
 
     private EntityManager entityManager;

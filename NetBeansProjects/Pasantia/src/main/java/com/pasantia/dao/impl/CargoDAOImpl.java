@@ -8,12 +8,14 @@ import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.CargoDAO;
 import com.pasantia.entidades.Cargo;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author root
  */
+@Stateless
 public class CargoDAOImpl implements CargoDAO{
 
     @Override

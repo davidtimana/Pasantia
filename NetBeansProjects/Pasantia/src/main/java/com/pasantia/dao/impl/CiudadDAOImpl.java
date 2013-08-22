@@ -9,6 +9,7 @@ import com.pasantia.dao.CiudadDAO;
 import com.pasantia.entidades.Ciudad;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -16,6 +17,7 @@ import org.hibernate.Session;
  *
  * @author root
  */
+@Stateless
 public class CiudadDAOImpl implements CiudadDAO{
 
     @Override

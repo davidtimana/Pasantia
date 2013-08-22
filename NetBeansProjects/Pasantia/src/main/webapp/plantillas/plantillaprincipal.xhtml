@@ -152,7 +152,7 @@
 
             </p:layoutUnit>
 
-            <p:layoutUnit id="left" position="west" 
+            <!--<p:layoutUnit id="left" position="west" 
                           size="270" resizable="true" 
                           collapsible="true" header="Opciones" 
                           minSize="200" style="display: none">
@@ -170,34 +170,25 @@
                     <p:tab title="Menu 3">
                         <h:outputText value="Menu 3 Content" />
                     </p:tab>
-                </p:accordionPanel>
+                </p:accordionPanel>-->
                 <ui:insert name="izquierda">
 
                 </ui:insert>
-            </p:layoutUnit>
+            
 
             <p:layoutUnit id="right" position="east" size="220" header="Gallery" resizable="true" closable="true" collapsible="true"
                           style="text-align:center">
 
-                <p:lightBox style="text-align:center;margin-top:20px;">
-                    <h:outputLink value="#{request.contextPath}/images/nature1.jpg" title="Nature 1" style="margin-bottom:5px;">
-                        <h:graphicImage value="/images/nature1_small.jpg"/>
-                    </h:outputLink>
+                <p:accordionPanel id="acordenIzquierda">
+                    
+                    <p:tab title="Usuario">
+                        <h:outputText value="Menu 2 Content" />
+                    </p:tab>
 
-                    <h:outputLink value="#{request.contextPath}/images/nature2.jpg" title="Nature 2" style="margin-bottom:2px;">
-                        <h:graphicImage value="/images/nature2_small.jpg"/>
-                    </h:outputLink>
-
-                    <h:outputLink value="#{request.contextPath}/images/nature3.jpg" title="Nature 3" style="margin-bottom:2px;">
-                        <h:graphicImage value="/images/nature3_small.jpg"/>
-                    </h:outputLink>
-
-                    <h:outputLink value="#{request.contextPath}/images/nature4.jpg" title="Nature 4" style="margin-bottom:2px;">
-                        <h:graphicImage value="/images/nature4_small.jpg"/>
-                    </h:outputLink>
-                </p:lightBox>
-
-                <p:commandButton id="basic" value="Show Dialog" onclick="dlg1.show();" type="button" style="margin-top:10px"/>
+                    <p:tab title="Menu 3">
+                        <h:outputText value="Menu 3 Content" />
+                    </p:tab>
+                </p:accordionPanel>
 
                 <ui:insert name="derecha">
 

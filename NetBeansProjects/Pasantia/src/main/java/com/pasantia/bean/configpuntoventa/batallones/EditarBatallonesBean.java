@@ -23,11 +23,9 @@ public class EditarBatallonesBean implements Serializable{
     private List<Batallon> batallones,batallonesEncontrados;
     private BatallonDAO batallonDAO;
     
-    public void prueba(){
-        System.out.println("probando***************");
-        for (Batallon batallon : batallonesEncontrados) {
-            System.out.println("batallones encontrados son-->"+batallon.getNombreBatallon());
-        }
+    public void editarBatallon(Batallon batallon){
+        System.out.println("probando-------------------"+batallon.getNombreBatallon());
+        //System.out.println("El batallon a editar es el siguiente---> "+batallon.getNombreBatallon());
     }
     
     public void cargarBatallones(){

@@ -9,7 +9,7 @@
     <ui:define name="titulo">
         Gestion De Batallones - SICOVI
     </ui:define>
-<!-- Prueba commit en sesion david-->
+    <!-- Prueba commit en sesion david-->
     <ui:define name="abajo">
         <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />    
     </ui:define>
@@ -24,101 +24,183 @@
 
     <ui:define name="cuerpo">
         <h:form>                    
-            <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
+            <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500" style="width: 100%">         
                 <h:panelGrid columns="2" cellpadding="6">  
                     <p:commandButton value="Nuevo Batallon" title="Crear un nuevo batallon" image="icon-add" update=":frmagregarbatallon:dlgNuevo"
                                      actionListener="#{agregarBatallonesBean.cargarGuardadoBatallon()}" />                                                       
                 </h:panelGrid>  
             </p:fieldset>  
         </h:form>
-             
+
 
 
 
         <h:form id="frmbatallones">
-            
+
             <p:dataTable id="datatable" var="batallones"
-                     value="#{editarBatallonesBean.batallones}"
-                     emptyMessage="No hay Batallones disponibles"
-                     paginator="true" rows="10" paginatorPosition="bottom"
-                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
-                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     resizableColumns="true" sortMode="multiple"
-                     filteredValue="#{editarBatallonesBean.batallonesEncontrados}"
-                     draggableColumns="true"
-                     >        
-            <p:ajax event="filter" listener="#{editarBatallonesBean.prueba()}"/>
-            <f:facet name="header">  
-                Lista de Batallones 
-            </f:facet>
-            
-             <p:columnGroup type="header">
-                 <p:row>
-                     <p:column colspan="1" headerText="Datos Batallón" />
-                     <p:column colspan="4" headerText="Datos De Contacto" />
-                     <p:column colspan="3" headerText="Ubicación" />
-                     <p:column colspan="2" headerText="Entes De Control" />
-                 </p:row>
-            <p:row>                  
-                <p:column  headerText="Nombre" filterBy="#{batallones.nombreBatallon}" style="width: 100%"/>  
-                <p:column  headerText="Dirección" sortBy="#{batallones.direccion}"/>  
-                <p:column  headerText="Barrio"  sortBy="#{batallones.barrio}"/>  
-                <p:column  headerText="Telefono 1"  sortBy="#{batallones.telefono1}"/>  
-                <p:column  headerText="Telefono 2" sortBy="#{batallones.telefono2}"/>  
-                <p:column  headerText="País" sortBy="#{batallones.ciudad.departamento.pais.nombrePais}"/>  
-                <p:column  headerText="Departamento" sortBy="#{batallones.ciudad.departamento.nombreDepartamento}"/>  
-                <p:column  headerText="Ciudad" sortBy="#{batallones.ciudad.nombreCiudad}"/>  
-                <p:column  headerText="División" sortBy="#{batallones.divisiones.nombreDivision}"/>  
-                <p:column  headerText="Coronel a Cargo" sortBy="#{batallones.persona.pnombre}"/>  
-            </p:row>            
-        </p:columnGroup>
+                         value="#{editarBatallonesBean.batallones}"
+                         emptyMessage="No hay Batallones disponibles"
+                         paginator="true" rows="10" paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         sortMode="multiple" editable="true"
+                         style="width: 100%">        
+                
+                
+                <f:facet name="header">  
+                    Lista de Batallones 
+                </f:facet>
+                <p:ajax event="rowEdit" listener="#{editarBatallonesBean.editarBatallon(batallones)}" immediate="true" />
+                
+                
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column colspan="1" headerText="Datos Batallón" />
+                        <p:column colspan="4" headerText="Datos De Contacto" />
+                        <p:column colspan="3" headerText="Ubicación" />
+                        <p:column colspan="2" headerText="Entes De Control" />
+                        <p:column colspan="2" headerText="Acciones" />
+                    </p:row>
+                    <p:row>                  
+                        <p:column  headerText="Nombre" sortBy="#{batallones.nombreBatallon}"/>  
+                        <p:column  headerText="Dirección" sortBy="#{batallones.direccion}"/>  
+                        <p:column  headerText="Barrio"  sortBy="#{batallones.barrio}"/>  
+                        <p:column  headerText="Telefono 1"  sortBy="#{batallones.telefono1}"/>  
+                        <p:column  headerText="Telefono 2" sortBy="#{batallones.telefono2}"/>  
+                        <p:column  headerText="País" sortBy="#{batallones.ciudad.departamento.pais.nombrePais}"/>  
+                        <p:column  headerText="Departamento" sortBy="#{batallones.ciudad.departamento.nombreDepartamento}"/>  
+                        <p:column  headerText="Ciudad" sortBy="#{batallones.ciudad.nombreCiudad}"/>  
+                        <p:column  headerText="División" sortBy="#{batallones.divisiones.nombreDivision}"/>  
+                        <p:column  headerText="Coronel a Cargo" sortBy="#{batallones.persona.pnombre}"/>
+                        <p:column  headerText="Editar"/>
+                        <p:column  headerText="Eliminar"/>  
+                    </p:row>            
+                </p:columnGroup>
+                
+                <p:column> 
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.nombreBatallon}" />
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.nombreBatallon}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor> 
+                </p:column>
 
-            <p:column style="width: 100%">                   
-                <h:outputText value="#{batallones.nombreBatallon}" />  
-            </p:column>
+                <p:column>                      
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.direccion}" /> 
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.direccion}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor> 
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.direccion}" />  
-            </p:column>
+                <p:column>                
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.barrio}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.barrio}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor> 
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.barrio}" />  
-            </p:column>
+                <p:column>                                       
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.barrio}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.barrio}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor> 
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.telefono1}" />  
-            </p:column>
+                <p:column>                 
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.telefono2}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.telefono2}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor> 
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.telefono2}" />  
-            </p:column>
+                <p:column>                 
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.ciudad.departamento.pais.nombrePais}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.ciudad.departamento.pais.nombrePais}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.ciudad.departamento.pais.nombrePais}" />  
-            </p:column>
+                <p:column>                   
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.ciudad.departamento.nombreDepartamento}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.ciudad.departamento.nombreDepartamento}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.ciudad.departamento.nombreDepartamento}" />  
-            </p:column>
+                <p:column>                  
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.ciudad.nombreCiudad}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.ciudad.nombreCiudad}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.ciudad.nombreCiudad}" />  
-            </p:column>
+                <p:column>                  
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.divisiones.nombreDivision}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.divisiones.nombreDivision}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.divisiones.nombreDivision}" />  
-            </p:column>
+                <p:column>                   
+                    
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <h:outputText value="#{batallones.persona.pnombre} #{batallones.persona.papellido}" />  
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <p:inputText value="#{batallones.persona.pnombre} #{batallones.persona.papellido}" style="width:100%"/>  
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
 
-            <p:column>                   
-                <h:outputText value="#{batallones.persona.pnombre} #{batallones.persona.papellido}" />  
-            </p:column>
+                <p:column style="width:4%">  
+                    <p:rowEditor />  
+                </p:column> 
+                
+                <p:column style="width:4%">  
+                    Eliminar
+                </p:column>
 
-            
-            
-            <f:facet name="footer">  
-                En total hay #{editarBatallonesBean.totalBatallones()}  batallones.  
-            </f:facet>
-        </p:dataTable> 
+
+                <f:facet name="footer">  
+                    En total hay #{editarBatallonesBean.totalBatallones()}  batallones.  
+                </f:facet>
+            </p:dataTable> 
 
 
         </h:form>

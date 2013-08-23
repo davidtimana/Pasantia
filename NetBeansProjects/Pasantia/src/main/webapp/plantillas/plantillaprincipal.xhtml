@@ -24,7 +24,7 @@
         <style type="text/css">
             .ui-layout-north {
                 z-index:20 !important;
-                overflow:visible !important;;
+                overflow:visible !important;
             }
 
             .ui-layout-north .ui-layout-unit-content {
@@ -47,6 +47,11 @@
         <!-- Dialog para comfirmar la eliminacion de los batallones -->
         <h:form id="dialog">        
             <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" />
+        </h:form>
+        
+        <!-- Dialog para buscar los batallones -->
+        <h:form id="frmbuscarBatallones">        
+            <ui:include src="../paginas/configpuntoventa/buscadorBatallones.xhtml" />
         </h:form>
         
 

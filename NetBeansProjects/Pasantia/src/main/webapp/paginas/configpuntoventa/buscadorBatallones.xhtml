@@ -11,8 +11,8 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
         <p:dialog header="Buscador de Batallones" widgetVar="dlgbuscarBatallon" resizable="false" 
-                  id="dlgbuscarBatallon" showEffect="explode" hideEffect="explode"  modal="false"  width="620" height="130" 
-                  minimizable="true" visible="#{buscarBatallonesBean.abrirBuscador}" closable="false">
+                  id="dlgbuscarBatallon" showEffect="explode" hideEffect="explode"  modal="false"  width="640" height="130" 
+                  minimizable="true" visible="#{buscarBatallonesBean.abrirBuscador}" closable="false" >
 
             <h:panelGrid id="espacio1" columns="7" cellpadding="1" style="margin:0 auto;"> 
                 <p:outputLabel value="Opciones a Buscar : * "/>
@@ -24,13 +24,16 @@ and open the template in the editor.
                     <p:ajax listener="#{buscarBatallonesBean.capturarOpcionSeleccionada()}" />
                 </p:selectOneMenu>
                 
-                <p:inputText id="txtnombrebuscar" style="#{buscarBatallonesBean.oculto}"/>
+                <p:inputText id="txtnombrebuscar" value="#{buscarBatallonesBean.textoBusqueda}" style="#{buscarBatallonesBean.oculto}">
+                    <p:ajax event="keyup" listener="#{buscarBatallonesBean.buscarBatallon()}"/>
+                </p:inputText>
                 
                 <p:selectOneMenu id="oppais" value="#{buscarBatallonesBean.paisSeleccionado}"  
                                  validatorMessage="Debe seleccionar Opciones" effect="fold" filter="true" 
                                  filterMatchMode="startsWith" style="#{buscarBatallonesBean.ocultarPais}" >  
                     <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                    <f:selectItems value="#{buscarBatallonesBean.paisesCombo}"  />                    
+                    <f:selectItems value="#{buscarBatallonesBean.paisesCombo}"  />
+                    <p:ajax listener="#{buscarBatallonesBean.buscarBatallon()}" event="change" />
                 </p:selectOneMenu>
                 
                 <p:selectOneMenu id="opdepartamento" value="#{buscarBatallonesBean.departamentoSeleccionado}"  
@@ -38,6 +41,7 @@ and open the template in the editor.
                                  filterMatchMode="startsWith" style="#{buscarBatallonesBean.ocultarDepartamento}" >  
                     <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                     <f:selectItems value="#{buscarBatallonesBean.departamentosCombo}"  />                    
+                    <p:ajax listener="#{buscarBatallonesBean.buscarBatallon()}" />
                 </p:selectOneMenu>
                 
                 <p:selectOneMenu id="opciudad" value="#{buscarBatallonesBean.ciudadSeleccionada}"  
@@ -45,6 +49,7 @@ and open the template in the editor.
                                  filterMatchMode="startsWith" style="#{buscarBatallonesBean.ocultarCiudad}" >  
                     <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                     <f:selectItems value="#{buscarBatallonesBean.ciudadesCombo}"  />                    
+                    <p:ajax listener="#{buscarBatallonesBean.buscarBatallon()}" />
                 </p:selectOneMenu>
                 
                 <p:selectOneMenu id="opdivisiones" value="#{buscarBatallonesBean.divisionSeleccionada}"  
@@ -52,15 +57,12 @@ and open the template in the editor.
                                  filterMatchMode="startsWith"  style="#{buscarBatallonesBean.ocultarDivisiones}">  
                     <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                     <f:selectItems value="#{buscarBatallonesBean.divisionesCombo}"  />                    
+                    <p:ajax listener="#{buscarBatallonesBean.buscarBatallon()}" />
                 </p:selectOneMenu>
                 
             </h:panelGrid>
             
-            <h:panelGrid id="espacio2" columns="2" cellpadding="1" style="margin:0 auto;"> 
-                <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
-                                 action="#{buscarBatallonesBean.buscarBatallon()}" 
-                                 icon="ui-icon-search" 
-                                 />           
+            <h:panelGrid id="espacio2" columns="1" cellpadding="1" style="margin:0 auto;">                            
                 <p:commandButton value="Cancelar" title="Cancelar" icon="icon-cancel"
                                  actionListener="#{buscarBatallonesBean.cancelarBuscador()}"/>                               
             </h:panelGrid>

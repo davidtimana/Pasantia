@@ -29,6 +29,65 @@ public class EditarBatallonesBean implements Serializable{
     private Boolean abrirComfirmar;
     
     
+    public void buscarBatallonesxNombre(String nombre){
+        System.out.println("empezando a buscar por buscarBatallonesxNombre en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxNombre(nombre);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxDireccion(String direccion){
+        System.out.println("empezando a buscar por buscarBatallonesxDireccion en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxDireccion(direccion);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxBarrio(String barrio){
+        System.out.println("empezando a buscar por buscarBatallonesxBarrio en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxBarrio(barrio);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxTelefono1(String telefono1){
+        System.out.println("empezando a buscar por buscarBatallonesxTelefono1 en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxTelefono1(telefono1);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxTelefono2(String telefono2){
+        System.out.println("empezando a buscar por buscarBatallonesxTelefono2 en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxTelefono2(telefono2);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxPais(Integer pais){
+        System.out.println("empezando a buscar por buscarBatallonesxPais en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxPais(pais);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxDepartamento(Integer departamento){
+        System.out.println("empezando a buscar por buscarBatallonesxDepartamento en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxDepartamento(departamento);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+    public void buscarBatallonesxCiudad(Integer ciudad){
+        System.out.println("empezando a buscar por buscarBatallonesxCiudad en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxCiudad(ciudad);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+    
+     public void buscarBatallonesxDivision(Integer division){
+        System.out.println("empezando a buscar por buscarBatallonesxDivision en batallonesbean.");
+        batallones=batallonDAO.buscarBatallonesxDivision(division);                
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+    }
+     
+     public void buscarBatallones(){
+         cargarBatallones();
+         RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
+     }
+    
     public void editarBatallon(Batallon batallon){
         System.out.println("Inicializando Edicion Batallones");
         if(batallonDAO.actualizarBatallon(batallon)){
@@ -62,7 +121,7 @@ public class EditarBatallonesBean implements Serializable{
     }
     
     public void cargarBatallones(){
-        batallones = batallonDAO.buscartodosBatallones();
+        batallones = batallonDAO.buscartodosBatallones();        
     }
     
     public Integer totalBatallones(){

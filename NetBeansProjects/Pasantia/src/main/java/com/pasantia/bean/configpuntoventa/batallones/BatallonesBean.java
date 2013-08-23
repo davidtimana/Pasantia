@@ -5,12 +5,16 @@
 package com.pasantia.bean.configpuntoventa.batallones;
 
 import com.pasantia.dao.BatallonDAO;
-import com.pasantia.dao.impl.BatallonDAOImpl;
 import com.pasantia.entidades.Batallon;
+import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -20,22 +24,31 @@ import javax.inject.Named;
 @ApplicationScoped
 public class BatallonesBean implements Serializable{
 
-    private List<Batallon> batallones;
-    private BatallonDAO batallonDAO;
+    private List<Batallon> batallones;    
     private Boolean panel;
     
-    public BatallonesBean() {
-        batallonDAO = new BatallonDAOImpl();
+    @Inject
+    EditarBatallonesBean batallonDAO;
+    
+    public BatallonesBean() {        
         panel=false;
-        cargarBatallones();
+        batallones=new ArrayList<Batallon>();
+        //cargarBatallones();
     }
+   
+    
+    
+    
+    
+    
     
     public Integer totalBatallones(){
         return batallones.size();
     }
     
     public void cargarBatallones(){
-        batallones = batallonDAO.buscartodosBatallones();
+        System.out.println("empezando a buscar por cargarBatallones en batallonesbean.");
+        batallones = batallonDAO.getBatallonesEncontrados();
     }
 
     public List<Batallon> getBatallones() {

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -48,7 +49,8 @@ public class BuscarBatallonesBean implements Serializable {
     private String ocultarPais;
     private String ocultarDepartamento;
     private String ocultarCiudad;
-    private String ocultarDivisiones;
+    private String ocultarDivisiones;    
+    private String textoBusqueda;
     
     @Inject
     PaisDAO paisDAO;
@@ -57,21 +59,27 @@ public class BuscarBatallonesBean implements Serializable {
     @Inject
     CiudadDAO ciudadDAO;
     @Inject
-    DivisionesDAO divisionesDAO;
+    DivisionesDAO divisionesDAO;    
+    @Inject
+    EditarBatallonesBean batallonesBean;
 
     public void cargarBuscador() {
 
         //cargarComboOpcionesBuscador();
         abrirBuscador = true;
         RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("dlgbuscarBatallon").getClientId(FacesContext.getCurrentInstance()));
+        Utilidad.mensajeInfo("Buscador De Batallones", "Por favor Seleccione una opcion para empezar a realizar la busqueda.");
+        
     }
-
+    
+    
     public void cancelarBuscador() {
         oculto = "display:none";
-         ocultarPais = "display:none";
+        ocultarPais = "display:none";
         ocultarDepartamento = "display:none";
         ocultarCiudad = "display:none";
-        ocultarDivisiones = "display:none";
+        ocultarDivisiones = "display:none";        
+        textoBusqueda="";
         abrirBuscador = false;
         opSeleccionada = null;
         paisSeleccionado = null;
@@ -84,6 +92,64 @@ public class BuscarBatallonesBean implements Serializable {
 
     public void buscarBatallon() {
         System.out.println("Inicio Busqueda");
+        System.out.println("vamos a buscar " + textoBusqueda);
+        if (oculto.equals("display:block") && textoBusqueda.equals("")) {
+            batallonesBean.buscarBatallones();
+        } else {
+            System.out.println("obtener valor y numero de opcion seleccionada y buscar en la bd->" + textoBusqueda);
+
+            switch (opSeleccionada) {
+                case 0:
+                    batallonesBean.buscarBatallonesxNombre(textoBusqueda);
+                    break;
+                case 1:
+                    batallonesBean.buscarBatallonesxDireccion(textoBusqueda);
+                    break;
+                case 2:
+                    batallonesBean.buscarBatallonesxBarrio(textoBusqueda);
+                    break;
+                case 3:
+                    batallonesBean.buscarBatallonesxTelefono1(textoBusqueda);
+                    break;
+                case 4:
+                    batallonesBean.buscarBatallonesxTelefono2(textoBusqueda);
+                    break;
+                case 5:
+                    if(paisSeleccionado==null){
+                        Utilidad.mensajeError("Buscador Batallones", "Debe seleccionar un pais para realizar la busqueda.");
+                    }else{
+                        batallonesBean.buscarBatallonesxPais(paisSeleccionado);
+                    }
+                    
+                    break;
+                case 6:                    
+                    if(departamentoSeleccionado==null){
+                        Utilidad.mensajeError("Buscador Batallones", "Debe seleccionar un departamento para realizar la busqueda.");
+                    }else{
+                        batallonesBean.buscarBatallonesxDepartamento(departamentoSeleccionado);
+                    }
+                    break;
+                case 7:                    
+                    if(ciudadSeleccionada==null){
+                        Utilidad.mensajeError("Buscador Batallones", "Debe seleccionar una ciudad para realizar la busqueda.");
+                    }else{
+                        batallonesBean.buscarBatallonesxCiudad(ciudadSeleccionada);
+                    }
+                    break;
+                case 8:                    
+                    if(divisionSeleccionada==null){
+                        Utilidad.mensajeError("Buscador Batallones", "Debe seleccionar una divisi{on para realizar la busqueda.");
+                    }else{
+                        batallonesBean.buscarBatallonesxDivision(divisionSeleccionada);
+                    }
+                    break;
+                case 9:
+
+                    break;
+
+
+            }
+        }
     }
 
     public void actualizarElementosBusqueda() {
@@ -102,13 +168,10 @@ public class BuscarBatallonesBean implements Serializable {
     public void capturarOpcionSeleccionada() {
         
         
-        System.out.println("opcion seleccionada es la siguiente--> " + opSeleccionada);
-
-//        oculto = "display:none";
-//        actualizarElementosBusqueda();
-        
+        textoBusqueda="";        
         actualizarElementosBusqueda();
-        if (opSeleccionada != null) {
+        if (opSeleccionada != null) {            
+            
             switch (opSeleccionada) {
                 case 0:
                     oculto = "display:block";
@@ -158,7 +221,8 @@ public class BuscarBatallonesBean implements Serializable {
                     System.err.println("Error en la seleccion de las opciones");
                     break;
             }
-        } else {
+        } else {            
+            
             actualizarElementosBusqueda();
             System.err.println("Error en la seleccion de las opciones");
         }
@@ -230,7 +294,7 @@ public class BuscarBatallonesBean implements Serializable {
         ocultarPais = "display:none";
         ocultarDepartamento = "display:none";
         ocultarCiudad = "display:none";
-        ocultarDivisiones = "display:none";
+        ocultarDivisiones = "display:none";        
         cargarComboOpcionesBuscador();
         
 
@@ -403,6 +467,19 @@ public class BuscarBatallonesBean implements Serializable {
     public void setOcultarDivisiones(String ocultarDivisiones) {
         this.ocultarDivisiones = ocultarDivisiones;
     }
+
+    public String getTextoBusqueda() {
+        return textoBusqueda;
+    }
+
+    public void setTextoBusqueda(String textoBusqueda) {
+        this.textoBusqueda = textoBusqueda;
+    }
+   
+    
+    
+    
+    
     
     
 

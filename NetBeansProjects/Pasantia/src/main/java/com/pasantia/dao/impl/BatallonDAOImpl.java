@@ -238,7 +238,7 @@ public class BatallonDAOImpl implements BatallonDAO {
     }
 
     @Override
-    public List<Batallon> buscarBatallonesxNombre(String nombre_batallon) {
+    public List<Batallon> buscarBatallonesxNombre(String nombre_batallon) {        
         Session session = ConexionHibernate.getSessionFactory().openSession();
         List list = new ArrayList();
         List <Batallon> batallones = new ArrayList<Batallon>();
@@ -246,11 +246,11 @@ public class BatallonDAOImpl implements BatallonDAO {
         String jpql =
         " SELECT b "
         + " FROM Batallon b "               
-        + " WHERE UPPER(b.nombreBatallon) like UPPER('%:id%') "
-                + "ORDER BY b.nombreBatallon";
-        Query q=session.createQuery(jpql);        
+        + " WHERE UPPER(b.nombreBatallon) LIKE '%"+nombre_batallon+"%'"
+                + " ORDER BY b.nombreBatallon";
+            System.out.println("El jpql es el siguiente-->"+jpql);
+        Query q=session.createQuery(jpql);    
         
-        q.setString("id", nombre_batallon);
         list=q.list();
         batallones=(List<Batallon>)list;
         
@@ -276,11 +276,10 @@ public class BatallonDAOImpl implements BatallonDAO {
         String jpql =
         " SELECT b "
         + " FROM Batallon b "               
-        + " WHERE UPPER(b.direccion) like UPPER('%:id%') "
+        + " WHERE UPPER(b.direccion) like UPPER('%"+direccion+"%') "
                 + "ORDER BY b.nombreBatallon";
-        Query q=session.createQuery(jpql);        
+        Query q=session.createQuery(jpql);               
         
-        q.setString("id", direccion);
         list=q.list();
         batallones=(List<Batallon>)list;
         
@@ -306,11 +305,10 @@ public class BatallonDAOImpl implements BatallonDAO {
         String jpql =
         " SELECT b "
         + " FROM Batallon b "               
-        + " WHERE UPPER(b.barrio) like UPPER('%:id%') "
+        + " WHERE UPPER(b.barrio) like UPPER('%"+barrio+"%') "
                 + "ORDER BY b.nombreBatallon";
-        Query q=session.createQuery(jpql);        
+        Query q=session.createQuery(jpql);                
         
-        q.setString("id", barrio);
         list=q.list();
         batallones=(List<Batallon>)list;
         
@@ -336,11 +334,10 @@ public class BatallonDAOImpl implements BatallonDAO {
         String jpql =
         " SELECT b "
         + " FROM Batallon b "               
-        + " WHERE UPPER(b.telefono1) like UPPER('%:id%') "
+        + " WHERE UPPER(b.telefono1) like UPPER('%"+telefono1+"%') "
                 + "ORDER BY b.nombreBatallon";
-        Query q=session.createQuery(jpql);        
+        Query q=session.createQuery(jpql);                
         
-        q.setString("id", telefono1);
         list=q.list();
         batallones=(List<Batallon>)list;
         
@@ -366,11 +363,10 @@ public class BatallonDAOImpl implements BatallonDAO {
         String jpql =
         " SELECT b "
         + " FROM Batallon b "               
-        + " WHERE UPPER(b.telefono2) like UPPER('%:id%') "
+        + " WHERE UPPER(b.telefono2) like UPPER('%"+telefono2+"%') "
                 + "ORDER BY b.nombreBatallon";
-        Query q=session.createQuery(jpql);        
+        Query q=session.createQuery(jpql);                
         
-        q.setString("id", telefono2);
         list=q.list();
         batallones=(List<Batallon>)list;
         

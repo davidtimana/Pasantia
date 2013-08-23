@@ -63,7 +63,7 @@ public class AgregarBatallonesBean implements Serializable{
     private BatallonDAO batallonDAO;
     
     @Inject
-    BatallonesBean batallonesBean;
+    EditarBatallonesBean batallonesBean;
     
     
 
@@ -77,6 +77,7 @@ public class AgregarBatallonesBean implements Serializable{
         if(validarDatos()){
             
             if(batallonDAO.insertarBatallon(batallon)){
+                System.out.println("el batallon es el siguiente--> "+batallon.getTelefono1());
                 Utilidad.mensajeInfo("Guardar Batallón.", "Batallon: "+batallon.getNombreBatallon()+". Guardado Correctamente.");                
             }else{
                 Utilidad.mensajeInfo("Guardar Batallón.", "Batallon: "+batallon.getNombreBatallon()+". No se pudo Guardar.");  
@@ -87,7 +88,7 @@ public class AgregarBatallonesBean implements Serializable{
         }   
         Utilidad.abrirDialog("dlgNuevo");
         RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
-        batallonesBean.cargarBatallones();
+        batallonesBean.buscarBatallones();
     }
     
     public void limpiarCampos(){

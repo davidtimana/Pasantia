@@ -7,6 +7,13 @@
     <h:head>
         <title>Inicio - SICOVI</title>
         <h:outputStylesheet name="css/estilos.css"/>
+        <h:outputStylesheet name="css/bootstrap.css"/> 
+       
+    
+        
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        
     </h:head>
     <h:body>
         
@@ -61,8 +68,34 @@
                     <p:layoutUnit position="center">  
                         <h:form>  
                             
-                            <h:link value="Mientras se construye clic aqui.." outcome="paginas/menu/menuInicial" />                           
+                            <h:link value="Mientras se construye clic aqui.." outcome="paginas/menu/menuInicial" />  
+                            <ul class="pagination">
+                                <li><a href="#">&laquo;</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&raquo;</a></li>
+</ul>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
                             
+                        
+
+
+
                         </h:form>  
                     </p:layoutUnit>  
   
@@ -93,6 +126,7 @@
             </p:dialog>
         </h:form>
         
+      
        
     </h:body>
 </html>

@@ -40,13 +40,14 @@ public class BatallonDAOImpl implements BatallonDAO {
 
     @Override
     public Boolean insertarBatallon(Batallon batallon) {
+        System.out.println("el batallon es el siguiente antes de insertar--> "+batallon.getTelefono1());
         Session session = ConexionHibernate.getSessionFactory().openSession();
         boolean resultado = false;
         String nombre_batallon = "";
         String barrio="";
         try {
             session.beginTransaction();
-            barrio=batallon.getNombreBatallon();
+            barrio=batallon.getBarrio();
             barrio=barrio.toUpperCase();
             barrio=barrio.trim();
             nombre_batallon = batallon.getNombreBatallon();
@@ -54,6 +55,7 @@ public class BatallonDAOImpl implements BatallonDAO {
             nombre_batallon = nombre_batallon.trim();
             batallon.setNombreBatallon(nombre_batallon);
             batallon.setBarrio(barrio);
+            System.out.println("el batallon es el siguiente antes de save--> "+batallon.getTelefono1());
             session.save(batallon);
             session.flush();
             session.beginTransaction().commit();
@@ -75,10 +77,15 @@ public class BatallonDAOImpl implements BatallonDAO {
         String nombre_batallon = "";
         try {
             session.beginTransaction();
+            String barrio = "";
+            barrio = batallon.getBarrio();
+            barrio = barrio.toUpperCase();
+            barrio = barrio.trim();
             nombre_batallon = batallon.getNombreBatallon();
             nombre_batallon = nombre_batallon.toUpperCase();
             nombre_batallon = nombre_batallon.trim();
             batallon.setNombreBatallon(nombre_batallon);
+            batallon.setBarrio(barrio);
             session.update(batallon);
             session.flush();
             session.beginTransaction().commit();

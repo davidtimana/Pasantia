@@ -31,122 +31,44 @@
                 <p:spacer width="10" height="5" /><br/>
                 <h:form>
                     <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
-                        <h:panelGrid columns="2" cellpadding="10">  
-                            <p:commandButton value="&nbsp;Nueva Ubicacion" title="Crear Una Nueva Ubicacion" image="icon-add" onclick="dlgNuevo.show();"
+                        <h:panelGrid columns="2" cellpadding="1">  
+                            <p:commandButton value="&nbsp;Nueva Ubicacion" title="Crear Una Nueva Ubicacion" image="icon-add" 
                                      actionListener="#{ubicacionBean.prepararGuardadoDelaUbicacion()}" />
-                            <h:outputText value="Agregar una nueva ubicacion para los articulos."/>
+                            <p:commandButton value="Buscar Ubicación" title="Buscar Ubicación" image="ui-icon-search" 
+                                             actionListener="#{buscabicacionesBean.cargarBuscadorUbicaciones()}" /> 
+                            
                         </h:panelGrid>  
                     </p:fieldset>  
                     
-                </h:form><br/>
-                <p:spacer width="10" height="5" />
+                </h:form><br/>                
                         
                 <!--Form: Tabla Ubicacion -->                           
-                <h:form id="frmubicacion">        
-                    <p:dataTable id="datatable" var="ubicacion" value="#{ubicacionBean.ubicaciones}" sortMode="multiple"  emptyMessage="No hay Ubicaciones disponibles"
-                                 paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
-                                 {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                <h:form id="frmubicacion">                      
+                    <p:dataTable id="datatableUbicaciones" var="ubicacion" value="#{ubicacionBean.ubicaciones}" 
+                                 sortMode="multiple"  emptyMessage="No hay Ubicaciones disponibles"
+                                 paginator="true" rows="10" paginatorPosition="bottom" 
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                 {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                 >
                         
                         <f:facet name="header">  
                             Lista de Ubicaciones 
                         </f:facet> 
-                        <p:column headerText="ID" style="text-align: center" sortBy="#{ubicacion.idUbicacion}" filterBy="#{ubicacion.idUbicacion}">
-                            <f:facet name="header">  
-                                Codigo Ubicacion 
-                            </f:facet>  
-                            <h:outputText value="#{ubicacion.idUbicacion}" />  
-                        </p:column>
-                        <p:column headerText="Descripcion" style="text-align: center" sortBy="#{ubicacion.descripcion}" filterBy="#{ubicacion.descripcion}">  
+                        
+                        <p:column headerText="Descripcion" style="text-align: center" sortBy="#{ubicacion.descripcion}" >  
                             <h:outputText value="#{ubicacion.descripcion}"  />  
                         </p:column>
                         <p:column headerText="Acciones" style="width:8%; text-align: center">
-                            <p:commandButton  update=":frmeditarubicacion" action="#{ubicacionBean.abrirEditar()}"  actionListener="#{ubicacionBean.prepararActualizadoDeUbicacion(ubicacion.idUbicacion,ubicacion.descripcion)}" 
-                                      title="&nbsp;Editar" image="icon-edit" />
-                            <p:commandButton  update=":frmEliminar"  actionListener="#{ubicacionBean.prepararEliminarUbicacion(ubicacion.idUbicacion,ubicacion.descripcion)}"
-                                              title="&nbsp;Eliminar" image="icon-delete" action="#{ubicacionBean.comfirmarEliminado(ubicacion.idUbicacion,ubicacion.descripcion)}" />  
+                            <p:commandButton  actionListener="#{ubicacionBean.prepararActualizadoDeUbicacion(ubicacion)}" 
+                                              title="&nbsp;Editar" image="icon-edit" />
+                            <p:commandButton  title="&nbsp;Eliminar" image="icon-delete" 
+                                              actionListener="#{ubicacionBean.prepararEliminacionUbicacion(ubicacion)}" />  
                         </p:column>
                         <f:facet name="footer">  
                             En total hay #{ubicacionBean.totalUbicaciones()} ubicaciones.  
                         </f:facet>
                    </p:dataTable>      
-                </h:form>
-                           
-                           
-                 <!--Form: Nueva Ubicacion -->          
-                  <h:form id="frmnuevaubicacion">
-                    <p:dialog header="Creacion de una nueva ubicacion de los productos" widgetVar="dlgNuevo" resizable="false" 
-                              id="dlgNuevo" showEffect="explode" hideEffect="explode"  modal="false"  width="550" binding="#{ubicacionBean.dlgnuevaubicacion}">  
-                        <p:growl id="growl"  sticky="true" />
-                        <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" /> 
-                            <h:panelGrid id="pgNuevo" columns="2" cellpadding="4" style="margin:0 auto;">  
-
-                               
-                                <h:outputText value="Descripción De La Ubicacion:" />  
-
-                                <p:inputText value="#{ubicacionBean.ubicacion.descripcion}" style="width: 200px" />
-
-
-
-                        </h:panelGrid>  
-                        <p:separator id="customSeparator2" style="width:500px;height:8px" />
-                        <p:commandButton  update=":frmubicacion:datatable,growl,dlgNuevo"  
-                                          action="#{ubicacionBean.guardarNuevaUbicacion()}" value="Guardar" 
-                                          title="&nbsp;Guardar" image="icon-guardar" />
-                        <p:commandButton  update=":frmubicacion"  value="Cancelar" title="&nbsp;Cancelar" 
-                                          image="icon-cancel" onclick="dlgNuevo.hide();"/>   
-                       
-                    </p:dialog>
-                </h:form>
-                 
-      <!--Form: Eliminar Ubicacion -->                    
-        <h:form id="frmEliminar">  
-                      
-            <p:growl id="growlEliminar"  sticky="true" />  
-            
-            <p:dialog id="dlgEliminar"  
-                             header="Eliminar Ubicacion" widgetVar="dlgEliminar" showEffect="explode" hideEffect="explode" binding="#{ubicacionBean.dlgconfireliminar}">  
-                <h:panelGrid id="pgEliminar" columns="2" cellpadding="2" style="margin:0 auto;">  
-                    <h:outputText value="Id De La Ubicacion" /> 
-                <p:inputText value="#{ubicacionBean.id}" style="width: 200px" binding="#{ubicacionBean.txtideliminar}"/>
-                </h:panelGrid>
-                <p:commandButton  update=":frmubicacion:datatable,growlEliminar,dlgEliminar" 
-                                  actionListener="#{ubicacionBean.eliminarUbicacion()}" value="Eliminar" 
-                                  title="&nbsp;Actualizar" image="icon-guardar" />
-                <p:commandButton  update=":frmubicacion:datatable" onclick="dlgEliminar.hide();"  value="Cancelar" title="&nbsp;Cancelar" 
-                                  image="icon-cancel" />                       
-            </p:dialog>  
-  
-        </h:form>      
-                    
-        
-        <!--Form: Editar Rol -->
-        <h:form id="frmeditarubicacion">
-            <p:dialog header="Edicion De Una Ubicaciòn Para Los Articulos" widgetVar="dlgEditar" resizable="false" 
-                      id="dlgEditar" modal="false" binding="#{ubicacionBean.dlgeditarubicacion}">  
-                <p:growl id="growlEditar"  sticky="true" />  
-                <p:messages id="messageseditar" showDetail="true" autoUpdate="true" closable="true" /> 
-                    <h:panelGrid id="pgEditar" columns="2" cellpadding="4" style="margin:0 auto;">  
-                        
-                     
-                        <h:outputText value="Id De La Ubicacion" /> 
-                        <h:outputText value="Descripción De La Ubicacion" />  
-                        
-                        <p:inputText value="#{ubicacionBean.id}" style="width: 200px" binding="#{ubicacionBean.txtideditar}"/>                       
-                        <p:inputText value="#{ubicacionBean.descripcion}" style="width: 200px"  binding="#{ubicacionBean.txtdescripcioneditar}" />
-                        
-                        
-                </h:panelGrid>  
-                <p:separator id="customSeparator" style="width:500px;height:8px" />
-                <p:commandButton  update=":frmubicacion:datatable,growlEditar,dlgEditar" 
-                                  actionListener="#{ubicacionBean.actualizarUbicacion()}" value="Actualizar" 
-                                  title="&nbsp;Actualizar" image="icon-guardar" />
-                <p:commandButton  update=":frmubicacion:datatable"  onclick="dlgEditar.hide();" value="Cancelar" title="&nbsp;Cancelar" 
-                                  image="icon-cancel" />  
-            </p:dialog>
-        </h:form>
-        
-
-        
+                </h:form>             
                 
             </ui:define>
 

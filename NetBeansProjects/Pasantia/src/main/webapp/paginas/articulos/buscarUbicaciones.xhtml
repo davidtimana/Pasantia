@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+        
+         <p:dialog header="Buscador de Ubicaciones" widgetVar="dlgbuscarBatallon" resizable="false" 
+                  id="dlgbuscarUbicaciones" showEffect="explode" hideEffect="explode"  modal="false"  width="600" height="90" 
+                  minimizable="true" visible="#{buscabicacionesBean.abrirBuscadorUbicaciones}" closable="false" >
+
+            <h:panelGrid id="espacio1" columns="7" cellpadding="1" style="margin:0 auto;"> 
+                <p:outputLabel value="Opciones a Buscar : * "/>
+                <p:selectOneMenu id="opbuscar" value="#{buscabicacionesBean.opcionSeleccionada}"  
+                                 validatorMessage="Debe seleccionar Opciones" effect="fold" filter="true" 
+                                 filterMatchMode="startsWith"  >  
+                    <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                    <f:selectItems value="#{buscabicacionesBean.comboOpciones}"  />
+                    
+                </p:selectOneMenu>
+                
+                <p:inputText id="txtnombrebuscar" value="#{buscabicacionesBean.textoBusqueda}" style="#{buscabicacionesBean.oculto}">
+                    
+                </p:inputText>
+                
+                
+                
+            </h:panelGrid>
+            
+            <h:panelGrid id="espacio2" columns="1" cellpadding="1" style="margin:0 auto;">                            
+                <p:commandButton value="Cancelar" title="Cancelar" icon="icon-cancel"
+                                 actionListener="#{buscabicacionesBean.cancelarBuscador()}"/>                               
+            </h:panelGrid>
+
+        </p:dialog>
+    </ui:composition>
+</html>

@@ -6,10 +6,11 @@ package com.pasantia.dao.impl;
 
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.UbicacionDAO;
-import com.pasantia.entidades.Rol;
 import com.pasantia.entidades.Ubicacion;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -20,9 +21,10 @@ import org.hibernate.Session;
 public class UbicacionDAOImpl implements UbicacionDAO{
 
     @Override
-    public void insertarUbicacion(Ubicacion ubicacion) {
+    public Boolean insertarUbicacion(Ubicacion ubicacion) {
         Session session = ConexionHibernate.getSessionFactory().openSession();
         String descripcion="";
+        Boolean result=false;
         try{
             session.beginTransaction();
             descripcion=ubicacion.getDescripcion();
@@ -31,18 +33,22 @@ public class UbicacionDAOImpl implements UbicacionDAO{
             ubicacion.setDescripcion(descripcion);
             session.save(ubicacion);
             session.beginTransaction().commit();
+            result=true;
             }catch(Exception e){
+            result=false;
             System.out.println("Error en insertar "+e.getMessage());
             session.beginTransaction().rollback();
         }finally{
             session.close();
         }
+        return result;
     }
 
     @Override
-    public void actualizarUbicacion(Ubicacion ubicacion) {
+    public Boolean actualizarUbicacion(Ubicacion ubicacion) {
         Session session = ConexionHibernate.getSessionFactory().openSession();
         String descripcion="";
+        Boolean result;
         try{
             session.beginTransaction();
             descripcion=ubicacion.getDescripcion();
@@ -50,32 +56,37 @@ public class UbicacionDAOImpl implements UbicacionDAO{
             descripcion=descripcion.trim();
             ubicacion.setDescripcion(descripcion);
             session.update(ubicacion);
-            session.beginTransaction().commit();            
+            session.beginTransaction().commit();  
+            result=true;
         }catch(Exception e){
+            result=false;
             System.out.println("Error en actualizar "+e.getMessage());
             session.beginTransaction().rollback();
         }
         finally{
             session.close();
         }
+        return result;
     }
 
     @Override
     public boolean eliminarUbicacion(Ubicacion ubicacion) {
         Session session = ConexionHibernate.getSessionFactory().openSession();
+        Boolean result=false;
         try{
             session.beginTransaction();
             session.delete(ubicacion);
             session.beginTransaction().commit();
-            return true;
+            result=true;
         }catch(Exception e){
-            System.out.println("Error al eliminar "+e.getMessage());
+            System.err.println("Error al eliminar "+e.getMessage());
             session.beginTransaction().rollback();
-            return true;
+            result=false;
         }
         finally{
             session.close();
         }
+        return result;
     }
 
     @Override
@@ -94,9 +105,53 @@ public class UbicacionDAOImpl implements UbicacionDAO{
     }
 
     @Override
-    public List<Ubicacion> buscartodasUbicaciones() {
+    public List<Ubicacion> buscartodasUbicaciones() {        
         Session session = ConexionHibernate.getSessionFactory().openSession();
-        return session.createQuery("from Ubicacion").list();
+        List<Ubicacion> ubicaciones= new ArrayList<Ubicacion>();        
+        try {            
+            Query q=session.createQuery("from Ubicacion");
+            ubicaciones=q.list();            
+        } catch (Exception e) {
+            ubicaciones=null;
+            System.err.println("Error al buscartodasUbicaciones: "+e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();            
+        }        
+        return ubicaciones;
+        }
+
+    @Override
+    public List<Ubicacion> buscartodasUbicacionesxNombre(String nombre) {
+         Session session = ConexionHibernate.getSessionFactory().openSession();
+        List list = new ArrayList();
+        List <Ubicacion> ubicaciones = new ArrayList<Ubicacion>();
+        try{
+        String jpql =
+        " SELECT b "
+        + " FROM Ubicacion b "               
+        + " WHERE UPPER(b.descripcion) LIKE '%"+nombre+"%'"
+                + " ORDER BY b.descripcion";
+            System.out.println("El jpql es el siguiente-->"+jpql);
+        Query q=session.createQuery(jpql);    
+        
+        list=q.list();
+        ubicaciones=(List<Ubicacion>)list;
+        
+       }catch(Exception e){
+           ubicaciones=null;
+            System.out.println("Error en buscar buscartodasUbicacionesxNombre "+e.getMessage());
+            session.beginTransaction().rollback();
+        }
+        finally{
+            System.out.println("cerrando la sesion en buscartodasUbicacionesxNombre retorna batallones");
+            session.flush();
+            session.close();
+        } 
+        return ubicaciones;
     }
-    
 }
+          
+    
+    
+

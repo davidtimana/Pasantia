@@ -42,6 +42,9 @@ public class Utilidad {
         String comando=idDialog+".show()";
         RequestContext.getCurrentInstance().execute(comando);        
     }
+    public static void actualizarElemento(String idElemento){
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete(idElemento).getClientId(FacesContext.getCurrentInstance()));
+    }
     
     public static UIComponent buscarHtmlComponete(String idComponete) {
         FacesContext context = FacesContext.getCurrentInstance();

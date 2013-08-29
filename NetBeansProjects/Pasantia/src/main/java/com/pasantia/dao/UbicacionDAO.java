@@ -21,14 +21,14 @@ public interface UbicacionDAO {
      * @param ubicacion 
      * @param rol
      */
-    public void insertarUbicacion(Ubicacion ubicacion);
+    public Boolean insertarUbicacion(Ubicacion ubicacion);
     /**
      *Metodo que se encarga de la
      * actualizacion de una nueva ubicacion
      * @param ubicacion 
      * @param rol
      */
-    public void actualizarUbicacion(Ubicacion ubicacion);
+    public Boolean actualizarUbicacion(Ubicacion ubicacion);
     /**
      *Metodo que se encarga de la
      * eliminacion de una ubicacion
@@ -49,5 +49,12 @@ public interface UbicacionDAO {
      * @return lista de ubicaciones
      */
     public List<Ubicacion> buscartodasUbicaciones();
+    
+     /**
+     *Metodo que se encarga de
+     * listar ubicaciones x descripcion
+     * @return lista de ubicaciones
+     */
+    public List<Ubicacion> buscartodasUbicacionesxNombre(String nombre);
     
 }

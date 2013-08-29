@@ -64,10 +64,30 @@
             <ui:include src="../paginas/configpuntoventa/buscadorBatallones.xhtml" />
         </h:form>
         
+        <!-- Dialog para agregar ubicaciones -->
+        <h:form id="frmnuevaubicacion">        
+            <ui:include src="../paginas/articulos/AgregarUbicaciones.xhtml" />
+        </h:form>
+        
+        <!-- Dialog para agregar ubicaciones -->
+        <h:form id="frmeditarubicacion">        
+            <ui:include src="../paginas/articulos/EditarUbicaciones.xhtml" />
+        </h:form>
+        
+         <!-- Dialog para agregar ubicaciones -->
+        <h:form id="frmeliminarubicacion">        
+            <ui:include src="../paginas/articulos/EliminarUbicaciones.xhtml" />
+        </h:form>
+         
+         <!-- Dialog para buscar ubicaciones -->
+        <h:form id="frmbuscarubicaciones">        
+            <ui:include src="../paginas/articulos/buscarUbicaciones.xhtml" />
+        </h:form>
+        
 
         <p:layout fullPage="true" >
 
-            <p:layoutUnit id="top" position="north" size="50">
+            <p:layoutUnit id="top" position="north" size="8%">
                 <h:form>
 
                     <p:menubar autoDisplay="false">
@@ -162,13 +182,13 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit id="bottom" position="south" size="100">
-                <p:panel header="Información Aplicación" toggleable="true" toggleOrientation="horizontal">  
+            <p:layoutUnit id="bottom" position="south" size="10%" >
+                <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    
                     <ui:insert name="abajo">
 
 
                     </ui:insert>
-                </p:panel> 
+               
                 
             </p:layoutUnit>
 
@@ -196,7 +216,7 @@
                 </ui:insert>
             
 
-            <p:layoutUnit id="right" position="east" size="220" header="Gallery" resizable="true" closable="true" collapsible="true"
+            <p:layoutUnit id="right" position="east" size="15%" header="Gallery" resizable="true" closable="true" collapsible="true"
                           style="text-align:center">
 
                 <p:accordionPanel id="acordenIzquierda">
@@ -217,9 +237,11 @@
             </p:layoutUnit>
 
             <p:layoutUnit id="center" position="center">
+                
                 <ui:insert name="cuerpo" >
                     <!-- AQUI IRA TODO LO DEL CUERPO DE LA PAGINA -->  
                 </ui:insert>
+                
             </p:layoutUnit>
 
         </p:layout>

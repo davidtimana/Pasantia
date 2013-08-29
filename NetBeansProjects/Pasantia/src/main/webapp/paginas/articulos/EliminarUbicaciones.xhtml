@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:confirmDialog message="Esta seguro que desea eliminar la ubicación: #{ubicacionBean.ubicacion.descripcion}?" 
+                             header="Eliminar Ubicaciones" severity="alert" 
+                             widgetVar="dlg1" id="dlgeliminarUbicacion"
+                             visible="#{ubicacionBean.abrirEliminarUbicacion}" >	
+            <p:commandButton value="Eliminar" icon="icon-delete"  actionListener="#{ubicacionBean.eliminarUbicacion()}" />	
+                <p:commandButton value="Cancelar" icon="icon-cancel"  actionListener="#{ubicacionBean.cancalarEliminarUbicacion()}"  />
+            </p:confirmDialog>
+        
+        
+    </ui:composition>
+</html>

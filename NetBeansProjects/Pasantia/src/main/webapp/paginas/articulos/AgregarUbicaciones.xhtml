@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+        
+        <p:dialog header="Creacion de una nueva ubicacion de los productos" widgetVar="dlgNuevo" 
+                  resizable="false" id="dlgNuevaUbicacion" 
+                  showEffect="explode" hideEffect="explode"  
+                  modal="true"  width="40%" visible="#{ubicacionBean.abrirNuevoUbicacion}"
+                  onHide="#{ubicacionBean.cancalarNuevaUbicacion()}">  
+                        
+                            <h:panelGrid id="pgNuevo" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                               
+                                <h:outputText value="Descripción De La Ubicacion:" />  
+
+                                <p:inputText value="#{ubicacionBean.ubicacion.descripcion}" style="width: 200px" />
+
+
+
+                        </h:panelGrid>  
+                        <p:separator id="customSeparator2" style="width:95%;height:8%" />
+                        <p:commandButton    
+                                          actionListener="#{ubicacionBean.guardarNuevaUbicacion()}" value="Guardar" 
+                                          title="Guardar" image="icon-guardar" />
+                        <p:commandButton  value="Cancelar" title="Cancelar" 
+                                          image="icon-cancel" actionListener="#{ubicacionBean.cancalarNuevaUbicacion()}"/>   
+                       
+                    </p:dialog>
+        
+        
+    </ui:composition>
+</html>

@@ -1,10 +1,9 @@
-
 -- phpMyAdmin SQL Dump
 -- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-08-2013 a las 17:58:32
+-- Tiempo de generación: 29-08-2013 a las 20:13:02
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.7
 
@@ -13322,7 +13321,17 @@ CREATE TABLE IF NOT EXISTS `Tipo_Identificacion` (
   `idTipo_Identificacion` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_tipo_identificacion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idTipo_Identificacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `Tipo_Identificacion`
+--
+
+INSERT INTO `Tipo_Identificacion` (`idTipo_Identificacion`, `nombre_tipo_identificacion`) VALUES
+(1, 'Cedula Ciudania'),
+(2, 'Tarjeta Identidad'),
+(3, 'Pasaporte'),
+(4, 'Cedula Extranjeria');
 
 -- --------------------------------------------------------
 

@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../../plantillas/plantillaprincipal.xhtml">
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="titulo">
         Gestion De Usuarios - SICOVI
@@ -19,8 +22,46 @@
         derecha
     </ui:define>
 
-    <ui:define name="cuerpo">
-        
+    <ui:define name="cuerpo">       
+   
+        <p:spacer width="1%" height="2%" />
+        <p:panel header="Administración De Usuarios" style="overflow: auto" >
+
+            <p:tabView effect="slide" effectDuration="normal" style="width: 100%">  
+
+                <p:tab title="Gestionar Usuarios">
+                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
+                        <h:form id="frmdatosbasicos">
+                        <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
+                        </h:form>
+                    </h:panelGrid>
+
+                </p:tab>  
+                <p:tab title="Visualizar Usuarios">  
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <p:graphicImage value="/images/godfather/godfather2.jpg" />  
+                        <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.   
+                                      In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,   
+                                      killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."></h:outputText>  
+                    </h:panelGrid>  
+                </p:tab>  
+                <p:tab title="Godfather Part III">  
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <p:graphicImage value="/images/godfather/godfather3.jpg" />  
+                        <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.   
+                                      Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."></h:outputText>  
+                    </h:panelGrid>  
+                </p:tab>  
+
+            </p:tabView> 
+
+
+
+
+            <f:facet name="actions">                 
+                <p:commandButton styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" icon="ui-icon ui-icon-help" />
+            </f:facet>  
+        </p:panel>      
         
         
     </ui:define>

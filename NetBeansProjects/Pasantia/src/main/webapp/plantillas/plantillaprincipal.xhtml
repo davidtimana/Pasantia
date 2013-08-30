@@ -169,6 +169,19 @@
                             </p:submenu>
 
                         </p:submenu>
+                        
+                        <p:submenu label="Parametros" icon="ui-icon-document">
+                            <p:submenu label="Usuarios" icon="ui-icon-contact">
+                                <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
+                                <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
+                            </p:submenu>
+
+                            <p:submenu label="Precios De Compra" icon="ui-icon-contact">
+                                <p:menuitem value="Gestion De Precios" action="#{navegacion.ir_a_Gestion_Precios_Compra()}" />
+                                <p:menuitem value="Listar Variaciones" action="#{navegacion.ir_a_Listar_Variaciones()}" />
+                            </p:submenu>
+
+                        </p:submenu>
 
                         <p:submenu label="Ayuda" icon="ui-icon-pencil">
                             <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>

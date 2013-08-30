@@ -15,7 +15,7 @@
     <mapping resource="com/pasantia/entidades/Inventario.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/FechaCompra.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/Ciudad.hbm.xml"/>
-    <mapping resource="com/pasantia/entidades/Casino.hbm.xml"/>    
+    <mapping resource="com/pasantia/entidades/Casino.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/Venta.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/DetalleVenta.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/FechaEntrega.hbm.xml"/>

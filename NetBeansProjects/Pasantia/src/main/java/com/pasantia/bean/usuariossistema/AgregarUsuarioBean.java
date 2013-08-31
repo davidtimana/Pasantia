@@ -18,29 +18,16 @@ import javax.inject.Inject;
  */
 @Named(value = "agregarUsuarioBean")
 @ApplicationScoped
-public class AgregarUsuarioBean {
+public class AgregarUsuarioBean extends CombosComunes{
 
-    private List<SelectItem> comboTipoIdentificacion;
-    private Integer tipoIdentiSelect;
     
-    @Inject
-    CombosComunes combosComunes;
+    private Integer tipoIdentiSelect,sexoSelect;
     
-    public void cargarComboTipoIdentificacion(){
-        //comboTipoIdentificacion = combosComunes.cargarComboTipoIdentificacion();
-    }
+      
+    
     
     public AgregarUsuarioBean() {
-         comboTipoIdentificacion=new ArrayList<SelectItem>();
-        cargarComboTipoIdentificacion();
-    }
-
-    public List<SelectItem> getComboTipoIdentificacion() {
-        return comboTipoIdentificacion;
-    }
-
-    public void setComboTipoIdentificacion(List<SelectItem> comboTipoIdentificacion) {
-        this.comboTipoIdentificacion = comboTipoIdentificacion;
+        
     }
 
     public Integer getTipoIdentiSelect() {
@@ -50,5 +37,24 @@ public class AgregarUsuarioBean {
     public void setTipoIdentiSelect(Integer tipoIdentiSelect) {
         this.tipoIdentiSelect = tipoIdentiSelect;
     }
+
+    public Integer getSexoSelect() {
+        return sexoSelect;
+    }
+
+    public void setSexoSelect(Integer sexoSelect) {
+        this.sexoSelect = sexoSelect;
+    }
+
+   
     
+    
+    
+    
+
+    
+   
+    
+    
+
 }

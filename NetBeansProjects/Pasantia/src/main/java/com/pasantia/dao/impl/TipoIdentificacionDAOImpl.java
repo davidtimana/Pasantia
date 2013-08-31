@@ -26,7 +26,7 @@ public class TipoIdentificacionDAOImpl implements TipoIdentificacionDAO{
         Session session = ConexionHibernate.getSessionFactory().openSession();
         List<TipoIdentificacion> tipoIdentificaciones = new ArrayList<TipoIdentificacion>();
         try {
-            Query q = session.createQuery("from TipoIdentificacion t ORDER BY nombreTipoIdentificacion ASC");
+            Query q = session.createQuery("from TipoIdentificacion t ORDER BY  t.nombreTipoIdentificacion ASC");
             tipoIdentificaciones = q.list();
         } catch (Exception e) {
             tipoIdentificaciones = null;

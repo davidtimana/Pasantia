@@ -16,20 +16,17 @@ import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.DivisionesUbicacion;
 import com.pasantia.entidades.Pais;
 import com.pasantia.utilidades.Utilidad;
-import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
-import javax.security.auth.message.callback.PrivateKeyCallback;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.dialog.Dialog;
 import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
-import org.primefaces.context.RequestContext;
 
 /**
  *

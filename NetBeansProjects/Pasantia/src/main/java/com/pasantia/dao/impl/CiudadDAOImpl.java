@@ -71,25 +71,27 @@ public class CiudadDAOImpl implements CiudadDAO{
 
     @Override
     public List<Ciudad> buscarxidDpto(Integer id) {
-        Session session = ConexionHibernate.getSessionFactory().openSession();  
-        List<Ciudad> list=new ArrayList<Ciudad>();
-        try{
-            
-        Query q=session.createQuery("select distinct c from Ciudad as c where c.departamento.idDepartamento= :id");
-        q.setInteger("id", id);
-        list=(List<Ciudad>)q.list();
-        
-        
-        }catch(Exception e){
-            list=null;
-            System.out.println("Error en buscar "+e.getMessage());
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        List<Ciudad> list = new ArrayList<Ciudad>();
+        String jpql = "";
+        try {
+            jpql = " SELECT c from Ciudad c "
+                    + "WHERE c.departamento.idDepartamento= :id "
+                    + "ORDER BY c.nombreCiudad";
+            Query q = session.createQuery(jpql);
+            q.setInteger("id", id);
+            list = (List<Ciudad>) q.list();
+
+
+        } catch (Exception e) {
+            list = null;
+            System.out.println("Error en buscarxidDpto " + e.getMessage());
             session.beginTransaction().rollback();
-        }
-        finally{
+        } finally {
             System.out.println("cerrando la sesion en buscarxidDpto");
             session.close();
         }
-        
+
         return list;
     }
 

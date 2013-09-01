@@ -10,109 +10,93 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        
-        
-        <p:accordionPanel>  
+
+
+        <p:accordionPanel >  
+            
             <p:tab title="Datos Personales Usuario">
-                <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
-                    <h:panelGrid columns="1" cellpadding="2" style="width: 85%;text-align: center" >
-                        <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" style="width: 40%;height: 40%"/>
-                        <p:commandButton value="Cargar Foto" style="width: 70%"/>
+                <h:form id="frmdatosPersonalesUsuario">
+                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
+                        <h:panelGrid columns="1" cellpadding="2" style="width: 85%;text-align: center" >
+                            <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" style="width: 40%;height: 40%"/>
+                            <p:commandButton value="Cargar Foto" style="width: 70%"/>
+
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center"  cellspacing="15%" >  
+
+                            <p:outputLabel value="Primer Nombre: *" style="width: 100%"/>
+                            <p:inputText  style="width: 100%"/>
+
+                            <p:outputLabel value="Segundo Nombre: " style="width: 100%"/>
+                            <p:inputText style="width: 100%"/>
+
+                            <p:outputLabel value="Primer Apellido: *" style="width: 100%"/>
+                            <p:inputText style="width: 100%"/>
+
+                            <p:outputLabel value="Segundo Apellido: " style="width: 100%"/>
+                            <p:inputText style="width: 100%"/>                        
+                            <p:outputLabel value="Tipo Identificación *" style="width: 100%"/>
+                         
+
+                            <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%"/>
+                            <p:calendar />
+
+
+
+                        </h:panelGrid> 
+
 
                     </h:panelGrid>
-
-                    <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center"  cellspacing="15%" >  
-
-                        <p:outputLabel value="Primer Nombre: *" style="width: 100%"/>
-                        <p:inputText  style="width: 100%"/>
-
-                        <p:outputLabel value="Segundo Nombre: " style="width: 100%"/>
-                        <p:inputText style="width: 100%"/>
-
-                        <p:outputLabel value="Primer Apellido: *" style="width: 100%"/>
-                        <p:inputText style="width: 100%"/>
-
-                        <p:outputLabel value="Segundo Apellido: " style="width: 100%"/>
-                        <p:inputText style="width: 100%"/>                        
-                        <p:outputLabel value="Tipo Identificación *" style="width: 100%"/>
-                        <p:selectOneMenu id="cmbtipoIdentificacion" value="#{agregarUsuarioBean.tipoIdentiSelect}"  
-                                         validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith" 
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarUsuarioBean.comboTipoIdentificacion}"  />           
-                        </p:selectOneMenu>
-
-
-                        <p:outputLabel value="Identificacion: *" style="width: 100%"/>
-                        <p:inputText style="width: 100%"/>
-
-                        <p:outputLabel value="Sexo *" style="width: 100%"/>
-                        <p:selectOneMenu id="cmbsexo" value="#{agregarUsuarioBean.sexoSelect}"  
-                                         validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith" 
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarUsuarioBean.comboSexo}"  />           
-                        </p:selectOneMenu> 
-
-                        <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%"/>
-                        <p:calendar />
-
-                        
-
-                    </h:panelGrid> 
-
-
-                </h:panelGrid>
+                </h:form>
 
             </p:tab>  
             <p:tab title="Datos De Contacto Usuario">  
-                <h:panelGrid columns="8" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
-                    <p:outputLabel value="Telefono: *" style="width: 100%"/>
+                <h:form id="frmdatosContactoUsuario">
+                    <h:panelGrid columns="8" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
+                        <p:outputLabel value="Telefono: *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
                         <p:outputLabel value="Movil: *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
                         <p:outputLabel value="Email *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
-
-                </h:panelGrid>  
+                    </h:panelGrid>  
+                </h:form>
             </p:tab>
-            <p:tab title="Domicilio Usuario">  
-                <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center" cellspacing="15%">
-                    
-                    <p:outputLabel value="País: *" style="width: 100%"/>
-                    <p:selectOneMenu id="cmbPais" value="#{agregarUsuarioBean.paisSeleccinado}"  
+            
+            <p:tab title="Domicilio Usuario" >
+                
+                <h:form id="frmdomicilioUsuario">
+                    <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%">
+
+                        <p:outputLabel value="País: *" style="width: 100%"/>
+                        <p:selectOneMenu id="cmbPais" value="#{agregarUsuarioBean.paisSeleccionado}"  
                                          validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
                                          filterMatchMode="startsWith"  
                                          style="width: 100%">  
                             <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                             <f:selectItems value="#{agregarUsuarioBean.comboPaises}"  />
-                            <p:ajax listener="#{agregarUsuarioBean.cargarComboDepartamentoxPais()}" update="cmbDepartamento" />
-                        </p:selectOneMenu>
-                    
-                    <p:outputLabel value="Departamento : * "/>
-                    <p:selectOneMenu id="cmbDepartamento" value="#{agregarUsuarioBean.departamentoSeleccionado}"  
-                                         validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"
-                                         
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarUsuarioBean.comboDepartamentos}"  />
                             
                         </p:selectOneMenu>
-                    
-                    <p:outputLabel value="Barrio: *" style="width: 100%"/>
+
+                        
+
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%">
+                        <p:outputLabel value="Barrio: *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
 
                         <p:outputLabel value="Dirección *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
-                </h:panelGrid>  
+                    </h:panelGrid>
+                </h:form>
             </p:tab>  
 
         </p:accordionPanel>
-        
-        
-        
+
+
+
     </ui:composition>
 </html>

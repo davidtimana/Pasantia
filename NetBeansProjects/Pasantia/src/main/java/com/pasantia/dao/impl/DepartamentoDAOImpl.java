@@ -7,7 +7,7 @@ package com.pasantia.dao.impl;
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.entidades.Departamento;
-import com.pasantia.entidades.Pais;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -33,10 +33,26 @@ public class DepartamentoDAOImpl implements DepartamentoDAO{
     @Override
     public List<Departamento> buscarDepartamentoporIdPais(Integer id) {
         Session session = ConexionHibernate.getSessionFactory().openSession();
-        
-        Query q=session.createQuery("from Departamento as d where d.pais.idPais= :pais");
-        q.setInteger("pais", id);
-        return q.list();
+        List<Departamento> departamentos = new ArrayList<Departamento>();
+        String jpql = "";
+
+        try {
+            jpql = " FROM Departamento d "
+                    + "WHERE d.pais.idPais= :pais "
+                    + "ORDER BY d.nombreDepartamento ASC";
+            Query q = session.createQuery(jpql);
+            q.setInteger("pais", id);
+            departamentos = (List<Departamento>) q.list();
+
+        } catch (Exception e) {
+            departamentos = null;
+            System.out.println("Error en buscarDepartamentoporIdPais " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return departamentos;
     }
 
     @Override

@@ -7,6 +7,7 @@ package com.pasantia.dao;
 import com.pasantia.entidades.Pais;
 import java.util.List;
 import javax.ejb.Local;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -28,5 +29,13 @@ public interface PaisDAO {
      * @return lista de paises
      */
     public Pais buscarPaisxId(Integer id);
+    
+        /**
+     *Metodo que se encarga de
+     * listar los paises en combo
+     * @return lista de paises
+     */
+    public List<SelectItem> buscartodasPaisesCombo();
+    
     
 }

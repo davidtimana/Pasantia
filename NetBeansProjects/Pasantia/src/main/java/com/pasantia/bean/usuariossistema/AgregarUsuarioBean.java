@@ -4,47 +4,83 @@
  */
 package com.pasantia.bean.usuariossistema;
 
+import com.pasantia.dao.PaisDAO;
 import com.pasantia.utilidades.CombosComunes;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Orlando Timana
  */
 @Named(value = "agregarUsuarioBean")
-@ApplicationScoped
-public class AgregarUsuarioBean extends CombosComunes{
+@SessionScoped
+public class AgregarUsuarioBean implements Serializable{
 
     
-    private Integer tipoIdentiSelect,sexoSelect;
+    private Integer paisSeleccionado,tipoIdentificacionSeleccionada,sexoSeleccionado;
+    private List<SelectItem> comboPaises;
     
-      
+    @Inject
+    PaisDAO paisDAO;
+    
+    public void cargarPaises(){
+        comboPaises=paisDAO.buscartodasPaisesCombo();
+    }
     
     
     public AgregarUsuarioBean() {
-        
+        System.out.println("Inicianilizando el constructor por defecto");
+        comboPaises=new ArrayList<SelectItem>();
+        //cargarPaises();
     }
 
-    public Integer getTipoIdentiSelect() {
-        return tipoIdentiSelect;
+    
+    public List<SelectItem> getComboPaises() {
+        comboPaises=paisDAO.buscartodasPaisesCombo();
+        return comboPaises;
     }
 
-    public void setTipoIdentiSelect(Integer tipoIdentiSelect) {
-        this.tipoIdentiSelect = tipoIdentiSelect;
+    public void setComboPaises(List<SelectItem> comboPaises) {
+        this.comboPaises = comboPaises;
     }
 
-    public Integer getSexoSelect() {
-        return sexoSelect;
+    public Integer getPaisSeleccionado() {
+        return paisSeleccionado;
     }
 
-    public void setSexoSelect(Integer sexoSelect) {
-        this.sexoSelect = sexoSelect;
+    public void setPaisSeleccionado(Integer paisSeleccionado) {
+        this.paisSeleccionado = paisSeleccionado;
     }
+
+    public Integer getTipoIdentificacionSeleccionada() {
+        return tipoIdentificacionSeleccionada;
+    }
+
+    public void setTipoIdentificacionSeleccionada(Integer tipoIdentificacionSeleccionada) {
+        this.tipoIdentificacionSeleccionada = tipoIdentificacionSeleccionada;
+    }
+
+    public Integer getSexoSeleccionado() {
+        return sexoSeleccionado;
+    }
+
+    public void setSexoSeleccionado(Integer sexoSeleccionado) {
+        this.sexoSeleccionado = sexoSeleccionado;
+    }
+    
+    
+    
+    
+    
+    
+    
 
    
     

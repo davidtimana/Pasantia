@@ -13,19 +13,18 @@ import com.pasantia.entidades.Ubicacion;
 import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.primefaces.component.dialog.Dialog;
 import org.primefaces.component.inputtext.InputText;
-import org.primefaces.component.message.Message;
 
 /**
  *
  * @author root
  */
 @Named(value = "categoriaBean")
-@RequestScoped
+@SessionScoped
 public class CategoriaBean implements Serializable{
 
     private Categoria categoria;

@@ -7,10 +7,11 @@ package com.pasantia.bean.ubicaciones;
 import com.pasantia.dao.UbicacionDAO;
 import com.pasantia.entidades.Ubicacion;
 import com.pasantia.utilidades.Utilidad;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
 /**
@@ -18,8 +19,8 @@ import javax.inject.Inject;
  * @author david
  */
 @Named(value = "ubicacionBean")
-@ApplicationScoped
-public class UbicacionBean {
+@SessionScoped
+public class UbicacionBean implements Serializable{
 
     private Ubicacion ubicacion;
     private List<Ubicacion> ubicaciones; 

@@ -17,27 +17,25 @@
     </h:head>
     <h:body style="background-image: url(resources/img/pattern_152.gif)">
         
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: #4cae4c;background: green">
-            <div style="">
-                <p:graphicImage value="resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
+        <div style="position: absolute; top: 50%;left: 50%;width: 50%;height: 50%;margin-top: -20%;margin-left: -30%; border: #4cae4c;">
+            <div >
+                <p:graphicImage value="resources/img/banner3.png" alt="SICOVI" title="SICOVI" width="100%" height="70%"/>  
             </div>
-
-            
-            <p:layout style="min-width:1000px;min-height:600px;background: green !important" id="layout">  
+            <p:layout style="width: 100%" >  
 
 
-                <p:layoutUnit position="center" style="background: green !important">
-                    <p:spacer width="2%" height="17%"/>
-                    <div  style="width: 80%;height: 80%;margin-left: auto;margin-right: auto;border: 1px;-moz-border-radius:3px;margin-bottom: auto;margin-top: auto"   >
-                        <h:panelGrid columns="2" cellpadding="1" cellspacing="15%" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                <p:layoutUnit position="center" style="border: 1">
+                    
+                    <div>
+                        <h:panelGrid columns="2" cellpadding="1" cellspacing="15%" >
 
-                            <h:panelGrid columns="1" cellpadding="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <h:panelGrid columns="1" cellpadding="1"  >
                                 <p:galleria value="#{imagenesControlBean.imagenes}" var="imagen" panelWidth="300" panelHeight="300" showCaption="true">                              
                                     <p:graphicImage value="#{imagen.direccion}" alt="#{imagen.descripcion}" title="#{imagen.titulo}" />  
                                 </p:galleria>
                             </h:panelGrid>
 
-                            <h:panelGrid columns="1" cellpadding="3" cellspacing="15%" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                            <h:panelGrid columns="1" cellpadding="3" cellspacing="15%" >
 
                                 <p:panel header="Iniciar Sesión" >
 
@@ -85,6 +83,9 @@
                 </p:layoutUnit>
                 
             </p:layout> 
+
+            
+            
             
             
         </div>

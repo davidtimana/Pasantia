@@ -70,6 +70,10 @@ public class Utilidad {
         return null;
     }
     
+    public static String estilosErrorInput(){
+        return "border-color:#e9322d;-webkit-box-shadow:0 0 6px #f8b9b7;-moz-box-shadow: 0 0 6px #f8b9b7;box-shadow: 0 0 6px #f8b9b7";
+    }
+    
     
     
 }

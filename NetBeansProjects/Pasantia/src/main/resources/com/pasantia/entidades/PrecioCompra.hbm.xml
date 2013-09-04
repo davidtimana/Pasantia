@@ -1,26 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="CasinoPasantia" name="com.pasantia.entidades.PrecioCompra" table="Precio_Compra">
-    <id name="idPrecioCompra" type="java.lang.Integer">
-      <column name="idPrecio_Compra"/>
-      <generator class="identity"/>
-    </id>
-    <property name="fecha" type="timestamp">
-      <column length="19" name="fecha" not-null="true"/>
-    </property>
-    <property name="precio" type="long">
-      <column name="precio" not-null="true" precision="10" scale="0"/>
-    </property>
-    <property name="activo" type="java.lang.Integer">
-      <column name="activo"/>
-    </property>
-    <set inverse="true" name="productos">
-      <key>
-        <column name="fk_id_precio_compra" not-null="true"/>
-      </key>
-      <one-to-many class="com.pasantia.entidades.Producto"/>
-    </set>
-  </class>
+    <class name="com.pasantia.entidades.PrecioCompra" table="Precio_Compra" catalog="CasinoPasantia">
+        <id name="idPrecioCompra" type="java.lang.Integer">
+            <column name="idPrecio_Compra" />
+            <generator class="identity" />
+        </id>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <property name="precio" type="long">
+            <column name="precio" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="activo" type="java.lang.Integer">
+            <column name="activo" />
+        </property>
+        <set name="productos" inverse="true">
+            <key>
+                <column name="fk_id_precio_compra" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Producto" />
+        </set>
+    </class>
 </hibernate-mapping>

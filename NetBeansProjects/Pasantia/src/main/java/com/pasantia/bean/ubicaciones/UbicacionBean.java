@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -30,6 +32,27 @@ public class UbicacionBean implements Serializable{
     UbicacionDAO ubicacionDAO;
     
    
+    public void buscarUbicaciones(Integer idUbicacion, String nombreUbicacion) {
+        System.out.println("buscaremos en UbicacionesBean con" + idUbicacion + nombreUbicacion);
+        if (idUbicacion == null && nombreUbicacion.equals("")) {
+            ubicaciones = ubicacionDAO.buscartodasUbicaciones();
+        } else {
+            ubicaciones = ubicacionDAO.buscartodasUbicacionesxNombrexId(idUbicacion, nombreUbicacion);
+        }
+        if (ubicaciones.isEmpty()) {
+            Utilidad.mensajePeligro("SICOVI.", "La busqueda de Ubicaciones con codigo: " + idUbicacion + " y Nombre: " + nombreUbicacion + ". No tuvo Resultados");
+
+        } else {
+            Utilidad.mensajeInfo("SICOVI.", "La busqueda devolvio: " + ubicaciones.size() + " Resultados.");
+        }
+        //Utilidad.actualizarElemento("datatableUbicaciones");
+        for (Ubicacion ubicacion1 : ubicaciones) {
+            System.out.println("las ubicaciones buscadas son las siguientes--> "+ubicacion1.getDescripcion()+"la busqueda del id es-->"+Utilidad.buscarHtmlComponete("datatableUbicaciones").getClientId(FacesContext.getCurrentInstance()));
+        }
+        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("datatableUbicaciones").getClientId(FacesContext.getCurrentInstance()));
+
+    }
+    
     //Metodos para gestionar nuevas ubicaciones
     public void prepararGuardadoDelaUbicacion(){
         System.out.println("llegando a preparar guardado de ubicación");

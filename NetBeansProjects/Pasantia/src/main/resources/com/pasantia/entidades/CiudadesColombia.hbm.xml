@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="CasinoPasantia" name="com.pasantia.entidades.CiudadesColombia" table="CiudadesColombia">
-    <id name="idCiudadesColombia" type="int">
-      <column name="idCiudadesColombia"/>
-      <generator class="assigned"/>
-    </id>
-    <property name="ciudad" type="string">
-      <column length="300" name="Ciudad"/>
-    </property>
-    <property name="latitud" type="java.lang.Double">
-      <column name="latitud" precision="22" scale="0"/>
-    </property>
-    <property name="longitud" type="java.lang.Double">
-      <column name="longitud" precision="22" scale="0"/>
-    </property>
-  </class>
+    <class name="com.pasantia.entidades.CiudadesColombia" table="CiudadesColombia" catalog="CasinoPasantia">
+        <id name="idCiudadesColombia" type="int">
+            <column name="idCiudadesColombia" />
+            <generator class="assigned" />
+        </id>
+        <property name="ciudad" type="string">
+            <column name="Ciudad" length="300" />
+        </property>
+        <property name="latitud" type="java.lang.Double">
+            <column name="latitud" precision="22" scale="0" />
+        </property>
+        <property name="longitud" type="java.lang.Double">
+            <column name="longitud" precision="22" scale="0" />
+        </property>
+    </class>
 </hibernate-mapping>

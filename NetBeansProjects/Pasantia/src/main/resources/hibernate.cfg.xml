@@ -41,6 +41,7 @@
     <mapping resource="com/pasantia/entidades/TipoIdentificacion.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/TipoPersona.hbm.xml"/>
     <mapping resource="com/pasantia/entidades/Sexo.hbm.xml"/>
-    <mapping resource="com/pasantia/entidades/DiasEntregaPedidos.hbm.xml"/>
+    <mapping resource="com/pasantia/entidades/DiasEntregaPedidos.hbm.xml"/> 
+    <mapping resource="com/pasantia/entidades/Imagen.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

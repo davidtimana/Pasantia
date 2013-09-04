@@ -24,6 +24,6 @@
     <!-- Tema de Primefaces -->
     <context-param>  
     <param-name>primefaces.THEME</param-name>  
-    <param-value>afternoon</param-value>  
+    <param-value>pasantia</param-value>  
 </context-param> 
 </web-app>

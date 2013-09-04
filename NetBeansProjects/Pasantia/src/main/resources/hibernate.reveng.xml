@@ -34,4 +34,5 @@
   <table-filter match-name="Usuario"/>
   <table-filter match-name="Cargo"/>
   <table-filter match-name="Compra"/>
+  <table-filter match-name="Imagen"/>
 </hibernate-reverse-engineering>

@@ -57,4 +57,12 @@ public interface UbicacionDAO {
      */
     public List<Ubicacion> buscartodasUbicacionesxNombre(String nombre);
     
+    /**
+     *Metodo que se encarga de
+     * listar ubicaciones x nombre
+     * o por id
+     * @return lista de ubicaciones
+     */
+    public List<Ubicacion> buscartodasUbicacionesxNombrexId(Integer idUbicacion,String nombreUbicacion);
+    
 }

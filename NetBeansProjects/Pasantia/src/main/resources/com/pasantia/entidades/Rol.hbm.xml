@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="CasinoPasantia" name="com.pasantia.entidades.Rol" table="Rol">
-    <id name="idRol" type="java.lang.Integer">
-      <column name="idRol"/>
-      <generator class="identity"/>
-    </id>
-    <property name="descripcion" type="string">
-      <column length="45" name="descripcion" not-null="true"/>
-    </property>
-    <set inverse="true" name="usuarios">
-      <key>
-        <column name="secrol" not-null="true"/>
-      </key>
-      <one-to-many class="com.pasantia.entidades.Usuario"/>
-    </set>
-  </class>
+    <class name="com.pasantia.entidades.Rol" table="Rol" catalog="CasinoPasantia">
+        <id name="idRol" type="java.lang.Integer">
+            <column name="idRol" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="45" not-null="true" />
+        </property>
+        <set name="usuarios" inverse="true">
+            <key>
+                <column name="secrol" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Usuario" />
+        </set>
+    </class>
 </hibernate-mapping>

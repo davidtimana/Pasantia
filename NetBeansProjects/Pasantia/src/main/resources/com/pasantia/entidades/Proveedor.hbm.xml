@@ -1,38 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="CasinoPasantia" name="com.pasantia.entidades.Proveedor" table="Proveedor">
-    <id name="idProveedor" type="java.lang.Integer">
-      <column name="idProveedor"/>
-      <generator class="identity"/>
-    </id>
-    <many-to-one class="com.pasantia.entidades.Persona" fetch="select" name="persona">
-      <column name="fk_persona" not-null="true"/>
-    </many-to-one>
-    <property name="nombre" type="string">
-      <column length="45" name="nombre" not-null="true"/>
-    </property>
-    <property name="telefono" type="string">
-      <column length="45" name="telefono" not-null="true"/>
-    </property>
-    <property name="direccion" type="string">
-      <column length="45" name="direccion" not-null="true"/>
-    </property>
-    <property name="nit" type="string">
-      <column length="45" name="nit" not-null="true"/>
-    </property>
-    <set inverse="true" name="detalleCompras">
-      <key>
-        <column name="fk_id_proveedores" not-null="true"/>
-      </key>
-      <one-to-many class="com.pasantia.entidades.DetalleCompra"/>
-    </set>
-    <set inverse="true" name="compras">
-      <key>
-        <column name="fk_id_proveedor" not-null="true"/>
-      </key>
-      <one-to-many class="com.pasantia.entidades.Compra"/>
-    </set>
-  </class>
+    <class name="com.pasantia.entidades.Proveedor" table="Proveedor" catalog="CasinoPasantia">
+        <id name="idProveedor" type="java.lang.Integer">
+            <column name="idProveedor" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select">
+            <column name="fk_persona" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="45" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="45" not-null="true" />
+        </property>
+        <property name="nit" type="string">
+            <column name="nit" length="45" not-null="true" />
+        </property>
+        <set name="detalleCompras" inverse="true">
+            <key>
+                <column name="fk_id_proveedores" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.DetalleCompra" />
+        </set>
+        <set name="compras" inverse="true">
+            <key>
+                <column name="fk_id_proveedor" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Compra" />
+        </set>
+    </class>
 </hibernate-mapping>

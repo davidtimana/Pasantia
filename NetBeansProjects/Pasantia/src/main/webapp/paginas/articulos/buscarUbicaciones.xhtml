@@ -10,23 +10,22 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
     <ui:composition>
-        
-         <p:dialog header="Buscador de Ubicaciones" widgetVar="dlgbuscarBatallon" resizable="false" 
-                  id="dlgbuscarUbicaciones" showEffect="explode" hideEffect="explode"  modal="false"  width="35%" height="50%" 
-                  minimizable="true" visible="#{buscabicacionesBean.abrirBuscadorUbicacion}" closable="false" >
 
-            <h:panelGrid id="espacio1" columns="7" cellpadding="1" style="margin:0 auto;"> 
-                
-                <p:inputText id="txtidubicbuscar" value="#{buscabicacionesBean.idBuscar}"  />
-                <p:inputText id="txtnombreubicbuscar" value="#{buscabicacionesBean.nombreBuscar}"  />
-                    
-                
-                
-                
-                
+        <p:dialog header="Buscador de Ubicaciones" widgetVar="dlgbuscarUbicaciones" resizable="false" 
+                  id="dlgbuscarUbicaciones" showEffect="explode" hideEffect="explode"  modal="false"  width="35%" height="50%" 
+                  minimizable="true" visible="#{buscabicacionesBean.abrirBuscadorUbicacion}" closable="true" onHide="#{buscabicacionesBean.cancelarBuscador()}" >
+
+            <h:panelGrid id="espacio1" columns="4" cellpadding="1" style="width: 95%;margin-left: auto;margin-right: auto;"> 
+                <p:outputLabel value="Codigo: " />
+                <p:inputText  value="#{buscabicacionesBean.idBuscar}" />
+
+                <p:outputLabel value="Nombre: " />
+                <p:inputText  value="#{buscabicacionesBean.nombreBuscar}"  />   
             </h:panelGrid>
-            
-            <h:panelGrid id="espacio2" columns="1" cellpadding="1" style="margin:0 auto;">                            
+
+            <h:panelGrid id="espacio2" columns="2" cellpadding="1" style="margin-left: auto;margin-right: auto;">                            
+                <p:commandButton value="Buscar" title="Buscar" icon="ui-icon-search"
+                                 actionListener="#{buscabicacionesBean.buscarUbicaciones()}" />                               
                 <p:commandButton value="Cancelar" title="Cancelar" icon="icon-cancel"
                                  actionListener="#{buscabicacionesBean.cancelarBuscador()}"/>                               
             </h:panelGrid>

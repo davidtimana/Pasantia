@@ -8,6 +8,7 @@ import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 
 
@@ -22,14 +23,25 @@ public class BuscarUbicacionesBean implements Serializable{
     private Boolean abrirBuscadorUbicacion;
     private String nombreBuscar;
     private Integer idBuscar;
+    
+    @Inject
+    UbicacionBean ubicacionesBean;
 
+    public void buscarUbicaciones(){        
+        ubicacionesBean.buscarUbicaciones(idBuscar, nombreBuscar);        
+    }
+    
     public void cargarBuscadorUbicaciones() {
         abrirBuscadorUbicacion=true;
         Utilidad.actualizarElemento("dlgbuscarUbicaciones");
+        Utilidad.mensajeInfo("SICOVI", "Buscador de Ubicaciones. Por favor escriba los parametros con los cuales desea buscar.");
     }
 
     public void cancelarBuscador() {
         abrirBuscadorUbicacion = false;
+        idBuscar=null;
+        nombreBuscar="";
+        Utilidad.actualizarElemento("dlgbuscarUbicaciones");
     }
 
     public BuscarUbicacionesBean() {

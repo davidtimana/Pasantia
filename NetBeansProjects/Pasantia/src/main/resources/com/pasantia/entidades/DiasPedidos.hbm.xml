@@ -1,38 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 17/08/2013 10:58:34 AM by Hibernate Tools 3.2.1.GA -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="CasinoPasantia" name="com.pasantia.entidades.DiasPedidos" table="Dias_Pedidos">
-    <id name="idDiasPedidos" type="java.lang.Integer">
-      <column name="idDias_Pedidos"/>
-      <generator class="identity"/>
-    </id>
-    <property name="lunes" type="int">
-      <column name="lunes" not-null="true"/>
-    </property>
-    <property name="martes" type="int">
-      <column name="martes" not-null="true"/>
-    </property>
-    <property name="miercoles" type="int">
-      <column name="miercoles" not-null="true"/>
-    </property>
-    <property name="jueves" type="int">
-      <column name="jueves" not-null="true"/>
-    </property>
-    <property name="viernes" type="int">
-      <column name="viernes" not-null="true"/>
-    </property>
-    <property name="sabado" type="int">
-      <column name="sabado" not-null="true"/>
-    </property>
-    <property name="domingo" type="int">
-      <column name="domingo" not-null="true"/>
-    </property>
-    <set inverse="true" name="catalogoVentas">
-      <key>
-        <column name="fk_id_ds_pedido" not-null="true"/>
-      </key>
-      <one-to-many class="com.pasantia.entidades.CatalogoVenta"/>
-    </set>
-  </class>
+    <class name="com.pasantia.entidades.DiasPedidos" table="Dias_Pedidos" catalog="CasinoPasantia">
+        <id name="idDiasPedidos" type="java.lang.Integer">
+            <column name="idDias_Pedidos" />
+            <generator class="identity" />
+        </id>
+        <property name="lunes" type="int">
+            <column name="lunes" not-null="true" />
+        </property>
+        <property name="martes" type="int">
+            <column name="martes" not-null="true" />
+        </property>
+        <property name="miercoles" type="int">
+            <column name="miercoles" not-null="true" />
+        </property>
+        <property name="jueves" type="int">
+            <column name="jueves" not-null="true" />
+        </property>
+        <property name="viernes" type="int">
+            <column name="viernes" not-null="true" />
+        </property>
+        <property name="sabado" type="int">
+            <column name="sabado" not-null="true" />
+        </property>
+        <property name="domingo" type="int">
+            <column name="domingo" not-null="true" />
+        </property>
+        <set name="catalogoVentas" inverse="true">
+            <key>
+                <column name="fk_id_ds_pedido" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.CatalogoVenta" />
+        </set>
+    </class>
 </hibernate-mapping>

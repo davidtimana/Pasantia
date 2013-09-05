@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-08-2013 a las 20:13:02
+-- Tiempo de generación: 04-09-2013 a las 19:10:04
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.7
 
@@ -9302,7 +9302,7 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idCategoria`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encarga de guardar informacion de la categoria' AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encarga de guardar informacion de la categoria' AUTO_INCREMENT=23 ;
 
 --
 -- Volcado de datos para la tabla `Categoria`
@@ -9319,7 +9319,15 @@ INSERT INTO `Categoria` (`idCategoria`, `descripcion`) VALUES
 (8, 'GRANOS'),
 (9, 'ALMUERZO'),
 (10, 'DESAYUNO'),
-(11, 'CENA');
+(11, 'CENA'),
+(12, 'PRUEBA 1'),
+(13, 'PRUEBA 2'),
+(14, 'PRUEBA 3'),
+(15, 'PRUEBA 4'),
+(16, 'PRUEBA 5'),
+(17, 'PRUEBA 6'),
+(21, 'PRUEBA 10'),
+(22, 'PROBANDO NUEVAMENTE');
 
 -- --------------------------------------------------------
 
@@ -12896,6 +12904,30 @@ CREATE TABLE IF NOT EXISTS `Forma_De_Pagar` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `Imagen`
+--
+
+CREATE TABLE IF NOT EXISTS `Imagen` (
+  `secimagen` int(11) NOT NULL AUTO_INCREMENT,
+  `direccion` varchar(100) NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  `principal` int(11) NOT NULL,
+  PRIMARY KEY (`secimagen`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `Imagen`
+--
+
+INSERT INTO `Imagen` (`secimagen`, `direccion`, `titulo`, `descripcion`, `principal`) VALUES
+(1, 'resources/img/batallon1.jpg', 'Escudo', 'Escuela De Suboficiales', 1),
+(2, 'resources/img/batallon2.jpg', 'prueba', 'prueba', 1),
+(3, 'resources/img/batallon3.jpg', 'prueba', 'prueba', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `Inventario`
 --
 
@@ -13287,7 +13319,7 @@ CREATE TABLE IF NOT EXISTS `Rol` (
   `idRol` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `Rol`
@@ -13297,7 +13329,8 @@ INSERT INTO `Rol` (`idRol`, `descripcion`) VALUES
 (1, 'ADMINISTRADOR'),
 (2, 'VENDEDOR'),
 (3, 'PROVEEDOR'),
-(4, 'CLIENTE');
+(4, 'CLIENTE'),
+(5, 'SDFSDF');
 
 -- --------------------------------------------------------
 
@@ -13309,7 +13342,16 @@ CREATE TABLE IF NOT EXISTS `Sexo` (
   `idSexo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_sexo` varchar(45) NOT NULL,
   PRIMARY KEY (`idSexo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `Sexo`
+--
+
+INSERT INTO `Sexo` (`idSexo`, `nombre_sexo`) VALUES
+(1, 'Masculino'),
+(2, 'Femenino'),
+(3, 'Otro');
 
 -- --------------------------------------------------------
 
@@ -13355,7 +13397,7 @@ CREATE TABLE IF NOT EXISTS `Ubicacion` (
   `idUbicacion` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idUbicacion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encargara de guardar informacion de la ubicaci' AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encargara de guardar informacion de la ubicaci' AUTO_INCREMENT=32 ;
 
 --
 -- Volcado de datos para la tabla `Ubicacion`
@@ -13367,13 +13409,28 @@ INSERT INTO `Ubicacion` (`idUbicacion`, `descripcion`) VALUES
 (3, 'BODEGA 1'),
 (4, 'BODEGA 2'),
 (5, 'BODEGA 3'),
-(6, 'BODEGA 4'),
+(6, 'BODEGA 4 PRUEBA 3'),
 (7, 'BODEGA 5'),
 (8, 'BODEGA 6'),
 (9, 'BODEGA 7'),
 (10, 'BODEGA 8'),
 (11, 'BODEGA 9'),
-(12, 'BODEGA 10');
+(12, 'BODEGA 10'),
+(13, 'PRUEBA GUARDADO'),
+(14, 'PROBANDO CON ESTILOS'),
+(15, 'PRUEBA ZINDEX'),
+(16, 'PRUEBA'),
+(17, 'PRUEBA OTRA VEZ'),
+(18, 'PRUEBA NUEVAMENTE'),
+(19, 'PRUEBA MENSAJE'),
+(20, 'PRUEBA'),
+(21, 'PRUEBA MAS'),
+(22, 'PRUEBA FINAL'),
+(23, 'OTRA PRUEBA MAS'),
+(27, 'PRUEBA 10002'),
+(28, 'PRUEBA10003'),
+(29, 'SDFSASDFS'),
+(31, 'PRUEBA ANCHICO 321');
 
 -- --------------------------------------------------------
 

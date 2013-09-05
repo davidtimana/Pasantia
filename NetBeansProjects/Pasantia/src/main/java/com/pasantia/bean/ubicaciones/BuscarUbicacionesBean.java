@@ -6,6 +6,7 @@ package com.pasantia.bean.ubicaciones;
 
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ public class BuscarUbicacionesBean implements Serializable{
         Utilidad.actualizarElemento("dlgbuscarUbicaciones");
         Utilidad.mensajeInfo("SICOVI", "Buscador de Ubicaciones. Por favor escriba los parametros con los cuales desea buscar.");
     }
-
+    
     public void cancelarBuscador() {
         abrirBuscadorUbicacion = false;
         idBuscar=null;

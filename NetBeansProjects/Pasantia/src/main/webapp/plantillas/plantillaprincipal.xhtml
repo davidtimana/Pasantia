@@ -8,6 +8,7 @@
 
     <h:head>
         <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
+        <!--<script src="http://maps.google.com/maps/api/js?sensor=true|false" type="text/javascript"></script>-->
 
 
 
@@ -83,21 +84,80 @@
         <h:form id="frmbuscarubicaciones">        
             <ui:include src="../paginas/articulos/buscarUbicaciones.xhtml" />
         </h:form>
+        
+        <!-- Dialog para Agregar Categorias -->
+        <h:form id="frmagregarcategoria">        
+            <ui:include src="../paginas/articulos/AgregarCategoria.xhtml" />
+        </h:form>
+        
+        <!-- Dialog para Editar Categorias -->
+        <h:form id="frmeditarcategoria">        
+            <ui:include src="../paginas/articulos/EditarCategoria.xhtml" />
+        </h:form>
+        
+         <!-- Dialog para Eliminar Categorias -->
+        <h:form id="frmeliminarcategoria">        
+            <ui:include src="../paginas/articulos/EliminarCategoria.xhtml" />
+        </h:form>
+         
+          <!-- Dialog para buscar Categorias -->
+        <h:form id="frmbuscarcategoria">        
+            <ui:include src="../paginas/articulos/BuscarCategoria.xhtml" />
+        </h:form>
 
 
         <p:layout fullPage="true" >
 
-            <p:layoutUnit id="top" position="north" size="8%" style="margin-left: auto;margin-right: auto;">
-                <div  style="width: 98%;margin-left: auto;margin-right: auto;"   >
-                    <h:form>
+            
+            <p:layoutUnit id="top" position="north"   size="14%">
+                <div style="top:  0;position: absolute;width: 80%;margin-left: 22%;margin-right: 10%;z-index: 50000">
 
-                        <p:menubar autoDisplay="false" style="margin-left: auto;margin-right: auto;">
-                            <p:submenu label="Productos" icon="ui-icon-document">
+                    <h:panelGrid columns="3" cellpadding="1">
+                        
+                            <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
+                            <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
+                            <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
+                        
+                    </h:panelGrid>
+
+
+                </div>
+            </p:layoutUnit>
+            
+
+            <div style="bottom: 0;position: absolute;width: 80%;z-index: 500000;text-align: center;margin-left: 8%;margin-right: 10%">
+                <p:layoutUnit id="bottom" position="south" size="10%" header="Estado">
+
+
+                    <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    
+                    <ui:insert name="abajo">
+
+
+                    </ui:insert>
+
+
+                </p:layoutUnit>
+            </div>                
+
+            
+           
+
+
+            <p:layoutUnit id="right" position="east" size="17%" header="Menu" resizable="true" collapsible="true">
+
+                <h:form>
+                    <div  style="width: 98%;margin-left: auto;margin-right: auto;"   >
+                        <p:spacer width="5%" />
+                        <p:slideMenu style="width: 100%" >  
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Productos" icon="ui-icon-cart">  
                                 <p:submenu label="Articulos" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Articulos" action="#{navegacion.ir_a_Gestion_Articulos()}" />
                                     <p:menuitem value="Listar Articulos" action="#{navegacion.ir_a_Listar_Articulos()}" />
                                 </p:submenu>
-                                <p:submenu label="Ubicaciones" icon="ui-icon-contact">
+                                <p:submenu label="Ubicaciones" icon="ui-icon-pin-s">
                                     <p:menuitem value="Gestion De Ubicaciones" action="#{navegacion.ir_a_Gestion_Ubicaciones()}" />
                                     <p:menuitem value="Listar Ubicaciones" action="#{navegacion.ir_a_Listar_Ubicaciones()}" />
                                 </p:submenu>
@@ -108,29 +168,33 @@
                                 <p:submenu label="Precios De Compra" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Precios" action="#{navegacion.ir_a_Gestion_Precios_Compra()}" />
                                     <p:menuitem value="Listar Variaciones" action="#{navegacion.ir_a_Listar_Variaciones()}" />
-                                </p:submenu>
-
+                                </p:submenu>  
                             </p:submenu>
-
-                            <p:submenu label="Ventas" icon="ui-icon-pencil">
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Ventas" icon="ui-icon-shuffle">
+                                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
+                                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                            </p:submenu>  
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Inventario" icon="ui-icon-folder-open">  
                                 <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
                                 <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
                             </p:submenu>
-
-                            <p:submenu label="Inventario" icon="ui-icon-help">
-                                <p:menuitem value="Contents" url="#" />
-                                <p:submenu label="Search" icon="ui-icon-search">
-                                    <p:submenu label="Text">
-                                        <p:menuitem value="Workspace" url="#" />
-                                    </p:submenu>
-                                    <p:menuitem value="File" url="#" />
-                                </p:submenu>
-                            </p:submenu>
-                            <p:submenu label="Compras" icon="ui-icon-pencil">
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Compras" icon="ui-icon-suitcase">  
                                 <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
                                 <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
                             </p:submenu>
-                            <p:submenu label="Acceso y Seguridad" icon="ui-icon-pencil">
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Acceso y Seguridad" icon="ui-icon-locked">  
                                 <p:submenu label="Usuario" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Roles()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Roles()}" />
@@ -144,7 +208,10 @@
                                     <p:menuitem value="Listar Cargos" action="#{navegacion.ir_a_Listar_Roles()}" />
                                 </p:submenu>
                             </p:submenu>
-                            <p:submenu label="Configuracion Punto De Venta" icon="ui-icon-pencil">
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Configuración Punto De Venta" icon="ui-icon-wrench">  
                                 <p:submenu label="Divisiones" icon="ui-icon-contact">
                                     <p:menuitem value="Gestionar De Divisiones" action="#{navegacion.ir_a_Gestionar_Divisiones()}" />
                                     <p:menuitem value="Listar Divisiones" action="#{navegacion.ir_a_Listar_Roles()}" />
@@ -158,106 +225,62 @@
                                     <p:menuitem value="Listar Casinos" action="#{navegacion.ir_a_Listar_Roles()}" />
                                 </p:submenu>
                             </p:submenu>
-                            <p:submenu label="Usuarios Del Sistema" icon="ui-icon-document">
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Usuarios Del Sistema" icon="ui-icon-person">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
-
-                                <p:submenu label="Precios De Compra" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Precios" action="#{navegacion.ir_a_Gestion_Precios_Compra()}" />
-                                    <p:menuitem value="Listar Variaciones" action="#{navegacion.ir_a_Listar_Variaciones()}" />
-                                </p:submenu>
-
                             </p:submenu>
-
-                            <p:submenu label="Parametros" icon="ui-icon-document">
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Parametros" icon="ui-icon-gear">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
-
-                                <p:submenu label="Precios De Compra" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Precios" action="#{navegacion.ir_a_Gestion_Precios_Compra()}" />
-                                    <p:menuitem value="Listar Variaciones" action="#{navegacion.ir_a_Listar_Variaciones()}" />
+                            </p:submenu>
+                            
+                            <p:separator />  
+                            
+                            <p:submenu label="Ayuda" icon="ui-icon-help">  
+                                <p:submenu label="Usuarios" icon="ui-icon-contact">
+                                    <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
+                                    <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
-
                             </p:submenu>
-
-                            <p:submenu label="Ayuda" icon="ui-icon-pencil">
-                                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
-                                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                            
+                            <p:submenu label="Acerca De" icon="ui-icon-contact">  
+                                <p:submenu label="Usuarios" icon="ui-icon-contact">
+                                    <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
+                                    <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
+                                </p:submenu>
                             </p:submenu>
-                            <p:submenu label="Acerca De" icon="ui-icon-pencil">
-                                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
-                                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
-                            </p:submenu>
-                        </p:menubar>
-                    </h:form>
-                </div>
-            </p:layoutUnit>
-
-            <p:layoutUnit id="bottom" position="south" size="10%" >
-                <div  style="width: 90%;margin-left: auto;margin-right: auto;"   >
-                    <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    
-                    <ui:insert name="abajo">
-
-
-                    </ui:insert>
-                </div>                
-            </p:layoutUnit>
-
-            <!--<p:layoutUnit id="left" position="west" 
-                          size="270" resizable="true" 
-                          collapsible="true" header="Opciones" 
-                          minSize="200" style="display: none">
-                <p:accordionPanel id="acordenIzquierda">
-                    <p:tab title="Fecha y Horas Actuales">
-                        <br />
-                        <p:calendar mode="inline" navigator="none" />
-                        <br />
-                    </p:tab>
-
-                    <p:tab title="Usuario">
-                        <h:outputText value="Menu 2 Content" />
-                    </p:tab>
-
-                    <p:tab title="Menu 3">
-                        <h:outputText value="Menu 3 Content" />
-                    </p:tab>
-                </p:accordionPanel>-->
-            <ui:insert name="izquierda">
-
-            </ui:insert>
-
-
-            <p:layoutUnit id="right" position="east" size="15%" header="Gallery" resizable="true" closable="true" collapsible="true"
-                          style="text-align:center">
-
-                <p:accordionPanel id="acordenIzquierda">
-
-                    <p:tab title="Usuario">
-                        <h:outputText value="Menu 2 Content" />
-                    </p:tab>
-
-                    <p:tab title="Menu 3">
-                        <h:outputText value="Menu 3 Content" />
-                    </p:tab>
-                </p:accordionPanel>
-
+                            
+                        </p:slideMenu>  
+                    </div>
+                </h:form>
                 <ui:insert name="derecha">
 
                 </ui:insert>
 
             </p:layoutUnit>
 
-            <p:layoutUnit id="center" position="center">
-                <div  style="width: 80%;margin-left: auto;margin-right: auto;border: 1px;-moz-border-radius:3px;"   >
-                    <ui:insert name="cuerpo" >
+            <p:layoutUnit id="center" position="center">                
+                <div  style="width: 80%;margin-left: auto;margin-right: auto;border: 1px;-moz-border-radius:3px;margin-top: 2%"   >
+                    <p:panel>
+                        <f:facet name="header">
+                            <ui:insert name="tituloInsercion" />
+                        </f:facet>
+                        <ui:insert name="cuerpo" >
 
-                        <!-- AQUI IRA TODO LO DEL CUERPO DE LA PAGINA -->  
+                            <!-- AQUI IRA TODO LO DEL CUERPO DE LA PAGINA -->  
 
-                    </ui:insert>
+                        </ui:insert>
+                    </p:panel>
                 </div>
             </p:layoutUnit>
 

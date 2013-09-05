@@ -2,153 +2,77 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-    
 
-        <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                        xmlns:ui="http://java.sun.com/jsf/facelets"
-                        xmlns:h="http://java.sun.com/jsf/html"
-                        xmlns:p="http://primefaces.org/ui"
-                        template="./../../plantillas/plantillaprincipal.xhtml" 
-                        xmlns:f="http://java.sun.com/jsf/core">
 
-            <ui:define name="titulo">
-                Gestion De Categorias - SICOVI
-            </ui:define>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../plantillas/plantillaprincipal.xhtml" 
+                xmlns:f="http://java.sun.com/jsf/core">
 
-            <ui:define name="abajo">
-                abajo
-            </ui:define>
+    <ui:define name="titulo">
+        Gestion De Categorias - SICOVI
+    </ui:define>
 
-            <ui:define name="izquierda">
-                izquierda
-            </ui:define>
+    <ui:define name="abajo">
 
-            <ui:define name="derecha">
-                derecha
-            </ui:define>
+    </ui:define>
 
-            <ui:define name="cuerpo">
-                <p:spacer width="10" height="5" /><br/>
-                <h:form>
-                    <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
-                        <h:panelGrid columns="2" cellpadding="10">  
-                            <p:commandButton value="&nbsp;Nueva Categoria" title="Crear Una Nueva Categoria" image="icon-add" onclick="dlgNuevo.show();"
-                                     actionListener="#{categoriaBean.prepararGuardadoDelaCategoria()}" />
-                            <h:outputText value="Agregar una nueva categoria para los articulos."/>
-                        </h:panelGrid>  
-                    </p:fieldset>  
-                    
-                </h:form><br/>
-                <p:spacer width="10" height="5" />
+    <ui:define name="tituloInsercion">
+        Gestion De Categorias
+    </ui:define>
+
+    <ui:define name="derecha">
+
+    </ui:define>
+
+    <ui:define name="cuerpo">
+        <p:spacer width="10" height="5" /><br/>
+        <h:form>
+            <p:fieldset legend="Opciones" >                         
+                <p:dock position="top" proximity="150" >  
+                    <p:menuitem value="Inicio" icon="/resources/img/Home-256.png"  title="Inicio" action="#{navegacion.retornarPaginaAdministrador()}"/>  
+                    <p:menuitem value="Nuevo" icon="/resources/img/agregar.png" actionListener="#{agregarCategoriaBean.cargarGuardadoCategoria()}" title="Nueva Categoria" />  
+                    <p:menuitem value="Buscar" icon="/resources/img/buscar.png"  actionListener="#{buscarCategoriaBean.cargarBuscadorUbicaciones()}" title="Buscar Ubicación" />                           
+                </p:dock>
+            </p:fieldset>  
+
+        </h:form>    
+        
+        
+        <!--Form: Tabla Categorias -->                           
+        <h:form id="frmcategoria">        
+            <p:dataTable id="tblcategorias" var="categoria" value="#{categoriaBean.categorias}" sortMode="multiple"  emptyMessage="No hay Categorias disponibles"
+                         paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+
+                <f:facet name="header">  
+                    Lista de Categorias 
+                </f:facet> 
                 
-                <!--Form: Tabla Categorias -->                           
-                <h:form id="frmcategoria">        
-                    <p:dataTable id="datatable" var="categoria" value="#{categoriaBean.categorias}" sortMode="multiple"  emptyMessage="No hay Categorias disponibles"
-                                 paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
-                                 {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
-                        
-                        <f:facet name="header">  
-                            Lista de Categorias 
-                        </f:facet> 
-                        <p:column headerText="ID" style="text-align: center" sortBy="#{categoria.idCategoria}" filterBy="#{categoria.idCategoria}">
-                            <f:facet name="header">  
-                                Codigo Categoria 
-                            </f:facet>  
-                            <h:outputText value="#{categoria.idCategoria}" />  
-                        </p:column>
-                        <p:column headerText="Descripcion" style="text-align: center" sortBy="#{categoria.descripcion}" filterBy="#{categoria.descripcion}">  
-                            <h:outputText value="#{categoria.descripcion}"  />  
-                        </p:column>
-                        <p:column headerText="Acciones" style="width:8%; text-align: center">
-                            <p:commandButton  update=":frmeditarcategoria"   actionListener="#{categoriaBean.prepararActualizadoDeCategoria(categoria.idCategoria, categoria.descripcion)}" 
-                                      title="&nbsp;Editar" image="icon-edit" />
-                            <p:commandButton  update=":frmEliminar" title="&nbsp;Eliminar" image="icon-delete" actionListener="#{categoriaBean.prepararEliminarCategoria(categoria.idCategoria, categoria.descripcion)}" 
-                                              />  
-                        </p:column>
-                        <f:facet name="footer">  
-                            En total hay #{categoriaBean.totalCategorias()} categorias.  
-                        </f:facet>
-                   </p:dataTable>      
-                </h:form>
-                
-                
-                <!--Form: Nueva Categoria -->          
-                  <h:form id="frmnuevacategoria">
-                    <p:dialog header="Creacion de una nueva categoria de los productos" widgetVar="dlgNuevo" resizable="false" 
-                              id="dlgNuevo" showEffect="explode" hideEffect="explode"  modal="false"  width="550" binding="#{categoriaBean.dlgNuevaCategoria}">  
-                        <p:growl id="growl"  sticky="true"  />
-                        <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  /> 
-                            <h:panelGrid id="pgNuevo" columns="2" cellpadding="4" style="margin:0 auto;">  
-
-                               
-                                <h:outputText value="Descripción De La Categoria" />  
-
-                                <p:inputText value="#{categoriaBean.descripcion}" style="width: 200px" binding="#{ubicacionBean.txtdescripcioneditar}" />
-
-
-
-                        </h:panelGrid>  
-                        <p:separator id="customSeparator2" style="width:500px;height:8px" />
-                        <p:commandButton  update=":frmcategoria:datatable,growl,dlgNuevo"  
-                                          action="#{categoriaBean.guardarNuevaCategoria()}" value="Guardar" 
-                                          title="&nbsp;Guardar" image="icon-guardar" />
-                        <p:commandButton  update=":frmcategoria" onclick="dlgNuevo.hide();" value="Cancelar" title="&nbsp;Cancelar" 
-                                          image="icon-cancel" />   
-                       
-                    </p:dialog>
-                </h:form> 
-                
-        <!--Form: Editar Categoria -->
-        <h:form id="frmeditarcategoria">
-            <p:dialog header="Edicion De Una Categoria Para Los Articulos" widgetVar="dlgEditar" resizable="false" 
-                      id="dlgEditar" modal="false" binding="#{categoriaBean.dlgeditarcategoria}">  
-                <p:growl id="growlEditar"  sticky="true" />  
-                <p:messages id="messageseditar" showDetail="true" autoUpdate="true" closable="true" /> 
-                    <h:panelGrid id="pgEditar" columns="2" cellpadding="4" style="margin:0 auto;">  
-                        
-                     
-                        <h:outputText value="Id De La Categoria" /> 
-                        <h:outputText value="Descripción De La Categoria" />  
-                        
-                        <p:inputText value="#{categoriaBean.id}" style="width: 200px" binding="#{categoriaBean.txtideditar}"/>                       
-                        <p:inputText value="#{categoriaBean.descripcion}" style="width: 200px"  binding="#{categoriaBean.txtdescripcioning}" />
-                        
-                        
-                </h:panelGrid>  
-                <p:separator id="customSeparator" style="width:500px;height:8px" />
-                <p:commandButton  update=":frmcategoria:datatable,growlEditar,dlgEditar" 
-                                  actionListener="#{categoriaBean.actualizarCategoria()}" value="Actualizar" 
-                                  title="&nbsp;Actualizar" image="icon-guardar" />
-                <p:commandButton  update=":frmcategoria:datatable"  onclick="dlgEditar.hide();" value="Cancelar" title="&nbsp;Cancelar" 
-                                  image="icon-cancel" />  
-            </p:dialog>
+                <p:column headerText="Descripcion" style="text-align: center" sortBy="#{categoria.descripcion}" >  
+                    <h:outputText value="#{categoria.descripcion}"  />  
+                </p:column>
+                <p:column headerText="Acciones" style="width:8%; text-align: center">
+                    <p:commandButton  title="Editar" image="icon-edit" actionListener="#{editarCategoriaBean.cargarEditarCategorias(categoria)}"/>
+                    <p:commandButton   title="Eliminar" image="icon-delete" actionListener="#{eliminarCategoriaBean.cargarEliminadoCategoria(categoria)}"                                />  
+                </p:column>
+                <f:facet name="footer">  
+                    En total hay #{categoriaBean.totalCategorias()} categorias.  
+                </f:facet>
+            </p:dataTable>      
         </h:form>
                 
-        <!--Form: Eliminar Ubicacion -->                    
-        <h:form id="frmEliminar">  
-                      
-            <p:growl id="growlEliminar"  sticky="true" />  
-            
-            <p:dialog id="dlgEliminar"  
-                      header="Eliminar Categoria" widgetVar="dlgEliminar" showEffect="explode" hideEffect="explode" binding="#{categoriaBean.dlgeliminarcomfirmar}">  
-                <h:panelGrid id="pgEliminar" columns="2" cellpadding="2" style="margin:0 auto;">  
-                    <h:outputText value="Id De La Categoria" /> 
-                    <p:inputText value="#{categoriaBean.id}" style="width: 200px" binding="#{categoriaBean.txtideliminar}"/>
-                </h:panelGrid>
-                <p:commandButton  update=":frmcategoria:datatable,growlEliminar,dlgEliminar" 
-                                  actionListener="#{categoriaBean.eliminarCategoria()}" value="Eliminar" 
-                                  title="&nbsp;Actualizar" image="icon-guardar" />
-                <p:commandButton  update=":frmcategoria:datatable" onclick="dlgEliminar.hide();"  value="Cancelar" title="&nbsp;Cancelar" 
-                                  image="icon-cancel" />                       
-            </p:dialog>  
-            
-        </h:form>      
                 
                 
-                
-            </ui:define>
 
-        </ui:composition>
 
-    
+
+
+    </ui:define>
+
+</ui:composition>
+
+
 

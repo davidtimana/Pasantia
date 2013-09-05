@@ -9,25 +9,25 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
-        
-         <p:dialog header="Edicion De Una Ubicaciòn Para Los Articulos" widgetVar="dlgEditar" resizable="false" 
-                   id="dlgEditarUbicacion" modal="true" visible="#{ubicacionBean.abrirEdicionUbicacion}" width="40%"
-                   onHide="#{ubicacionBean.cancalarEdicionUbicacion()}">  
-                 
-                    <h:panelGrid id="pgEditar" columns="2" cellpadding="1" style="width: 100%;text-align: center" >                 
-                         
-                        <h:outputText value="Descripción De La Ubicacion" />                     
-                        <p:inputText value="#{ubicacionBean.ubicacion.descripcion}" style="width: 100%"   />
-                        <p:inputText value="#{ubicacionBean.ubicacion.idUbicacion}" style="display: none"   />
-                        
-                        
-                </h:panelGrid>  
-                <p:separator id="customSeparator" style="width:95%;height:8%" />
-                <p:commandButton   
-                                  actionListener="#{ubicacionBean.actualizarUbicacion()}" value="Actualizar" 
-                                  title="Actualizar" image="icon-guardar" />
-                <p:commandButton  actionListener="#{ubicacionBean.cancalarEdicionUbicacion()}" value="Cancelar" 
-                                  title="Cancelar" image="icon-cancel" />  
-            </p:dialog>
+
+        <p:dialog header="Edicion De Una Ubicaciòn Para Los Articulos" widgetVar="dlgEditar" resizable="false" 
+                  id="dlgEditarUbicacion" modal="true" visible="#{ubicacionBean.abrirEdicionUbicacion}" width="40%"
+                  closable="false">  
+
+            <h:panelGrid id="pgEditar" columns="2" cellpadding="1" style="width: 100%;text-align: center" >                 
+
+                <h:outputText value="Descripción De La Ubicacion" />                     
+                <p:inputText value="#{ubicacionBean.ubicacion.descripcion}" style="width: 70%;#{ubicacionBean.estiloError}" id='txtdesubicedit'  />
+                <p:inputText value="#{ubicacionBean.ubicacion.idUbicacion}" style="display: none"   />
+
+
+            </h:panelGrid>  
+            <p:separator id="customSeparator" style="width:95%;height:8%" />
+            <p:commandButton   
+                actionListener="#{ubicacionBean.actualizarUbicacion()}" value="Actualizar" 
+                title="Actualizar" image="ui-icon-disk" />
+            <p:commandButton  actionListener="#{ubicacionBean.cancalarEdicionUbicacion()}" value="Cancelar" 
+                              title="Cancelar" image="ui-icon-cancel" />  
+        </p:dialog>
     </ui:composition>
 </html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+        
+        <p:dialog header="Edicion De Una Categoria Para Los Articulos" widgetVar="dlgEditarCategoria" resizable="false" 
+                  id="dlgEditarCategoria" modal="true" visible="#{editarCategoriaBean.abrirEditarCategoria}" width="40%"
+                  closable="false">  
+
+            <h:panelGrid columns="2" cellpadding="1" style="width: 100%;text-align: center" >                 
+
+                <h:outputText value="Descripción De La Ubicacion" />                     
+                <p:inputText value="#{editarCategoriaBean.categoria.descripcion}" style="width: 70%;#{editarCategoriaBean.estiloError}" id='txtdescat'  />
+                <p:inputText value="#{editarCategoriaBean.categoria.idCategoria}" style="display: none"   />
+
+
+            </h:panelGrid>  
+            <p:separator id="customSeparator" style="width:95%;height:8%" />
+            <p:commandButton   
+                actionListener="#{editarCategoriaBean.guardarEdicionCategoria()}" value="Actualizar" 
+                title="Actualizar" image="ui-icon-disk" />
+            <p:commandButton  actionListener="#{editarCategoriaBean.cancelarEdicionCategoria()}" value="Cancelar" 
+                              title="Cancelar" image="ui-icon-cancel" />  
+        </p:dialog>
+        
+        
+    </ui:composition>
+</html>

@@ -15,35 +15,39 @@
             </ui:define>
 
             <ui:define name="abajo">
-                abajo
+                
                     
             </ui:define>
 
-            <ui:define name="izquierda">
-                izquierda
-            </ui:define>
+            
 
             <ui:define name="derecha">
-                derecha
+                
+            </ui:define>
+            <ui:define name="tituloInsercion">
+                Gestion De Ubicaciones
             </ui:define>
             
             <ui:define  name="cuerpo">
                 <p:spacer width="10" height="5" /><br/>
                 <h:form>
-                    <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
-                        <h:panelGrid columns="2" cellpadding="1">  
-                            <p:commandButton value="&nbsp;Nueva Ubicacion" title="Crear Una Nueva Ubicacion" image="icon-add" 
-                                     actionListener="#{ubicacionBean.prepararGuardadoDelaUbicacion()}" />
-                            <p:commandButton value="Buscar Ubicación" title="Buscar Ubicación" image="ui-icon-search" 
-                                             actionListener="#{buscabicacionesBean.cargarBuscadorUbicaciones()}" /> 
-                            
-                        </h:panelGrid>  
-                    </p:fieldset>  
+                    
+                    <p:fieldset legend="Opciones" >         
+                        
+                        <p:dock position="top" proximity="150" >  
+                            <p:menuitem value="Inicio" icon="/resources/img/Home-256.png"  title="Inicio" action="#{navegacion.retornarPaginaAdministrador()}"/>  
+                            <p:menuitem value="Nuevo" icon="/resources/img/agregar.png" actionListener="#{ubicacionBean.prepararGuardadoDelaUbicacion()}" title="Nueva Ubicación" />  
+                            <p:menuitem value="Buscar" icon="/resources/img/buscar.png" actionListener="#{buscabicacionesBean.cargarBuscadorUbicaciones()}" title="Buscar Ubicación" />                           
+                        </p:dock>
+                        
+                          
+                    </p:fieldset>
+                    
                     
                 </h:form><br/>                
                         
                 <!--Form: Tabla Ubicacion -->                           
-                <h:form id="frmubicacion">                      
+                <h:form id="frmubicacion" >                      
                     <p:dataTable id="datatableUbicaciones" var="ubicacion" value="#{ubicacionBean.ubicaciones}" 
                                  sortMode="multiple"  emptyMessage="No hay Ubicaciones disponibles"
                                  paginator="true" rows="10" paginatorPosition="bottom" 

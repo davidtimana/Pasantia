@@ -7,34 +7,32 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        
-        <p:dialog header="Creacion de una nueva ubicacion de los productos" widgetVar="dlgNuevo" 
+
+        <p:dialog header="Creacion de una nueva ubicacion de los productos"  
                   resizable="false" id="dlgNuevaUbicacion" 
                   showEffect="explode" hideEffect="explode"  
                   modal="true"  width="40%" visible="#{ubicacionBean.abrirNuevoUbicacion}"
-                  onHide="#{ubicacionBean.cancalarNuevaUbicacion()}">  
-                        
-                            <h:panelGrid id="pgNuevo" columns="2" cellpadding="4" style="margin:0 auto;">  
+                  onHide="#{ubicacionBean.cancalarNuevaUbicacion()}" closable="true">  
 
-                               
-                                <h:outputText value="Descripción De La Ubicacion:" />  
-
-                                <p:inputText value="#{ubicacionBean.ubicacion.descripcion}" style="width: 200px" />
+            <h:panelGrid id="pgNuevo" columns="2" cellpadding="1" style="margin:0 auto;">  
 
 
+                <h:outputLabel value="Descripción De La Ubicación:"  /> 
+                <p:inputText value="#{ubicacionBean.ubicacion.descripcion}" id="txtnombreubic" title="#{ubicacionBean.estiloError}" 
+                             style="width: 70%;#{ubicacionBean.estiloError}"  />
+            </h:panelGrid>  
+            <p:separator id="customSeparator2" style="width:95%;height:8%" />
+            <p:commandButton    
+                actionListener="#{ubicacionBean.guardarNuevaUbicacion()}" value="Guardar" 
+                title="Guardar" image="ui-icon-disk" />
+            <p:commandButton  value="Cancelar" title="Cancelar" 
+                              image="ui-icon-cancel" actionListener="#{ubicacionBean.cancalarNuevaUbicacion()}"/>   
 
-                        </h:panelGrid>  
-                        <p:separator id="customSeparator2" style="width:95%;height:8%" />
-                        <p:commandButton    
-                                          actionListener="#{ubicacionBean.guardarNuevaUbicacion()}" value="Guardar" 
-                                          title="Guardar" image="icon-guardar" />
-                        <p:commandButton  value="Cancelar" title="Cancelar" 
-                                          image="icon-cancel" actionListener="#{ubicacionBean.cancalarNuevaUbicacion()}"/>   
-                       
-                    </p:dialog>
-        
-        
+        </p:dialog>
+
+
     </ui:composition>
 </html>

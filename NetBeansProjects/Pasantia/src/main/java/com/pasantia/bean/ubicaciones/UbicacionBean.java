@@ -10,6 +10,7 @@ import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -26,7 +27,8 @@ public class UbicacionBean implements Serializable{
 
     private Ubicacion ubicacion;
     private List<Ubicacion> ubicaciones; 
-    private Boolean abrirNuevoUbicacion,abrirEdicionUbicacion,abrirEliminarUbicacion;
+    private Boolean abrirNuevoUbicacion,abrirEdicionUbicacion,abrirEliminarUbicacion;    
+    private String estiloError;
     
     @Inject
     UbicacionDAO ubicacionDAO;
@@ -40,38 +42,42 @@ public class UbicacionBean implements Serializable{
             ubicaciones = ubicacionDAO.buscartodasUbicacionesxNombrexId(idUbicacion, nombreUbicacion);
         }
         if (ubicaciones.isEmpty()) {
+            if(idUbicacion==null){
+                idUbicacion=0;
+            }
             Utilidad.mensajePeligro("SICOVI.", "La busqueda de Ubicaciones con codigo: " + idUbicacion + " y Nombre: " + nombreUbicacion + ". No tuvo Resultados");
 
         } else {
             Utilidad.mensajeInfo("SICOVI.", "La busqueda devolvio: " + ubicaciones.size() + " Resultados.");
         }
-        //Utilidad.actualizarElemento("datatableUbicaciones");
-        for (Ubicacion ubicacion1 : ubicaciones) {
-            System.out.println("las ubicaciones buscadas son las siguientes--> "+ubicacion1.getDescripcion()+"la busqueda del id es-->"+Utilidad.buscarHtmlComponete("datatableUbicaciones").getClientId(FacesContext.getCurrentInstance()));
-        }
-        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("datatableUbicaciones").getClientId(FacesContext.getCurrentInstance()));
+        Utilidad.actualizarElemento("datatableUbicaciones");
+
 
     }
     
     //Metodos para gestionar nuevas ubicaciones
-    public void prepararGuardadoDelaUbicacion(){
-        System.out.println("llegando a preparar guardado de ubicación");
+    public void prepararGuardadoDelaUbicacion(){        
         abrirNuevoUbicacion=true;
         Utilidad.actualizarElemento("dlgNuevaUbicacion");        
     }    
-    public void guardarNuevaUbicacion() {
-        System.out.println("LLegue a guardar -->>>" + ubicacion.getDescripcion());
+    public void guardarNuevaUbicacion() {        
 
         if (ubicacion.getDescripcion().equals("")) {
-            Utilidad.mensajeFatal("Guardar Ubicación", "Error Al Guardar La Ubicacion Del Articulo descripcion requerida");
+            estiloError= Utilidad.estilosErrorInput();
+            Utilidad.actualizarElemento("txtnombreubic"); 
+            Utilidad.mensajeFatal("SICOVI", "Error Al Guardar La Ubicacion Del Articulo descripcion requerida");
         } else {
+            estiloError="";
             if (ubicacionDAO.insertarUbicacion(ubicacion)) {
-                Utilidad.mensajeInfo("Guardar Ubicación", "Ubicacion Guardada Exitosamente");
-                Utilidad.actualizarElemento("datatableUbicaciones");
-                abrirNuevoUbicacion = false;
-                Utilidad.actualizarElemento("dlgNuevaUbicacion");
+                Utilidad.mensajeInfo("SICOVI", "Ubicacion Guardada Exitosamente");
+                cargarUbicaciones();
+                Utilidad.actualizarElemento("datatableUbicaciones"); 
+                ubicacion=new Ubicacion();
+                Utilidad.actualizarElemento("txtnombreubic"); 
             } else {
-                Utilidad.mensajeFatal("Guardar Ubicación", "Error Al Guardar La Ubicacion");
+                
+                Utilidad.mensajeFatal("SICOVI", "Error Al Guardar La Ubicacion");
+                
             }
         }
 
@@ -79,35 +85,33 @@ public class UbicacionBean implements Serializable{
     }
     public void cancalarNuevaUbicacion(){
         ubicacion=new Ubicacion();
-        abrirNuevoUbicacion=false;
+        abrirNuevoUbicacion=false;   
+        estiloError="";
         Utilidad.actualizarElemento("dlgNuevaUbicacion");        
     }    
    
      //Metodos para gestionar actualizacion de  ubicaciones
-    public void prepararActualizadoDeUbicacion(Ubicacion u){
-        System.out.println("Preparando para actualizar una ubicacion con id:"+u.getIdUbicacion());
-        ubicacion=u;
-        System.out.println("Preparando para actualizar una ubicacion con id:"+ubicacion.getIdUbicacion());      
+    public void prepararActualizadoDeUbicacion(Ubicacion u){        
+        ubicacion=u;        
         abrirEdicionUbicacion=true;
-        Utilidad.actualizarElemento("dlgEditarUbicacion");
-       
-        
-        
+        Utilidad.actualizarElemento("dlgEditarUbicacion");      
     }
-    public void actualizarUbicacion() {
-        System.out.println("Actualizando ubicacion con descripcion: " + ubicacion.getDescripcion() + ubicacion.getIdUbicacion());
+    public void actualizarUbicacion() {        
 
         if (ubicacion.getDescripcion().equals("")) {
-            Utilidad.mensajeFatal("Actualizar Ubicación", "Error Al Actualizar La Ubicacion Del Articulo descripcion requerida");
+            Utilidad.mensajeFatal("SICOVI", "Error Al Actualizar La Ubicacion Del Articulo descripcion requerida");
+            estiloError= Utilidad.estilosErrorInput();
+            Utilidad.actualizarElemento("txtdesubicedit"); 
 
         } else {
             if (ubicacionDAO.actualizarUbicacion(ubicacion)) {
-                Utilidad.mensajeInfo("Actualizar Ubicación", "Ubicacion Actualizada Exitosamente");
+                Utilidad.mensajeInfo("SICOVI", "Ubicacion Actualizada Exitosamente");
+                cargarUbicaciones();
                 Utilidad.actualizarElemento("datatableUbicaciones");
                 abrirEdicionUbicacion = false;
                 Utilidad.actualizarElemento("dlgEditarUbicacion");
             } else {
-                Utilidad.mensajeFatal("Actualizar Ubicación", "Error Al Actualizar La Ubicacion");
+                Utilidad.mensajeFatal("SICOVI", "Error Al Actualizar La Ubicacion");
             }
             abrirEdicionUbicacion = false;
             Utilidad.actualizarElemento("dlgEditarUbicacion");
@@ -117,14 +121,13 @@ public class UbicacionBean implements Serializable{
     public void cancalarEdicionUbicacion(){
         ubicacion=new Ubicacion();
         abrirEdicionUbicacion=false;
+        estiloError="";
         Utilidad.actualizarElemento("dlgEditarUbicacion");        
     }
     
     //Metodos para gestionar la eliminacion de ubicaciones
-    public void prepararEliminacionUbicacion(Ubicacion u){
-        System.out.println("Preparando para eliminar una ubicacion con id:"+u.getIdUbicacion());
-        ubicacion=u;
-        System.out.println("Preparando para eliminar una ubicacion con id:"+ubicacion.getIdUbicacion());      
+    public void prepararEliminacionUbicacion(Ubicacion u){        
+        ubicacion=u;        
         abrirEliminarUbicacion=true;
         Utilidad.actualizarElemento("dlgeliminarUbicacion");
     }
@@ -135,10 +138,11 @@ public class UbicacionBean implements Serializable{
     }  
     public void eliminarUbicacion(){      
         if(ubicacionDAO.eliminarUbicacion(ubicacion)){
-            Utilidad.mensajeInfo("Eliminar Ubicaciones", "Ubicacion Eliminada Exitosamente");
+            Utilidad.mensajeInfo("SICOVI", "Ubicacion Eliminada Exitosamente");
+            cargarUbicaciones();
             Utilidad.actualizarElemento("datatableUbicaciones");
         }else{
-            Utilidad.mensajeFatal("Eliminar Ubicaciones", "Error al eliminar la ubicación seleccionada");
+            Utilidad.mensajeFatal("SICOVI", "Error al eliminar la ubicación seleccionada");
         }        
         cancalarEliminarUbicacion();
     }
@@ -154,13 +158,22 @@ public class UbicacionBean implements Serializable{
         return total;
     }
     
+    public void actualizarEstilo(){
+        estiloError="";
+        Utilidad.actualizarElemento("txtnombreubic"); 
+    }
+    
      public UbicacionBean() {       
        abrirNuevoUbicacion=false;
        abrirEdicionUbicacion=false;
-       abrirEliminarUbicacion=false;
+       abrirEliminarUbicacion=false;       
        ubicacion=new Ubicacion();
+       ubicaciones = new ArrayList<Ubicacion>();   
+       estiloError="";
        
     }
+
+   
     
      
 
@@ -172,8 +185,7 @@ public class UbicacionBean implements Serializable{
         this.ubicacion = ubicacion;
     }
 
-    public List<Ubicacion> getUbicaciones() {
-        cargarUbicaciones();
+    public List<Ubicacion> getUbicaciones() {        
         return ubicaciones;
     }
 
@@ -204,4 +216,17 @@ public class UbicacionBean implements Serializable{
     public void setAbrirEliminarUbicacion(Boolean abrirEliminarUbicacion) {
         this.abrirEliminarUbicacion = abrirEliminarUbicacion;
     }
-}
+
+    public String getEstiloError() {
+        return estiloError;
+    }
+
+    public void setEstiloError(String estiloError) {
+        this.estiloError = estiloError;
+    }
+    
+    
+    
+    }
+
+

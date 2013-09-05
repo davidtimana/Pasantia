@@ -4,22 +4,32 @@
  */
 package com.pasantia.bean;
 
+import com.pasantia.bean.categoria.CategoriaBean;
+import com.pasantia.bean.ubicaciones.UbicacionBean;
+import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author david
  */
 
-@ManagedBean
-@RequestScoped
+@Named(value = "navegacion")
+@SessionScoped
 public class Navegacion implements Serializable{
 
-    /**
-     * Creates a new instance of Navegacion
-     */
+   
+    
+    @Inject
+    UbicacionBean ubicacionBean;
+    @Inject
+    CategoriaBean categoriaBean;
+    
     public Navegacion() {
     }
     public String ir_a_Gestion_Articulos(){
@@ -29,12 +39,14 @@ public class Navegacion implements Serializable{
         return "listararticulos";
     }
     public String ir_a_Gestion_Ubicaciones(){
+        ubicacionBean.cargarUbicaciones();        
         return "gestionubicaciones";
     }
     public String ir_a_Listar_Ubicaciones(){
         return "listarubicaciones";
     }
     public String ir_a_Gestion_Categorias(){
+        categoriaBean.cargarCategorias();
         return "gestionarcategorias";
     }
     public String ir_a_Listar_Categorias(){
@@ -69,6 +81,10 @@ public class Navegacion implements Serializable{
     }
     public String ir_a_Gestionar_Casinos(){
         return "gestionarcasinos";
+    }
+    
+    public String retornarPaginaAdministrador(){
+        return "retornarPaginaAdministrador";
     }
     
     

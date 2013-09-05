@@ -7,96 +7,65 @@
     <h:head>
         <title>Bienvenido - SICOVI</title>
         <h:outputStylesheet name="css/estilos.css"/>
-        <h:outputStylesheet name="css/bootstrap.css"/> 
-
-
-
-        <!-- Latest compiled and minified JavaScript -->
+        <h:outputStylesheet name="css/bootstrap.css"/>        
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
     </h:head>
     <h:body style="background-image: url(resources/img/pattern_152.gif)">
-        
-        <div style="position: absolute; top: 50%;left: 50%;width: 50%;height: 50%;margin-top: -20%;margin-left: -30%; border: #4cae4c;">
+
+
+        <!--Inicio Elemento Centrado para Inicio de Sesion -->
+        <div style="position: absolute; top: 50%;left: 50%;width: 50%;height: 50%;margin-top: -15%;margin-left: -26%; border: #4cae4c;">
             <div >
                 <p:graphicImage value="resources/img/banner3.png" alt="SICOVI" title="SICOVI" width="100%" height="70%"/>  
             </div>
-            <p:layout style="width: 100%" >  
+            <p:panel >
+                <div style="width: 60%;margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                    <h:panelGrid columns="3" cellpadding="1">
+                        <p:galleria value="#{imagenesControlBean.imagenes}" var="imagen"  showCaption="true" panelWidth="200" panelHeight="200" effect="slide">                              
+                            <p:graphicImage value="#{imagen.direccion}" alt="#{imagen.descripcion}" title="#{imagen.titulo}" />  
+                        </p:galleria>
+                        <p:spacer width="5%" />
+                        <p:panelGrid columns="2" >
+                            <f:facet name="header">
+                                Iniciar Sesión
+                            </f:facet>
+
+                            <p:outputLabel value="Cedula: *" />
+                            <p:inputText id="cedula"  title="Ingrese su cedula" label="Cedula" style=""/>                           
+
+                            <p:outputLabel value="Password: *"/>
+                            <p:password id="contrasena" feedback="true" promptLabel="Ingrese Su Contraseña" 
+                                        weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" strongLabel="Seguridad: Alta" 
+                                        label="Contraseña" />                                    
+                            <f:facet name="footer">
+                                <p:commandButton value="Iniciar" title="Iniciar" icon="ui-icon-home"/>
+                                <p:commandLink oncomplete="dlgEditar.show();">  
+                                    <h:outputText value="Olvido Su Contraseña?" title="Olvido Su Contraseña?"  />  
+                                </p:commandLink>  
+                            </f:facet>
+                        </p:panelGrid>
 
 
-                <p:layoutUnit position="center" style="border: 1">
-                    
-                    <div>
-                        <h:panelGrid columns="2" cellpadding="1" cellspacing="15%" >
+                    </h:panelGrid>
 
-                            <h:panelGrid columns="1" cellpadding="1"  >
-                                <p:galleria value="#{imagenesControlBean.imagenes}" var="imagen" panelWidth="300" panelHeight="300" showCaption="true">                              
-                                    <p:graphicImage value="#{imagen.direccion}" alt="#{imagen.descripcion}" title="#{imagen.titulo}" />  
-                                </p:galleria>
-                            </h:panelGrid>
-
-                            <h:panelGrid columns="1" cellpadding="3" cellspacing="15%" >
-
-                                <p:panel header="Iniciar Sesión" >
-
-                                    <h:outputLabel for="cedula" value="Cedula: *" /><p:spacer width="30" height="8" />
-                                    <p:inputText id="cedula" required="true" title="Ingrese su cedula" label="Cedula">
-                                        <f:validateLength minimum="2" />
-                                    </p:inputText>    
-
-                                    <p:message for="cedula" /> 
-
-
-                                    <h:outputLabel for="contrasena" value="Password: *"/><p:spacer width="10" height="8" />
-                                    <p:password id="contrasena" feedback="true" promptLabel="Ingrese Su Contraseña" 
-                                                weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" strongLabel="Seguridad: Alta" 
-                                                required="true" label="Contraseña" />
-
-                                    <p:message for="contrasena" />
-                                </p:panel>
-                                <h:panelGrid columns="1" cellpadding="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
-
-                                    <p:commandButton value="Entrar" id="ajax" styleClass="ui-priority-primary"
-                                                     title="Click aqui para entrar" />
-
-
-
-                                </h:panelGrid>  
-                                <h:panelGrid columns="1" cellpadding="1" >
-                                    <p:commandLink style="margin-right:20px;" oncomplete="dlgEditar.show();">  
-                                        <h:outputText value="Olvide Mi Contraseña" title="titulo"  />  
-                                    </p:commandLink>  
-                                </h:panelGrid>
-
-                            </h:panelGrid>
-
-
-
-
-
-
-
-
-
-                        </h:panelGrid>
-                    </div>
-                </p:layoutUnit>
-                
-            </p:layout> 
-
-            
-            
-            
-            
+                </div>
+            </p:panel>
         </div>
-        
-        <div style="bottom: 0;position: fixed;width: 80%;z-index: 50000;text-align: center;margin-left: 8%;margin-right: 10%">
+        <!--Fin  Elemento Centrado para Inicio de Sesion -->
+
+
+        <!--Inicio Elemento Parte Inferior Derechos de Autor -->
+        <div style="bottom: 0;position: absolute;width: 80%;z-index: 50000;text-align: center;margin-left: 8%;margin-right: 10%">
             <p:panel header="Reservados Todos Los Derechos Ingeniero David Orlando Timana &copy;" />                 
         </div>
+        <!--Fin Elemento Parte Inferior Derechos de Autor -->
 
         <h:form>
             <h:link value="Mientras se construye clic aqui.." outcome="paginas/menu/menuInicial" />  
         </h:form>
+
+
 
         <!--Form: Editar Rol -->
         <h:form id="frmrecuperar">

@@ -16,7 +16,7 @@
     <managed-bean>
         <managed-bean-name>Navegacion</managed-bean-name>
         <managed-bean-class>com.pasantia.bean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <navigation-rule>
         <from-view-id>*</from-view-id>
@@ -95,6 +95,11 @@
             <from-action>#{navegacion.ir_a_Gestionar_Casinos()}</from-action> 
             <from-outcome>gestionarcasinos</from-outcome>
             <to-view-id>/paginas/configpuntoventa/GestionarCasinos.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navegacion.retornarPaginaAdministrador()}</from-action> 
+            <from-outcome>retornarPaginaAdministrador</from-outcome>
+            <to-view-id>/paginas/menu/menuInicial.xhtml</to-view-id>
         </navigation-case>
         
     </navigation-rule>

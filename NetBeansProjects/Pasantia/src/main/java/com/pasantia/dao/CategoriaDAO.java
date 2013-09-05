@@ -20,19 +20,19 @@ public interface CategoriaDAO {
      * insercion de una nueva categoria
      * @param categoria 
      */
-    public void insertarUbicacion(Categoria categoria);
+    public Boolean insertarCategoria(Categoria categoria);
     /**
      *Metodo que se encarga de la
      * actualizacion de una nueva Categoria
      * @param categoria 
      */
-    public void actualizarUbicacion(Categoria categoria);
+    public Boolean actualizarCategoria(Categoria categoria);
     /**
      *Metodo que se encarga de la
      * eliminacion de una Categoria
      * @param categoria 
      */
-    public boolean eliminarUbicacion(Categoria categoria);
+    public boolean eliminarCategoria(Categoria categoria);
     /**
      *Metodo que se encarga de buscar
      * una Categoria por su id
@@ -46,6 +46,14 @@ public interface CategoriaDAO {
      * @return lista de categorias
      */
     public List<Categoria> buscartodasCategorias();
+    
+    /**
+     *Metodo que se encarga de
+     * listar categorias x nombre
+     * o por id
+     * @return lista de ubicaciones
+     */
+    public List<Categoria> buscartodasCategoriasxNombrexId(Integer idCategori,String nombreCategoria);
     
     
 }

@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import org.primefaces.component.dialog.Dialog;
 
 /**
@@ -22,61 +24,65 @@ import org.primefaces.component.dialog.Dialog;
  * @author David Timaná
  */
 @Named(value = "eliminarDivisionesPriBean")
-@ApplicationScoped
+@SessionScoped
 public class EliminarDivisionesBean implements Serializable{
 
-    private Dialog dlgeliminarDivisiones;
-    private Divisiones division;
-    private DivisionesDAO divisionesDAO;
+    private Divisiones division;    
     private List<DivisionesUbicacion> listDivisiones;
-    private DivisionesUbicacionDAO divisionesUbicacionDAO;
+    private Boolean abrirEliminarDivision;
+    
+    @Inject
+    DivisionesUbicacionDAO divisionesUbicacionDAO;
+    @Inject
+    DivisionesDAO divisionesDAO;
+    @Inject
+    DivisionesBean divisionesBean;
+    
+    
+    
 
     public void cargarEliminadoDivision(Divisiones d) {
         listDivisiones = divisionesUbicacionDAO.buscarubicacionesxiddivision(d.getIdDivisiones());
         if (listDivisiones.isEmpty()) {
-            division = d;
-            dlgeliminarDivisiones.setVisible(true);
+            division = d;            
+            abrirEliminarDivision=true;
         } else {
+            abrirEliminarDivision=false;
             Utilidad.mensajeError("Eliminar Divisiones", "Division: " + d.getNombreDivision() + ". "
                     + "Tiene ubicaciones asociades transfiera esas ubicaciones a otra división antes de eliminar esta división");
         }
+        Utilidad.actualizarElemento("dlgeliminarDivision");;
 
     }
 
     public void cancelarEliminar() {
-        dlgeliminarDivisiones.setVisible(false);
+        abrirEliminarDivision=false;
+        division=new Divisiones();
+        Utilidad.actualizarElemento("dlgeliminarDivision");
     }
 
     public void eliminarDivision() {
-        if (division != null) {
-            if (divisionesDAO.eliminarDivisiones(division)) {
-                Utilidad.mensajeInfo("Eliminar Divisiones.", "Division: " + division.getNombreDivision() + ". Eliminada Correctamente.");
-            } else {
-                Utilidad.mensajeFatal("Eliminar Divisiones", "Division: " + division.getNombreDivision() + ". NO pudo ser eliminada.");
-            }
-        } else {
-            Utilidad.mensajeFatal("Selección División", "...ERROR...Al seleccionar la divisiòn.");
-        }
-        division = null;
+       if(divisionesDAO.eliminarDivisiones(division)){
+            Utilidad.mensajeInfo("SICOVI", "División Eliminada Exitosamente.");
+            divisionesBean.cargarDivisiones();
+            Utilidad.actualizarElemento("tbldivisiones");
+        }else{
+            Utilidad.mensajeFatal("SICOVI", "Error al eliminar la división seleccionada.");
+        }     
+        cancelarEliminar();
     }
 
     public EliminarDivisionesBean() {
-        dlgeliminarDivisiones = new Dialog();
+        
         division = new Divisiones();
-        divisionesDAO = new DivisionesDAOImpl();
-        divisionesUbicacionDAO = new DivisionesUbicacionDAOImpl();
+        abrirEliminarDivision=false;
+
         //Valores por defecto
 
-        dlgeliminarDivisiones.setVisible(false);
+        
     }
 
-    public Dialog getDlgeliminarDivisiones() {
-        return dlgeliminarDivisiones;
-    }
-
-    public void setDlgeliminarDivisiones(Dialog dlgeliminarDivisiones) {
-        this.dlgeliminarDivisiones = dlgeliminarDivisiones;
-    }
+    
 
     public Divisiones getDivision() {
         return division;
@@ -93,4 +99,14 @@ public class EliminarDivisionesBean implements Serializable{
     public void setListDivisiones(List<DivisionesUbicacion> listDivisiones) {
         this.listDivisiones = listDivisiones;
     }
+
+    public Boolean getAbrirEliminarDivision() {
+        return abrirEliminarDivision;
+    }
+
+    public void setAbrirEliminarDivision(Boolean abrirEliminarDivision) {
+        this.abrirEliminarDivision = abrirEliminarDivision;
+    }
+    
+    
 }

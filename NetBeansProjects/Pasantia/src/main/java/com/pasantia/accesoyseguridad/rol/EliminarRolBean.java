@@ -54,6 +54,8 @@ public class EliminarRolBean implements Serializable {
     
     
     public EliminarRolBean() {
+        rol = new Rol();
+        abrirEliminarRol=false;
     }
 
     public Boolean getAbrirEliminarRol() {

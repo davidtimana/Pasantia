@@ -11,6 +11,7 @@ import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import org.primefaces.component.dialog.Dialog;
 
@@ -20,74 +21,80 @@ import org.primefaces.component.dialog.Dialog;
  * @author root
  */
 @Named(value = "agregarDivisionesBean")
-@RequestScoped
+@SessionScoped
 public class agregarDivisionesBean implements Serializable{
     
-    private String descripcion;
     private Divisiones divisiones;
-    private DivisionesDAO divisionesDAO;
-    private Dialog dlgNuevo;
+    private Boolean abrirNuevaDivision;
+    private String estiloError;
+    
+    
+    
+    @Inject
+    DivisionesDAO divisionesDAO;
+    @Inject
+    DivisionesBean divisionesBean;
+    
+    
     
     
     
     
     
 
-    public void prepararGuardadoDelasDivisiones(){  
-        dlgNuevo.setVisible(true);
+    public void prepararGuardadoDelasDivisiones(){
+        abrirNuevaDivision=true;
+        Utilidad.actualizarElemento("dlgnuevadivision");
+        
     }  
+   
     
     
     
    
     public void guardarNuevaDivision(){        
         
-        if(descripcion.equals("") || descripcion.isEmpty() || descripcion==null){                       
-            Utilidad.mensajeFatal("Error al guardar la division.", "Nombre de la division requerida.");            
+        if (divisiones.getNombreDivision().equals("")) {
+            estiloError= Utilidad.estilosErrorInput();
+            Utilidad.actualizarElemento("txtnomdivision"); 
+            Utilidad.mensajeFatal("SICOVI", "Error al guardar la división Nombre requerido");
+        } else {
+            estiloError="";
+            if (divisionesDAO.insertarDivisiones(divisiones)) {
+                Utilidad.mensajeInfo("SICOVI", "Division Guardada Exitosamente");
+                divisionesBean.cargarDivisiones();
+                Utilidad.actualizarElemento("tbldivisiones"); 
+                divisiones=new Divisiones();
+                Utilidad.actualizarElemento("txtnomdivision"); 
+            } else {
+                
+                Utilidad.mensajeFatal("SICOVI", "Error Al Guardar La División");
+                
+            }
         }
-        else{              
-            divisiones.setNombreDivision(descripcion);               
-                if(divisionesDAO.insertarDivisiones(divisiones)){
-                    Utilidad.mensajeInfo("Guardado Exitoso.", "Division guardada Exitosamente.");          
-                   
-                }                
-                else{
-                    Utilidad.mensajeFatal("Guardado Incorrecto.", "...ERROR... al guardar.");          
-                }
-                descripcion="";            
-           }
     }
     
     public void cancelarNuevaDivision(){
-        dlgNuevo.setVisible(false);
-        descripcion="";
+        divisiones=new Divisiones();
+        abrirNuevaDivision=false;
+        Utilidad.actualizarElemento("txtnomdivision"); 
+        Utilidad.actualizarElemento("dlgnuevadivision");
+        
     }
     
-     public agregarDivisionesBean() {
-        divisionesDAO = new DivisionesDAOImpl();
-        dlgNuevo = new Dialog();
+     public agregarDivisionesBean() {        
+        
         divisiones = new Divisiones();
+        abrirNuevaDivision = false;
         
         //Valores por defecto
-        dlgNuevo.setVisible(false);
+
     }
     
 
-    public Dialog getDlgNuevo() {
-        return dlgNuevo;
-    }
+     
 
-    public void setDlgNuevo(Dialog dlgNuevo) {
-        this.dlgNuevo = dlgNuevo;
-    }   
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+   
 
     public Divisiones getDivisiones() {
         return divisiones;
@@ -96,6 +103,26 @@ public class agregarDivisionesBean implements Serializable{
     public void setDivisiones(Divisiones divisiones) {
         this.divisiones = divisiones;
     }
+
+    public Boolean getAbrirNuevaDivision() {
+        return abrirNuevaDivision;
+    }
+
+    public void setAbrirNuevaDivision(Boolean abrirNuevaDivision) {
+        this.abrirNuevaDivision = abrirNuevaDivision;
+    }
+
+    public String getEstiloError() {
+        return estiloError;
+    }
+
+    public void setEstiloError(String estiloError) {
+        this.estiloError = estiloError;
+    }
+    
+    
+    
+    
     
     
     

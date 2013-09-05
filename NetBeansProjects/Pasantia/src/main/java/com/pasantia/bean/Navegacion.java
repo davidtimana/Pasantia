@@ -7,6 +7,7 @@ package com.pasantia.bean;
 import com.pasantia.accesoyseguridad.rol.RolBean;
 import com.pasantia.articulos.categoria.CategoriaBean;
 import com.pasantia.articulos.ubicacion.UbicacionBean;
+import com.pasantia.bean.configpuntoventa.divisiones.DivisionesBean;
 import com.pasantia.dao.RolDAO;
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
@@ -33,6 +34,8 @@ public class Navegacion implements Serializable{
     CategoriaBean categoriaBean;
     @Inject
     RolBean rolBean;
+    @Inject
+    DivisionesBean divisionesBean;
     
     public Navegacion() {
     }
@@ -79,6 +82,8 @@ public class Navegacion implements Serializable{
         return "listarusuarios";
     }
     public String ir_a_Gestionar_Divisiones(){
+        divisionesBean.cargarDivisiones();
+        divisionesBean.cargarDepartamentos();
         return "gestionardivisiones";
     }
     public String ir_a_Gestionar_Batallones(){

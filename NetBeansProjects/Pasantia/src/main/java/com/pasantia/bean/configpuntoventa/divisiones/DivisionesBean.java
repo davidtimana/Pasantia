@@ -11,10 +11,13 @@ import com.pasantia.dao.impl.*;
 import com.pasantia.entidades.*;
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import org.primefaces.event.ToggleEvent;
 
 
@@ -23,16 +26,21 @@ import org.primefaces.event.ToggleEvent;
  * @author David Timana
  */
 @Named(value = "divisionesBean")
-@ViewScoped
+@SessionScoped
 public class DivisionesBean implements Serializable{
                          //******************************Inicio divisionBean*********************************************   
-    private DivisionesDAO divisionesDAO;
+    
     
     //*******************Inicio Declaracion de Atributos***********************************    
     private List<Divisiones> divisioneslista;
-    private List<Departamento> departamentosAsociados;
-    private DivisionesUbicacionDAO divisionesUbicacion;
-    private DepartamentoDAO departamentoDAO;
+    private List<Departamento> departamentosAsociados;        
+    
+    @Inject
+    DivisionesDAO divisionesDAO;
+    @Inject
+    DivisionesUbicacionDAO divisionesUbicacion;
+    @Inject
+    DepartamentoDAO departamentoDAO;
     //*******************FIn Declaracion de Atributos***********************************
     
     
@@ -49,17 +57,21 @@ public class DivisionesBean implements Serializable{
     public void desplegarFila(Divisiones d){        
         departamentosAsociados = divisionesUbicacion.buscarUbicacionesxIdDivision(d.getIdDivisiones());       
     }
+    
+    public void cargarDivisiones(){
+        divisioneslista = divisionesDAO.buscartodasDivisiones();              
+    }
+    public void cargarDepartamentos(){
+        departamentosAsociados = departamentoDAO.buscartodosDepartamentos();
+    }
     //*************************Fin Declaracion De Metodos de divisionBean********************************************* 
     
     
     //********************************************Constructor por Defecto**************************************************************
     
-    public DivisionesBean() {        
-       divisionesDAO = new DivisionesDAOImpl();
-       divisioneslista = divisionesDAO.buscartodasDivisiones();
-       divisionesUbicacion = new DivisionesUbicacionDAOImpl();
-       departamentoDAO = new DepartamentoDAOImpl();
-       departamentosAsociados = departamentoDAO.buscartodosDepartamentos();
+    public DivisionesBean() {                      
+       divisioneslista = new ArrayList<Divisiones>();
+       departamentosAsociados = new ArrayList<Departamento>();
        
     }    
     

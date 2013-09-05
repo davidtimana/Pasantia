@@ -49,11 +49,15 @@
     <h:body>
 
         <!-- Dialog para la espera de las peticiones ajax -->
-        <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />          
+        <p:ajaxStatus onstart="statusDialog.show();" oncomplete="statusDialog.hide();" onerror="errorDialog.show()"  />          
         <p:dialog modal="true" widgetVar="statusDialog" header="...Cargando..."   
                   draggable="false" closable="false" resizable="false">  
             <p:graphicImage value="../../resources/img/cargando.gif" />  
         </p:dialog> 
+        <p:dialog modal="true" widgetVar="errorDialog" header="...Error..."   
+                  draggable="false" closable="true" resizable="false">  
+            Error en el servidor
+        </p:dialog>
 
         <!-- Dialog para comfirmar la eliminacion de los batallones -->
         <h:form id="dialog">        
@@ -124,6 +128,23 @@
         <h:form id="frmbuscarroles">        
             <ui:include src="../paginas/accesoyseguridad/BuscarRol.xhtml" />
         </h:form>
+             
+              <!--Form: Nuevo Cargo -->          
+        <h:form id="frmnuevadivision">
+            <ui:include src="../paginas/configpuntoventa/frmagregardivision.xhtml" />
+        </h:form>
+              
+              <!-- Dialog editar divisiones -->            
+        <h:form id="frmeditardivisiones" >                
+            <ui:include src="../paginas/configpuntoventa/frmeditardivision.xhtml" />                
+        </h:form>
+              
+               <!-- Formulario eliminar divisiones -->
+        <h:form id="frmeliminardivisiones">                                
+            <ui:include src="../paginas/configpuntoventa/frmeliminardivision.xhtml"/>
+        </h:form>
+
+        
 
 
         <p:layout fullPage="true" >

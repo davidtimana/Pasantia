@@ -114,7 +114,7 @@ public class DivisionesDAOImpl implements DivisionesDAO{
         Session session = ConexionHibernate.getSessionFactory().openSession();
         List<Divisiones> divisiones= new ArrayList<Divisiones>();        
         try {
-            Query q=session.createQuery("from Divisiones");
+            Query q=session.createQuery("FROM Divisiones d ORDER BY d.nombreDivision ASC");
             divisiones=q.list();
         } catch (Exception e) {
             divisiones=null;

@@ -14,8 +14,8 @@
         
     </ui:define>
 
-    <ui:define name="izquierda">
-        izquierda
+    <ui:define name="tituloInsercion">
+        Gestionar Divisiones
     </ui:define>
 
     <ui:define name="derecha">
@@ -24,60 +24,59 @@
 
     <ui:define name="cuerpo">
 
-        <p:growl id="growl"  sticky="true"  />
-        <h:form>                    
-            <p:fieldset legend="Opciones" toggleable="true" toggleSpeed="500">         
-                <h:panelGrid columns="2" cellpadding="6">  
-                    <p:commandButton value="&nbsp;Nueva Division" title="Crear Una Nueva Division" image="icon-add"
-                                     actionListener="#{agregarDivisionesBean.prepararGuardadoDelasDivisiones()}" 
-                                     update=":frmnuevadivision:dlgNuevo"/>                                                       
-                                                                         
-                </h:panelGrid>  
+                       
+        <p:spacer width="10" height="5" />
+        <h:form>
+            <p:fieldset legend="Opciones" >                         
+                <p:dock position="top" proximity="150" >  
+                    <p:menuitem value="Inicio" icon="/resources/img/Home-256.png"  title="Inicio" action="#{navegacion.retornarPaginaAdministrador()}"/>  
+                    <p:menuitem value="Nuevo" icon="/resources/img/agregar.png" actionListener="#{agregarDivisionesBean.prepararGuardadoDelasDivisiones()}" title="Nueva División" />  
+                    <p:menuitem value="Buscar" icon="/resources/img/buscar.png"   title="Buscar División" />                           
+                </p:dock>
             </p:fieldset>  
-        </h:form><br/>
+
+        </h:form>    
+        <p:spacer width="10" height="5" /><br/>
 
 
         <!--Form: Tabla De Divisiones -->                           
         <h:form id="frmdivision">        
-            <p:dataTable id="datatable" var="divisiones" value="#{divisionesBean.divisioneslista}" sortMode="multiple"  emptyMessage="No hay Divisiones disponibles"
+            <p:dataTable id="tbldivisiones" var="divisiones" value="#{divisionesBean.divisioneslista}" sortMode="multiple"  emptyMessage="No hay Divisiones disponibles"
                          paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                          {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  >
 
                 <f:facet name="header">  
                     Lista de Divisiones 
                 </f:facet>
-                <p:ajax event="rowToggle" listener="#{divisionesBean.desplegarFila(divisiones)}" update=":frmdivision:datatable:tblexpandible" />  
+                <p:ajax event="rowToggle" listener="#{divisionesBean.desplegarFila(divisiones)}"  />  
                 <p:column style="width:2%">  
                     <p:rowToggler />  
                 </p:column>  
-                <p:column headerText="ID" style="width: 4%; text-align: center" sortBy="#{divisiones.idDivisiones}" filterBy="#{divisiones.idDivisiones}"  
-                >
-                    <f:facet name="header">  
-                        Codigo Division 
-                    </f:facet>  
+                <p:column headerText="ID" style="width: 4%; text-align: center" sortBy="#{divisiones.idDivisiones}"   >
+                    
                     <h:outputText value="#{divisiones.idDivisiones}" />  
                 </p:column>
-                <p:column headerText="Descripcion" style="width: 14%; text-align: center" sortBy="#{divisiones.nombreDivision}" filterBy="#{divisiones.nombreDivision}">  
+                <p:column headerText="Descripcion" style="width: 14%; text-align: center" sortBy="#{divisiones.nombreDivision}" >  
                     <h:outputText value="#{divisiones.nombreDivision}"  />  
                 </p:column>
                 <p:column headerText="Ubicación " style="width: 4%; text-align: center" >  
-                    <p:commandButton  title="&nbsp;Visualizar Ubicaciones" binding="#{controlMapaBean.btngeolocalizacion}"  
+                    <p:commandButton  title="Visualizar Ubicaciones" binding="#{controlMapaBean.btngeolocalizacion}"  
                                       actionListener="#{controlMapaBean.prepararCargaGeolocalizacion(divisiones.idDivisiones)}"
-                                      oncomplete="dlgMapa.show();" update=":frmubicacionMapa,:frmubicacionMapa:mapa1" 
+                                      oncomplete="dlgMapa.show();"  
                                       icon="ui-icon-pin-s" >
                     </p:commandButton>
 
                 </p:column>
 
                 <p:column headerText="Acciones" style="width: 6%; text-align: center">
-                    <p:commandButton update=":frmeditardivisiones:dlgEditardivision" 
-                                     actionListener="#{editarDivisionesBean.cargarEdicion(divisiones.idDivisiones)}"   
+                    <p:commandButton  
+                        actionListener="#{editarDivisionBean.cargarEdicion(divisiones)}"   
                                      title="&nbsp;Editar" image="icon-edit"  />          
-                    <p:commandButton update=":frmeliminardivisiones:dlgEliminardivision" 
+                    <p:commandButton  
                                      actionListener="#{eliminarDivisionesPriBean.cargarEliminadoDivision(divisiones)}"   
                                      title="&nbsp;Eliminar" image="icon-delete" />
                     
-                    <p:commandButton id="btnasig" update=":asignarDepartamentosaDivision:dlgasignar,:asignarDepartamentosaDivision:tbldepartamentos" 
+                    <p:commandButton id="btnasig"  
                                      actionListener="#{asignarDepartamentosaDivision.cargarAsignacion(divisiones)}"   
                                      title="Asignar Departamentos" image="icon-add" >                        
                     </p:commandButton>
@@ -87,7 +86,7 @@
                 <p:rowExpansion> 
 
                     
-                    <p:dataTable id="tblexpandible"
+                    <p:dataTable id="tblexpandibleDivisiones"
                                  var="ubic" 
                                  value="#{divisionesBean.departamentosAsociados}"  
                                  emptyMessage="No hay Ubicaciones disponibles"
@@ -116,30 +115,7 @@
             </p:dataTable>      
         </h:form>
 
-        <!--Form: Nuevo Cargo -->          
-        <h:form id="frmnuevadivision">
-            <ui:include src="frmagregardivision.xhtml" />
-        </h:form>
-
-        <!--formulario ubicacion en mapa-->
-        <h:form id="frmubicacionMapa">
-            <ui:include src="UbicacionMapa.xhtml"  />           
-        </h:form>
-
-        <!-- Formulario editar divisiones -->            
-        <h:form id="frmeditardivisiones" >                
-            <ui:include src="frmeditardivision.xhtml" />                
-        </h:form>
-
-        <!-- Formulario eliminar divisiones -->
-        <h:form id="frmeliminardivisiones">                                
-            <ui:include src="frmeliminardivision.xhtml"/>
-        </h:form>
-        
-        <!-- Formulario asignar departamentos a division -->
-        <h:form id="asignarDepartamentosaDivision">
-            <ui:include src="asignarDepartamentosaDivision.xhtml" />
-        </h:form>
+       
 
     </ui:define>
 

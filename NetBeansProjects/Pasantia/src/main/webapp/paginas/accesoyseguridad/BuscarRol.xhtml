@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        
+        <p:dialog header="Buscador de Roles" widgetVar="dlgbuscarroles" resizable="false" 
+                  id="dlgbuscarroles" showEffect="explode" hideEffect="explode"  modal="false"  width="35%" height="50%" 
+                  minimizable="true" visible="#{buscarRolBean.abrirBuscadorRol}" closable="true" >
+
+            <h:panelGrid columns="4" cellpadding="1" style="width: 95%;margin-left: auto;margin-right: auto;"> 
+                <p:outputLabel value="Codigo: " />
+                <p:inputText  value="#{buscarRolBean.idRol}" >
+                    
+                </p:inputText>
+
+                <p:outputLabel value="Nombre: " />
+                <p:inputText  value="#{buscarRolBean.nombreRol}"  />   
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="1" style="margin-left: auto;margin-right: auto;">                            
+                <p:commandButton value="Buscar" title="Buscar" icon="ui-icon-search"
+                                 actionListener="#{buscarRolBean.buscarRoles()}" />                               
+                <p:commandButton value="Cancelar" title="Cancelar" icon="ui-icon-cancel"
+                                 actionListener="#{buscarRolBean.cancelarBuscadorRoles()}"/>                               
+            </h:panelGrid>
+
+        </p:dialog>
+        
+        
+        
+    </ui:composition>
+</html>
+

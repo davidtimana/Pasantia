@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        
+        <p:dialog header="Creacion de un nuevo rol para los usuarios" resizable="false" 
+                  id="dlgnuevorol" showEffect="explode" hideEffect="explode"  modal="true"  width="40%" 
+                  visible="#{agregarRolBean.abrirGuardarRol}" closable="false">
+            
+            <h:panelGrid columns="2" cellpadding="1" style="margin:0 auto;">  
+
+                <h:outputText value="Descripción Del Rol" />  
+                <p:inputText value="#{agregarRolBean.rol.descripcion}" style="width: 100%;#{agregarRolBean.estiloError}"
+                             id='txtnombrerol'/>
+
+            </h:panelGrid> 
+
+            <p:separator style="width:95%;height:8%"  />
+
+            <p:commandButton  actionListener="#{agregarRolBean.guardarRol()}" value="Guardar" 
+                              title="Guardar" image="ui-icon-disk" />
+            <p:commandButton actionListener="#{agregarRolBean.cancelarGuardado()}" value="Cancelar" title="Cancelar" 
+                             image="ui-icon-cancel" />   
+
+        </p:dialog>
+
+
+
+    </ui:composition>
+</html>
+

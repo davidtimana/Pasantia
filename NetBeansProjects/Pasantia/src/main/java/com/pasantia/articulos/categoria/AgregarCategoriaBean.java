@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pasantia.bean.categoria;
+package com.pasantia.articulos.categoria;
 
 import com.pasantia.dao.CategoriaDAO;
 import com.pasantia.entidades.Categoria;

@@ -74,15 +74,15 @@
                 <!--  <p:growl id="growlEditar"  sticky="true" />  -->
                 <h:panelGrid id="pgEditar" columns="2" cellpadding="4" style="margin:0 auto;">  
                     <h:outputText value="Cedula:" />                          
-                    <p:inputText value="#{rolBean.rol.descripcion}" style="width: 200px" />
+                    <p:inputText value="" style="width: 200px" />
 
                     <h:outputText value="Email" />                      
-                    <p:inputText value="#{rolBean.rol.descripcion}" style="width: 200px" />
+                    <p:inputText value="" style="width: 200px" />
 
                 </h:panelGrid>  
                 <p:separator id="customSeparatord" style="width:500px;height:8px" />
                 <p:commandButton  oncomplete="dlgEditar.hide()" 
-                                  actionListener="#{rolBean.actualizarRol()}" value="Recuperar" 
+                                   value="Recuperar" 
                                   title="&nbsp;Actualizar" image="icon-guardar" />
                 <p:commandButton  oncomplete="dlgEditar.hide()" value="Cancelar" title="&nbsp;Cancelar" 
                                   image="icon-cancel" />  

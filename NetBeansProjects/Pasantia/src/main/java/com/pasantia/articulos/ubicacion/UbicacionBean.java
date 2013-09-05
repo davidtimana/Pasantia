@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pasantia.bean.ubicaciones;
+package com.pasantia.articulos.ubicacion;
 
 import com.pasantia.dao.UbicacionDAO;
 import com.pasantia.entidades.Ubicacion;

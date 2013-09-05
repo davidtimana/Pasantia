@@ -128,7 +128,7 @@ public class UbicacionDAOImpl implements UbicacionDAO {
                     " SELECT b "
                     + " FROM Ubicacion b "
                     + " WHERE UPPER(b.descripcion) LIKE '%" + nombre + "%'"
-                    + " ORDER BY b.descripcion";
+                    + " ORDER BY b.descripcion ASC";
             System.out.println("El jpql es el siguiente-->" + jpql);
             Query q = session.createQuery(jpql);
 

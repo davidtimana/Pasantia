@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="titulo">
+        
+    </ui:define>
+
+    <ui:define name="abajo">
+        
+    </ui:define>
+
+    <ui:define name="derecha">
+        
+    </ui:define>
+
+    <ui:define name="tituloInsercion">
+        Gestionar Roles
+    </ui:define>
+
+    <ui:define name="cuerpo">       
+        
+                
+        <p:spacer width="10" height="5" /><br/>
+        <h:form>
+            <p:fieldset legend="Opciones" >                         
+                <p:dock position="top" proximity="150" >  
+                    <p:menuitem value="Inicio" icon="/resources/img/Home-256.png"  title="Inicio" action="#{navegacion.retornarPaginaAdministrador()}"/>  
+                    <p:menuitem value="Nuevo" icon="/resources/img/agregar.png" actionListener="#{agregarRolBean.abrirGuardadoRol()}" title="Nuevo Rol" />  
+                    <p:menuitem value="Buscar" icon="/resources/img/buscar.png"  actionListener="#{buscarRolBean.cargarBuscadorRoles()}" title="Buscar Rol" />                           
+                </p:dock>
+            </p:fieldset>  
+
+        </h:form>    
+        <p:spacer width="10" height="5" /><br/>
+        <!--Form: Tabla Roles -->
+        <h:form id="frmroles">        
+            <p:dataTable id="tblroles" var="rol" value="#{rolBean.roles}" emptyMessage="No hay roles disponibles"
+                         paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} " 
+                          sortMode="multiple">
+                <f:facet name="header">  
+                   Lista de Roles 
+                </f:facet> 
+               
+                <p:column headerText="Descripcion" style="text-align: center" sortBy="#{rol.descripcion}">  
+                    <h:outputText value="#{rol.descripcion}"  />  
+                </p:column>
+                <p:column headerText="Acciones" style="width:8%; text-align: center">
+                    <p:commandButton title="Editar" image="icon-edit"  actionListener="#{editarRolBean.cargarEditarRols(rol)}"/>
+                    <p:commandButton title="Eliminar" image="icon-delete" actionListener="#{eliminarRolBean.cargarEliminadoRol(rol)}" />  
+                </p:column>
+                <f:facet name="footer" >  
+                    En total hay #{rolBean.totalRoles()} roles.  
+                 </f:facet>
+           </p:dataTable>      
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>

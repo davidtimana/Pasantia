@@ -20,19 +20,19 @@ public interface RolDAO {
      * insercion de un nuevo Rol
      * @param rol
      */
-    public void insertarRol(Rol rol);
+    public Boolean insertarRol(Rol rol);
     /**
      *Metodo que se encarga de la
      * actualizacion de un un Rol
      * @param rol
      */
-    public void actualizarRol(Rol rol);
+    public Boolean actualizarRol(Rol rol);
     /**
      *Metodo que se encarga de la
      * eliminacion de un Rol
      * @param rol
      */
-    public void eliminarRol(Rol rol);
+    public Boolean eliminarRol(Rol rol);
     /**
      *Metodo que se encarga de buscar
      * un rol por su id
@@ -46,5 +46,13 @@ public interface RolDAO {
      * @return
      */
     public List<Rol> buscartodosRoles();
+    
+    /**
+     *Metodo que se encarga de
+     * listar roles x nombre
+     * o por id
+     * @return lista de ubicaciones
+     */
+    public List<Rol> buscartodasRolesxNombrexId(Integer idRol,String nombreRol);
     
 }

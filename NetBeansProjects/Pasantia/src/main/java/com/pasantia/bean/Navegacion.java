@@ -4,8 +4,10 @@
  */
 package com.pasantia.bean;
 
-import com.pasantia.bean.categoria.CategoriaBean;
-import com.pasantia.bean.ubicaciones.UbicacionBean;
+import com.pasantia.accesoyseguridad.rol.RolBean;
+import com.pasantia.articulos.categoria.CategoriaBean;
+import com.pasantia.articulos.ubicacion.UbicacionBean;
+import com.pasantia.dao.RolDAO;
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
@@ -29,6 +31,8 @@ public class Navegacion implements Serializable{
     UbicacionBean ubicacionBean;
     @Inject
     CategoriaBean categoriaBean;
+    @Inject
+    RolBean rolBean;
     
     public Navegacion() {
     }
@@ -59,9 +63,10 @@ public class Navegacion implements Serializable{
         return "listarvariaciones";
     }
     public String ir_a_Gestionar_Roles(){
+        rolBean.cargarRoles();
         return "gestionarroles";
     }
-    public String ir_a_Listar_Roles(){
+    public String ir_a_Listar_Roles(){        
         return "listarroles";
     }
     public String ir_a_Gestionar_Cargos(){

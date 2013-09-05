@@ -142,7 +142,7 @@ public class CategoriaDAOImpl implements CategoriaDAO {
                     + " FROM Categoria b "
                     + " WHERE UPPER(b.descripcion) LIKE '%" + nombreCategoria + "%' "                    
                     + condicion
-                    + " ORDER BY b.descripcion";
+                    + " ORDER BY b.descripcion ASC";
             System.out.println("El jpql es el siguiente-->" + jpql);
             Query q = session.createQuery(jpql);
             session.flush();

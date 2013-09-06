@@ -11,7 +11,7 @@
     </ui:define>
 
     <ui:define name="abajo">
-        
+
     </ui:define>
 
     <ui:define name="tituloInsercion">
@@ -24,7 +24,7 @@
 
     <ui:define name="cuerpo">
 
-                       
+
         <p:spacer width="10" height="5" />
         <h:form>
             <p:fieldset legend="Opciones" >                         
@@ -49,43 +49,42 @@
                     Lista de Divisiones 
                 </f:facet>
                 <p:ajax event="rowToggle" listener="#{divisionesBean.desplegarFila(divisiones)}"  />  
-                <p:column style="width:2%">  
+                <p:column style="width:2%" headerText="Ubicaciones">  
                     <p:rowToggler />  
                 </p:column>  
-                <p:column headerText="ID" style="width: 4%; text-align: center" sortBy="#{divisiones.idDivisiones}"   >
-                    
-                    <h:outputText value="#{divisiones.idDivisiones}" />  
-                </p:column>
+
                 <p:column headerText="Descripcion" style="width: 14%; text-align: center" sortBy="#{divisiones.nombreDivision}" >  
                     <h:outputText value="#{divisiones.nombreDivision}"  />  
                 </p:column>
                 <p:column headerText="Ubicación " style="width: 4%; text-align: center" >  
-                    <p:commandButton  title="Visualizar Ubicaciones" binding="#{controlMapaBean.btngeolocalizacion}"  
-                                      actionListener="#{controlMapaBean.prepararCargaGeolocalizacion(divisiones.idDivisiones)}"
-                                      oncomplete="dlgMapa.show();"  
-                                      icon="ui-icon-pin-s" >
-                    </p:commandButton>
+                    <p:commandButton  title="Visualizar Ubicaciones"   
+                                      actionListener="#{controlMapaBean.prepararCargaGeolocalizacion(divisiones)}"                                        
+                                      icon="ui-icon-pin-s" />
+                    
 
                 </p:column>
 
                 <p:column headerText="Acciones" style="width: 6%; text-align: center">
                     <p:commandButton  
                         actionListener="#{editarDivisionBean.cargarEdicion(divisiones)}"   
-                                     title="&nbsp;Editar" image="icon-edit"  />          
+                        title="&nbsp;Editar" image="icon-edit" />
+                        
+
+                    <p:spacer width="3%" />
                     <p:commandButton  
-                                     actionListener="#{eliminarDivisionesPriBean.cargarEliminadoDivision(divisiones)}"   
-                                     title="&nbsp;Eliminar" image="icon-delete" />
-                    
+                        actionListener="#{eliminarDivisionesPriBean.cargarEliminadoDivision(divisiones)}"   
+                        title="&nbsp;Eliminar" image="icon-delete" />
+                    <p:spacer width="3%" />
                     <p:commandButton id="btnasig"  
                                      actionListener="#{asignarDepartamentosaDivision.cargarAsignacion(divisiones)}"   
-                                     title="Asignar Departamentos" image="icon-add" >                        
-                    </p:commandButton>
-                    
+                                     title="Asignar Departamentos" image="icon-add" />                        
+                    <p:spacer width="3%" />
+
                 </p:column>
-                
+
                 <p:rowExpansion> 
 
-                    
+
                     <p:dataTable id="tblexpandibleDivisiones"
                                  var="ubic" 
                                  value="#{divisionesBean.departamentosAsociados}"  
@@ -95,17 +94,15 @@
                                  rows="3" 
                                  paginatorPosition="bottom" 
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
-                                                    {PreviousPageLink} {PageLinks} {NextPageLink} 
-                                                    {LastPageLink} {RowsPerPageDropdown}">
-                        <p:column headerText="Id " style="width: 4%; text-align: center" >  
-                            <h:outputText  value="#{ubic.idDepartamento}" />  
-                        </p:column>
+                                 {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                 {LastPageLink} {RowsPerPageDropdown}">
+                        
                         <p:column headerText="Nombre Departamento" style="width: 4%; text-align: center" >  
                             <h:outputText  value="#{ubic.nombreDepartamento}" /> 
                         </p:column>
                         <f:facet name="footer">  
                             En total hay #{divisionesBean.totalUbicaciones()} ubicaciones.  
-                </f:facet>
+                        </f:facet>
                     </p:dataTable>                    
 
                 </p:rowExpansion>  
@@ -115,7 +112,7 @@
             </p:dataTable>      
         </h:form>
 
-       
+
 
     </ui:define>
 

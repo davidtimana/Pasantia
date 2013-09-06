@@ -58,6 +58,10 @@ public class DivisionesBean implements Serializable{
         departamentosAsociados = divisionesUbicacion.buscarUbicacionesxIdDivision(d.getIdDivisiones());       
     }
     
+    public void mostrarAyuda(Integer num){
+        System.out.println("oprimi boton--> "+num);
+    }
+    
     public void cargarDivisiones(){
         divisioneslista = divisionesDAO.buscartodasDivisiones();              
     }

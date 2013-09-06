@@ -5,35 +5,38 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        
-        <p:dialog  widgetVar="dlgMapa" resizable="false"  binding="#{controlMapaBean.dlggeolocallizacion}" 
-                   id="dlgMapa" modal="false" width="800" height="500" minimizable="true" >            
-                <p:panelGrid id="pnlmapa" style="margin-top:20px" >  
-                    <f:facet name="header">  
-                        <p:row>  
-                            <p:column colspan="2">Ubicacion para:&nbsp;<p:outputLabel binding="#{controlMapaBean.lblubigeo}"/> </p:column>  
-                        </p:row>  
-                        <p:row>                         
-                            <p:column >Departamento</p:column>  
-                            <p:column >Mapa</p:column>                              
-                        </p:row>
-                        <p:row>  
-                            <p:column style="font-weight: bold;" ><ui:include src="tblGeolocalizacion.xhtml"  /></p:column>
-                            <p:column style="font-weight: bold;" >                                
-                                <p:gmap id="mapa1" center="#{controlMapaBean.latitud}, #{controlMapaBean.longitud}" zoom="#{controlMapaBean.zoom}" type="HYBRID" 
-                                style="width:600px;height:400px" model="#{controlMapaBean.modMapa}" /> 
-                            </p:column>                                                          
-                        </p:row>
-                        
-                        
-                    </f:facet>  
-                </p:panelGrid>  
-                
-                <!--<ui:include src="UbicacionMapa.xhtml"  />              -->
-            </p:dialog>     
-        
-        
+
+        <p:dialog resizable="false" id="dlgUbicacionDivision" modal="true" 
+                  width="50%" minimizable="false" 
+                  visible="#{controlMapaBean.abrirMapaDivisiones}" closable="false" header="Geolocalización De Divisiones">  
+
+            <p:panelGrid style="margin-top:20px" >  
+                <f:facet name="header">  
+                    <p:row>  
+                        <p:column colspan="2">Ubicacion para: #{controlMapaBean.divisiones.nombreDivision}  </p:column>  
+                    </p:row>  
+                    <p:row>                         
+                        <p:column >Departamento</p:column>  
+                        <p:column >Mapa</p:column>                              
+                    </p:row>
+                    <p:row>  
+                        <p:column style="font-weight: bold;" ><ui:include src="tblGeolocalizacion.xhtml"  /></p:column>
+                        <p:column style="font-weight: bold;" >                                
+                            <p:gmap id="mapdivisionesubicacion" center="#{controlMapaBean.latitud}, #{controlMapaBean.longitud}" zoom="#{controlMapaBean.zoom}" type="HYBRID" 
+                                    style="width:600px;height:400px" model="#{controlMapaBean.modMapa}" /> 
+                        </p:column>                                                          
+                    </p:row>
+
+
+                </f:facet>  
+            </p:panelGrid>
+            <p:commandButton actionListener="#{controlMapaBean.cerrarMapa()}" value="Cerrar" title="Cerrar" 
+                             image="ui-icon-arrowreturnthick-1-w" />   
+
+        </p:dialog>     
+
+
     </ui:composition>
-    
+
 </html>
 

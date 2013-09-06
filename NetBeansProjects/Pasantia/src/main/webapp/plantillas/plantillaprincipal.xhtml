@@ -88,83 +88,95 @@
         <h:form id="frmbuscarubicaciones">        
             <ui:include src="../paginas/articulos/buscarUbicaciones.xhtml" />
         </h:form>
-        
+
         <!-- Dialog para Agregar Categorias -->
         <h:form id="frmagregarcategoria">        
             <ui:include src="../paginas/articulos/AgregarCategoria.xhtml" />
         </h:form>
-        
+
         <!-- Dialog para Editar Categorias -->
         <h:form id="frmeditarcategoria">        
             <ui:include src="../paginas/articulos/EditarCategoria.xhtml" />
         </h:form>
-        
-         <!-- Dialog para Eliminar Categorias -->
+
+        <!-- Dialog para Eliminar Categorias -->
         <h:form id="frmeliminarcategoria">        
             <ui:include src="../paginas/articulos/EliminarCategoria.xhtml" />
         </h:form>
-         
-          <!-- Dialog para buscar Categorias -->
+
+        <!-- Dialog para buscar Categorias -->
         <h:form id="frmbuscarcategoria">        
             <ui:include src="../paginas/articulos/BuscarCategoria.xhtml" />
         </h:form>
-          
-           <!-- Dialog para Agregar Roles -->
+
+        <!-- Dialog para Agregar Roles -->
         <h:form id="frmabregarroles">        
             <ui:include src="../paginas/accesoyseguridad/AgregarRol.xhtml" />
         </h:form>
-           
-           <!-- Dialog para Editar Roles -->
+
+        <!-- Dialog para Editar Roles -->
         <h:form id="frmeditarroles">        
             <ui:include src="../paginas/accesoyseguridad/EditarRol.xhtml" />
         </h:form>
-           
-            <!-- Dialog para Eliminar Roles -->
+
+        <!-- Dialog para Eliminar Roles -->
         <h:form id="frmeliminarroles">        
             <ui:include src="../paginas/accesoyseguridad/EliminarRol.xhtml" />
         </h:form>
-            
-             <!-- Dialog para Editar Roles -->
+
+        <!-- Dialog para Editar Roles -->
         <h:form id="frmbuscarroles">        
             <ui:include src="../paginas/accesoyseguridad/BuscarRol.xhtml" />
         </h:form>
-             
-              <!--Form: Nuevo Cargo -->          
+
+        <!--Form: Nuevo Cargo -->          
         <h:form id="frmnuevadivision">
             <ui:include src="../paginas/configpuntoventa/frmagregardivision.xhtml" />
         </h:form>
-              
-              <!-- Dialog editar divisiones -->            
+
+        <!-- Dialog editar divisiones -->            
         <h:form id="frmeditardivisiones" >                
             <ui:include src="../paginas/configpuntoventa/frmeditardivision.xhtml" />                
         </h:form>
-              
-               <!-- Formulario eliminar divisiones -->
+
+        <!-- Formulario eliminar divisiones -->
         <h:form id="frmeliminardivisiones">                                
             <ui:include src="../paginas/configpuntoventa/frmeliminardivision.xhtml"/>
         </h:form>
 
+        <!--formulario ubicacion en mapa-->
+        <h:form id="frmubicacionMapaDivisiones">
+            <ui:include src="../paginas/configpuntoventa/UbicacionMapa.xhtml"  />           
+        </h:form>
         
+        <!-- Formulario asignar departamentos a division -->
+        <h:form id="asignarDepartamentosaDivision">
+            <ui:include src="../paginas/configpuntoventa/asignarDepartamentosaDivision.xhtml" />
+        </h:form>
+
+
+
+
 
 
         <p:layout fullPage="true" >
 
-            
+
             <p:layoutUnit id="top" position="north"   size="17%">
                 <div style="top:  0;position: absolute;width: 80%;margin-left: 17%;margin-right: 17%;z-index: 50000">
 
                     <h:panelGrid columns="3" cellpadding="1">
-                        
-                            <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
-                            <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
-                            <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
-                        
+
+                        <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
+                        <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
+                        <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
+
                     </h:panelGrid>
 
 
                 </div>
             </p:layoutUnit>
-            
+
 
             <div style="bottom: 0;position: absolute;width: 80%;z-index: 500000;text-align: center;margin-left: 8%;margin-right: 10%">
                 <p:layoutUnit id="bottom" position="south" size="14%" header="Estado">
@@ -180,8 +192,8 @@
                 </p:layoutUnit>
             </div>                
 
-            
-           
+
+
 
 
             <p:layoutUnit id="right" position="east" size="17%" header="Menu" resizable="true" collapsible="true">
@@ -190,9 +202,9 @@
                     <div  style="width: 98%;margin-left: auto;margin-right: auto;"   >
                         <p:spacer width="5%" />
                         <p:slideMenu style="width: 100%" >  
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Productos" icon="ui-icon-cart">  
                                 <p:submenu label="Articulos" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Articulos" action="#{navegacion.ir_a_Gestion_Articulos()}" />
@@ -211,30 +223,30 @@
                                     <p:menuitem value="Listar Variaciones" action="#{navegacion.ir_a_Listar_Variaciones()}" />
                                 </p:submenu>  
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Ventas" icon="ui-icon-shuffle">
                                 <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
                                 <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
                             </p:submenu>  
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Inventario" icon="ui-icon-folder-open">  
                                 <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
                                 <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Compras" icon="ui-icon-suitcase">  
                                 <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
                                 <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Acceso y Seguridad" icon="ui-icon-locked">  
                                 <p:submenu label="Usuario" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Roles()}" />
@@ -249,9 +261,9 @@
                                     <p:menuitem value="Listar Cargos" action="#{navegacion.ir_a_Listar_Roles()}" />
                                 </p:submenu>
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Configuración Punto De Venta" icon="ui-icon-wrench">  
                                 <p:submenu label="Divisiones" icon="ui-icon-contact">
                                     <p:menuitem value="Gestionar De Divisiones" action="#{navegacion.ir_a_Gestionar_Divisiones()}" />
@@ -266,41 +278,41 @@
                                     <p:menuitem value="Listar Casinos" action="#{navegacion.ir_a_Listar_Roles()}" />
                                 </p:submenu>
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Usuarios Del Sistema" icon="ui-icon-person">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Parametros" icon="ui-icon-gear">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
                             </p:submenu>
-                            
+
                             <p:separator />  
-                            
+
                             <p:submenu label="Ayuda" icon="ui-icon-help">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
                             </p:submenu>
-                            
+
                             <p:submenu label="Acerca De" icon="ui-icon-contact">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
                                 </p:submenu>
                             </p:submenu>
-                            
+
                         </p:slideMenu>  
                     </div>
                 </h:form>

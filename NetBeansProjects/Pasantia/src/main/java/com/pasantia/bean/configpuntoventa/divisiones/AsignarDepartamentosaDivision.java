@@ -8,9 +8,6 @@ package com.pasantia.bean.configpuntoventa.divisiones;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.dao.DivisionesUbicacionDAO;
 import com.pasantia.dao.PaisDAO;
-import com.pasantia.dao.impl.DepartamentoDAOImpl;
-import com.pasantia.dao.impl.DivisionesUbicacionDAOImpl;
-import com.pasantia.dao.impl.PaisDAOImpl;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.DivisionesUbicacion;
@@ -20,69 +17,74 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
-import org.primefaces.component.commandbutton.CommandButton;
+import javax.inject.Inject;
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.dialog.Dialog;
-import org.primefaces.component.outputlabel.OutputLabel;
-import org.primefaces.component.selectonemenu.SelectOneMenu;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 @Named(value = "asignarDepartamentosaDivision")
-@ApplicationScoped
+@SessionScoped
 public class AsignarDepartamentosaDivision implements Serializable{
 
-    
-    //http://www.primefaces.org/showcase/ui/stack.jsf    
-    
-    private Dialog dlgasignar;
-    private List<Departamento> departamentos,departamentosSeleccionados;
-    private DepartamentoDAO departamentoDAO;
-    private List<DivisionesUbicacion> divisionesUbicacion,divisionesUbicacionlistcomprobar,divisionesUbicacionValidar,divisionesUbicacionCargar;
-    private DivisionesUbicacionDAO divisionesUbicacionDAO;
+          
+    private Boolean abrirAsignacionesUbicacion;
+    private List<Departamento> departamentos,departamentosSeleccionados;    
+    private List<DivisionesUbicacion> divisionesUbicacion,divisionesUbicacionlistcomprobar,divisionesUbicacionValidar,divisionesUbicacionCargar;    
     private ModeloDatosDepartamento modeloDatosDepartamento;
-    private List<Pais> paises;
-    private PaisDAO paisDAO;
+    private List<Pais> paises;    
     private List<SelectItem> paisescombo;
     private Pais pais;
     private Divisiones division;
     private DivisionesUbicacion divisionubicacion;
     private DataTable tblDepartamentos;
-    private Integer width,height;
-    private SelectOneMenu sompaises;
-    private OutputLabel lblpais;
-    private CommandButton btnguardarAsig;
+    private Integer width,height;    
     private Boolean estaEditando;
     
-    public void cargarAsignacion(Divisiones d){
-        System.out.println("la division seleccionada es-->" + d.getNombreDivision());
-        departamentos = departamentoDAO.buscarDepartamentoporIdPais(51);
-         modeloDatosDepartamento = new ModeloDatosDepartamento(departamentos);
-        if (d != null) {
-            division = d;
-            divisionesUbicacionValidar = divisionesUbicacionDAO.buscarubicacionesxiddivision(division.getIdDivisiones());
-            if (divisionesUbicacionValidar.isEmpty()) {//Si no tiene departamentos asociados - Agregar Nuevos
-                estaEditando=false;
-                width = 620;
-                height = 140;
-                tblDepartamentos.setStyle("display:none");
-                sompaises.setStyle("display:block");
-                lblpais.setStyle("display:block");
-                btnguardarAsig.setStyle("display:none");                
-            } else {//Si tiene departamentos asociados - Editar las Asociaciones
-                estaEditando=true;
-                cargarPropiedadesConAsociaciones();
-            }
-            dlgasignar.setVisible(true);
-        } else {
-            Utilidad.mensajeFatal("Selección Divisiones", "...ERROR...Al seleccionar la división.");
-        }
+    @Inject
+    DepartamentoDAO departamentoDAO;
+    @Inject
+    PaisDAO paisDAO;
+    @Inject
+    DivisionesUbicacionDAO divisionesUbicacionDAO;
+    
+    
+    
+     public void cargarAsignacion(Divisiones d) {
+
+        abrirAsignacionesUbicacion = true;
         
-    }    
+
+        System.out.println("la division seleccionada es-->" + d.getNombreDivision());
+        //departamentos = departamentoDAO.buscarDepartamentoporIdPais(51);
+        //modeloDatosDepartamento = new ModeloDatosDepartamento(departamentos);
+
+        division = d;
+        divisionesUbicacionValidar = divisionesUbicacionDAO.buscarubicacionesxiddivision(division.getIdDivisiones());
+        if (divisionesUbicacionValidar.isEmpty()) {//Si no tiene departamentos asociados - Agregar Nuevos
+            estaEditando = false;
+            width = 20;
+            height = 20;
+            tblDepartamentos.setStyle("display:none");
+
+        } else {//Si tiene departamentos asociados - Editar las Asociaciones
+             width = 40;
+            height = 100;
+            estaEditando = true;
+            //cargarPropiedadesConAsociaciones();
+        }
+        Utilidad.actualizarElemento("dlgasignarubicaciones");
+
+
+    }
+
+    public void cerrarAsignacionesDivision(){
+        abrirAsignacionesUbicacion=false;
+        Utilidad.actualizarElemento("dlgasignarubicaciones");
+    }
     
     
     public void cargarPaises(){
@@ -100,17 +102,17 @@ public class AsignarDepartamentosaDivision implements Serializable{
         tblDepartamentos.setStyle("display:block");        
         width=700;
         height=590;        
-        btnguardarAsig.setStyle("display:block");
+        
         Utilidad.abrirDialog("dlgasignar");
     }    
   
     
      public Integer totalDepartamentos(){        
-        return departamentos.size();
+        return 0;
     }
      
      public void cancelarAsignacion(){
-         dlgasignar.setVisible(false);
+         
          departamentosSeleccionados = null;
          tblDepartamentos.setStyle("display:none");         
          width = 640;
@@ -196,9 +198,7 @@ public class AsignarDepartamentosaDivision implements Serializable{
          width = 620;
          height = 600;
          tblDepartamentos.setStyle("display:block");
-         sompaises.setStyle("display:none");
-         lblpais.setStyle("display:none");
-         btnguardarAsig.setStyle("display:block");         
+         
          if (division.getIdDivisiones() != 0 && division.getIdDivisiones() != 0) {
              //divisionesUbicacionCargar = divisionesUbicacionDAO.buscarubicacionesxiddivision(division.getIdDivisiones());
              departamentosSeleccionados = divisionesUbicacionDAO.buscarUbicacionesxIdDivision(division.getIdDivisiones());              
@@ -247,40 +247,32 @@ public class AsignarDepartamentosaDivision implements Serializable{
     }
       
     public AsignarDepartamentosaDivision() {
-        dlgasignar = new Dialog();
-        departamentoDAO = new DepartamentoDAOImpl();
-        paisDAO = new PaisDAOImpl();
-        divisionesUbicacionDAO = new DivisionesUbicacionDAOImpl();
+        
+        
+        
+        abrirAsignacionesUbicacion=false;
         pais = new Pais();
         division = new Divisiones();
         divisionubicacion =  new DivisionesUbicacion();
         tblDepartamentos = new DataTable();
-        sompaises = new SelectOneMenu();
-        lblpais = new OutputLabel();
-        btnguardarAsig = new CommandButton();
+//        
         departamentosSeleccionados = new ArrayList<Departamento>();
-        //Valores por defecto
-        sompaises.setStyle("display:block");
-        width=620;
-        height=140;
-        dlgasignar.setVisible(false);
-        tblDepartamentos.setStyle("display:none");
-        departamentos = departamentoDAO.buscartodosDepartamentos();
-        eliminarDepartamentosSeleccionados();
-        divisionesUbicacion = divisionesUbicacionDAO.buscarubicaciones();
-        modeloDatosDepartamento = new ModeloDatosDepartamento(departamentos);        
-        cargarPaises();
+//        //Valores por defecto
+//        
+//        width=620;
+//        height=140;
+//        
+//        tblDepartamentos.setStyle("display:none");
+////        departamentos = departamentoDAO.buscartodosDepartamentos();
+//        //eliminarDepartamentosSeleccionados();
+//        divisionesUbicacion = divisionesUbicacionDAO.buscarubicaciones();
+//        modeloDatosDepartamento = new ModeloDatosDepartamento(departamentos);        
+//        //cargarPaises();
         
         
     }   
 
-    public Dialog getDlgasignar() {
-        return dlgasignar;
-    }
-
-    public void setDlgasignar(Dialog dlgasignar) {
-        this.dlgasignar = dlgasignar;
-    }
+    
 
     public List<Departamento> getDepartamentos() {
         return departamentos;
@@ -394,29 +386,7 @@ public class AsignarDepartamentosaDivision implements Serializable{
         this.divisionesUbicacionValidar = divisionesUbicacionValidar;
     }
 
-    public SelectOneMenu getSompaises() {
-        return sompaises;
-    }
-
-    public void setSompaises(SelectOneMenu sompaises) {
-        this.sompaises = sompaises;
-    }
-
-    public OutputLabel getLblpais() {
-        return lblpais;
-    }
-
-    public void setLblpais(OutputLabel lblpais) {
-        this.lblpais = lblpais;
-    }
-
-    public CommandButton getBtnguardarAsig() {
-        return btnguardarAsig;
-    }
-
-    public void setBtnguardarAsig(CommandButton btnguardarAsig) {
-        this.btnguardarAsig = btnguardarAsig;
-    }
+    
 
     public List<DivisionesUbicacion> getDivisionesUbicacionCargar() {
         return divisionesUbicacionCargar;
@@ -433,6 +403,16 @@ public class AsignarDepartamentosaDivision implements Serializable{
     public void setEstaEditando(Boolean estaEditando) {
         this.estaEditando = estaEditando;
     }
+
+    public Boolean getAbrirAsignacionesUbicacion() {
+        return abrirAsignacionesUbicacion;
+    }
+
+    public void setAbrirAsignacionesUbicacion(Boolean abrirAsignacionesUbicacion) {
+        this.abrirAsignacionesUbicacion = abrirAsignacionesUbicacion;
+    }
+    
+    
    
     
     

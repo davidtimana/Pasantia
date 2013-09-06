@@ -8,12 +8,11 @@ and open the template in the editor.
    
     <ui:composition>
         
-        <p:selectOneListbox binding="#{controlMapaBean.listubicaciones}" id="ubic" value="#{controlMapaBean.idDivisionUbicacion}"  
-                             >  
+        <p:selectOneListbox  value="#{controlMapaBean.idDivisionUbicacion}"  id="listaubicacionesdivision">  
                                     
                                     <f:selectItems value="#{controlMapaBean.comboUbicaciones}"  />
                                     <p:ajax 
-                                        listener="#{controlMapaBean.verUbicacion()}" update=":frmubicacionMapa:mapa1" 
+                                        listener="#{controlMapaBean.verUbicacion()}"  
                                              />                                     
                                 </p:selectOneListbox>        
         

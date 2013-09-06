@@ -9,13 +9,21 @@
         <h:outputStylesheet name="css/estilos.css"/>
         <h:outputStylesheet name="css/bootstrap.css"/>        
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/es_ES/all.js#xfbml=1";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     </h:head>
     <h:body style="background-image: url(resources/img/pattern_152.gif)">
 
-
+        
         <!--Inicio Elemento Centrado para Inicio de Sesion -->
         <div style="position: absolute; top: 50%;left: 50%;width: 50%;height: 50%;margin-top: -15%;margin-left: -26%; border: #4cae4c;">
+            <div class="fb-like" data-href="http://developers.facebook.com/docs/reference/plugins/like" data-width="450" data-show-faces="true" data-send="true"></div>
             <div >
                 <p:graphicImage value="resources/img/banner3.png" alt="SICOVI" title="SICOVI" width="100%" height="70%"/>  
             </div>
@@ -51,6 +59,7 @@
 
                 </div>
             </p:panel>
+            
         </div>
         <!--Fin  Elemento Centrado para Inicio de Sesion -->
 

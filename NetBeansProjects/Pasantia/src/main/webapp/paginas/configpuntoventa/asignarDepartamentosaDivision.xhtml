@@ -6,80 +6,20 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        <p:dialog header="Asignar Departamentos a Division: #{asignarDepartamentosaDivision.division.nombreDivision}" widgetVar="dlgasignar" resizable="false" 
-                  id="dlgasignarubicaciones" showEffect="explode" hideEffect="explode"  modal="true"  width="#{asignarDepartamentosaDivision.width}%" height="#{asignarDepartamentosaDivision.height}%" 
-                  visible="#{asignarDepartamentosaDivision.abrirAsignacionesUbicacion}" closable="false">
+        <p:dialog header="Asignar Departamentos a Division: " widgetVar="dlgasignar" resizable="false" 
+                  id="dlgasignarubicaciones" showEffect="explode" hideEffect="explode"  modal="true"  width="35%" height="35%" 
+                  visible="#{asignarUbicacionesBean.abrirAsignaciones}" closable="false">
 
-            <h:panelGrid   columns="2" cellpadding="1" style="margin:0 auto"  >
-                <p:outputLabel value="País"  />
-                <p:selectOneMenu id="pais" value="#{asignarDepartamentosaDivision.pais.idPais}"  
-                                 validatorMessage="Debe seleccionar Pais" effect="fold" filter="true" 
-                                 filterMatchMode="startsWith" 
-                                 >  
-                    <f:selectItem itemLabel="...Seleccione..." itemValue="" />  
-                    <f:selectItems value="#{asignarDepartamentosaDivision.paisescombo}"  />
-                    <p:ajax  
-                            listener="#{asignarDepartamentosaDivision.cargarDepartamentosxPais()}" />                                                                  
+            <div style="margin-left: 20%;margin-right: 20%;margin-top: 2%;margin-bottom: 2%">
 
-                </p:selectOneMenu>   
-            </h:panelGrid>
+                <p:pickList id="pickAsignacionesDepartamentos" value="#{asignarUbicacionesBean.modeloDepartamentos}" var="dep"   
+                itemLabel="#{dep.nombreDepartamento}" itemValue="#{dep}" showSourceControls="true" showTargetControls="true" showCheckbox="true"  
+                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" /> 
+                <p:commandButton value="Cerrar" title="Cerrar" icon="ui-icon-arrowreturnthick-1-w" actionListener="#{asignarUbicacionesBean.cerrarAsignaciones()}" />
 
-            <p:dataTable id="tbldepartamentos" value="#{asignarDepartamentosaDivision.modeloDatosDepartamento}" var="d"
-                         emptyMessage="Todos los departamentos asignados." paginator="true" 
-                         rows="15" paginatorPosition="bottom" 
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         selection="#{asignarDepartamentosaDivision.departamentosSeleccionados}" >
-                <f:facet name="header">  
-                    Seleccione  
-                </f:facet>  
-
-                <p:column selectionMode="multiple" style="width:2%" /> 
-
-                <f:facet name="header">  
-                    Lista de Departamentos Disponibles para asignar a la división seleccionada.
-                </f:facet> 
-
-                <p:column headerText="Codigo Departamento " style="display: none"  >
-                    <f:facet name="header">  
-                        Codigo Departamento 
-                    </f:facet>  
-                    <h:outputText value="#{d.idDepartamento}" />  
-                </p:column>
-
-                <p:column headerText="Nombre Departamento"  >
-                    <f:facet name="header">  
-                        Nombre Departamento
-                    </f:facet>  
-                    <h:outputText value="#{d.nombreDepartamento}" />  
-                </p:column>
-
-                <p:column headerText="Pais del departamento"  >
-                    <f:facet name="header">  
-                        Pais del departamento
-                    </f:facet>  
-                    <h:outputText value="#{d.pais.nombrePais}" />  
-                </p:column>
-                <f:facet name="footer">  
-                    En total hay #{asignarDepartamentosaDivision.totalDepartamentos()} departamentos.  
-                </f:facet>
-
-            </p:dataTable>
-            
-            <p:spacer height="2%" />
-                                                                            
-            <p:commandButton id="cancelasig" value="Cancelar" title="Cancelar" 
-                             actionListener="#{asignarDepartamentosaDivision.cancelarAsignacion()}"                                                 
-                             image="ui-icon-cancel"/>  
-            <p:commandButton id="guardarasig" value="Guardar Asignación" title="Guardar Asignación" 
-                             actionListener="#{asignarDepartamentosaDivision.guardarAsignacion()}"                                                 
-                             image="ui-icon-disk"/>                               
-            <p:commandButton actionListener="#{asignarDepartamentosaDivision.cerrarAsignacionesDivision()}" value="Cerrar" title="Cerrar" 
-                             image="ui-icon-arrowreturnthick-1-w" />   
-
-
-
-            
+            </div>
         </p:dialog>
+
 
 
     </ui:composition>

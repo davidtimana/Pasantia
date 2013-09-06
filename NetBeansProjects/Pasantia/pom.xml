@@ -62,11 +62,11 @@
             <artifactId>primefaces-mobile</artifactId>  
             <version>0.9.3</version>  
         </dependency>
-      <!--  <dependency>  
+       <dependency>  
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>afternoon</artifactId>  
             <version>1.0.9</version>  
-        </dependency>  -->
+        </dependency>  
         <dependency>
             <groupId>com.pasantia</groupId>
             <artifactId>pasantia</artifactId>

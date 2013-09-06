@@ -59,8 +59,8 @@ public class AsignarDepartamentosaDivision implements Serializable{
         
 
         System.out.println("la division seleccionada es-->" + d.getNombreDivision());
-        //departamentos = departamentoDAO.buscarDepartamentoporIdPais(51);
-        //modeloDatosDepartamento = new ModeloDatosDepartamento(departamentos);
+        departamentos = departamentoDAO.buscarDepartamentoporIdPais(51);
+        modeloDatosDepartamento = new ModeloDatosDepartamento(departamentos);
 
         division = d;
         divisionesUbicacionValidar = divisionesUbicacionDAO.buscarubicacionesxiddivision(division.getIdDivisiones());
@@ -74,7 +74,7 @@ public class AsignarDepartamentosaDivision implements Serializable{
              width = 40;
             height = 100;
             estaEditando = true;
-            //cargarPropiedadesConAsociaciones();
+            cargarPropiedadesConAsociaciones();
         }
         Utilidad.actualizarElemento("dlgasignarubicaciones");
 

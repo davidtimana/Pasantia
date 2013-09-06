@@ -11,7 +11,7 @@ import org.primefaces.model.SelectableDataModel;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 public class ModeloDatosDepartamento extends ListDataModel<Departamento> implements SelectableDataModel<Departamento> {
 

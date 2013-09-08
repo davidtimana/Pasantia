@@ -29,9 +29,9 @@ import org.primefaces.model.DualListModel;
 public class AsignarUbicacionesBean implements Serializable {
 
     private Boolean abrirAsignaciones;
-    private List<Departamento> departamentos,departamentosSeleccionados;
-    private DualListModel<Departamento> modeloDepartamentos;
+    private List<Departamento> departamentos;    
     private Divisiones divisionSeleccionada;
+    private List<DepartamentoTemp> depSeleccionados;
     
     
     @Inject
@@ -39,43 +39,93 @@ public class AsignarUbicacionesBean implements Serializable {
     @Inject
     DivisionesUbicacionDAO divisionesUbicacionDAO;
     
-    public void cargarAsignaciones(Divisiones d){
-        divisionSeleccionada=d;
-        abrirAsignaciones=true;        
-        List<DivisionesUbicacion> listaComprobacion;
-        if((divisionesUbicacionDAO.buscarubicacionesxiddivision(d.getIdDivisiones())).isEmpty()){
-            //No tiene divisiones asociadas
+    public void cargarAsignaciones(Divisiones d) {
+        divisionSeleccionada = d;
+
+        abrirAsignaciones = true;
+        List<DivisionesUbicacion> listaComprobacion = divisionesUbicacionDAO.buscarubicacionesxiddivision(d.getIdDivisiones());
+        if (listaComprobacion.isEmpty()) {
+            //No tiene divisiones asociadas            
             cargarDepartamentosNoAsociados();
-            Utilidad.actualizarElemento("pickAsignacionesDepartamentos");
-        }else{
+
+        } else {
             //tiene divisiones asociadas
-            
+            for (DivisionesUbicacion du : listaComprobacion) {
+                DepartamentoTemp temp = new DepartamentoTemp();
+                temp.setIdDepartamento(du.getDepartamento().getIdDepartamento());
+                temp.setNombreDepartamento(du.getDepartamento().getNombreDepartamento());
+                temp.setSeleccionado(false);
+                for (DepartamentoTemp dtemp : depSeleccionados) {
+                    if (dtemp.getNombreDepartamento().equals(temp.getNombreDepartamento())) {
+                        dtemp.setSeleccionado(true);
+                    }
+                }
+
+            }
         }
-        
-        
-        
-        
+        Utilidad.actualizarElemento("tblubicacionesdepasociadas");
         Utilidad.actualizarElemento("dlgasignarubicaciones");
-        
+
     }
     
+    public void cargarDepartamentoYaAsociados(List<DivisionesUbicacion> listaComprobacion) {
+        for (DivisionesUbicacion du : listaComprobacion) {
+            DepartamentoTemp temp = new DepartamentoTemp();
+            temp.setIdDepartamento(du.getDepartamento().getIdDepartamento());
+            temp.setNombreDepartamento(du.getDepartamento().getNombreDepartamento());
+            temp.setSeleccionado(false);
+            for (DepartamentoTemp dtemp : depSeleccionados) {
+                if (dtemp.getNombreDepartamento().equals(temp.getNombreDepartamento())) {
+                    dtemp.setSeleccionado(true);
+                }
+            }
+
+        }
+    }
+    
+  
+    
+    public void guardarDepartamentosAsignados(){
+        for (DepartamentoTemp dtemp : depSeleccionados) {
+            System.out.println("los departamento modificados--> "+dtemp.getNombreDepartamento()+" estado--> "+dtemp.getSeleccionado());
+        }
+        
+      
+    }
+
     public void cerrarAsignaciones(){
-        abrirAsignaciones=false;
+        abrirAsignaciones=false;    
+        depSeleccionados = new ArrayList<DepartamentoTemp>();
         Utilidad.actualizarElemento("dlgasignarubicaciones");
+    }
+    
+    public Integer totalDepartamentos(){
+        return depSeleccionados.size();
     }
     
     @PostConstruct
     public void cargarDepartamentos(){        
         departamentos = departamentoDAO.buscartodosDepartamentos();
-        modeloDepartamentos = new DualListModel<Departamento>(departamentos, departamentosSeleccionados);
+        cargarNuevaLista();
         
     }
     
     public void cargarDepartamentosNoAsociados(){
         departamentos = departamentoDAO.buscartodosDepartamentos();
         eliminarDepartamentosSeleccionados();
-        modeloDepartamentos = new DualListModel<Departamento>(departamentos, departamentosSeleccionados);
+        cargarNuevaLista();
         
+        
+    }
+    
+    public void cargarNuevaLista(){
+        for (Departamento d : departamentos) {
+            DepartamentoTemp dt = new DepartamentoTemp();
+            dt.setIdDepartamento(d.getIdDepartamento());
+            dt.setNombreDepartamento(d.getNombreDepartamento());
+            dt.setSeleccionado(false);
+            depSeleccionados.add(dt);
+        }
     }
     
      public void eliminarDepartamentosSeleccionados(){
@@ -92,7 +142,9 @@ public class AsignarUbicacionesBean implements Serializable {
         System.out.println("inicializando");
         abrirAsignaciones=false;  
         departamentos = new ArrayList<Departamento>();
-        departamentosSeleccionados = new ArrayList<Departamento>();
+     
+        depSeleccionados = new ArrayList<DepartamentoTemp>();
+        
         
         
     }
@@ -113,21 +165,9 @@ public class AsignarUbicacionesBean implements Serializable {
         this.departamentos = departamentos;
     }
 
-    public List<Departamento> getDepartamentosSeleccionados() {
-        return departamentosSeleccionados;
-    }
+   
 
-    public void setDepartamentosSeleccionados(List<Departamento> departamentosSeleccionados) {
-        this.departamentosSeleccionados = departamentosSeleccionados;
-    }
-
-    public DualListModel<Departamento> getModeloDepartamentos() {
-        return modeloDepartamentos;
-    }
-
-    public void setModeloDepartamentos(DualListModel<Departamento> modeloDepartamentos) {
-        this.modeloDepartamentos = modeloDepartamentos;
-    }
+    
 
     public Divisiones getDivisionSeleccionada() {
         return divisionSeleccionada;
@@ -136,6 +176,26 @@ public class AsignarUbicacionesBean implements Serializable {
     public void setDivisionSeleccionada(Divisiones divisionSeleccionada) {
         this.divisionSeleccionada = divisionSeleccionada;
     }
+
+   
+
+    public List<DepartamentoTemp> getDepSeleccionados() {
+        return depSeleccionados;
+    }
+
+    public void setDepSeleccionados(List<DepartamentoTemp> depSeleccionados) {
+        this.depSeleccionados = depSeleccionados;
+    }
+
+   
+    
+    
+    
+    
+    
+    
+
+    
     
     
     

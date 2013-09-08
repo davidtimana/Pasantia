@@ -6,16 +6,48 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        <p:dialog header="Asignar Departamentos a Division: " widgetVar="dlgasignar" resizable="false" 
-                  id="dlgasignarubicaciones" showEffect="explode" hideEffect="explode"  modal="true"  width="35%" height="35%" 
-                  visible="#{asignarUbicacionesBean.abrirAsignaciones}" closable="false">
+        <p:dialog header="Asignar Departamentos a Division: #{asignarUbicacionesBean.divisionSeleccionada.nombreDivision}" widgetVar="dlgasignar" resizable="false" 
+                  id="dlgasignarubicaciones" showEffect="explode" hideEffect="explode"  modal="true"  width="45%" height="45%" 
+                  visible="#{asignarUbicacionesBean.abrirAsignaciones}" closable="true"
+                  >
 
             <div style="margin-left: 20%;margin-right: 20%;margin-top: 2%;margin-bottom: 2%">
 
-                <p:pickList id="pickAsignacionesDepartamentos" value="#{asignarUbicacionesBean.modeloDepartamentos}" var="dep"   
-                itemLabel="#{dep.nombreDepartamento}" itemValue="#{dep}" showSourceControls="true" showTargetControls="true" showCheckbox="true"  
-                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" /> 
-                <p:commandButton value="Cerrar" title="Cerrar" icon="ui-icon-arrowreturnthick-1-w" actionListener="#{asignarUbicacionesBean.cerrarAsignaciones()}" />
+                
+                <p:dataTable id="tblubicacionesdepasociadas" var="d" value="#{asignarUbicacionesBean.depSeleccionados}" sortMode="multiple"  emptyMessage="Todos los departamentos ya fueron asignados"
+                             paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                             >  
+
+                    <f:facet name="header">  
+                        Lista de departamentos a seleccionar                        
+                    </f:facet>  
+
+
+                    <p:column headerText="Departamento" style="width:25%">                          
+                        <p:outputLabel value="#{d.nombreDepartamento}" style="margin-left: 5%"/>
+                    </p:column>  
+
+                    <p:column headerText="Seleccioné " style="width:25%">  
+                        <p:selectBooleanCheckbox value="#{d.seleccionado}"
+                                                 style="margin-left: 37%" >
+                            
+                        </p:selectBooleanCheckbox>
+                    </p:column> 
+
+                    <f:facet name="footer">
+                        El total de departamento disponibles es: #{asignarUbicacionesBean.totalDepartamentos()}
+                        <br />
+                        <p:commandButton value="Guardar" title="Guardar" icon="ui-icon-disk" 
+                                         actionListener="#{asignarUbicacionesBean.guardarDepartamentosAsignados()}"  />  
+                        <p:commandButton value="Cerrar" title="Cerrar" icon="ui-icon-arrowreturnthick-1-w" 
+                                         actionListener="#{asignarUbicacionesBean.cerrarAsignaciones()}"  />  
+                    </f:facet>  
+
+
+
+
+                </p:dataTable> 
 
             </div>
         </p:dialog>

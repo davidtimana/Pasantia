@@ -27,11 +27,10 @@
 
         <p:spacer width="10" height="5" />
         <h:form>
-            <p:fieldset legend="Opciones" >                         
+            <p:fieldset legend="Opciones" >
                 <p:dock position="top" proximity="150" >  
                     <p:menuitem value="Inicio" icon="/resources/img/Home-256.png"  title="Inicio" action="#{navegacion.retornarPaginaAdministrador()}"/>  
-                    <p:menuitem value="Nuevo" icon="/resources/img/agregar.png" actionListener="#{agregarDivisionesBean.prepararGuardadoDelasDivisiones()}" title="Nueva División" />  
-                    <p:menuitem value="Buscar" icon="/resources/img/buscar.png"   title="Buscar División" />                           
+                    <p:menuitem value="Nuevo" icon="/resources/img/agregar.png" actionListener="#{agregarDivisionesBean.prepararGuardadoDelasDivisiones()}" title="Nueva División" />                      
                 </p:dock>
             </p:fieldset>  
 
@@ -53,7 +52,7 @@
                     <p:rowToggler />  
                 </p:column>  
 
-                <p:column headerText="Descripcion" style="width: 14%; text-align: center" sortBy="#{divisiones.nombreDivision}" >  
+                <p:column headerText="Descripcion" style="width: 14%; text-align: center" sortBy="#{divisiones.nombreDivision}" filterBy="#{divisiones.nombreDivision}" >  
                     <h:outputText value="#{divisiones.nombreDivision}"  />  
                 </p:column>
                 <p:column headerText="Ubicación " style="width: 4%; text-align: center" >  

@@ -102,4 +102,14 @@ public interface DivisionesUbicacionDAO {
     public List<Divisiones> buscarDivisionesAsociadas();
     
     
+    /**
+     * Metodo que se encarga de buscar las asignaciones de ubicacion para las
+     * divisiones
+     *
+     * @param id
+     * @return List<Departamento>
+     */
+    public List<Departamento> buscarubicacionesxiddivisionretornaDepartamentos(Integer id);
+    
+    
 }

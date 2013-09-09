@@ -8,6 +8,7 @@ import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.entidades.Departamento;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -22,7 +23,7 @@ import org.hibernate.Session;
 @Stateless
 public class DepartamentoDAOImpl implements DepartamentoDAO{
 
-    private EntityManager entityManager;
+    
     
     @Override
     public List<Departamento> buscartodosDepartamentos() {
@@ -83,6 +84,43 @@ public class DepartamentoDAOImpl implements DepartamentoDAO{
             System.out.println("cerrando la sesion");
             session.close();
         }
+    }
+
+    @Override
+    public List<Departamento> buscarDepartamentoNoAsociados() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        List<Departamento> departamentos = new ArrayList<Departamento>();
+        List<Object> listaNativa = new ArrayList<Object>();
+        
+        
+        String sql = "";
+
+        try {
+            sql = " SELECT d.idDepartamento,d.nombre_departamento,d.latitud,d.longitud,d.secpais FROM Departamento d "
+                    + " LEFT JOIN DivisionesUbicacion du on (d.idDepartamento = du.secdepartamento) "
+                    + " LEFT JOIN Divisiones divi on(du.secdivision=divi.idDivisiones) "
+                    + " WHERE d.secpais=51 and du.secdepartamento is null and du.secdivision is null";
+            Query q = session.createSQLQuery(sql);
+            
+            listaNativa= q.list();
+            Iterator iterator = listaNativa.iterator();
+            while (iterator.hasNext()) {
+                Departamento departamento = new Departamento();
+                Object[] obj = (Object[]) iterator.next();                
+                departamento=buscarDepartamentoporIdUno((Integer)obj[0]);
+                departamentos.add(departamento);
+            }            
+            
+
+        } catch (Exception e) {
+            departamentos = null;
+            System.out.println("Error en buscarDepartamentoNoAsociados " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return departamentos;
     }
     
 }

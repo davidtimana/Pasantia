@@ -14,10 +14,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.BeforeCompletion;
 import javax.inject.Inject;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -34,6 +36,7 @@ public class AsignarUbicacionesBean implements Serializable {
     private List<DepartamentoTemp> depSeleccionados;
     
     
+    
     @Inject
     DepartamentoDAO departamentoDAO;
     @Inject
@@ -43,17 +46,22 @@ public class AsignarUbicacionesBean implements Serializable {
         divisionSeleccionada = d;
 
         abrirAsignaciones = true;
-        List<DivisionesUbicacion> listaComprobacion = divisionesUbicacionDAO.buscarubicacionesxiddivision(d.getIdDivisiones());
+        departamentos = new ArrayList<Departamento>();
+        depSeleccionados = new ArrayList<DepartamentoTemp>();
+        departamentos = departamentoDAO.buscarDepartamentoNoAsociados();        
+        List<Departamento> listaComprobacion = divisionesUbicacionDAO.buscarubicacionesxiddivisionretornaDepartamentos(d.getIdDivisiones());
+        departamentos.addAll(listaComprobacion);        
+        cargarNuevaLista();
         if (listaComprobacion.isEmpty()) {
             //No tiene divisiones asociadas            
             cargarDepartamentosNoAsociados();
 
         } else {
             //tiene divisiones asociadas
-            for (DivisionesUbicacion du : listaComprobacion) {
+            for (Departamento du : listaComprobacion) {
                 DepartamentoTemp temp = new DepartamentoTemp();
-                temp.setIdDepartamento(du.getDepartamento().getIdDepartamento());
-                temp.setNombreDepartamento(du.getDepartamento().getNombreDepartamento());
+                temp.setIdDepartamento(du.getIdDepartamento());
+                temp.setNombreDepartamento(du.getNombreDepartamento());
                 temp.setSeleccionado(false);
                 for (DepartamentoTemp dtemp : depSeleccionados) {
                     if (dtemp.getNombreDepartamento().equals(temp.getNombreDepartamento())) {
@@ -94,8 +102,11 @@ public class AsignarUbicacionesBean implements Serializable {
     }
 
     public void cerrarAsignaciones(){
-        abrirAsignaciones=false;    
-        depSeleccionados = new ArrayList<DepartamentoTemp>();
+        abrirAsignaciones=false; 
+        departamentos = new ArrayList<Departamento>();
+        depSeleccionados = new ArrayList<DepartamentoTemp>(); 
+        
+        Utilidad.actualizarElemento("tblubicacionesdepasociadas");
         Utilidad.actualizarElemento("dlgasignarubicaciones");
     }
     
@@ -104,21 +115,20 @@ public class AsignarUbicacionesBean implements Serializable {
     }
     
     @PostConstruct
-    public void cargarDepartamentos(){        
-        departamentos = departamentoDAO.buscartodosDepartamentos();
-        cargarNuevaLista();
+    public void cargarDepartamentos(){
         
+        departamentos = departamentoDAO.buscarDepartamentoNoAsociados();
+        cargarNuevaLista();      
     }
     
     public void cargarDepartamentosNoAsociados(){
-        departamentos = departamentoDAO.buscartodosDepartamentos();
-        eliminarDepartamentosSeleccionados();
-        cargarNuevaLista();
-        
+        departamentos = departamentoDAO.buscarDepartamentoNoAsociados();      
+        cargarNuevaLista();       
         
     }
     
     public void cargarNuevaLista(){
+        depSeleccionados = new ArrayList<DepartamentoTemp>();
         for (Departamento d : departamentos) {
             DepartamentoTemp dt = new DepartamentoTemp();
             dt.setIdDepartamento(d.getIdDepartamento());
@@ -141,9 +151,10 @@ public class AsignarUbicacionesBean implements Serializable {
     public AsignarUbicacionesBean() {
         System.out.println("inicializando");
         abrirAsignaciones=false;  
-        departamentos = new ArrayList<Departamento>();
-     
+        departamentos = new ArrayList<Departamento>();        
         depSeleccionados = new ArrayList<DepartamentoTemp>();
+        
+        
         
         
         
@@ -186,6 +197,18 @@ public class AsignarUbicacionesBean implements Serializable {
     public void setDepSeleccionados(List<DepartamentoTemp> depSeleccionados) {
         this.depSeleccionados = depSeleccionados;
     }
+
+   
+    
+    
+
+    
+    
+    
+
+   
+    
+    
 
    
     

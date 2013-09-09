@@ -7,7 +7,7 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
         <p:dialog header="Asignar Departamentos a Division: #{asignarUbicacionesBean.divisionSeleccionada.nombreDivision}" widgetVar="dlgasignar" resizable="false" 
-                  id="dlgasignarubicaciones" showEffect="explode" hideEffect="explode"  modal="true"  width="45%" height="45%" 
+                  id="dlgasignarubicaciones" showEffect="explode" hideEffect="explode"  modal="true"  width="40%" height="45%" 
                   visible="#{asignarUbicacionesBean.abrirAsignaciones}" closable="true"
                   >
 
@@ -15,20 +15,22 @@ and open the template in the editor.
 
                 
                 <p:dataTable id="tblubicacionesdepasociadas" var="d" value="#{asignarUbicacionesBean.depSeleccionados}" sortMode="multiple"  emptyMessage="Todos los departamentos ya fueron asignados"
-                             paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             paginator="true" rows="5" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                              {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                             >  
+                             widgetVar="tblasignaciones">  
 
                     <f:facet name="header">  
                         Lista de departamentos a seleccionar                        
-                    </f:facet>  
+                        
+                    </f:facet> 
+                    
 
 
-                    <p:column headerText="Departamento" style="width:25%">                          
+                    <p:column headerText="Departamento" style="width:25%" sortBy="#{d.nombreDepartamento}" filterBy="#{d.nombreDepartamento}">                          
                         <p:outputLabel value="#{d.nombreDepartamento}" style="margin-left: 5%"/>
                     </p:column>  
 
-                    <p:column headerText="Seleccioné " style="width:25%">  
+                    <p:column headerText="Seleccioné " style="width:25%" >  
                         <p:selectBooleanCheckbox value="#{d.seleccionado}"
                                                  style="margin-left: 37%" >
                             
@@ -41,7 +43,8 @@ and open the template in the editor.
                         <p:commandButton value="Guardar" title="Guardar" icon="ui-icon-disk" 
                                          actionListener="#{asignarUbicacionesBean.guardarDepartamentosAsignados()}"  />  
                         <p:commandButton value="Cerrar" title="Cerrar" icon="ui-icon-arrowreturnthick-1-w" 
-                                         actionListener="#{asignarUbicacionesBean.cerrarAsignaciones()}"  />  
+                                         actionListener="#{asignarUbicacionesBean.cerrarAsignaciones()}"
+                                         oncomplete="tblasignaciones.clearFilters()"/>  
                     </f:facet>  
 
 

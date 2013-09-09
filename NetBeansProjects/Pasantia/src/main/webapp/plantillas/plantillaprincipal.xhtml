@@ -50,7 +50,7 @@
 
         <!-- Dialog para la espera de las peticiones ajax -->
         <p:ajaxStatus onstart="statusDialog.show();" oncomplete="statusDialog.hide();" onerror="errorDialog.show()"  />          
-        <p:dialog modal="true" widgetVar="statusDialog" header="...Cargando..."   
+        <p:dialog modal="false" widgetVar="statusDialog" header="...Cargando..."   
                   draggable="false" closable="false" resizable="false">  
             <p:graphicImage value="../../resources/img/cargando.gif" />  
         </p:dialog> 

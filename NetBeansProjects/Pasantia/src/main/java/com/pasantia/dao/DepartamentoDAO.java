@@ -45,4 +45,12 @@ public interface DepartamentoDAO {
      * @return Departamento
      */
     public void actualizarDepartamento(Departamento departamento);
+    
+     /**
+     *Metodo que se encarga de listar
+     * los departamentos no asociados
+     * a una division     
+     * @return Departamentos
+     */
+    public List<Departamento> buscarDepartamentoNoAsociados();
 }

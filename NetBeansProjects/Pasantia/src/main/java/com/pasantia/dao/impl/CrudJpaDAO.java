@@ -7,12 +7,16 @@ package com.pasantia.dao.impl;
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.CrudDAO;
 import java.util.List;
+import javax.annotation.PreDestroy;
+import javax.ejb.Stateless;
 import org.hibernate.Session;
 
 /**
  *
  * @author David Orlando Timaná
  */
+
+@Stateless
 public class CrudJpaDAO<T> implements CrudDAO<T>{
     
     
@@ -21,6 +25,11 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
 
     public CrudJpaDAO() {
         session = ConexionHibernate.getSessionFactory().openSession();  
+    }
+    
+    @PreDestroy
+    public void destruirSession(){
+        session.close();
     }
 
     @Override
@@ -92,7 +101,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
 
     @Override
     public T buscar(Class<T> entityClass, Object id) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (T) session.get(entityClass, (Integer) id);
     }
 
     @Override

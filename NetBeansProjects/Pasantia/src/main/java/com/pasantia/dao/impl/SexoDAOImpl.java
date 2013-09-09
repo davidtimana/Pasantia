@@ -10,6 +10,7 @@ import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateless;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -17,6 +18,8 @@ import org.hibernate.Session;
  *
  * @author jbuitron
  */
+
+@Stateless
 public class SexoDAOImpl implements SexoDAO{
 
     @Override

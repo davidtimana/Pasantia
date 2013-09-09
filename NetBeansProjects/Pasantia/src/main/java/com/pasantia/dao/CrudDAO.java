@@ -4,11 +4,14 @@
  */
 package com.pasantia.dao;
 
+import javax.ejb.Local;
+
 /**
  *
  * @author David Orlando Timaná
  */
 
+@Local
 public interface CrudDAO<T> extends ICrud<T>{
     
     	/**

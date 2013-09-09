@@ -7,114 +7,142 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
 
-        <!-- .errorCajaTexto{
-            border-color: #e9322d;
-            -webkit-box-shadow: 0 0 6px #f8b9b7;
-            -moz-box-shadow: 0 0 6px #f8b9b7;
-            box-shadow: 0 0 6px #f8b9b7;
-        } -->
-        <p:dialog header="Creacion de un nuevo batallon" widgetVar="dlgNuevo" resizable="false" 
-                  id="dlgNuevo" showEffect="explode" hideEffect="explode"  modal="false"  width="1100" height="300" 
-                  minimizable="true" binding="#{agregarBatallonesBean.dlgnuevobatallon}" onHide="#{agregarBatallonesBean.cerrarGuardado()}">
 
 
-            <p:accordionPanel>  
+
+        <p:accordionPanel id="accordionBatallones">  
+
+            <p:tab title="Datos Batallon" >  
+                <h:panelGrid  columns="2" cellpadding="2" style="margin-left: auto;margin-right: auto" id="datosbatallon">                             
+                    <p:outputLabel value="Nombre Batallón: * "/>
+                    <p:inputTextarea rows="2"
+                                     cols="50"
+                                     counterTemplate="{0} Letras Restantes." 
+                                     counter="contador"  
+                                     maxlength="255"
+                                     value="#{batallonControllerBean.batallon.nombreBatallon}"
+                                     style="width: 130%;#{batallonControllerBean.estErrNombre}"  readonly="#{batallonControllerBean.deshabilitarAll}" 
+                                     id="txtnombrebatallon" />                        
+
+                    <p:spacer width="70" height="1" /><h:outputText id="contador" />             
+                </h:panelGrid> 
+            </p:tab>  
+            <p:tab title="Datos de Contacto">  
+                <h:panelGrid columns="4" cellpadding="2" style="margin-left: auto;margin-right: auto"> 
+                    <p:outputLabel value="Dirección: * " />
+                    <p:inputText value="#{batallonControllerBean.batallon.direccion}" size="80"  readonly="#{batallonControllerBean.deshabilitarAll}"
+                                 style="#{batallonControllerBean.estErrDireccion}" id="txtdireccionbatallon"/>                   
+                    <p:outputLabel value="Barrio: * " />
+                    <p:inputText value="#{batallonControllerBean.batallon.barrio}" size="80" readonly="#{batallonControllerBean.deshabilitarAll}"
+                                 style="#{batallonControllerBean.estErrbarrio}" id="txtbarriobatallon"/>
+                    <p:outputLabel value="Telefono 1: * " />
+                    <p:inputText value="#{batallonControllerBean.batallon.telefono1}" size="80" readonly="#{batallonControllerBean.deshabilitarAll}"
+                                 style="#{batallonControllerBean.estErrTelefono}" id="txttelefono1batallon"/>
+                    <p:outputLabel value="Telefono 2: " />
+                    <p:inputText value="#{batallonControllerBean.batallon.telefono2}" size="80" readonly="#{batallonControllerBean.deshabilitarAll}"/>
+
+
+                </h:panelGrid>
+            </p:tab>  
+            <p:tab title="División Perteneciente">  
+                <h:panelGrid columns="2" cellpadding="1" style="margin-left: 20%;margin-right: 20%;#{batallonControllerBean.ubicacionEdit}"> 
+
+                    <p:outputLabel value="División Perteneciente : * "/>
+                    <p:selectOneMenu id="cmbdivisionbatallon" value="#{batallonControllerBean.divisionSelec}"  
+                                     validatorMessage="Debe seleccionar División" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith" 
+                                     style="width: 170%;#{batallonControllerBean.estErrDivision}"
+                                     disabled="#{batallonControllerBean.deshabilitarAll}">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{agregarBatallonesBean.comboDivisionesAsociadas}"  />           
+                    </p:selectOneMenu>  
+
+                </h:panelGrid>
                 
-                <p:tab title="Datos Batallon" id="pruebatab">  
-                    <h:panelGrid  columns="2" cellpadding="2" style="margin:0 auto;" id="datosbatallon">                             
-                        <p:outputLabel value="Nombre Batallón: * "/>
-                        <p:inputTextarea rows="2"
-                                         cols="50"
-                                         counterTemplate="{0} Letras Restantes." 
-                                         counter="contador"  
-                                         maxlength="255"
-                                         value="#{agregarBatallonesBean.nombre_batallon}"
-                                         />                    
+                <h:panelGrid columns="2" cellpadding="1" style="margin-left: 20%;margin-right: auto;#{batallonControllerBean.ubicacionLoad}"> 
 
-                        <p:spacer width="70" height="1" /><h:outputText id="contador" />             
-                    </h:panelGrid> 
-                </p:tab>  
-                <p:tab title="Datos de Contacto">  
-                    <h:panelGrid columns="4" cellpadding="4" style="margin:0 auto;"> 
-                        <p:outputLabel value="Dirección: * "/>
-                        <p:inputText value="#{agregarBatallonesBean.direccion}" />                   
-                        <p:outputLabel value="Barrio: * "/>
-                        <p:inputText value="#{agregarBatallonesBean.barrio}" />
-                        <p:outputLabel value="Telefono 1: * "/>
-                        <p:inputText value="#{agregarBatallonesBean.telefono1}" />
-                        <p:outputLabel value="Telefono 2: "/>
-                        <p:inputText value="#{agregarBatallonesBean.telefono2}" />
+                    <p:outputLabel value="División Perteneciente : * "/>
+                    <p:inputText value="#{batallonControllerBean.divisiones.nombreDivision}" size="50"  readonly="#{batallonControllerBean.deshabilitarAll}"/>
+
+                </h:panelGrid>
+            </p:tab>  
+            <p:tab title="Ubicación Batallón">  
+                <h:panelGrid columns="6" cellpadding="1" style="margin-left: 20%;margin-right: 20%;#{batallonControllerBean.ubicacionEdit}"> 
+
+                    <p:outputLabel value="Pais : * "/>
+                    <p:selectOneMenu id="cmbpaisbat" value="#{batallonControllerBean.paisSelec}"  
+                                     validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"  
+                                     style="width: 100%;#{batallonControllerBean.estErrPais}" disabled="#{batallonControllerBean.deshabilitarAll}" >  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{batallonControllerBean.comboPais}"  />
+                        <p:ajax listener="#{batallonControllerBean.cargardDepartamentoxPais()}"  />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Departamento : * "/>
+                    <p:selectOneMenu id="cmbdepartamentobat" value="#{batallonControllerBean.departamentoSelec}"  
+                                     validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"
+                                     disabled="#{batallonControllerBean.deshabilitarDepartamento}"
+                                     style="width: 100%;#{batallonControllerBean.estErrDepartamento}">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{batallonControllerBean.comboDepartamento}"  />
+                        <p:ajax listener="#{batallonControllerBean.cargarCiudadesxDepartamento()}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Ciudad : * "/>
+                    <p:selectOneMenu id="cmbciudadbat" value="#{batallonControllerBean.ciudadSelec}"  
+                                     validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"
+                                     disabled="#{batallonControllerBean.deshabilitarCiudad}"
+                                     style="width: 100%;#{batallonControllerBean.estErrCiudad}">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{batallonControllerBean.comboCiudades}"  />           
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <h:panelGrid columns="6" cellpadding="1" style="margin-left: 10%;margin-right: auto;#{batallonControllerBean.ubicacionLoad}"> 
+
+                    <p:outputLabel value="Pais : * "/>
+                    <p:inputText value="#{batallonControllerBean.ciudad.departamento.pais.nombrePais}" size="60" readonly="#{batallonControllerBean.deshabilitarAll}" />
+
+                    <p:outputLabel value="Departamento : * "/>
+                    <p:inputText value="#{batallonControllerBean.ciudad.departamento.nombreDepartamento}" size="60" readonly="#{batallonControllerBean.deshabilitarAll}"/>
+
+                    <p:outputLabel value="Ciudad : * "/>
+                    <p:inputText value="#{batallonControllerBean.ciudad.nombreCiudad}" size="60" readonly="#{batallonControllerBean.deshabilitarAll}"/>
+
+                </h:panelGrid>
+            </p:tab> 
+            <p:tab title="Geolocalización Batallón">
+                <div style="margin-left: 25%;margin-right: 25%">
+                    <p:gmap id="mapbatallones" center="#{batallonControllerBean.latitud}, #{batallonControllerBean.longitud}" zoom="#{batallonControllerBean.zoom}" type="HYBRID" 
+                            style="width:600px;height:400px" model="#{batallonControllerBean.modMapa}" /> 
+                </div>
+            </p:tab>  
+        </p:accordionPanel>
+        <p:separator  style="width:95%;height:2%"  />
+
+        <h:panelGrid columns="4" cellpadding="1">
+            <p:commandButton value="Nuevo Batallon" title="Nuevo Batallon" 
+                             action="#{batallonControllerBean.nuevoBatallon()}" 
+                             icon="ui-icon-plusthick" style="#{batallonControllerBean.ocultarNuevo}"
+                             id="btnnuevobat"/>           
+            <p:commandButton value="Editar Batallon" title="Editar Batallon" 
+                             action="#{batallonControllerBean.editarBatallon()}" 
+                             icon="ui-icon-pencil" style="#{batallonControllerBean.ocultarEdit}"
+                             id="btneditarbat"/>           
+            <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
+                             action="#{batallonControllerBean.guardarBatallon()}" 
+                             icon="ui-icon-disk" style="#{batallonControllerBean.ocultarGuardar}" 
+                             id="btnguardarBatallon"/>           
+            <p:commandButton value="Cancelar" title="Cancelar" icon="ui-icon-cancel"
+                             actionListener="#{batallonControllerBean.cancelarBatallon()}"
+                             id="btncancelarbat" style="#{batallonControllerBean.ocultarCancelar}"/>                               
+        </h:panelGrid>
 
 
-                    </h:panelGrid>
-                </p:tab>  
-                <p:tab title="Comandante a Cargo">  
-                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%"> 
 
-                         <p:outputLabel value="División Perteneciente : * "/>
-                         <p:selectOneMenu id="division" value="#{agregarBatallonesBean.divisionSeleccionada}"  
-                                         validatorMessage="Debe seleccionar División" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith" 
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarBatallonesBean.comboDivisionesAsociadas}"  />           
-                        </p:selectOneMenu>  
-                         
-
-
-                    </h:panelGrid>
-                </p:tab>  
-                <p:tab title="Ubicación Batallón">  
-                    <h:panelGrid columns="6" cellpadding="1" style="width: 100%"> 
-
-                          <p:outputLabel value="Pais : * "/>
-                          <p:selectOneMenu id="pais" value="#{agregarBatallonesBean.paisSeleccionado}"  
-                                         validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"  
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarBatallonesBean.combopaises}"  />
-                            <p:ajax listener="#{agregarBatallonesBean.cargarDepartamentosxPais()}" update="departamento,ciudad" />
-                        </p:selectOneMenu>
-                          
-                          <p:outputLabel value="Departamento : * "/>
-                          <p:selectOneMenu id="departamento" value="#{agregarBatallonesBean.departamentoSeleccionado}"  
-                                         validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"
-                                         disabled="#{agregarBatallonesBean.deshabilitarDepartamento}"
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarBatallonesBean.combodepartamentos}"  />
-                            <p:ajax listener="#{agregarBatallonesBean.cargarCiudadesxDepartamento()}" update="ciudad" />
-                        </p:selectOneMenu>
-                          
-                          <p:outputLabel value="Ciudad : * "/>
-                          <p:selectOneMenu id="ciudad" value="#{agregarBatallonesBean.ciudadSeleccionada}"  
-                                         validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"
-                                         disabled="#{agregarBatallonesBean.deshabilitarCiudad}"
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarBatallonesBean.combociudades}"  />           
-                        </p:selectOneMenu>
-                         
-
-
-                    </h:panelGrid>
-                </p:tab>  
-            </p:accordionPanel>
-            <p:separator  style="width:1000px;height:8px"  />
-            <h:panelGrid columns="2" cellpadding="1" >                             
-                <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
-                                 action="#{agregarBatallonesBean.guardarBatallon()}" 
-                                 icon="icon-add" 
-                                 update=":frmagregarbatallon:dlgNuevo,:frmbatallones:tblbatallones"/>           
-                <p:commandButton value="Cancelar" title="Cancelar" icon="icon-cancel"
-                                 actionListener="#{agregarBatallonesBean.cerrarGuardado()}"
-                                 update=":frmagregarbatallon:dlgNuevo"/>                               
-
-            </h:panelGrid>
-        </p:dialog>
 
 
 

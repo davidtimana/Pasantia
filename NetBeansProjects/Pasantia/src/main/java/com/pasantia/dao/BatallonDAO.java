@@ -109,4 +109,12 @@ public interface BatallonDAO {
      */
     public List<Batallon> buscarBatallonesxTelefono2(String telefono2);
     
+     
+    /**
+     *Metodo que se encarga de
+     * listar el ultimo batallon Ingresado
+     * @return Batallon
+     */
+    public Batallon buscarUltimo();
+    
 }

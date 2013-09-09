@@ -10,47 +10,36 @@ import com.pasantia.entidades.Batallon;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
-import com.pasantia.entidades.DivisionesUbicacion;
 import com.pasantia.entidades.Pais;
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.component.dialog.Dialog;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.TabChangeEvent;
 
 /**
  *
  * @author David Orlando Timanà
  */
 @Named(value = "agregarBatallonesBean")
-@ApplicationScoped
+@SessionScoped
 public class AgregarBatallonesBean implements Serializable{
 
-    private Dialog dlgnuevobatallon;
     private Batallon batallon;
     private String nombre_batallon;
     private String telefono1;
     private String telefono2;
     private String direccion;
-    private String barrio;
-    private DivisionesUbicacionDAO divisionesUbicacionDAO;
+    private String barrio;   
     private List<SelectItem> comboDivisionesAsociadas,combopaises,combodepartamentos,combociudades;
     private List<Divisiones> divisiones;    
     private List<Pais> paises;
     private List<Departamento> departamentos;
-    private List<Ciudad> ciudades;
-    private PaisDAO paisDAO;
-    private DepartamentoDAO departamentoDAO;
-    private CiudadDAO ciudadDAO;
+    private List<Ciudad> ciudades;     
     private Integer paisSeleccionado;
     private Integer departamentoSeleccionado;
     private Integer ciudadSeleccionada;
@@ -59,18 +48,21 @@ public class AgregarBatallonesBean implements Serializable{
     private Boolean deshabilitarCiudad;
     private DivisionesDAO divisionesDAO;
     private Divisiones division;
-    private Ciudad ciudad;
-    private BatallonDAO batallonDAO;
+    private Ciudad ciudad;    
     
+    @Inject 
+    BatallonDAO batallonDAO;
     @Inject
-    EditarBatallonesBean batallonesBean;
-    
+    DivisionesUbicacionDAO divisionesUbicacionDAO;
+    @Inject
+    PaisDAO paisDAO;
+    @Inject
+    DepartamentoDAO departamentoDAO;
+    @Inject
+    CiudadDAO ciudadDAO;
     
 
-    public void cargarGuardadoBatallon() {
-        System.out.println("Cargando el guardar");
-        dlgnuevobatallon.setVisible(true);
-    }
+    
 
     public void guardarBatallon() {      
        
@@ -86,9 +78,8 @@ public class AgregarBatallonesBean implements Serializable{
         }else{
             System.err.println("...ERROR...EN LA VALIDACIÓN DE DATOS");
         }   
-        Utilidad.abrirDialog("dlgNuevo");
-        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
-        batallonesBean.buscarBatallones();
+        
+        
     }
     
     public void limpiarCampos(){
@@ -205,11 +196,8 @@ public class AgregarBatallonesBean implements Serializable{
         return resultado;
     }
     
-    public void cerrarGuardado(){
-        dlgnuevobatallon.setVisible(false);
-        limpiarCampos();
-        RequestContext.getCurrentInstance().update(Utilidad.buscarHtmlComponete("tblbatallones").getClientId(FacesContext.getCurrentInstance()));
-        batallonesBean.cargarBatallones();
+    public void cerrarGuardado(){        
+        limpiarCampos();                
     }
     
     public void cargarPaises(){
@@ -234,6 +222,7 @@ public class AgregarBatallonesBean implements Serializable{
         
         deshabilitarDepartamento=false;
         deshabilitarCiudad=true;
+        Utilidad.actualizarElemento("cmbdepartamentobat");
         
     }
     public void cargarCiudadesxDepartamento(){
@@ -248,18 +237,15 @@ public class AgregarBatallonesBean implements Serializable{
         }
         
         deshabilitarCiudad=false;
+        Utilidad.actualizarElemento("cmbciudadbat");
         
     }
 
-    public AgregarBatallonesBean() {
-        dlgnuevobatallon = new Dialog();
-        batallon = new Batallon();
-        
-        batallonDAO = new BatallonDAOImpl(); 
+    public AgregarBatallonesBean() {        
+        batallon = new Batallon();     
         division = new Divisiones();
         ciudad = new Ciudad();
-        divisionesDAO = new DivisionesDAOImpl();
-        dlgnuevobatallon.setVisible(false);
+        divisionesDAO = new DivisionesDAOImpl();        
         deshabilitarCiudad=true;
         deshabilitarDepartamento=true;
         divisionesUbicacionDAO = new DivisionesUbicacionDAOImpl();
@@ -270,14 +256,7 @@ public class AgregarBatallonesBean implements Serializable{
         cargarComboDivisionesAsociadas();
         cargarPaises();
     }
-
-    public Dialog getDlgnuevobatallon() {
-        return dlgnuevobatallon;
-    }
-
-    public void setDlgnuevobatallon(Dialog dlgnuevobatallon) {
-        this.dlgnuevobatallon = dlgnuevobatallon;
-    }
+    
 
     public Batallon getBatallon() {
         return batallon;

@@ -6,11 +6,14 @@ package com.pasantia.dao;
 
 import com.pasantia.entidades.Sexo;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
+
+@Local
 public interface SexoDAO {
     
     public List<Sexo> buscarTodosSexo();

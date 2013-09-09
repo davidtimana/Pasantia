@@ -4,6 +4,7 @@
  */
 package com.pasantia.accesoyseguridad.rol;
 
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.RolDAO;
 import com.pasantia.entidades.Rol;
 import com.pasantia.utilidades.Utilidad;
@@ -14,7 +15,7 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "agregarRolBean")
 @SessionScoped
@@ -28,6 +29,8 @@ public class AgregarRolBean implements Serializable {
     RolDAO rolDAO;
     @Inject
     RolBean rolBean;
+    @Inject
+    CrudDAO crudDAO;
     
     public void abrirGuardadoRol(){        
         abrirGuardarRol=true;        

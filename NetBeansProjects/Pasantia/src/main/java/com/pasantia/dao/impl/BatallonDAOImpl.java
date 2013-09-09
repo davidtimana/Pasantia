@@ -7,6 +7,7 @@ package com.pasantia.dao.impl;
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.BatallonDAO;
 import com.pasantia.entidades.Batallon;
+import com.pasantia.entidades.Departamento;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -388,5 +389,28 @@ public class BatallonDAOImpl implements BatallonDAO {
             session.close();
         } 
         return batallones;
+    }
+
+    @Override
+    public Batallon buscarUltimo() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        Batallon b=null;
+        String jpql="";
+        try{
+            jpql="SELECT MAX(b) FROM Batallon b";
+            Query q=session.createQuery(jpql);            
+            b=(Batallon)q.uniqueResult();
+            
+        }catch(Exception e){
+            System.err.println("Error en buscarUltimo "+e.getMessage());
+            session.beginTransaction().rollback();
+            b= null;
+        }
+        finally{
+            System.out.println("cerrando la sesion en buscarUltimo");
+            session.flush();
+            session.close();
+        }
+        return b;
     }
 }

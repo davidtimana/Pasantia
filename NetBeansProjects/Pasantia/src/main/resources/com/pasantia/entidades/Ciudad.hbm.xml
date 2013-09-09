@@ -8,7 +8,7 @@
             <column name="idCiudad" />
             <generator class="identity" />
         </id>
-        <many-to-one name="departamento" class="com.pasantia.entidades.Departamento" fetch="select">
+        <many-to-one name="departamento" class="com.pasantia.entidades.Departamento" fetch="select" lazy="false">
             <column name="secdepartamento" not-null="true" />
         </many-to-one>
         <property name="nombreCiudad" type="string">

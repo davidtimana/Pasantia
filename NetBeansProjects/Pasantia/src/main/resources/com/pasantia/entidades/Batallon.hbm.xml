@@ -8,13 +8,13 @@
             <column name="idBatallon" />
             <generator class="identity" />
         </id>
-        <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select">
+        <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select" lazy="false">
             <column name="secciudad" not-null="true" />
         </many-to-one>
-        <many-to-one name="divisiones" class="com.pasantia.entidades.Divisiones" fetch="select">
+        <many-to-one name="divisiones" class="com.pasantia.entidades.Divisiones" fetch="select" lazy="false">
             <column name="secdivision" not-null="true" />
         </many-to-one>
-        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select">
+        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select" lazy="false">
             <column name="seccoronel" />
         </many-to-one>
         <property name="nombreBatallon" type="string">

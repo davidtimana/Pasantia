@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +22,7 @@ import org.primefaces.context.RequestContext;
  * @author root
  */
 @Named(value = "batallonesBean")
-@ApplicationScoped
+@SessionScoped
 public class BatallonesBean implements Serializable{
 
     private List<Batallon> batallones;    

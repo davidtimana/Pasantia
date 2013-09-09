@@ -14,19 +14,20 @@ and open the template in the editor.
             <div style="margin-left: 20%;margin-right: 20%;margin-top: 2%;margin-bottom: 2%">
 
                 
-                <p:dataTable id="tblubicacionesdepasociadas" var="d" value="#{asignarUbicacionesBean.depSeleccionados}" sortMode="multiple"  emptyMessage="Todos los departamentos ya fueron asignados"
+                <p:dataTable id="tblubicacionesdepasociadas" var="d" value="#{asignarUbicacionesBean.depSeleccionados}" sortMode="multiple"  
+                             emptyMessage="Todos los departamentos ya fueron asignados"
                              paginator="true" rows="5" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                              {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                              widgetVar="tblasignaciones">  
 
                     <f:facet name="header">  
-                        Lista de departamentos a seleccionar                        
+                        Lista de departamentos a seleccionar                 
                         
                     </f:facet> 
                     
 
 
-                    <p:column headerText="Departamento" style="width:25%" sortBy="#{d.nombreDepartamento}" filterBy="#{d.nombreDepartamento}">                          
+                    <p:column headerText="Departamento" style="width:25%" sortBy="#{d.nombreDepartamento}" >                          
                         <p:outputLabel value="#{d.nombreDepartamento}" style="margin-left: 5%"/>
                     </p:column>  
 

@@ -34,7 +34,7 @@ public class AsignarUbicacionesBean implements Serializable {
     private List<Departamento> departamentos;    
     private Divisiones divisionSeleccionada;
     private List<DepartamentoTemp> depSeleccionados;
-    
+    private String txtnombrebuscar;    
     
     
     @Inject
@@ -93,12 +93,69 @@ public class AsignarUbicacionesBean implements Serializable {
     
   
     
-    public void guardarDepartamentosAsignados(){
-        for (DepartamentoTemp dtemp : depSeleccionados) {
-            System.out.println("los departamento modificados--> "+dtemp.getNombreDepartamento()+" estado--> "+dtemp.getSeleccionado());
+    public void guardarDepartamentosAsignados() {
+        System.out.println("********************Se inicializa el guardado de asignacion de ubicaciones***********************");
+        int cont = 0,bandera=0;
+        List <Boolean> resultados = new ArrayList<Boolean>();
+        for (DepartamentoTemp dcomprobar : depSeleccionados) {
+            if (!dcomprobar.getSeleccionado()) {
+                cont++;
+            }
+        }
+        if (cont == depSeleccionados.size()) {
+            Utilidad.mensajeError("SICOVI", "Para guardar necesita asociar algun departamento a la división.");
+        } else {
+            for (DepartamentoTemp dtemp : depSeleccionados) {
+                Departamento d = new Departamento();
+                DivisionesUbicacion du = new DivisionesUbicacion();
+                DivisionesUbicacion duGuardar = new DivisionesUbicacion();
+                d = departamentoDAO.buscarDepartamentoporIdUno(dtemp.getIdDepartamento());
+                du = divisionesUbicacionDAO.buscarUbicacionesxIdDivisionYIdDepartamento(divisionSeleccionada.getIdDivisiones(), d.getIdDepartamento());
+                if (du == null) {
+                    if (dtemp.getSeleccionado()) {
+                        duGuardar.setDepartamento(d);
+                        duGuardar.setDivisiones(divisionSeleccionada);
+                        if (divisionesUbicacionDAO.insertarDivisionesUbicacion(duGuardar)) {
+                            System.out.println("Guardado correctamente");
+                            resultados.add(true);
+                        } else {
+                            System.err.println("Nooo se Guardado correctamente");
+                            resultados.add(false);
+                        }
+                    }
+
+                } else {
+                    if (!dtemp.getSeleccionado()) {
+                        duGuardar = divisionesUbicacionDAO.buscarUbicacionesxIdDivisionYIdDepartamento(divisionSeleccionada.getIdDivisiones(), d.getIdDepartamento());
+                        if (divisionesUbicacionDAO.eliminarDivisionesUbicacion(duGuardar)) {
+                            System.out.println("Eliminado correctamente");
+                            resultados.add(true);
+                        } else {
+                            System.err.println("Nooo se Elimino correctamente");
+                            resultados.add(false);
+                        }
+                    }
+                }
+            }
+
         }
         
-      
+        for (Boolean r : resultados) {
+            if(!r){
+                bandera=1;
+            }            
+        }
+        if (bandera == 1) {
+            Utilidad.mensajeFatal("SICOVI", "Ocurrio algun error al ejecutar la operación.");
+        } else {
+            Utilidad.mensajeInfo("SICOVI", "Tarea Ejecutada Correctamente.");
+        }
+
+
+        Utilidad.actualizarElemento("tblexpandibleDivisiones");
+        Utilidad.actualizarElemento("tbldivisiones");
+
+        System.out.println("********************Se Finaliza el guardado de asignacion de ubicaciones***********************");
     }
 
     public void cerrarAsignaciones(){
@@ -175,9 +232,6 @@ public class AsignarUbicacionesBean implements Serializable {
     public void setDepartamentos(List<Departamento> departamentos) {
         this.departamentos = departamentos;
     }
-
-   
-
     
 
     public Divisiones getDivisionSeleccionada() {
@@ -198,6 +252,16 @@ public class AsignarUbicacionesBean implements Serializable {
         this.depSeleccionados = depSeleccionados;
     }
 
+    public String getTxtnombrebuscar() {
+        return txtnombrebuscar;
+    }
+
+    public void setTxtnombrebuscar(String txtnombrebuscar) {
+        this.txtnombrebuscar = txtnombrebuscar;
+    }
+
+    
+    
    
     
     

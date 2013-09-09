@@ -30,6 +30,7 @@ public class DivisionesUbicacionDAOImpl implements DivisionesUbicacionDAO{
             session.beginTransaction();
             session.save(divisionesUbicacion);
             session.beginTransaction().commit();
+            session.flush();
             result = true;
         } catch (Exception e) {
             System.err.println("Error en insertar " + e.getMessage());
@@ -49,9 +50,10 @@ public class DivisionesUbicacionDAOImpl implements DivisionesUbicacionDAO{
             session.beginTransaction();
             session.delete(divisionesUbicacion);
             session.beginTransaction().commit();
+            session.flush();
             return true;
         }catch(Exception e){
-            System.out.println("Error al eliminar "+e.getMessage());
+            System.err.println("Error al eliminar "+e.getMessage());
             session.beginTransaction().rollback();
             return false;
         }

@@ -69,7 +69,9 @@ public class CombosComunes {
      */
     public List<SelectItem> cargarComboTipoIdentificacion() {
         cargarTipoIdentificaciones();
+        
         for (int i = 0; i < tipoIdentificaciones.size(); i++) {
+            System.out.println("***********la lista esta asi--->>>>"+tipoIdentificaciones.get(i).getNombreTipoIdentificacion());
             comboTipoIdentificacion.add(new SelectItem(tipoIdentificaciones.get(i).getIdTipoIdentificacion(), tipoIdentificaciones.get(i).getNombreTipoIdentificacion()));
         }
         return comboTipoIdentificacion;
@@ -121,15 +123,21 @@ public class CombosComunes {
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboDepartamento(Integer idPais) {
+        System.out.println("2");
         cargarDepartamentos(idPais);
+        System.out.println("5");
         for (int i = 0; i < departamentos.size(); i++) {
+            System.out.println("6");
             comboDepartamento.add(new SelectItem(departamentos.get(i).getIdDepartamento(), departamentos.get(i).getNombreDepartamento()));
         }
+        System.out.println("7");
         return comboDepartamento;
     }
 
     private void cargarDepartamentos(Integer idPais) {
+        System.out.println("3");
         departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);
+        System.out.println("4");
     }
 
     /**
@@ -196,8 +204,7 @@ public class CombosComunes {
         this.tipoIdentificaciones = tipoIdentificaciones;
     }
 
-    public List<SelectItem> getComboTipoIdentificacion() {
-        comboTipoIdentificacion = this.cargarComboTipoIdentificacion();
+    public List<SelectItem> getComboTipoIdentificacion() {        
         return comboTipoIdentificacion;
     }
 
@@ -213,8 +220,7 @@ public class CombosComunes {
         this.sexos = sexos;
     }
 
-    public List<SelectItem> getComboSexo() {
-        comboSexo = this.cargarComboSexo();
+    public List<SelectItem> getComboSexo() {        
         return comboSexo;
     }
 

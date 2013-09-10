@@ -13,47 +13,60 @@ and open the template in the editor.
 
 
         <p:accordionPanel >  
-            
-            <p:tab title="Datos Personales Usuario">
-                <h:form id="frmdatosPersonalesUsuario">
-                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
-                        <h:panelGrid columns="1" cellpadding="2" style="width: 85%;text-align: center" >
-                            <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" style="width: 40%;height: 40%"/>
-                            <p:commandButton value="Cargar Foto" style="width: 70%"/>
 
+            <p:tab title="Datos Personales Usuario">
+                
+                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
+                        <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
+                            <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" height="160" width="140"/>
+                            <p:commandButton value="Cargar Foto" style="margin-left: 7%" />
                         </h:panelGrid>
 
-                        <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center"  cellspacing="15%" >  
+                        <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center;"    >  
 
-                            <p:outputLabel value="Primer Nombre: *" style="width: 100%"/>
+                            <p:outputLabel value="Primer Nombre: *" />
+                            <p:inputText   style="width: 100%"/>
+
+                            <p:outputLabel value="Segundo Nombre: " />
                             <p:inputText  style="width: 100%"/>
 
-                            <p:outputLabel value="Segundo Nombre: " style="width: 100%"/>
-                            <p:inputText style="width: 100%"/>
+                            <p:outputLabel value="Primer Apellido: *" />
+                            <p:inputText  style="width: 100%"/>
 
-                            <p:outputLabel value="Primer Apellido: *" style="width: 100%"/>
-                            <p:inputText style="width: 100%"/>
+                            <p:outputLabel value="Segundo Apellido: " />
+                            <p:inputText  style="width: 100%"/> 
 
-                            <p:outputLabel value="Segundo Apellido: " style="width: 100%"/>
-                            <p:inputText style="width: 100%"/>                        
-                            <p:outputLabel value="Tipo Identificación *" style="width: 100%"/>
-                         
+                            <p:outputLabel value="Sexo *" />
+                            <p:selectOneMenu id="cmbsexper" value="#{gestionarUsuarioBean.sexoSeleccionado}"  
+                                             validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
+                                             filterMatchMode="startsWith" 
+                                             style="width: 100%">  
+                                <f:selectItem itemLabel="...Seleccione..."  />  
+                                <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />                            
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Tipo Identificación *" />
+                            <p:selectOneMenu id="cmbTipIdenti" value="#{gestionarUsuarioBean.tipoIdentificacionSeleccionada}"  
+                                             validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
+                                             filterMatchMode="startsWith" 
+                                             style="width: 100%">  
+                                <f:selectItem itemLabel="...Seleccione..."  />  
+                                <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
+                            </p:selectOneMenu>
 
                             <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%"/>
-                            <p:calendar />
-
-
+                            <p:calendar  size="24" style="width: 100%"/>
 
                         </h:panelGrid> 
 
 
                     </h:panelGrid>
-                </h:form>
+                
 
             </p:tab>  
             <p:tab title="Datos De Contacto Usuario">  
-                <h:form id="frmdatosContactoUsuario">
-                    <h:panelGrid columns="8" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
+                
+                    <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
                         <p:outputLabel value="Telefono: *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
                         <p:outputLabel value="Movil: *" style="width: 100%"/>
@@ -61,38 +74,65 @@ and open the template in the editor.
                         <p:outputLabel value="Email *" style="width: 100%"/>
                         <p:inputText style="width: 100%"/>
                     </h:panelGrid>  
-                </h:form>
-            </p:tab>
-            
-            <p:tab title="Domicilio Usuario" >
                 
-                <h:form id="frmdomicilioUsuario">
-                    <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%">
+            </p:tab>
+
+            <p:tab title="Domicilio Usuario" >
+
+                
+                    <h:panelGrid columns="6" cellpadding="2" style="width: 100%;text-align: center" cellspacing="15%">
 
                         <p:outputLabel value="País: *" style="width: 100%"/>
-                        <p:selectOneMenu id="cmbPais" value="#{agregarUsuarioBean.paisSeleccionado}"  
+                        <p:selectOneMenu id="cmbPaisPersona" value="#{gestionarUsuarioBean.paisSeleccionado}"  
                                          validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
                                          filterMatchMode="startsWith"  
                                          style="width: 100%">  
                             <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{agregarUsuarioBean.comboPaises}"  />
-                            
+                            <f:selectItems value="#{gestionarUsuarioBean.comboPais}"  />
+                            <p:ajax listener="#{gestionarUsuarioBean.cargardDepartamentoxPais()}" />
                         </p:selectOneMenu>
 
-                        
+                        <p:outputLabel value="Departamento : * "/>
+                        <p:selectOneMenu id="cmbdepartamentobper" value="#{gestionarUsuarioBean.departamentoSeleccionado}"  
+                                         validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith"
+                                         disabled="#{gestionarUsuarioBean.deshabilitarDepartamento}"
+                                         style="width: 100%;#{gestionarUsuarioBean.estErrDepartamento}">  
+                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                            <f:selectItems value="#{gestionarUsuarioBean.comboDepartamento}"  />
+                            <p:ajax listener="#{gestionarUsuarioBean.cargarCiudadesxDepartamento()}" />
+                        </p:selectOneMenu>
 
+                        <p:outputLabel value="Ciudad : * "/>
+                        <p:selectOneMenu id="cmbciudadbper" value="#{gestionarUsuarioBean.ciudadSeleccionado}"  
+                                         validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith"
+                                         disabled="#{gestionarUsuarioBean.deshabilitarCiudad}"
+                                         style="width: 100%;#{gestionarUsuarioBean.estErrCiudad}">  
+                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                            <f:selectItems value="#{gestionarUsuarioBean.comboCiudades}"  />           
+                        </p:selectOneMenu>
 
-                    </h:panelGrid>
+                    
 
-                    <h:panelGrid columns="4" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%">
-                        <p:outputLabel value="Barrio: *" style="width: 100%"/>
+                    
+                        <p:outputLabel value="Barrio: *" />
                         <p:inputText style="width: 100%"/>
 
-                        <p:outputLabel value="Dirección *" style="width: 100%"/>
+                        <p:outputLabel value="Dirección *" />
                         <p:inputText style="width: 100%"/>
                     </h:panelGrid>
-                </h:form>
-            </p:tab>  
+                
+            </p:tab> 
+            
+            <p:tab title="Geolocalización Usuario" >
+                
+                    <h:panelGrid columns="1" cellpadding="1" style="width: 100%;text-align: center" >
+                        <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
+                                style="width:600px;height:400px"  streetView="true" />                         
+                    </h:panelGrid>
+                
+            </p:tab> 
 
         </p:accordionPanel>
 

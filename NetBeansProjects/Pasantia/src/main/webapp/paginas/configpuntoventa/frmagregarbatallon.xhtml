@@ -30,22 +30,22 @@ and open the template in the editor.
             <p:tab title="Datos de Contacto">  
                 <h:panelGrid columns="4" cellpadding="2" style="margin-left: auto;margin-right: auto"> 
                     <p:outputLabel value="Dirección: * " />
-                    <p:inputText value="#{batallonControllerBean.batallon.direccion}" size="80"  readonly="#{batallonControllerBean.deshabilitarAll}"
+                    <p:inputText value="#{batallonControllerBean.batallon.direccion}" size="70"  readonly="#{batallonControllerBean.deshabilitarAll}"
                                  style="#{batallonControllerBean.estErrDireccion}" id="txtdireccionbatallon"/>                   
                     <p:outputLabel value="Barrio: * " />
-                    <p:inputText value="#{batallonControllerBean.batallon.barrio}" size="80" readonly="#{batallonControllerBean.deshabilitarAll}"
+                    <p:inputText value="#{batallonControllerBean.batallon.barrio}" size="70" readonly="#{batallonControllerBean.deshabilitarAll}"
                                  style="#{batallonControllerBean.estErrbarrio}" id="txtbarriobatallon"/>
                     <p:outputLabel value="Telefono 1: * " />
-                    <p:inputText value="#{batallonControllerBean.batallon.telefono1}" size="80" readonly="#{batallonControllerBean.deshabilitarAll}"
+                    <p:inputText value="#{batallonControllerBean.batallon.telefono1}" size="70" readonly="#{batallonControllerBean.deshabilitarAll}"
                                  style="#{batallonControllerBean.estErrTelefono}" id="txttelefono1batallon"/>
                     <p:outputLabel value="Telefono 2: " />
-                    <p:inputText value="#{batallonControllerBean.batallon.telefono2}" size="80" readonly="#{batallonControllerBean.deshabilitarAll}"/>
+                    <p:inputText value="#{batallonControllerBean.batallon.telefono2}" size="70" readonly="#{batallonControllerBean.deshabilitarAll}"/>
 
 
                 </h:panelGrid>
             </p:tab>  
             <p:tab title="División Perteneciente">  
-                <h:panelGrid columns="2" cellpadding="1" style="margin-left: 20%;margin-right: 20%;#{batallonControllerBean.ubicacionEdit}"> 
+                <h:panelGrid columns="2" cellpadding="1" style="margin-left: 5%;margin-right: 5%;#{batallonControllerBean.ubicacionEdit}"> 
 
                     <p:outputLabel value="División Perteneciente : * "/>
                     <p:selectOneMenu id="cmbdivisionbatallon" value="#{batallonControllerBean.divisionSelec}"  
@@ -73,7 +73,7 @@ and open the template in the editor.
                     <p:selectOneMenu id="cmbpaisbat" value="#{batallonControllerBean.paisSelec}"  
                                      validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"  
-                                     style="width: 100%;#{batallonControllerBean.estErrPais}" disabled="#{batallonControllerBean.deshabilitarAll}" >  
+                                     style="width: 70%;#{batallonControllerBean.estErrPais}" disabled="#{batallonControllerBean.deshabilitarAll}" >  
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{batallonControllerBean.comboPais}"  />
                         <p:ajax listener="#{batallonControllerBean.cargardDepartamentoxPais()}"  />
@@ -84,7 +84,7 @@ and open the template in the editor.
                                      validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"
                                      disabled="#{batallonControllerBean.deshabilitarDepartamento}"
-                                     style="width: 100%;#{batallonControllerBean.estErrDepartamento}">  
+                                     style="width: 70%;#{batallonControllerBean.estErrDepartamento}">  
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{batallonControllerBean.comboDepartamento}"  />
                         <p:ajax listener="#{batallonControllerBean.cargarCiudadesxDepartamento()}" />
@@ -95,27 +95,27 @@ and open the template in the editor.
                                      validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"
                                      disabled="#{batallonControllerBean.deshabilitarCiudad}"
-                                     style="width: 100%;#{batallonControllerBean.estErrCiudad}">  
+                                     style="width: 70%;#{batallonControllerBean.estErrCiudad}">  
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{batallonControllerBean.comboCiudades}"  />           
                     </p:selectOneMenu>
 
                 </h:panelGrid>
-                <h:panelGrid columns="6" cellpadding="1" style="margin-left: 10%;margin-right: auto;#{batallonControllerBean.ubicacionLoad}"> 
+                <h:panelGrid columns="6" cellpadding="1" style="margin-left: 2%;margin-right: 2%;#{batallonControllerBean.ubicacionLoad}"> 
 
                     <p:outputLabel value="Pais : * "/>
-                    <p:inputText value="#{batallonControllerBean.ciudad.departamento.pais.nombrePais}" size="60" readonly="#{batallonControllerBean.deshabilitarAll}" />
+                    <p:inputText value="#{batallonControllerBean.ciudad.departamento.pais.nombrePais}" size="40" readonly="#{batallonControllerBean.deshabilitarAll}" />
 
                     <p:outputLabel value="Departamento : * "/>
-                    <p:inputText value="#{batallonControllerBean.ciudad.departamento.nombreDepartamento}" size="60" readonly="#{batallonControllerBean.deshabilitarAll}"/>
+                    <p:inputText value="#{batallonControllerBean.ciudad.departamento.nombreDepartamento}" size="40" readonly="#{batallonControllerBean.deshabilitarAll}"/>
 
                     <p:outputLabel value="Ciudad : * "/>
-                    <p:inputText value="#{batallonControllerBean.ciudad.nombreCiudad}" size="60" readonly="#{batallonControllerBean.deshabilitarAll}"/>
+                    <p:inputText value="#{batallonControllerBean.ciudad.nombreCiudad}" size="35" readonly="#{batallonControllerBean.deshabilitarAll}"/>
 
                 </h:panelGrid>
             </p:tab> 
             <p:tab title="Geolocalización Batallón">
-                <div style="margin-left: 25%;margin-right: 25%">
+                <div style="margin-left: 10%;margin-right: 10%">
                     <p:gmap id="mapbatallones" center="#{batallonControllerBean.latitud}, #{batallonControllerBean.longitud}" zoom="#{batallonControllerBean.zoom}" type="HYBRID" 
                             style="width:600px;height:400px" model="#{batallonControllerBean.modMapa}" /> 
                 </div>

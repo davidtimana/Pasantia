@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Producto" table="Producto" catalog="CasinoPasantia">
         <id name="idProducto" type="java.lang.Integer">
@@ -20,6 +20,9 @@
         <many-to-one name="ubicacion" class="com.pasantia.entidades.Ubicacion" fetch="select">
             <column name="fk_id_ubicacion" not-null="true" />
         </many-to-one>
+        <many-to-one name="tblunidad" class="com.pasantia.entidades.Tblunidad" fetch="select">
+            <column name="secunidad" not-null="true" />
+        </many-to-one>
         <property name="descripcion" type="string">
             <column name="descripcion" length="45" not-null="true" />
         </property>
@@ -32,9 +35,6 @@
         <property name="precioVenta2" type="java.lang.Long">
             <column name="precio_venta2" precision="10" scale="0" />
         </property>
-        <property name="iva" type="long">
-            <column name="iva" precision="10" scale="0" not-null="true" />
-        </property>
         <property name="codigoBarras" type="string">
             <column name="codigo_barras" length="45" not-null="true" />
         </property>
@@ -44,17 +44,23 @@
         <property name="imagen" type="string">
             <column name="imagen" />
         </property>
-        <set name="detalleVentas" inverse="true">
+        <set name="tbldetalleVentas" inverse="true">
             <key>
-                <column name="fk_id_producto" not-null="true" />
+                <column name="SECPRODUCTO" not-null="true" />
             </key>
-            <one-to-many class="com.pasantia.entidades.DetalleVenta" />
+            <one-to-many class="com.pasantia.entidades.TbldetalleVenta" />
         </set>
-        <set name="detalleCompras" inverse="true">
+        <set name="tbldetallepedidos" inverse="true">
             <key>
-                <column name="fk_id_productos" not-null="true" />
+                <column name="SECPRODUCTO" not-null="true" />
             </key>
-            <one-to-many class="com.pasantia.entidades.DetalleCompra" />
+            <one-to-many class="com.pasantia.entidades.Tbldetallepedido" />
+        </set>
+        <set name="tbldetallecompras" inverse="true">
+            <key>
+                <column name="SECPRODUCTO" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tbldetallecompra" />
         </set>
     </class>
 </hibernate-mapping>

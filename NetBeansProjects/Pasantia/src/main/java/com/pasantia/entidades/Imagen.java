@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;

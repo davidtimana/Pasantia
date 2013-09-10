@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Tblcaja" table="tblcaja" catalog="CasinoPasantia">
+        <id name="seccaja" type="java.lang.Integer">
+            <column name="SECCAJA" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tblingreso" class="com.pasantia.entidades.Tblingreso" fetch="select">
+            <column name="SECINGRESO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tblegreso" class="com.pasantia.entidades.Tblegreso" fetch="select">
+            <column name="SECEGRESO" not-null="true" />
+        </many-to-one>
+        <property name="total" type="string">
+            <column name="TOTAL" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

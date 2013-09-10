@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -34,6 +34,8 @@ public class Casino  implements java.io.Serializable {
      private String telefono1;
      private String telefono2;
      private Set productos = new HashSet(0);
+     private Set tblcompras = new HashSet(0);
+     private Set tblventas = new HashSet(0);
 
     public Casino() {
     }
@@ -45,7 +47,7 @@ public class Casino  implements java.io.Serializable {
         this.nit = nit;
         this.telefono1 = telefono1;
     }
-    public Casino(Persona persona, Batallon batallon, String nombre, String nit, String telefono1, String telefono2, Set productos) {
+    public Casino(Persona persona, Batallon batallon, String nombre, String nit, String telefono1, String telefono2, Set productos, Set tblcompras, Set tblventas) {
        this.persona = persona;
        this.batallon = batallon;
        this.nombre = nombre;
@@ -53,6 +55,8 @@ public class Casino  implements java.io.Serializable {
        this.telefono1 = telefono1;
        this.telefono2 = telefono2;
        this.productos = productos;
+       this.tblcompras = tblcompras;
+       this.tblventas = tblventas;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -126,6 +130,22 @@ public class Casino  implements java.io.Serializable {
     
     public void setProductos(Set productos) {
         this.productos = productos;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="casino")
+    public Set getTblcompras() {
+        return this.tblcompras;
+    }
+    
+    public void setTblcompras(Set tblcompras) {
+        this.tblcompras = tblcompras;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="casino")
+    public Set getTblventas() {
+        return this.tblventas;
+    }
+    
+    public void setTblventas(Set tblventas) {
+        this.tblventas = tblventas;
     }
 
 

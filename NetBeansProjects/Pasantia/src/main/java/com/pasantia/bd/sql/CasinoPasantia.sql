@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-09-2013 a las 19:10:04
+-- Tiempo de generación: 10-09-2013 a las 10:56:31
 -- Versión del servidor: 5.5.32
--- Versión de PHP: 5.3.10-1ubuntu3.7
+-- Versión de PHP: 5.3.10-1ubuntu3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `Batallon` (
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_coronel_idx` (`seccoronel`),
   KEY `fk_ciudad_idx` (`secciudad`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Volcado de datos para la tabla `Batallon`
@@ -58,7 +58,8 @@ INSERT INTO `Batallon` (`idBatallon`, `nombre_batallon`, `telefono 1`, `telefono
 (14, 'NOVENA BRIGADA', '213245', '32132', 'calle 40 - 3 0', 'NOVENA BRIGADA', 4, NULL, 5002),
 (15, 'DECIMA BRIGADA', '8205060', '8205061', 'calle 6 20-50', 'DECIMA BRIGADA', 7, NULL, 76275),
 (16, 'UNDECIMA', '8104050', '906040', 'calle 40 - 20 30', 'SAN RAFAEL', 4, NULL, 25126),
-(17, 'DUODECIMO', '8204050', '6231312', 'carreara 40 - 50', 'VALENCIA', 20, NULL, 20178);
+(17, 'DUODECIMO', '8204050', '6231312', 'carreara 40 - 50', 'VALENCIA', 20, NULL, 20178),
+(18, 'ENESIMA BRIGADA', '812318731', '831321321', 'calle 4 # 5 -30', 'PAJONAL', 4, NULL, 52001);
 
 -- --------------------------------------------------------
 
@@ -9285,11 +9286,7 @@ CREATE TABLE IF NOT EXISTS `Casino` (
 CREATE TABLE IF NOT EXISTS `Catalogo_Venta` (
   `idCatalogo_Venta` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
-  `fk_id_ds_pedido` int(11) NOT NULL,
-  `fk_id_ds_entrega` int(11) NOT NULL,
-  PRIMARY KEY (`idCatalogo_Venta`),
-  KEY `fk_pedido` (`fk_id_ds_pedido`),
-  KEY `fk_entrega` (`fk_id_ds_entrega`)
+  PRIMARY KEY (`idCatalogo_Venta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -12456,23 +12453,6 @@ INSERT INTO `CiudadesColombia` (`idCiudadesColombia`, `Ciudad`, `latitud`, `long
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Compra`
---
-
-CREATE TABLE IF NOT EXISTS `Compra` (
-  `idCompra` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_id_fecha_compra` int(11) NOT NULL,
-  `fk_id_proveedor` int(11) NOT NULL,
-  `fk_id_fecha_entrega` int(11) NOT NULL,
-  PRIMARY KEY (`idCompra`),
-  KEY `fk_Compra_1` (`fk_id_fecha_compra`),
-  KEY `fk_proveedor` (`fk_id_proveedor`),
-  KEY `fk_fecha_entrega` (`fk_id_fecha_entrega`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `coordenadas`
 --
 
@@ -12566,80 +12546,6 @@ INSERT INTO `Departamento` (`idDepartamento`, `nombre_departamento`, `secpais`, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Detalle_Compra`
---
-
-CREATE TABLE IF NOT EXISTS `Detalle_Compra` (
-  `idDetalle_Compra` int(11) NOT NULL AUTO_INCREMENT,
-  `cantidad` int(11) NOT NULL,
-  `iva` decimal(10,0) NOT NULL,
-  `subtotal` decimal(10,0) DEFAULT NULL,
-  `total` decimal(10,0) DEFAULT NULL,
-  `fk_id_productos` int(11) NOT NULL,
-  `fk_id_proveedores` int(11) NOT NULL,
-  PRIMARY KEY (`idDetalle_Compra`),
-  KEY `fk_productos` (`fk_id_productos`),
-  KEY `fk_proveedores` (`fk_id_proveedores`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Detalle_Venta`
---
-
-CREATE TABLE IF NOT EXISTS `Detalle_Venta` (
-  `idDetalle_Venta` int(11) NOT NULL AUTO_INCREMENT,
-  `cantidad` int(11) NOT NULL,
-  `iva` decimal(10,0) NOT NULL,
-  `subtotal` decimal(10,0) DEFAULT NULL,
-  `total` decimal(10,0) DEFAULT NULL,
-  `fk_id_producto` int(11) NOT NULL,
-  `fk_id_forma_pago` int(11) NOT NULL,
-  PRIMARY KEY (`idDetalle_Venta`),
-  KEY `fk_producto` (`fk_id_producto`),
-  KEY `fk_pagar` (`fk_id_forma_pago`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Dias_Entrega_Pedidos`
---
-
-CREATE TABLE IF NOT EXISTS `Dias_Entrega_Pedidos` (
-  `idDias_Entrega_Pedidos` int(11) NOT NULL AUTO_INCREMENT,
-  `lunes` int(11) NOT NULL,
-  `martes` int(11) NOT NULL,
-  `miercoles` int(11) NOT NULL,
-  `jueves` int(11) NOT NULL,
-  `viernes` int(11) NOT NULL,
-  `sabado` int(11) NOT NULL,
-  `domingo` int(11) NOT NULL,
-  PRIMARY KEY (`idDias_Entrega_Pedidos`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Dias_Pedidos`
---
-
-CREATE TABLE IF NOT EXISTS `Dias_Pedidos` (
-  `idDias_Pedidos` int(11) NOT NULL AUTO_INCREMENT,
-  `lunes` int(11) NOT NULL,
-  `martes` int(11) NOT NULL,
-  `miercoles` int(11) NOT NULL,
-  `jueves` int(11) NOT NULL,
-  `viernes` int(11) NOT NULL,
-  `sabado` int(11) NOT NULL,
-  `domingo` int(11) NOT NULL,
-  PRIMARY KEY (`idDias_Pedidos`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 COMMENT='			' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `Divisiones`
 --
 
@@ -12647,7 +12553,7 @@ CREATE TABLE IF NOT EXISTS `Divisiones` (
   `idDivisiones` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_division` varchar(255) NOT NULL,
   PRIMARY KEY (`idDivisiones`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=96 ;
 
 --
 -- Volcado de datos para la tabla `Divisiones`
@@ -12656,10 +12562,9 @@ CREATE TABLE IF NOT EXISTS `Divisiones` (
 INSERT INTO `Divisiones` (`idDivisiones`, `nombre_division`) VALUES
 (1, 'PRIMERA DIVISION'),
 (2, 'SEGUNDA DIVISION'),
-(3, 'TERCERA DIVISION'),
 (4, 'CUARTA DIVISION'),
 (5, 'QUINTA DIVISION'),
-(6, 'SEXTA DIVISIONES'),
+(6, 'SEXTA DIVISIONES PRUEBA'),
 (7, 'SEPTIMA DIVISION'),
 (8, 'OCTAVA DIVISION'),
 (9, 'NOVENA DIVISION'),
@@ -12700,7 +12605,6 @@ INSERT INTO `Divisiones` (`idDivisiones`, `nombre_division`) VALUES
 (44, 'DIVISION MAS PRUEBA'),
 (45, 'PROBANDO'),
 (46, 'PRUEBA OTRA'),
-(48, 'ABUNDES'),
 (49, 'PRUEBA 2'),
 (50, 'PRUEBA 4'),
 (51, 'PRUEBA 4'),
@@ -12738,7 +12642,15 @@ INSERT INTO `Divisiones` (`idDivisiones`, `nombre_division`) VALUES
 (83, 'PRUEBA FINAL'),
 (84, 'PRUEBA FINAL 2'),
 (85, 'OTRA PRUEBA PARA ENTREGAR MODULO'),
-(86, 'PRUEBA MAS');
+(86, 'PRUEBA MAS'),
+(87, 'PROBANDO CON ESTILOS'),
+(88, 'PRUEBA 1'),
+(89, 'PRUEBA 2'),
+(91, 'PRUEBA 4 AHORA'),
+(92, 'PRUEBA 5'),
+(93, 'PRUEBA 6'),
+(94, 'PRUEBA 7'),
+(95, 'PRUEBA 6');
 
 -- --------------------------------------------------------
 
@@ -12753,153 +12665,34 @@ CREATE TABLE IF NOT EXISTS `DivisionesUbicacion` (
   PRIMARY KEY (`idDivisionesUbicacion`),
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_departamento_idx` (`secdepartamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=112 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Volcado de datos para la tabla `DivisionesUbicacion`
 --
 
 INSERT INTO `DivisionesUbicacion` (`idDivisionesUbicacion`, `secdepartamento`, `secdivision`) VALUES
-(1, 25, 8),
-(2, 27, 8),
-(3, 41, 8),
-(7, 11, 10),
-(8, 5, 10),
-(10, 81, 8),
-(12, 13, 10),
-(13, 54, 6),
-(14, 52, 6),
-(15, 50, 6),
-(17, 13, 1),
-(18, 15, 1),
-(20, 8, 4),
-(21, 68, 2),
-(22, 44, 85),
-(23, 18, 86),
-(24, 44, 9),
-(25, 47, 9),
-(26, 52, 9),
-(27, 54, 11),
-(28, 50, 11),
-(29, 63, 11),
-(30, 5, 10),
-(31, 13, 10),
-(32, 17, 10),
-(33, 18, 10),
-(34, 23, 10),
-(35, 25, 10),
-(36, 27, 10),
-(37, 11, 10),
-(38, 5, 10),
-(39, 13, 10),
-(40, 5, 10),
-(41, 13, 10),
-(42, 17, 10),
-(43, 73, 10),
-(44, 76, 10),
-(45, 85, 10),
-(46, 11, 10),
-(47, 5, 10),
-(48, 13, 10),
-(49, 5, 10),
-(50, 13, 10),
-(51, 17, 10),
-(52, 18, 10),
-(53, 23, 10),
-(54, 25, 10),
-(55, 27, 10),
-(56, 11, 10),
-(57, 5, 10),
-(58, 13, 10),
-(59, 5, 10),
-(60, 13, 10),
-(61, 17, 10),
-(62, 50, 10),
-(63, 25, 7),
-(64, 41, 7),
-(65, 47, 7),
-(66, 52, 7),
-(67, 41, 7),
-(68, 47, 7),
-(69, 52, 7),
-(70, 19, 7),
-(71, 20, 7),
-(72, 23, 7),
-(73, 5, 10),
-(74, 5, 10),
-(75, 5, 10),
-(76, 5, 10),
-(77, 5, 10),
-(78, 5, 10),
-(79, 5, 10),
-(80, 5, 10),
-(81, 11, 10),
-(82, 11, 10),
-(83, 11, 10),
-(84, 11, 10),
-(85, 13, 10),
-(86, 13, 10),
-(87, 13, 10),
-(88, 13, 10),
-(89, 13, 10),
-(90, 13, 10),
-(91, 13, 10),
-(92, 13, 10),
-(93, 17, 10),
-(94, 17, 10),
-(95, 17, 10),
-(96, 17, 10),
-(97, 18, 10),
-(98, 18, 10),
-(99, 50, 10),
-(100, 73, 10),
-(101, 76, 10),
-(102, 85, 10),
-(103, 50, 20),
-(104, 54, 20),
-(105, 66, 20),
-(106, 50, 19),
-(107, 52, 19),
-(108, 54, 19),
-(109, 8, 4),
-(110, 25, 4),
-(111, 25, 39);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Fecha_Compra`
---
-
-CREATE TABLE IF NOT EXISTS `Fecha_Compra` (
-  `idFecha_Compra` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` datetime NOT NULL,
-  PRIMARY KEY (`idFecha_Compra`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Fecha_Entrega`
---
-
-CREATE TABLE IF NOT EXISTS `Fecha_Entrega` (
-  `idFecha_Entrega` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` datetime NOT NULL,
-  PRIMARY KEY (`idFecha_Entrega`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Forma_De_Pagar`
---
-
-CREATE TABLE IF NOT EXISTS `Forma_De_Pagar` (
-  `idForma_De_Pagar` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_pago` varchar(45) NOT NULL,
-  PRIMARY KEY (`idForma_De_Pagar`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+(2, 8, 10),
+(3, 11, 10),
+(4, 13, 10),
+(5, 15, 10),
+(6, 17, 10),
+(11, 25, 4),
+(12, 5, 16),
+(13, 18, 18),
+(14, 19, 18),
+(15, 20, 18),
+(16, 23, 18),
+(17, 27, 18),
+(18, 41, 19),
+(19, 44, 19),
+(20, 47, 19),
+(21, 50, 19),
+(22, 52, 19),
+(23, 54, 22),
+(24, 63, 22),
+(25, 66, 22),
+(26, 68, 23);
 
 -- --------------------------------------------------------
 
@@ -12924,22 +12717,6 @@ INSERT INTO `Imagen` (`secimagen`, `direccion`, `titulo`, `descripcion`, `princi
 (1, 'resources/img/batallon1.jpg', 'Escudo', 'Escuela De Suboficiales', 1),
 (2, 'resources/img/batallon2.jpg', 'prueba', 'prueba', 1),
 (3, 'resources/img/batallon3.jpg', 'prueba', 'prueba', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Inventario`
---
-
-CREATE TABLE IF NOT EXISTS `Inventario` (
-  `idInventario` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_id_venta_detalle` int(11) NOT NULL,
-  `fk_id_compra_detalle` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  PRIMARY KEY (`idInventario`),
-  KEY `fk_detalle_venta` (`fk_id_venta_detalle`),
-  KEY `fk_detalle_compra` (`fk_id_compra_detalle`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -13277,7 +13054,6 @@ CREATE TABLE IF NOT EXISTS `Producto` (
   `cantidad_actual` int(11) NOT NULL,
   `precio_venta1` decimal(10,0) NOT NULL,
   `precio_venta2` decimal(10,0) DEFAULT NULL,
-  `iva` decimal(10,0) NOT NULL,
   `codigo_barras` varchar(45) NOT NULL,
   `cantidad_minima` int(11) NOT NULL,
   `fk_id_categoria` int(11) NOT NULL,
@@ -13285,29 +13061,14 @@ CREATE TABLE IF NOT EXISTS `Producto` (
   `fk_id_ubicacion` int(11) NOT NULL,
   `fk_id_casino` int(11) NOT NULL,
   `imagen` varchar(255) DEFAULT NULL,
+  `secunidad` int(11) NOT NULL,
   PRIMARY KEY (`idProducto`),
   KEY `fk_categoria` (`fk_id_categoria`),
   KEY `fk_precio_compra` (`fk_id_precio_compra`),
   KEY `fk_ubicacion` (`fk_id_ubicacion`),
-  KEY `fk_casino` (`fk_id_casino`)
+  KEY `fk_casino` (`fk_id_casino`),
+  KEY `fk_Producto_1_idx` (`secunidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encarga de registrar los productos del casino ' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Proveedor`
---
-
-CREATE TABLE IF NOT EXISTS `Proveedor` (
-  `idProveedor` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
-  `direccion` varchar(45) NOT NULL,
-  `nit` varchar(45) NOT NULL,
-  `fk_persona` int(11) NOT NULL,
-  PRIMARY KEY (`idProveedor`),
-  KEY `fk_persona_idx` (`fk_persona`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -13319,7 +13080,7 @@ CREATE TABLE IF NOT EXISTS `Rol` (
   `idRol` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `Rol`
@@ -13330,7 +13091,11 @@ INSERT INTO `Rol` (`idRol`, `descripcion`) VALUES
 (2, 'VENDEDOR'),
 (3, 'PROVEEDOR'),
 (4, 'CLIENTE'),
-(5, 'SDFSDF');
+(6, 'ROL DE PRUEBA 1'),
+(7, 'ROL DE PRUEBA 2'),
+(8, 'ROL DE PRUEBA 3 PRUEBA'),
+(10, 'ROL ACTUALIZADO'),
+(11, 'ROL DE PRUEBA 6');
 
 -- --------------------------------------------------------
 
@@ -13352,6 +13117,327 @@ INSERT INTO `Sexo` (`idSexo`, `nombre_sexo`) VALUES
 (1, 'Masculino'),
 (2, 'Femenino'),
 (3, 'Otro');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblcaja`
+--
+
+CREATE TABLE IF NOT EXISTS `tblcaja` (
+  `SECCAJA` int(11) NOT NULL AUTO_INCREMENT,
+  `SECEGRESO` int(11) NOT NULL,
+  `SECINGRESO` int(11) NOT NULL,
+  `TOTAL` varchar(45) NOT NULL,
+  PRIMARY KEY (`SECCAJA`),
+  KEY `FK_EGRESO_idx` (`SECEGRESO`),
+  KEY `FK_INGRESO_idx` (`SECINGRESO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLCOMPRA`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLCOMPRA` (
+  `SECCOMPRA` int(11) NOT NULL AUTO_INCREMENT,
+  `SECCASINO` int(11) NOT NULL,
+  `SECPROVEEDOR` int(11) NOT NULL,
+  `SECFORMAPAGO` int(11) NOT NULL,
+  `TOTAL` decimal(10,0) DEFAULT NULL,
+  `TOTALCANTIDAD` int(11) DEFAULT NULL,
+  `FECHA` date NOT NULL,
+  `OBSERVACION` varchar(45) DEFAULT NULL,
+  `SUBTOTAL` decimal(10,0) DEFAULT NULL,
+  `IVA` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`SECCOMPRA`),
+  KEY `fk_Compra_1` (`SECCASINO`),
+  KEY `fk_proveedor` (`SECPROVEEDOR`),
+  KEY `fk_fecha_entrega` (`SECFORMAPAGO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblcompracredito`
+--
+
+CREATE TABLE IF NOT EXISTS `tblcompracredito` (
+  `SECOMPRACREDITO` int(11) NOT NULL AUTO_INCREMENT,
+  `FECHA_PAGO` date NOT NULL,
+  `PAGADO` int(11) NOT NULL,
+  `SECCOMPRA` int(11) NOT NULL,
+  PRIMARY KEY (`SECOMPRACREDITO`),
+  KEY `fk_tblcompracredito_1_idx` (`SECCOMPRA`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblcompraefectivo`
+--
+
+CREATE TABLE IF NOT EXISTS `tblcompraefectivo` (
+  `SECCOMPRAEFECTIVO` int(11) NOT NULL AUTO_INCREMENT,
+  `SECCOMPRA` int(11) NOT NULL,
+  `FECHA_PAGO` date NOT NULL,
+  `PAGADO` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`SECCOMPRAEFECTIVO`),
+  KEY `FK_COMPRA_idx` (`SECCOMPRA`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLDETALLECOMPRA`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLDETALLECOMPRA` (
+  `idDetalle_Compra` int(11) NOT NULL AUTO_INCREMENT,
+  `CANTIDAD` int(11) NOT NULL,
+  `SUBTOTAL` decimal(10,0) NOT NULL,
+  `SECPRODUCTO` int(11) NOT NULL,
+  `IVA` decimal(10,0) DEFAULT NULL,
+  `SECCOMPRA` int(11) NOT NULL,
+  PRIMARY KEY (`idDetalle_Compra`),
+  KEY `fk_productos` (`SECPRODUCTO`),
+  KEY `fk_TBLDETALLECOMPRA_1_idx` (`SECCOMPRA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLDETALLEPEDIDO`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLDETALLEPEDIDO` (
+  `SECDETALLEPEDIDO` int(11) NOT NULL AUTO_INCREMENT,
+  `SECPRODUCTO` int(11) NOT NULL,
+  `SECPEDIDO` int(11) NOT NULL,
+  `CANTIDAD` int(11) DEFAULT NULL,
+  `SUBTOTAL` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`SECDETALLEPEDIDO`),
+  KEY `fk_TBLDETALLEPEDIDO_1_idx` (`SECPRODUCTO`),
+  KEY `fk_TBLDETALLEPEDIDO_2_idx` (`SECPEDIDO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLDETALLE_VENTA`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLDETALLE_VENTA` (
+  `idDetalle_Venta` int(11) NOT NULL AUTO_INCREMENT,
+  `CANTIDAD` int(11) NOT NULL,
+  `SUBTOTAL` decimal(10,0) DEFAULT NULL,
+  `SECPRODUCTO` int(11) NOT NULL,
+  `SECVENTA` int(11) NOT NULL,
+  PRIMARY KEY (`idDetalle_Venta`),
+  KEY `fk_TBLDETALLE_VENTA_1_idx` (`SECVENTA`),
+  KEY `fk_TBLDETALLE_VENTA_2_idx` (`SECPRODUCTO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblegreso`
+--
+
+CREATE TABLE IF NOT EXISTS `tblegreso` (
+  `SECEGRESO` int(11) NOT NULL AUTO_INCREMENT,
+  `SECCOMPRA` int(11) NOT NULL,
+  `SECTIPOEGRESO` int(11) NOT NULL,
+  `FECHA` date NOT NULL,
+  PRIMARY KEY (`SECEGRESO`),
+  KEY `FK_COMPRA_idx` (`SECCOMPRA`),
+  KEY `FK_TIPOEGRESO_idx` (`SECTIPOEGRESO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblentregapedido`
+--
+
+CREATE TABLE IF NOT EXISTS `tblentregapedido` (
+  `SECENTREGAPEDIDO` int(11) NOT NULL AUTO_INCREMENT,
+  `LUNES` tinyint(1) DEFAULT '0',
+  `MARTES` tinyint(1) DEFAULT '0',
+  `MIERCOLES` tinyint(1) DEFAULT '0',
+  `JUEVES` tinyint(1) DEFAULT '0',
+  `VIERNES` tinyint(1) DEFAULT '0',
+  `SABADO` tinyint(1) DEFAULT '0',
+  `DOMINGO` tinyint(1) DEFAULT '0',
+  `SECPEDIDO` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`SECENTREGAPEDIDO`),
+  KEY `FK_PEDIDO_idx` (`SECPEDIDO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLFORMA_PAGO`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLFORMA_PAGO` (
+  `SECFORMA_PAGO` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION` varchar(45) NOT NULL,
+  PRIMARY KEY (`SECFORMA_PAGO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblingreso`
+--
+
+CREATE TABLE IF NOT EXISTS `tblingreso` (
+  `SECINGRESO` int(11) NOT NULL AUTO_INCREMENT,
+  `SECVENTA` int(11) NOT NULL,
+  `SECTIPOINGRESO` int(11) NOT NULL,
+  `FECHA` date NOT NULL,
+  PRIMARY KEY (`SECINGRESO`),
+  KEY `FK_VENTA_idx` (`SECVENTA`),
+  KEY `fk_tblingreso_2_idx` (`SECTIPOINGRESO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblinventario`
+--
+
+CREATE TABLE IF NOT EXISTS `tblinventario` (
+  `SECINVENTARIO` int(11) NOT NULL AUTO_INCREMENT,
+  `SECDETALLEVENTA` int(11) NOT NULL,
+  `SECDETALLECOMPRA` int(11) NOT NULL,
+  `TOTAL_CANTIDAD` varchar(45) NOT NULL,
+  `TOTAL_COMPRA` varchar(45) NOT NULL,
+  `TOTAL_COMPRAS` varchar(45) NOT NULL,
+  PRIMARY KEY (`SECINVENTARIO`),
+  KEY `FK_DETALLEVENTA_idx` (`SECDETALLEVENTA`),
+  KEY `FK_DETALLECOMPRA_idx` (`SECDETALLECOMPRA`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblpedido`
+--
+
+CREATE TABLE IF NOT EXISTS `tblpedido` (
+  `SECPEDIDO` int(11) NOT NULL AUTO_INCREMENT,
+  `SECPROVEEDOR` int(11) NOT NULL,
+  `TOTALPEDIDO` decimal(10,0) NOT NULL,
+  `SECCLIENTE` int(11) NOT NULL,
+  `TOTAL_CANTIDAD` int(11) DEFAULT NULL,
+  `FECHA` date NOT NULL,
+  `OBSERVACION` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`SECPEDIDO`),
+  KEY `FK_PROVEEDOR_idx` (`SECPROVEEDOR`),
+  KEY `fk_tblpedido_3_idx` (`SECCLIENTE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLPROVEEDOR`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLPROVEEDOR` (
+  `SECPROVEEDOR` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRE` varchar(45) NOT NULL,
+  `TELEFONO` varchar(45) NOT NULL,
+  `DIRECCION` varchar(45) NOT NULL,
+  `NIT` varchar(45) NOT NULL,
+  `EMAIL` varchar(45) DEFAULT NULL,
+  `SECCIUDAD` int(11) NOT NULL,
+  `SECENTREGAPEDIDO` int(11) NOT NULL,
+  PRIMARY KEY (`SECPROVEEDOR`),
+  KEY `fk_Proveedor_1_idx` (`SECCIUDAD`),
+  KEY `fk_TBLPROVEEDOR_2_idx` (`SECENTREGAPEDIDO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbltipoegreso`
+--
+
+CREATE TABLE IF NOT EXISTS `tbltipoegreso` (
+  `SECTIPOINGRESO` int(11) NOT NULL AUTO_INCREMENT,
+  `CONCEPTO_EGRESO` varchar(200) NOT NULL,
+  PRIMARY KEY (`SECTIPOINGRESO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbltipoingreso`
+--
+
+CREATE TABLE IF NOT EXISTS `tbltipoingreso` (
+  `SECTIPOINGRESO` int(11) NOT NULL AUTO_INCREMENT,
+  `CONCEPTO_INGRESO` varchar(200) NOT NULL,
+  PRIMARY KEY (`SECTIPOINGRESO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblunidad`
+--
+
+CREATE TABLE IF NOT EXISTS `tblunidad` (
+  `SECUNIDAD` int(11) NOT NULL AUTO_INCREMENT,
+  `UNIDADES` varchar(45) NOT NULL,
+  PRIMARY KEY (`SECUNIDAD`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `TBLVENTA`
+--
+
+CREATE TABLE IF NOT EXISTS `TBLVENTA` (
+  `SECVENTA` int(11) NOT NULL AUTO_INCREMENT,
+  `FECHA` datetime NOT NULL,
+  `SECCLIENTE` int(11) NOT NULL,
+  `SECCASINO` int(11) NOT NULL,
+  `OBSERVACION` varchar(45) DEFAULT NULL,
+  `SECVENDEDOR` int(11) NOT NULL,
+  `TOTAL` decimal(2,0) DEFAULT NULL,
+  `TOTAL_CANTIDAD` decimal(2,0) DEFAULT NULL,
+  `SECFORMAPAGO` int(11) NOT NULL,
+  PRIMARY KEY (`SECVENTA`),
+  KEY `fk_refdetalle_venta` (`SECCASINO`),
+  KEY `fk_id_persona_idx` (`SECCLIENTE`),
+  KEY `fk_TBLVENTA_2_idx` (`SECVENDEDOR`),
+  KEY `fk_TBLVENTA_3_idx` (`SECFORMAPAGO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblvisitapedidos`
+--
+
+CREATE TABLE IF NOT EXISTS `tblvisitapedidos` (
+  `SECVISITAPEDIDOS` int(11) NOT NULL AUTO_INCREMENT,
+  `LUNES` tinyint(1) DEFAULT '0',
+  `MARTES` tinyint(1) DEFAULT '0',
+  `MIERCOLES` tinyint(1) DEFAULT '0',
+  `JUEVES` tinyint(1) DEFAULT '0',
+  `VIERNES` tinyint(1) DEFAULT '0',
+  `SABADO` tinyint(1) DEFAULT '0',
+  `DOMINGO` tinyint(1) DEFAULT '0',
+  `SECPROVEEDOR` int(11) NOT NULL,
+  PRIMARY KEY (`SECVISITAPEDIDOS`),
+  KEY `FK_PROVEEDOR_idx` (`SECPROVEEDOR`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -13444,27 +13530,12 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `nomusuario` varchar(45) NOT NULL,
   `secpersona` int(11) NOT NULL,
   `secrol` int(11) NOT NULL,
-  `activo` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '0',
+  `sesion` varchar(45) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idUsuario`),
   KEY `fk_rol_idx` (`secrol`),
   KEY `fk_persona_usuario_idx` (`secpersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla que se encarga de manejar la informacion de los usuarios de acceso a la aplicacion*/' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Venta`
---
-
-CREATE TABLE IF NOT EXISTS `Venta` (
-  `idVenta` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha_venta` datetime NOT NULL,
-  `fk_id_persona` int(11) NOT NULL,
-  `fk_id_detalle_venta` int(11) NOT NULL,
-  PRIMARY KEY (`idVenta`),
-  KEY `fk_refdetalle_venta` (`fk_id_detalle_venta`),
-  KEY `fk_id_persona_idx` (`fk_id_persona`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
 
 --
 -- Restricciones para tablas volcadas
@@ -13486,25 +13557,10 @@ ALTER TABLE `Casino`
   ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`fk_id_persona`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `Catalogo_Venta`
---
-ALTER TABLE `Catalogo_Venta`
-  ADD CONSTRAINT `fk_entrega` FOREIGN KEY (`fk_id_ds_entrega`) REFERENCES `Dias_Entrega_Pedidos` (`idDias_Entrega_Pedidos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_pedido` FOREIGN KEY (`fk_id_ds_pedido`) REFERENCES `Dias_Pedidos` (`idDias_Pedidos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Filtros para la tabla `Ciudad`
 --
 ALTER TABLE `Ciudad`
   ADD CONSTRAINT `fk_departamentoss` FOREIGN KEY (`secdepartamento`) REFERENCES `Departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `Compra`
---
-ALTER TABLE `Compra`
-  ADD CONSTRAINT `fk_Compra_1` FOREIGN KEY (`fk_id_fecha_compra`) REFERENCES `Fecha_Compra` (`idFecha_Compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_fecha_entrega` FOREIGN KEY (`fk_id_fecha_entrega`) REFERENCES `Fecha_Entrega` (`idFecha_Entrega`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proveedor` FOREIGN KEY (`fk_id_proveedor`) REFERENCES `Proveedor` (`idProveedor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `Departamento`
@@ -13513,32 +13569,11 @@ ALTER TABLE `Departamento`
   ADD CONSTRAINT `fk_idpais` FOREIGN KEY (`secpais`) REFERENCES `Pais` (`idPais`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `Detalle_Compra`
---
-ALTER TABLE `Detalle_Compra`
-  ADD CONSTRAINT `fk_productos` FOREIGN KEY (`fk_id_productos`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_proveedores` FOREIGN KEY (`fk_id_proveedores`) REFERENCES `Proveedor` (`idProveedor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `Detalle_Venta`
---
-ALTER TABLE `Detalle_Venta`
-  ADD CONSTRAINT `fk_pagar` FOREIGN KEY (`fk_id_forma_pago`) REFERENCES `Forma_De_Pagar` (`idForma_De_Pagar`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto` FOREIGN KEY (`fk_id_producto`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Filtros para la tabla `DivisionesUbicacion`
 --
 ALTER TABLE `DivisionesUbicacion`
   ADD CONSTRAINT `fk_departamentossss` FOREIGN KEY (`secdepartamento`) REFERENCES `Departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_divisionesssss` FOREIGN KEY (`secdivision`) REFERENCES `Divisiones` (`idDivisiones`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `Inventario`
---
-ALTER TABLE `Inventario`
-  ADD CONSTRAINT `fk_detalle_compra` FOREIGN KEY (`fk_id_compra_detalle`) REFERENCES `Detalle_Compra` (`idDetalle_Compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_detalle_venta` FOREIGN KEY (`fk_id_venta_detalle`) REFERENCES `Detalle_Venta` (`idDetalle_Venta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `Persona`
@@ -13555,16 +13590,109 @@ ALTER TABLE `Persona`
 -- Filtros para la tabla `Producto`
 --
 ALTER TABLE `Producto`
+  ADD CONSTRAINT `fk_Producto_1` FOREIGN KEY (`secunidad`) REFERENCES `tblunidad` (`SECUNIDAD`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_casino` FOREIGN KEY (`fk_id_casino`) REFERENCES `Casino` (`idCasino`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_categoria` FOREIGN KEY (`fk_id_categoria`) REFERENCES `Categoria` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_precio_compra` FOREIGN KEY (`fk_id_precio_compra`) REFERENCES `Precio_Compra` (`idPrecio_Compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_ubicacion` FOREIGN KEY (`fk_id_ubicacion`) REFERENCES `Ubicacion` (`idUbicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `Proveedor`
+-- Filtros para la tabla `tblcaja`
 --
-ALTER TABLE `Proveedor`
-  ADD CONSTRAINT `fk_persona` FOREIGN KEY (`fk_persona`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `tblcaja`
+  ADD CONSTRAINT `fk_tblcaja_1` FOREIGN KEY (`SECEGRESO`) REFERENCES `tblegreso` (`SECEGRESO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tblcaja_2` FOREIGN KEY (`SECINGRESO`) REFERENCES `tblingreso` (`SECINGRESO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `TBLCOMPRA`
+--
+ALTER TABLE `TBLCOMPRA`
+  ADD CONSTRAINT `fk_TBLCOMPRA_3` FOREIGN KEY (`SECFORMAPAGO`) REFERENCES `TBLFORMA_PAGO` (`SECFORMA_PAGO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLCOMPRA_1` FOREIGN KEY (`SECCASINO`) REFERENCES `Casino` (`idCasino`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLCOMPRA_2` FOREIGN KEY (`SECPROVEEDOR`) REFERENCES `TBLPROVEEDOR` (`SECPROVEEDOR`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblcompracredito`
+--
+ALTER TABLE `tblcompracredito`
+  ADD CONSTRAINT `fk_tblcompracredito_1` FOREIGN KEY (`SECCOMPRA`) REFERENCES `TBLCOMPRA` (`SECCOMPRA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblcompraefectivo`
+--
+ALTER TABLE `tblcompraefectivo`
+  ADD CONSTRAINT `fk_tblcompraefectivo_1` FOREIGN KEY (`SECCOMPRA`) REFERENCES `TBLCOMPRA` (`SECCOMPRA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `TBLDETALLECOMPRA`
+--
+ALTER TABLE `TBLDETALLECOMPRA`
+  ADD CONSTRAINT `fk_TBLDETALLECOMPRA_1` FOREIGN KEY (`SECCOMPRA`) REFERENCES `TBLCOMPRA` (`SECCOMPRA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_productos` FOREIGN KEY (`SECPRODUCTO`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `TBLDETALLEPEDIDO`
+--
+ALTER TABLE `TBLDETALLEPEDIDO`
+  ADD CONSTRAINT `fk_TBLDETALLEPEDIDO_2` FOREIGN KEY (`SECPEDIDO`) REFERENCES `tblpedido` (`SECPEDIDO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLDETALLEPEDIDO_1` FOREIGN KEY (`SECPRODUCTO`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `TBLDETALLE_VENTA`
+--
+ALTER TABLE `TBLDETALLE_VENTA`
+  ADD CONSTRAINT `fk_TBLDETALLE_VENTA_2` FOREIGN KEY (`SECPRODUCTO`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLDETALLE_VENTA_1` FOREIGN KEY (`SECVENTA`) REFERENCES `TBLVENTA` (`SECVENTA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblegreso`
+--
+ALTER TABLE `tblegreso`
+  ADD CONSTRAINT `fk_tblegreso_2` FOREIGN KEY (`SECTIPOEGRESO`) REFERENCES `tbltipoegreso` (`SECTIPOINGRESO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tblegreso_1` FOREIGN KEY (`SECCOMPRA`) REFERENCES `TBLCOMPRA` (`SECCOMPRA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblingreso`
+--
+ALTER TABLE `tblingreso`
+  ADD CONSTRAINT `fk_tblingreso_2` FOREIGN KEY (`SECTIPOINGRESO`) REFERENCES `tbltipoingreso` (`SECTIPOINGRESO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tblingreso_1` FOREIGN KEY (`SECVENTA`) REFERENCES `TBLVENTA` (`SECVENTA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblinventario`
+--
+ALTER TABLE `tblinventario`
+  ADD CONSTRAINT `fk_tblinventario_2` FOREIGN KEY (`SECDETALLECOMPRA`) REFERENCES `TBLDETALLECOMPRA` (`idDetalle_Compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tblinventario_1` FOREIGN KEY (`SECDETALLEVENTA`) REFERENCES `TBLDETALLE_VENTA` (`idDetalle_Venta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblpedido`
+--
+ALTER TABLE `tblpedido`
+  ADD CONSTRAINT `fk_tblpedido_2` FOREIGN KEY (`SECPROVEEDOR`) REFERENCES `TBLPROVEEDOR` (`SECPROVEEDOR`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tblpedido_3` FOREIGN KEY (`SECCLIENTE`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `TBLPROVEEDOR`
+--
+ALTER TABLE `TBLPROVEEDOR`
+  ADD CONSTRAINT `fk_TBLPROVEEDOR_1` FOREIGN KEY (`SECCIUDAD`) REFERENCES `Ciudad` (`idCiudad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLPROVEEDOR_2` FOREIGN KEY (`SECENTREGAPEDIDO`) REFERENCES `tblentregapedido` (`SECENTREGAPEDIDO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `TBLVENTA`
+--
+ALTER TABLE `TBLVENTA`
+  ADD CONSTRAINT `fk_TBLVENTA_3` FOREIGN KEY (`SECFORMAPAGO`) REFERENCES `TBLFORMA_PAGO` (`SECFORMA_PAGO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_id_persona` FOREIGN KEY (`SECCLIENTE`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLVENTA_1` FOREIGN KEY (`SECCASINO`) REFERENCES `Casino` (`idCasino`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_TBLVENTA_2` FOREIGN KEY (`SECVENDEDOR`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblvisitapedidos`
+--
+ALTER TABLE `tblvisitapedidos`
+  ADD CONSTRAINT `fk_tblvisitapedidos_1` FOREIGN KEY (`SECPROVEEDOR`) REFERENCES `TBLPROVEEDOR` (`SECPROVEEDOR`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `Usuario`
@@ -13572,13 +13700,6 @@ ALTER TABLE `Proveedor`
 ALTER TABLE `Usuario`
   ADD CONSTRAINT `fk_persona_usuario` FOREIGN KEY (`secpersona`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_rol` FOREIGN KEY (`secrol`) REFERENCES `Rol` (`idRol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `Venta`
---
-ALTER TABLE `Venta`
-  ADD CONSTRAINT `fk_id_persona` FOREIGN KEY (`fk_id_persona`) REFERENCES `Persona` (`idTBLPERSONA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_refdetalle_venta` FOREIGN KEY (`fk_id_detalle_venta`) REFERENCES `Detalle_Venta` (`idDetalle_Venta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

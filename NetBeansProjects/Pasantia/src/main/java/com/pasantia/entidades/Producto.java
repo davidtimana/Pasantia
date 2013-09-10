@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -31,48 +31,50 @@ public class Producto  implements java.io.Serializable {
      private Categoria categoria;
      private PrecioCompra precioCompra;
      private Ubicacion ubicacion;
+     private Tblunidad tblunidad;
      private String descripcion;
      private int cantidadActual;
      private long precioVenta1;
      private Long precioVenta2;
-     private long iva;
      private String codigoBarras;
      private int cantidadMinima;
      private String imagen;
-     private Set detalleVentas = new HashSet(0);
-     private Set detalleCompras = new HashSet(0);
+     private Set tbldetalleVentas = new HashSet(0);
+     private Set tbldetallepedidos = new HashSet(0);
+     private Set tbldetallecompras = new HashSet(0);
 
     public Producto() {
     }
 
 	
-    public Producto(Casino casino, Categoria categoria, PrecioCompra precioCompra, Ubicacion ubicacion, String descripcion, int cantidadActual, long precioVenta1, long iva, String codigoBarras, int cantidadMinima) {
+    public Producto(Casino casino, Categoria categoria, PrecioCompra precioCompra, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, int cantidadActual, long precioVenta1, String codigoBarras, int cantidadMinima) {
         this.casino = casino;
         this.categoria = categoria;
         this.precioCompra = precioCompra;
         this.ubicacion = ubicacion;
+        this.tblunidad = tblunidad;
         this.descripcion = descripcion;
         this.cantidadActual = cantidadActual;
         this.precioVenta1 = precioVenta1;
-        this.iva = iva;
         this.codigoBarras = codigoBarras;
         this.cantidadMinima = cantidadMinima;
     }
-    public Producto(Casino casino, Categoria categoria, PrecioCompra precioCompra, Ubicacion ubicacion, String descripcion, int cantidadActual, long precioVenta1, Long precioVenta2, long iva, String codigoBarras, int cantidadMinima, String imagen, Set detalleVentas, Set detalleCompras) {
+    public Producto(Casino casino, Categoria categoria, PrecioCompra precioCompra, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, int cantidadActual, long precioVenta1, Long precioVenta2, String codigoBarras, int cantidadMinima, String imagen, Set tbldetalleVentas, Set tbldetallepedidos, Set tbldetallecompras) {
        this.casino = casino;
        this.categoria = categoria;
        this.precioCompra = precioCompra;
        this.ubicacion = ubicacion;
+       this.tblunidad = tblunidad;
        this.descripcion = descripcion;
        this.cantidadActual = cantidadActual;
        this.precioVenta1 = precioVenta1;
        this.precioVenta2 = precioVenta2;
-       this.iva = iva;
        this.codigoBarras = codigoBarras;
        this.cantidadMinima = cantidadMinima;
        this.imagen = imagen;
-       this.detalleVentas = detalleVentas;
-       this.detalleCompras = detalleCompras;
+       this.tbldetalleVentas = tbldetalleVentas;
+       this.tbldetallepedidos = tbldetallepedidos;
+       this.tbldetallecompras = tbldetallecompras;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -121,6 +123,15 @@ public class Producto  implements java.io.Serializable {
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="secunidad", nullable=false)
+    public Tblunidad getTblunidad() {
+        return this.tblunidad;
+    }
+    
+    public void setTblunidad(Tblunidad tblunidad) {
+        this.tblunidad = tblunidad;
+    }
     
     @Column(name="descripcion", nullable=false, length=45)
     public String getDescripcion() {
@@ -158,15 +169,6 @@ public class Producto  implements java.io.Serializable {
         this.precioVenta2 = precioVenta2;
     }
     
-    @Column(name="iva", nullable=false, precision=10, scale=0)
-    public long getIva() {
-        return this.iva;
-    }
-    
-    public void setIva(long iva) {
-        this.iva = iva;
-    }
-    
     @Column(name="codigo_barras", nullable=false, length=45)
     public String getCodigoBarras() {
         return this.codigoBarras;
@@ -194,20 +196,28 @@ public class Producto  implements java.io.Serializable {
         this.imagen = imagen;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="producto")
-    public Set getDetalleVentas() {
-        return this.detalleVentas;
+    public Set getTbldetalleVentas() {
+        return this.tbldetalleVentas;
     }
     
-    public void setDetalleVentas(Set detalleVentas) {
-        this.detalleVentas = detalleVentas;
+    public void setTbldetalleVentas(Set tbldetalleVentas) {
+        this.tbldetalleVentas = tbldetalleVentas;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="producto")
-    public Set getDetalleCompras() {
-        return this.detalleCompras;
+    public Set getTbldetallepedidos() {
+        return this.tbldetallepedidos;
     }
     
-    public void setDetalleCompras(Set detalleCompras) {
-        this.detalleCompras = detalleCompras;
+    public void setTbldetallepedidos(Set tbldetallepedidos) {
+        this.tbldetallepedidos = tbldetallepedidos;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="producto")
+    public Set getTbldetallecompras() {
+        return this.tbldetallecompras;
+    }
+    
+    public void setTbldetallecompras(Set tbldetallecompras) {
+        this.tbldetallecompras = tbldetallecompras;
     }
 
 

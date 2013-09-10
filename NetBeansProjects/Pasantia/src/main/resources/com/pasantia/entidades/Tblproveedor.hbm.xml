@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Tblproveedor" table="TBLPROVEEDOR" catalog="CasinoPasantia">
+        <id name="secproveedor" type="java.lang.Integer">
+            <column name="SECPROVEEDOR" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tblentregapedido" class="com.pasantia.entidades.Tblentregapedido" fetch="select">
+            <column name="SECENTREGAPEDIDO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select">
+            <column name="SECCIUDAD" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="45" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="TELEFONO" length="45" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="45" not-null="true" />
+        </property>
+        <property name="nit" type="string">
+            <column name="NIT" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" length="45" />
+        </property>
+        <set name="tblcompras" inverse="true">
+            <key>
+                <column name="SECPROVEEDOR" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblcompra" />
+        </set>
+        <set name="tblpedidos" inverse="true">
+            <key>
+                <column name="SECPROVEEDOR" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblpedido" />
+        </set>
+        <set name="tblvisitapedidoses" inverse="true">
+            <key>
+                <column name="SECPROVEEDOR" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblvisitapedidos" />
+        </set>
+    </class>
+</hibernate-mapping>

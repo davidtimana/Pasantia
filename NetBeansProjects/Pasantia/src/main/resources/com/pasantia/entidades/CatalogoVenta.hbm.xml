@@ -1,19 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.CatalogoVenta" table="Catalogo_Venta" catalog="CasinoPasantia">
         <id name="idCatalogoVenta" type="java.lang.Integer">
             <column name="idCatalogo_Venta" />
             <generator class="identity" />
         </id>
-        <many-to-one name="diasEntregaPedidos" class="com.pasantia.entidades.DiasEntregaPedidos" fetch="select">
-            <column name="fk_id_ds_entrega" not-null="true" />
-        </many-to-one>
-        <many-to-one name="diasPedidos" class="com.pasantia.entidades.DiasPedidos" fetch="select">
-            <column name="fk_id_ds_pedido" not-null="true" />
-        </many-to-one>
         <property name="descripcion" type="string">
             <column name="descripcion" length="45" not-null="true" />
         </property>

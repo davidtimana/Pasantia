@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Tblcompra" table="TBLCOMPRA" catalog="CasinoPasantia">
+        <id name="seccompra" type="java.lang.Integer">
+            <column name="SECCOMPRA" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select">
+            <column name="SECCASINO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tblproveedor" class="com.pasantia.entidades.Tblproveedor" fetch="select">
+            <column name="SECPROVEEDOR" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tblformaPago" class="com.pasantia.entidades.TblformaPago" fetch="select">
+            <column name="SECFORMAPAGO" not-null="true" />
+        </many-to-one>
+        <property name="total" type="java.lang.Long">
+            <column name="TOTAL" precision="10" scale="0" />
+        </property>
+        <property name="totalcantidad" type="java.lang.Integer">
+            <column name="TOTALCANTIDAD" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="10" not-null="true" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="OBSERVACION" length="45" />
+        </property>
+        <property name="subtotal" type="java.lang.Long">
+            <column name="SUBTOTAL" precision="10" scale="0" />
+        </property>
+        <property name="iva" type="java.lang.Long">
+            <column name="IVA" precision="10" scale="0" />
+        </property>
+        <set name="tblcompracreditos" inverse="true">
+            <key>
+                <column name="SECCOMPRA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblcompracredito" />
+        </set>
+        <set name="tbldetallecompras" inverse="true">
+            <key>
+                <column name="SECCOMPRA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tbldetallecompra" />
+        </set>
+        <set name="tblcompraefectivos" inverse="true">
+            <key>
+                <column name="SECCOMPRA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblcompraefectivo" />
+        </set>
+        <set name="tblegresos" inverse="true">
+            <key>
+                <column name="SECCOMPRA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblegreso" />
+        </set>
+    </class>
+</hibernate-mapping>

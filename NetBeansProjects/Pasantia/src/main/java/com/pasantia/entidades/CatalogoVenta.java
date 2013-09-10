@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,8 +25,6 @@ public class CatalogoVenta  implements java.io.Serializable {
 
 
      private Integer idCatalogoVenta;
-     private DiasEntregaPedidos diasEntregaPedidos;
-     private DiasPedidos diasPedidos;
      private String descripcion;
      private Set personas = new HashSet(0);
 
@@ -36,14 +32,10 @@ public class CatalogoVenta  implements java.io.Serializable {
     }
 
 	
-    public CatalogoVenta(DiasEntregaPedidos diasEntregaPedidos, DiasPedidos diasPedidos, String descripcion) {
-        this.diasEntregaPedidos = diasEntregaPedidos;
-        this.diasPedidos = diasPedidos;
+    public CatalogoVenta(String descripcion) {
         this.descripcion = descripcion;
     }
-    public CatalogoVenta(DiasEntregaPedidos diasEntregaPedidos, DiasPedidos diasPedidos, String descripcion, Set personas) {
-       this.diasEntregaPedidos = diasEntregaPedidos;
-       this.diasPedidos = diasPedidos;
+    public CatalogoVenta(String descripcion, Set personas) {
        this.descripcion = descripcion;
        this.personas = personas;
     }
@@ -57,24 +49,6 @@ public class CatalogoVenta  implements java.io.Serializable {
     
     public void setIdCatalogoVenta(Integer idCatalogoVenta) {
         this.idCatalogoVenta = idCatalogoVenta;
-    }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="fk_id_ds_entrega", nullable=false)
-    public DiasEntregaPedidos getDiasEntregaPedidos() {
-        return this.diasEntregaPedidos;
-    }
-    
-    public void setDiasEntregaPedidos(DiasEntregaPedidos diasEntregaPedidos) {
-        this.diasEntregaPedidos = diasEntregaPedidos;
-    }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="fk_id_ds_pedido", nullable=false)
-    public DiasPedidos getDiasPedidos() {
-        return this.diasPedidos;
-    }
-    
-    public void setDiasPedidos(DiasPedidos diasPedidos) {
-        this.diasPedidos = diasPedidos;
     }
     
     @Column(name="descripcion", nullable=false, length=45)

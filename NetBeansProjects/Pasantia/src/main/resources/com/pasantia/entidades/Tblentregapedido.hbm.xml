@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Tblentregapedido" table="tblentregapedido" catalog="CasinoPasantia">
+        <id name="secentregapedido" type="java.lang.Integer">
+            <column name="SECENTREGAPEDIDO" />
+            <generator class="identity" />
+        </id>
+        <property name="lunes" type="java.lang.Boolean">
+            <column name="LUNES" />
+        </property>
+        <property name="martes" type="java.lang.Boolean">
+            <column name="MARTES" />
+        </property>
+        <property name="miercoles" type="java.lang.Boolean">
+            <column name="MIERCOLES" />
+        </property>
+        <property name="jueves" type="java.lang.Boolean">
+            <column name="JUEVES" />
+        </property>
+        <property name="viernes" type="java.lang.Boolean">
+            <column name="VIERNES" />
+        </property>
+        <property name="sabado" type="java.lang.Boolean">
+            <column name="SABADO" />
+        </property>
+        <property name="domingo" type="java.lang.Boolean">
+            <column name="DOMINGO" />
+        </property>
+        <property name="secpedido" type="boolean">
+            <column name="SECPEDIDO" not-null="true" />
+        </property>
+        <set name="tblproveedors" inverse="true">
+            <key>
+                <column name="SECENTREGAPEDIDO" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblproveedor" />
+        </set>
+    </class>
+</hibernate-mapping>

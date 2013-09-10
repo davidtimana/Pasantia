@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.TblformaPago" table="TBLFORMA_PAGO" catalog="CasinoPasantia">
+        <id name="secformaPago" type="java.lang.Integer">
+            <column name="SECFORMA_PAGO" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="45" not-null="true" />
+        </property>
+        <set name="tblcompras" inverse="true">
+            <key>
+                <column name="SECFORMAPAGO" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblcompra" />
+        </set>
+        <set name="tblventas" inverse="true">
+            <key>
+                <column name="SECFORMAPAGO" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblventa" />
+        </set>
+    </class>
+</hibernate-mapping>

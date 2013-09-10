@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Tbldetallecompra" table="TBLDETALLECOMPRA" catalog="CasinoPasantia">
+        <id name="idDetalleCompra" type="java.lang.Integer">
+            <column name="idDetalle_Compra" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="producto" class="com.pasantia.entidades.Producto" fetch="select">
+            <column name="SECPRODUCTO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tblcompra" class="com.pasantia.entidades.Tblcompra" fetch="select">
+            <column name="SECCOMPRA" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="CANTIDAD" not-null="true" />
+        </property>
+        <property name="subtotal" type="long">
+            <column name="SUBTOTAL" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="iva" type="java.lang.Long">
+            <column name="IVA" precision="10" scale="0" />
+        </property>
+        <set name="tblinventarios" inverse="true">
+            <key>
+                <column name="SECDETALLECOMPRA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblinventario" />
+        </set>
+    </class>
+</hibernate-mapping>

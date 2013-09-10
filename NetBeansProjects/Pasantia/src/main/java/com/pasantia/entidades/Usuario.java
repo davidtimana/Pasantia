@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -27,17 +27,19 @@ public class Usuario  implements java.io.Serializable {
      private Rol rol;
      private String clave;
      private String nomusuario;
-     private int activo;
+     private boolean activo;
+     private String sesion;
 
     public Usuario() {
     }
 
-    public Usuario(Persona persona, Rol rol, String clave, String nomusuario, int activo) {
+    public Usuario(Persona persona, Rol rol, String clave, String nomusuario, boolean activo, String sesion) {
        this.persona = persona;
        this.rol = rol;
        this.clave = clave;
        this.nomusuario = nomusuario;
        this.activo = activo;
+       this.sesion = sesion;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -88,12 +90,21 @@ public class Usuario  implements java.io.Serializable {
     }
     
     @Column(name="activo", nullable=false)
-    public int getActivo() {
+    public boolean isActivo() {
         return this.activo;
     }
     
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+    
+    @Column(name="sesion", nullable=false, length=45)
+    public String getSesion() {
+        return this.sesion;
+    }
+    
+    public void setSesion(String sesion) {
+        this.sesion = sesion;
     }
 
 

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pasantia.entidades.Tblventa" table="TBLVENTA" catalog="CasinoPasantia">
+        <id name="secventa" type="java.lang.Integer">
+            <column name="SECVENTA" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="personaBySeccliente" class="com.pasantia.entidades.Persona" fetch="select">
+            <column name="SECCLIENTE" not-null="true" />
+        </many-to-one>
+        <many-to-one name="personaBySecvendedor" class="com.pasantia.entidades.Persona" fetch="select">
+            <column name="SECVENDEDOR" not-null="true" />
+        </many-to-one>
+        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select">
+            <column name="SECCASINO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tblformaPago" class="com.pasantia.entidades.TblformaPago" fetch="select">
+            <column name="SECFORMAPAGO" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="FECHA" length="19" not-null="true" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="OBSERVACION" length="45" />
+        </property>
+        <property name="total" type="java.lang.Byte">
+            <column name="TOTAL" precision="2" scale="0" />
+        </property>
+        <property name="totalCantidad" type="java.lang.Byte">
+            <column name="TOTAL_CANTIDAD" precision="2" scale="0" />
+        </property>
+        <set name="tblingresos" inverse="true">
+            <key>
+                <column name="SECVENTA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblingreso" />
+        </set>
+        <set name="tbldetalleVentas" inverse="true">
+            <key>
+                <column name="SECVENTA" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.TbldetalleVenta" />
+        </set>
+    </class>
+</hibernate-mapping>

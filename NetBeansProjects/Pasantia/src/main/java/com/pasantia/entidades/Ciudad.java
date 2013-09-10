@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -31,6 +31,7 @@ public class Ciudad  implements java.io.Serializable {
      private String nombreCiudad;
      private Double latitud;
      private Double longitud;
+     private Set tblproveedors = new HashSet(0);
      private Set personas = new HashSet(0);
      private Set batallons = new HashSet(0);
 
@@ -42,11 +43,12 @@ public class Ciudad  implements java.io.Serializable {
         this.departamento = departamento;
         this.nombreCiudad = nombreCiudad;
     }
-    public Ciudad(Departamento departamento, String nombreCiudad, Double latitud, Double longitud, Set personas, Set batallons) {
+    public Ciudad(Departamento departamento, String nombreCiudad, Double latitud, Double longitud, Set tblproveedors, Set personas, Set batallons) {
        this.departamento = departamento;
        this.nombreCiudad = nombreCiudad;
        this.latitud = latitud;
        this.longitud = longitud;
+       this.tblproveedors = tblproveedors;
        this.personas = personas;
        this.batallons = batallons;
     }
@@ -96,6 +98,14 @@ public class Ciudad  implements java.io.Serializable {
     
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="ciudad")
+    public Set getTblproveedors() {
+        return this.tblproveedors;
+    }
+    
+    public void setTblproveedors(Set tblproveedors) {
+        this.tblproveedors = tblproveedors;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="ciudad")
     public Set getPersonas() {

@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 3/09/2013 11:43:16 AM by Hibernate Tools 3.2.1.GA
+// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -48,10 +48,11 @@ public class Persona  implements java.io.Serializable {
      private String foto;
      private String direccion;
      private String barrio;
+     private Set tblventasForSecvendedor = new HashSet(0);
      private Set batallons = new HashSet(0);
      private Set usuarios = new HashSet(0);
-     private Set proveedors = new HashSet(0);
-     private Set ventas = new HashSet(0);
+     private Set tblpedidos = new HashSet(0);
+     private Set tblventasForSeccliente = new HashSet(0);
      private Set casinos = new HashSet(0);
 
     public Persona() {
@@ -70,7 +71,7 @@ public class Persona  implements java.io.Serializable {
         this.direccion = direccion;
         this.barrio = barrio;
     }
-    public Persona(CatalogoVenta catalogoVenta, Cargo cargo, Ciudad ciudad, TipoIdentificacion tipoIdentificacion, Sexo sexo, TipoPersona tipoPersona, String pnombre, String snombre, String papellido, String sapellido, String cedula, Date fechaNacimiento, String email, String telefono, String movil, String foto, String direccion, String barrio, Set batallons, Set usuarios, Set proveedors, Set ventas, Set casinos) {
+    public Persona(CatalogoVenta catalogoVenta, Cargo cargo, Ciudad ciudad, TipoIdentificacion tipoIdentificacion, Sexo sexo, TipoPersona tipoPersona, String pnombre, String snombre, String papellido, String sapellido, String cedula, Date fechaNacimiento, String email, String telefono, String movil, String foto, String direccion, String barrio, Set tblventasForSecvendedor, Set batallons, Set usuarios, Set tblpedidos, Set tblventasForSeccliente, Set casinos) {
        this.catalogoVenta = catalogoVenta;
        this.cargo = cargo;
        this.ciudad = ciudad;
@@ -89,10 +90,11 @@ public class Persona  implements java.io.Serializable {
        this.foto = foto;
        this.direccion = direccion;
        this.barrio = barrio;
+       this.tblventasForSecvendedor = tblventasForSecvendedor;
        this.batallons = batallons;
        this.usuarios = usuarios;
-       this.proveedors = proveedors;
-       this.ventas = ventas;
+       this.tblpedidos = tblpedidos;
+       this.tblventasForSeccliente = tblventasForSeccliente;
        this.casinos = casinos;
     }
    
@@ -268,6 +270,14 @@ public class Persona  implements java.io.Serializable {
     public void setBarrio(String barrio) {
         this.barrio = barrio;
     }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="personaBySecvendedor")
+    public Set getTblventasForSecvendedor() {
+        return this.tblventasForSecvendedor;
+    }
+    
+    public void setTblventasForSecvendedor(Set tblventasForSecvendedor) {
+        this.tblventasForSecvendedor = tblventasForSecvendedor;
+    }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
     public Set getBatallons() {
         return this.batallons;
@@ -285,20 +295,20 @@ public class Persona  implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
-    public Set getProveedors() {
-        return this.proveedors;
+    public Set getTblpedidos() {
+        return this.tblpedidos;
     }
     
-    public void setProveedors(Set proveedors) {
-        this.proveedors = proveedors;
+    public void setTblpedidos(Set tblpedidos) {
+        this.tblpedidos = tblpedidos;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
-    public Set getVentas() {
-        return this.ventas;
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="personaBySeccliente")
+    public Set getTblventasForSeccliente() {
+        return this.tblventasForSeccliente;
     }
     
-    public void setVentas(Set ventas) {
-        this.ventas = ventas;
+    public void setTblventasForSeccliente(Set tblventasForSeccliente) {
+        this.tblventasForSeccliente = tblventasForSeccliente;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
     public Set getCasinos() {

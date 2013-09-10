@@ -1,3 +1,6 @@
+
+                                       Sistema De Control De Inventarios - SICOVI
+
 Para una correcta funcionalidad de este proyecto es necesario primero que todo crear la base de datos que maneja este proyecto
 la base de datos se encuentra en el mismo proyecto y se puede correr directamente deste netbeans.
 

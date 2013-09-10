@@ -5,6 +5,8 @@
 package com.pasantia.bean.configpuntoventa.batallones;
 
 import com.pasantia.dao.BatallonDAO;
+import com.pasantia.dao.CiudadDAO;
+import com.pasantia.dao.DivisionesDAO;
 import com.pasantia.entidades.Batallon;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Divisiones;
@@ -39,14 +41,27 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
     private Double longitud;
     private Integer zoom;
     private MapModel modMapa;
+    
     @Inject
     BatallonDAO batallonDAO;
+    @Inject
+    AgregarBatallonesBean agregarBatallonesBean;
+    @Inject
+    EditarBatallonesBean editarbatallonesBean;
+    @Inject
+    DivisionesDAO divisionesDAO;
+    @Inject
+    CiudadDAO ciudadDAO;
+    
 
     @PostConstruct
     public void cargarUltimoBatallon() {
         System.out.println("*********************Cargando Combo pais*********************************");
         cargarComboPais();
         System.out.println("*********************Fin Cargando Combo pais*********************************");
+        System.out.println("*********************Cargando Combo Divisiones Asociadas*********************************");
+        cargarComboDivisionesAsociadas();
+        System.out.println("*********************Fin Cargando Combo Divisiones Asociadas*********************************");
         System.out.println("*********************Cargando Ultimo Batallon Ingresado********************");
         batallon = batallonDAO.buscarUltimo();
         divisionSelec = batallon.getDivisiones().getIdDivisiones();
@@ -163,12 +178,21 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
     }
     public void guardarBatallon() {
         
-        if(validarDatos()){
+        if(validarDatos()){            
+            batallon.setCiudad(ciudad);
+            batallon.setDivisiones(divisiones);
+            System.out.println("El batallon que se manda a guardar es--> "+batallon.getIdBatallon());
+            System.out.println("El batallon que se manda a guardar es--> "+batallon.getNombreBatallon());
+            System.out.println("El batallon que se manda a guardar es--> "+batallon.getDivisiones().getNombreDivision());
+            System.out.println("El batallon que se manda a guardar es--> "+batallon.getCiudad().getNombreCiudad());
             if(estaEditando){
                 System.out.println("**********Se esta editando.");
+                editarbatallonesBean.editarBatallon(batallon);
             }else{
                 System.out.println("**********Se esta Guardando nuevo.");
+                agregarBatallonesBean.guardarBatallon(batallon);
             }
+            cargarUltimoBatallon();
             
         }else{
             System.err.println("*************Ocurrio algun error al realizar la validacion.");
@@ -223,6 +247,7 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
                             System.err.println("****************Error...division batallon vacio");
                             validador++;
                         } else {
+                            divisiones= divisionesDAO.buscarDivisionesporId(divisionSelec);
                             estErrDivision = Utilidad.estilosErrorInput();
                             Utilidad.actualizarElemento("cmbdivisionbatallon");
                             if (paisSelec == null) {
@@ -250,6 +275,7 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
                                         System.err.println("****************Error...ciudad batallon vacio");
                                         validador++;
                                     } else {
+                                        ciudad=ciudadDAO.buscarxid(ciudadSelec);
                                         estErrCiudad = "";
                                         Utilidad.actualizarElemento("cmbciudadbat");
                                         validador = 0;

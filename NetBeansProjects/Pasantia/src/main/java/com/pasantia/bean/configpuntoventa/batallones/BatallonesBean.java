@@ -49,7 +49,7 @@ public class BatallonesBean implements Serializable{
     
     public void cargarBatallones(){
         System.out.println("empezando a buscar por cargarBatallones en batallonesbean.");
-        batallones = batallonDAO.getBatallonesEncontrados();
+        //batallones = batallonDAO.getBatallonesEncontrados();
     }
 
     public List<Batallon> getBatallones() {

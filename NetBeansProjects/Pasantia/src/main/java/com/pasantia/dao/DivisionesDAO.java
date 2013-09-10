@@ -61,4 +61,11 @@ public interface DivisionesDAO {
      * @return division
      */
     public Integer buscarUltimaIngresada();
+    
+      /**
+     *Metodo que se encarga de buscar
+     * las divisiones asociadas     
+     * @return List<Divisiones>
+     */
+    public List<Divisiones> buscarDivisionesAsociadas();
 }

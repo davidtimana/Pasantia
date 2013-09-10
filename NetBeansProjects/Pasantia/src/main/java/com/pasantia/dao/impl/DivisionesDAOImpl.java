@@ -155,5 +155,27 @@ public class DivisionesDAOImpl implements DivisionesDAO{
         Query q=session.createQuery(jpql);       
         return (Integer)(q.uniqueResult());
     }
+
+    @Override
+    public List<Divisiones> buscarDivisionesAsociadas() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        List<Divisiones> divisiones = new ArrayList<Divisiones>();
+        String jpql="";
+        try {
+            jpql=" SELECT DISTINCT d FROM DivisionesUbicacion du "
+                    + " JOIN du.divisiones d "
+                    + " ORDER BY d.nombreDivision ASC";
+            Query q = session.createQuery(jpql);
+            divisiones = (List<Divisiones>)q.list();
+        } catch (Exception e) {
+            divisiones = null;
+            System.err.println("Error al buscarDivisionesAsociadas " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return divisiones;
+    }
     
 }

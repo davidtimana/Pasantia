@@ -14,15 +14,11 @@ import com.pasantia.entidades.TipoPersona;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.model.SelectItem;
-import javax.inject.Inject;
 import org.primefaces.event.FlowEvent;
 
 /**
@@ -53,46 +49,59 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
     
     @PostConstruct
     public void Init(){
-        System.out.println("***********Inicianilizando"); 
-        System.out.println("*****************Cargando Combo Paises");
+        logger.info("***********Inicianilizando"); 
+        logger.info("*****************Cargando Combo Paises");
         cargarComboPais();
-        System.out.println("*****************Fin Cargando Combo Paises");
-        System.out.println("*****************Cargando Combo TipoIdentificacion");
+        logger.info("*****************Fin Cargando Combo Paises");
+        logger.info("*****************Cargando Combo TipoIdentificacion");
         cargarComboTipoIdentificacion();        
-        System.out.println("*****************Fin Cargando Combo TipoIdentificacion");
-        System.out.println("*****************Cargando Combo Sexo");
+        logger.info("*****************Fin Cargando Combo TipoIdentificacion");
+        logger.info("*****************Cargando Combo Sexo");
         cargarComboSexo();        
-        System.out.println("*****************Fin Cargando Combo Sexo");
+        logger.info("*****************Fin Cargando Combo Sexo");
         
     }
     
-     public String onFlowProcess(FlowEvent event) {  
-        logger.info("Current wizard step:" + event.getOldStep());  
-        logger.info("Next step:" + event.getNewStep());  
-          
-        if(skip) {  
-            skip = false;   //reset in case user goes back  
-            return "prueba";  
-        }  
-        else {  
-            return event.getNewStep();  
-        }  
-    }  
+    public String validarDatos(FlowEvent event) {
+        String pestañaActual = event.getOldStep();
+        String pestañaSiguiente = event.getNewStep();
+        logger.log(Level.INFO, "pestaña donde estoy:{0}", pestañaActual);
+        logger.log(Level.INFO, "Siguiente pestaña:{0}", pestañaSiguiente);
+        logger.info("Validando datos");
+        boolean resultado = false;
+        Integer validador = 0;
+
+        if (pestañaActual.equals("gestionusuarios")) {
+
+            if (persona.getPnombre().equals("")) {
+                estErrNombre = Utilidad.estilosErrorInput();
+                Utilidad.actualizarElemento("txtpnombre");
+                Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Nombre requerido.");
+                logger.info("****************Error...Primer Nombre vacio");
+                validador++;
+            }
+        }
+        if(validador>0){
+            return "gestionusuarios";
+        }else{
+            return "confiusuario";
+        }
+
+
+        
+    }
     
     public void cargardDepartamentoxPais(){
-        System.out.println("El pais seleccionado es el siguente..> "+paisSeleccionado);
-        if(paisSeleccionado!=null){            
-            System.out.println("1");
+        logger.log(Level.INFO, "El pais seleccionado es el siguente..> {0}", paisSeleccionado);
+        if(paisSeleccionado!=null){                        
             cargarComboDepartamento(paisSeleccionado);
-            deshabilitarDepartamento=false;
-            System.out.println("8");
+            deshabilitarDepartamento=false;            
         }else{
             deshabilitarDepartamento=true;
             deshabilitarCiudad=true;
         }
         Utilidad.actualizarElemento("cmbdepartamentobper");
-        Utilidad.actualizarElemento("cmbciudadbper");
-        System.out.println("9");
+        Utilidad.actualizarElemento("cmbciudadbper");        
         
     }
     

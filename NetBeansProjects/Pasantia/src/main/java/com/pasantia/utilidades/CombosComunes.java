@@ -70,8 +70,7 @@ public class CombosComunes {
     public List<SelectItem> cargarComboTipoIdentificacion() {
         cargarTipoIdentificaciones();
         
-        for (int i = 0; i < tipoIdentificaciones.size(); i++) {
-            System.out.println("***********la lista esta asi--->>>>"+tipoIdentificaciones.get(i).getNombreTipoIdentificacion());
+        for (int i = 0; i < tipoIdentificaciones.size(); i++) {            
             comboTipoIdentificacion.add(new SelectItem(tipoIdentificaciones.get(i).getIdTipoIdentificacion(), tipoIdentificaciones.get(i).getNombreTipoIdentificacion()));
         }
         return comboTipoIdentificacion;
@@ -122,22 +121,16 @@ public class CombosComunes {
      * @param Integer idPais
      * @return List<SelecItem>
      */
-    public List<SelectItem> cargarComboDepartamento(Integer idPais) {
-        System.out.println("2");
-        cargarDepartamentos(idPais);
-        System.out.println("5");
-        for (int i = 0; i < departamentos.size(); i++) {
-            System.out.println("6");
+    public List<SelectItem> cargarComboDepartamento(Integer idPais) {        
+        cargarDepartamentos(idPais);        
+        for (int i = 0; i < departamentos.size(); i++) {            
             comboDepartamento.add(new SelectItem(departamentos.get(i).getIdDepartamento(), departamentos.get(i).getNombreDepartamento()));
-        }
-        System.out.println("7");
+        }        
         return comboDepartamento;
     }
 
     private void cargarDepartamentos(Integer idPais) {
-        System.out.println("3");
-        departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);
-        System.out.println("4");
+        departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);        
     }
 
     /**

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        
+        
+        <h:panelGrid columns="1" cellpadding="1" style="width: 100%;text-align: center;">
+            
+            <p:selectOneMenu id="cmbTipoPersona" value="#{gestionarUsuarioBean.tipoPersonaSeleccionado}"  
+                                     validatorMessage="Debe seleccionar Tipo Persona" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"  
+                                     style="width: 60%;">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{gestionarUsuarioBean.comboTipoPersonas}"  />                        
+                    </p:selectOneMenu>
+        </h:panelGrid>
+        
+    </ui:composition>
+</html>

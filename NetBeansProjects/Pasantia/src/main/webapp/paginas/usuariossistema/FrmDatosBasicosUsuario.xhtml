@@ -15,130 +15,156 @@ and open the template in the editor.
         <p:accordionPanel >  
 
             <p:tab title="Datos Personales Usuario" >
-                
-                    <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
-                        <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
-                            <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" height="160" width="140"/>
-                            <p:commandButton value="Cargar Foto" style="margin-left: 7%" />
-                        </h:panelGrid>
 
-                        <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center;"    >  
-
-                            <p:outputLabel value="Primer Nombre: *" />
-                            <p:inputText   value="#{gestionarUsuarioBean.persona.pnombre}" 
-                                           style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre"/>
-
-                            <p:outputLabel value="Segundo Nombre: " />
-                            <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" 
-                                          style="width: 100%" id="txtsnombre"/>
-
-                            <p:outputLabel value="Primer Apellido: *" />
-                            <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" 
-                                          style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido"/>
-
-                            <p:outputLabel value="Segundo Apellido: " />
-                            <p:inputText  value="#{gestionarUsuarioBean.persona.sapellido}" style="width: 100%" id="txtsapellido"/> 
-
-                            <p:outputLabel value="Sexo *" />
-                            <p:selectOneMenu id="cmbsexper" value="#{gestionarUsuarioBean.sexoSeleccionado}"  
-                                             validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
-                                             filterMatchMode="startsWith" 
-                                             style="width: 100%;#{gestionarUsuarioBean.estErrsexo}">  
-                                <f:selectItem itemLabel="...Seleccione..."  />  
-                                <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />                            
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Tipo Identificación *" />
-                            <p:selectOneMenu id="cmbTipIdenti" value="#{gestionarUsuarioBean.tipoIdentificacionSeleccionada}"  
-                                             validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
-                                             filterMatchMode="startsWith" 
-                                             style="width: 100%;#{gestionarUsuarioBean.estErrtipoidenti}">  
-                                <f:selectItem itemLabel="...Seleccione..."  />  
-                                <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
-                            </p:selectOneMenu>
-
-                            <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%"/>
-                            
-                            <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
-                                        style="width: 100%;border-color:#e9322d;-webkit-box-shadow:0 0 6px #f8b9b7;-moz-box-shadow: 0 0 6px #f8b9b7;box-shadow: 0 0 6px #f8b9b7" id="txtfechanacimiento" required="true" requiredMessage="Fecha Requerida"/>
-                            
-                        </h:panelGrid> 
-
-
+                <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
+                    <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
+                        <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" height="160" width="140"/>
+                        <p:commandButton value="Cargar Foto" style="margin-left: 7%" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"/>
                     </h:panelGrid>
-                
+
+                    <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center;"    >  
+
+                        <p:outputLabel value="Primer Nombre: *" style="#{gestionarUsuarioBean.estErrNombre}" id="lblpnombre" />
+                        <p:inputText   value="#{gestionarUsuarioBean.persona.pnombre}" 
+                                       style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre" validatorMessage="Primer Nombre: Solo se permite letras." >
+                            <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Segundo Nombre: " />
+                        <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" 
+                                      style="width: 100%" id="txtsnombre" validatorMessage="Segundo Nombre: Solo se permite letras.">
+                            <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Primer Apellido: *" style="#{gestionarUsuarioBean.estErrapellido}" id="lblpapellido" />
+                        <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" 
+                                      style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido" validatorMessage="Primer Apellido Solo se permite letras.">
+                            <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Segundo Apellido: " />
+                        <p:inputText  value="#{gestionarUsuarioBean.persona.sapellido}" style="width: 100%" id="txtsapellido" validatorMessage="Segundo Apellido: Solo se permite letras."> 
+                            <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Sexo *" style="#{gestionarUsuarioBean.estErrsexo}" id="lblsexper" />
+                        <p:selectOneMenu id="cmbsexper" value="#{gestionarUsuarioBean.sexoSeleccionado}"  
+                                         validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith" 
+                                         style="width: 100%;#{gestionarUsuarioBean.estErrsexo}">  
+                            <f:selectItem itemLabel="...Seleccione..."  />  
+                            <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />                            
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Tipo Identificación *"  style="#{gestionarUsuarioBean.estErrtipoidenti}" id="lblTipIdenti"/>
+                        <p:selectOneMenu id="cmbTipIdenti" value="#{gestionarUsuarioBean.tipoIdentificacionSeleccionada}"  
+                                         validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith" 
+                                         style="width: 100%;#{gestionarUsuarioBean.estErrtipoidenti}">  
+                            <f:selectItem itemLabel="...Seleccione..."  />  
+                            <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="lblfechanacimiento"/>
+
+                        <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
+                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento" />
+
+                    </h:panelGrid> 
+
+
+                </h:panelGrid>
+
 
             </p:tab>  
             <p:tab title="Datos De Contacto Usuario">  
-                
-                    <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
-                        <p:outputLabel value="Telefono: *" style="width: 100%"/>
-                        <p:inputText value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
-                                     style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}"/>
-                        <p:outputLabel value="Movil: *" style="width: 100%"/>
-                        <p:inputText value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
-                                     style="width: 100%;#{gestionarUsuarioBean.estErrmovil}"/>
-                        <p:outputLabel value="Email *" style="width: 100%"/>
-                        <p:inputText value="#{gestionarUsuarioBean.persona.email}" style="width: 100%"/>
-                    </h:panelGrid>  
-                
+
+                <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
+
+                    <p:outputLabel value="Telefono: *" style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" id="lbltelefonoper"/>
+                    <p:inputText value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
+                                 style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" validatorMessage="Telefono: Se permite solo numeros del 0-9">
+                        <f:validateRegex pattern="[0-9]+" />
+                    </p:inputText>
+                    <p:outputLabel value="Movil: *" style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" id="lblmovilper"/>
+
+                    <p:inputText value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
+                                 style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" validatorMessage="Telefono Movil: Se permite solo numeros del 0-9">
+                        <f:validateRegex pattern="[0-9]+" />
+                    </p:inputText>
+                    <p:outputLabel value="Email *" style="width: 100%;#{gestionarUsuarioBean.estErremail}" id="lblemailper"/>
+                    <p:inputText value="#{gestionarUsuarioBean.persona.email}" id="txtemailper" 
+                                 style="width: 100%;#{gestionarUsuarioBean.estErremail}"
+                                 validatorMessage="Formato Email Invalido">
+                        <f:validateRegex
+                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>                                        
+
+                </h:panelGrid>                
+
             </p:tab>
 
             <p:tab title="Domicilio Usuario" >
 
-                
-                    <h:panelGrid columns="6" cellpadding="2" style="width: 100%;text-align: center" cellspacing="15%">
 
-                        <p:outputLabel value="País: *" style="width: 100%"/>
-                        <p:selectOneMenu id="cmbPaisPersona" value="#{gestionarUsuarioBean.paisSeleccionado}"  
-                                         validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"  
-                                         style="width: 100%">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{gestionarUsuarioBean.comboPais}"  />
-                            <p:ajax listener="#{gestionarUsuarioBean.cargardDepartamentoxPais()}" />
-                        </p:selectOneMenu>
+                <h:panelGrid columns="6" cellpadding="2" style="width: 100%;text-align: center" cellspacing="15%">
 
-                        <p:outputLabel value="Departamento : * "/>
-                        <p:selectOneMenu id="cmbdepartamentobper" value="#{gestionarUsuarioBean.departamentoSeleccionado}"  
-                                         validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"
-                                         disabled="#{gestionarUsuarioBean.deshabilitarDepartamento}"
-                                         style="width: 100%;#{gestionarUsuarioBean.estErrDepartamento}">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{gestionarUsuarioBean.comboDepartamento}"  />
-                            <p:ajax listener="#{gestionarUsuarioBean.cargarCiudadesxDepartamento()}" />
-                        </p:selectOneMenu>
+                    <p:outputLabel value="País: *" style="width: 100%;#{gestionarUsuarioBean.estErrPais}" id="lblPaisPersona"/>
+                    <p:selectOneMenu id="cmbPaisPersona" value="#{gestionarUsuarioBean.paisSeleccionado}"  
+                                     validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"  
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrPais}">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{gestionarUsuarioBean.comboPais}"  />
+                        <p:ajax listener="#{gestionarUsuarioBean.cargardDepartamentoxPais()}" />
+                    </p:selectOneMenu>
 
-                        <p:outputLabel value="Ciudad : * "/>
-                        <p:selectOneMenu id="cmbciudadbper" value="#{gestionarUsuarioBean.ciudadSeleccionado}"  
-                                         validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith"
-                                         disabled="#{gestionarUsuarioBean.deshabilitarCiudad}"
-                                         style="width: 100%;#{gestionarUsuarioBean.estErrCiudad}">  
-                            <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
-                            <f:selectItems value="#{gestionarUsuarioBean.comboCiudades}"  />           
-                        </p:selectOneMenu>
+                    <p:outputLabel value="Departamento : * " style="#{gestionarUsuarioBean.estErrDepartamento}" id="lbldepartamentobper"/>
+                    <p:selectOneMenu id="cmbdepartamentobper" value="#{gestionarUsuarioBean.departamentoSeleccionado}"  
+                                     validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"
+                                     disabled="#{gestionarUsuarioBean.deshabilitarDepartamento}"
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrDepartamento}">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{gestionarUsuarioBean.comboDepartamento}"  />
+                        <p:ajax listener="#{gestionarUsuarioBean.cargarCiudadesxDepartamento()}" />
+                    </p:selectOneMenu>
 
-                    
+                    <p:outputLabel value="Ciudad : * " style="#{gestionarUsuarioBean.estErrCiudad}" id="lblciudadbper"/>
+                    <p:selectOneMenu id="cmbciudadbper" value="#{gestionarUsuarioBean.ciudadSeleccionado}"  
+                                     validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
+                                     filterMatchMode="startsWith"
+                                     disabled="#{gestionarUsuarioBean.deshabilitarCiudad}"
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrCiudad}">  
+                        <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
+                        <f:selectItems value="#{gestionarUsuarioBean.comboCiudades}"  />           
+                        <p:ajax listener="#{gestionarUsuarioBean.cambiarMapaxCiudad()}" />
+                    </p:selectOneMenu>
 
-                    
-                        <p:outputLabel value="Barrio: *" />
-                        <p:inputText value="#{gestionarUsuarioBean.persona.barrio}" style="width: 100%"/>
 
-                        <p:outputLabel value="Dirección *" />
-                        <p:inputText value="#{gestionarUsuarioBean.persona.direccion}" style="width: 100%"/>
-                    </h:panelGrid>
-                
+
+
+                    <p:outputLabel value="Barrio: *"  style="#{gestionarUsuarioBean.stErrbarrio}" id="lblbarrioper"/>
+                    <p:inputText value="#{gestionarUsuarioBean.persona.barrio}" id="txtbarrioper" 
+                                 style="width: 100%;#{gestionarUsuarioBean.stErrbarrio}"/>
+
+                    <p:outputLabel value="Dirección *" style="#{gestionarUsuarioBean.stErrdireccion}" id="lbldireccionper"/>
+                    <p:inputText value="#{gestionarUsuarioBean.persona.direccion}" id="txtdireccionper" 
+                                 style="width: 100%;#{gestionarUsuarioBean.stErrdireccion}"/>
+                </h:panelGrid>
+
             </p:tab> 
-            
+
             <p:tab title="Geolocalización Usuario" >
-                
-                    <h:panelGrid columns="1" cellpadding="1" style="width: 100%;text-align: center" >
-                        <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
-                                style="width:600px;height:400px"  streetView="true" />                         
-                    </h:panelGrid>
-                
+
+                <h:panelGrid columns="1" cellpadding="2" style="width: 100%;text-align: center" >
+                    <p:outputLabel value="Seleccione la ubicacion de la vivienda actual:  *" style="#{gestionarUsuarioBean.estErrMapa}" id="lblmapPersonas"/>
+                    <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
+                            style="width:600px;height:400px"  streetView="true" >                         
+                        <p:ajax event="pointSelect" listener="#{gestionarUsuarioBean.puntoSeleccionadoMapa}" />
+                    </p:gmap>   
+                </h:panelGrid>
+
             </p:tab> 
 
         </p:accordionPanel>

@@ -10,12 +10,14 @@ import com.pasantia.dao.DivisionesDAO;
 import com.pasantia.dao.PaisDAO;
 import com.pasantia.dao.SexoDAO;
 import com.pasantia.dao.TipoIdentificacionDAO;
+import com.pasantia.dao.TipoPersonaDAO;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.Pais;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
+import com.pasantia.entidades.TipoPersona;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
@@ -47,6 +49,9 @@ public class CombosComunes {
     //Atributos Combo Divisiones asociadas
     private List<Divisiones> divisionesAsociadas;
     private List<SelectItem> comboDivisionesAsociadas;
+    //Atributos Combo Tipo Persona
+    private List<TipoPersona> tipoPersonas;
+    private List<SelectItem> comboTipoPersonas;
     //Inyecciones
     @Inject
     TipoIdentificacionDAO tipoIdentificacionDAO;
@@ -60,6 +65,8 @@ public class CombosComunes {
     CiudadDAO ciudadDAO;
     @Inject
     DivisionesDAO divisionesDAO;
+    @Inject
+    TipoPersonaDAO tipoPersonaDAO;
 
     /**
      * Metodo que se encarga de buscar y cargar un combo con Tipo
@@ -169,6 +176,22 @@ public class CombosComunes {
     private void cargaDivisionesAsociadas() {
         divisionesAsociadas = divisionesDAO.buscarDivisionesAsociadas();
     }
+    
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con Tipo
+     * Identificaciones     *
+     * @return List<SelecItem>
+     */
+    public List<SelectItem> cargarComboTiposPersonas(){
+        cargaTiposPersonas();
+        for (int i = 0; i < tipoPersonas.size(); i++) {
+            comboTipoPersonas.add(new SelectItem(tipoPersonas.get(i).getIdTipoPersona(), tipoPersonas.get(i).getNombreTipoPersona()));
+        }
+        return comboTipoPersonas;
+    }
+    private void cargaTiposPersonas(){
+        tipoPersonas=tipoPersonaDAO.buscarTiposPersona();
+    }
 
     //Constructor por Defecto
     public CombosComunes() {
@@ -178,6 +201,7 @@ public class CombosComunes {
         departamentos = new ArrayList<Departamento>();
         ciudades = new ArrayList<Ciudad>();
         divisionesAsociadas = new ArrayList<Divisiones>();
+        tipoPersonas = new ArrayList<TipoPersona>();
 
         comboSexo = new ArrayList<SelectItem>();
         comboTipoIdentificacion = new ArrayList<SelectItem>();
@@ -185,6 +209,7 @@ public class CombosComunes {
         comboDepartamento = new ArrayList<SelectItem>();
         comboCiudades = new ArrayList<SelectItem>();
         comboDivisionesAsociadas = new ArrayList<SelectItem>();
+        comboTipoPersonas = new ArrayList<SelectItem>();
 
     }
 
@@ -284,4 +309,22 @@ public class CombosComunes {
     public void setComboDivisionesAsociadas(List<SelectItem> comboDivisionesAsociadas) {
         this.comboDivisionesAsociadas = comboDivisionesAsociadas;
     }
+
+    public List<TipoPersona> getTipoPersonas() {
+        return tipoPersonas;
+    }
+
+    public void setTipoPersonas(List<TipoPersona> tipoPersonas) {
+        this.tipoPersonas = tipoPersonas;
+    }
+
+    public List<SelectItem> getComboTipoPersonas() {
+        return comboTipoPersonas;
+    }
+
+    public void setComboTipoPersonas(List<SelectItem> comboTipoPersonas) {
+        this.comboTipoPersonas = comboTipoPersonas;
+    }
+    
+    
 }

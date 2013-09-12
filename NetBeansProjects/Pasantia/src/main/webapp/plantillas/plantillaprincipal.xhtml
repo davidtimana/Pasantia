@@ -11,15 +11,14 @@
         <!--<script src="http://maps.google.com/maps/api/js?sensor=true|false" type="text/javascript"></script>-->
 
 
-
-        <script type="text/javascript">
-            function cambiarErrorCajaDeTexto() {
-                $(".ui-inputfield").css("border-color", "#e9322d");
-                $(".ui-inputfield").css("-webkit-box-shadow", "0 0 6px #f8b9b7");
-                $(".ui-inputfield").css("-moz-box-shadow", "0 0 6px #f8b9b7");
-                $(".ui-inputfield").css("box-shadow", "0 0 6px #f8b9b7");
-            }
+        <script language="text/javascript">
+      
+            
+            
+    
         </script>
+
+      
         <title><ui:insert name="titulo"></ui:insert></title>
 
 
@@ -152,6 +151,11 @@
         <!-- Formulario asignar departamentos a division -->
         <h:form id="asignarDepartamentosaDivision">
             <ui:include src="../paginas/configpuntoventa/asignarDepartamentosaDivision.xhtml" />
+        </h:form>
+        
+        <!-- Formulario subir fotos de usuario -->
+        <h:form id="subirfotoUsuario">
+            <ui:include src="../paginas/usuariossistema/SubirFotoUsuario.xhtml" />
         </h:form>
         
 

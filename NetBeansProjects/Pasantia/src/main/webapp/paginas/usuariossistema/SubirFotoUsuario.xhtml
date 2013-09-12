@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+
+        <p:dialog header="Subir Foto usuario" widgetVar="dlgsubirFoto" resizable="false" 
+                  id="dlgsubirFoto" showEffect="explode" hideEffect="explode"  modal="true"  width="40%" 
+                  minimizable="true" visible="#{gestionarUsuarioBean.abrirSubir}" closable="false" > 
+
+            <h:panelGrid columns="1" cellpadding="1" style="width: 100%">
+
+                <p:fileUpload fileUploadListener="#{gestionarUsuarioBean.fincargaFoto}" mode="advanced"  
+                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
+
+
+            </h:panelGrid>   
+            <p:commandButton                                                   
+                actionListener="#{gestionarUsuarioBean.cancelarSubirFoto()}"  value="Cancelar" 
+                title="Cancelar" image="ui-icon-cancel" />       
+
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

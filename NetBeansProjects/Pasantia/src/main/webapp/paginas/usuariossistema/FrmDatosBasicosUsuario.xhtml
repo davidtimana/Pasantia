@@ -25,13 +25,16 @@ and open the template in the editor.
                         <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center;"    >  
 
                             <p:outputLabel value="Primer Nombre: *" />
-                            <p:inputText   value="#{gestionarUsuarioBean.persona.pnombre}" style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre"/>
+                            <p:inputText   value="#{gestionarUsuarioBean.persona.pnombre}" 
+                                           style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre"/>
 
                             <p:outputLabel value="Segundo Nombre: " />
-                            <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" style="width: 100%" id="txtsnombre"/>
+                            <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" 
+                                          style="width: 100%" id="txtsnombre"/>
 
                             <p:outputLabel value="Primer Apellido: *" />
-                            <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" style="width: 100%" id="txtpapellido"/>
+                            <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" 
+                                          style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido"/>
 
                             <p:outputLabel value="Segundo Apellido: " />
                             <p:inputText  value="#{gestionarUsuarioBean.persona.sapellido}" style="width: 100%" id="txtsapellido"/> 
@@ -40,7 +43,7 @@ and open the template in the editor.
                             <p:selectOneMenu id="cmbsexper" value="#{gestionarUsuarioBean.sexoSeleccionado}"  
                                              validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
                                              filterMatchMode="startsWith" 
-                                             style="width: 100%">  
+                                             style="width: 100%;#{gestionarUsuarioBean.estErrsexo}">  
                                 <f:selectItem itemLabel="...Seleccione..."  />  
                                 <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />                            
                             </p:selectOneMenu>
@@ -49,14 +52,16 @@ and open the template in the editor.
                             <p:selectOneMenu id="cmbTipIdenti" value="#{gestionarUsuarioBean.tipoIdentificacionSeleccionada}"  
                                              validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
                                              filterMatchMode="startsWith" 
-                                             style="width: 100%">  
+                                             style="width: 100%;#{gestionarUsuarioBean.estErrtipoidenti}">  
                                 <f:selectItem itemLabel="...Seleccione..."  />  
                                 <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%"/>
-                            <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" style="width: 100%"/>
-
+                            
+                            <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
+                                        style="width: 100%;border-color:#e9322d;-webkit-box-shadow:0 0 6px #f8b9b7;-moz-box-shadow: 0 0 6px #f8b9b7;box-shadow: 0 0 6px #f8b9b7" id="txtfechanacimiento" required="true" requiredMessage="Fecha Requerida"/>
+                            
                         </h:panelGrid> 
 
 
@@ -68,9 +73,11 @@ and open the template in the editor.
                 
                     <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
                         <p:outputLabel value="Telefono: *" style="width: 100%"/>
-                        <p:inputText value="#{gestionarUsuarioBean.persona.telefono}" style="width: 100%"/>
+                        <p:inputText value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}"/>
                         <p:outputLabel value="Movil: *" style="width: 100%"/>
-                        <p:inputText value="#{gestionarUsuarioBean.persona.movil}" style="width: 100%"/>
+                        <p:inputText value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrmovil}"/>
                         <p:outputLabel value="Email *" style="width: 100%"/>
                         <p:inputText value="#{gestionarUsuarioBean.persona.email}" style="width: 100%"/>
                     </h:panelGrid>  

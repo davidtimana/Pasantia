@@ -70,6 +70,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
         logger.info("Validando datos");
         boolean resultado = false;
         Integer validador = 0;
+        persona.setPnombre(persona.getPnombre().trim());
+        persona.setPapellido(persona.getPapellido().trim());
+        persona.setTelefono(persona.getTelefono().trim());
+        persona.setMovil(persona.getMovil().trim());
 
         if (pestañaActual.equals("gestionusuarios")) {
 
@@ -79,7 +83,73 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
                 Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Nombre requerido.");
                 logger.info("****************Error...Primer Nombre vacio");
                 validador++;
+            } else {
+                estErrNombre = "";
+                Utilidad.actualizarElemento("txtpnombre");
+                if (persona.getPapellido().equals("")) {
+                    estErrapellido = Utilidad.estilosErrorInput();
+                    Utilidad.actualizarElemento("txtpapellido");
+                    Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Apellido requerido.");
+                    logger.info("****************Error...Primer Apellido vacio");
+                    validador++;
+                } else {
+                    estErrapellido = "";
+                    Utilidad.actualizarElemento("txtpapellido");
+                    if (sexoSeleccionado == null) {
+                        estErrsexo = Utilidad.estilosErrorInput();
+                        Utilidad.actualizarElemento("cmbsexper");
+                        Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Selección Sexo requerido.");
+                        logger.info("****************Error...Sexo no seleccionado");
+                        validador++;
+                    } else {
+                        estErrsexo = "";
+                        Utilidad.actualizarElemento("cmbsexper");
+                        if (tipoIdentificacionSeleccionada == null) {
+                            estErrtipoidenti = Utilidad.estilosErrorInput();
+                            Utilidad.actualizarElemento("cmbTipIdenti");
+                            Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Selección Tipo Identificación requerido.");
+                            logger.info("****************Error...Tipo Identificació no seleccionado");
+                            validador++;
+                        } else {
+                            estErrtipoidenti = "";
+                            Utilidad.actualizarElemento("cmbTipIdenti");
+                            if (persona.getFechaNacimiento() == null) {
+                                estErrfecha = Utilidad.estilosErrorInput();
+                                Utilidad.actualizarElemento("txtfechanacimiento");
+                                Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Selección Fecha Nacimiento requerida.");
+                                logger.info("****************Error...Fecha Nacimiento no seleccionada");
+                                validador++;
+                            } else {
+                                estErrfecha = "";
+                                Utilidad.actualizarElemento("txtfechanacimiento");
+                                if (persona.getTelefono().equals("")) {
+                                    estErrtelefono = Utilidad.estilosErrorInput();
+                                    Utilidad.actualizarElemento("txttelefonoper");
+                                    Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: Telefono requerido.");
+                                    logger.info("****************Error...Telefono vacio");
+                                    validador++;
+                                } else {
+                                    estErrtelefono = "";
+                                    Utilidad.actualizarElemento("txttelefonoper");
+                                    if (persona.getMovil().equals("")) {
+                                        estErrmovil = Utilidad.estilosErrorInput();
+                                        Utilidad.actualizarElemento("txttelefonoper");
+                                        Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: Telefono requerido.");
+                                        logger.info("****************Error...Telefono vacio");
+                                        validador++;
+                                    } else {
+                                        estErrmovil = "";
+                                        Utilidad.actualizarElemento("txttelefonoper");
+                                    }
+                                }
+                            }
+                        }
+                      
+                    }
+
+                }
             }
+
         }
         if(validador>0){
             return "gestionusuarios";

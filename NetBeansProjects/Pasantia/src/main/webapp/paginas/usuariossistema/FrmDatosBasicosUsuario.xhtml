@@ -19,7 +19,9 @@ and open the template in the editor.
                 <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
                     <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
                         <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" height="160" width="140"/>
-                        <p:commandButton value="Cargar Foto" style="margin-left: 7%" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"/>
+                        <p:commandButton value="Cargar Foto" style="margin-left: 7%" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"
+                                         id="btncargar"/>
+                        <p:outputLabel id="lblmensajefoto" value="Foto: #{gestionarUsuarioBean.nombre_foto} Seleccionada." />
                     </h:panelGrid>
 
                     <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center;"    >  
@@ -79,7 +81,7 @@ and open the template in the editor.
             </p:tab>  
             <p:tab title="Datos De Contacto Usuario">  
 
-                <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center" cellspacing="15%"> 
+                <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center;#{gestionarUsuarioBean.estErremail}" cellspacing="15%"> 
 
                     <p:outputLabel value="Telefono: *" style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" id="lbltelefonoper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"

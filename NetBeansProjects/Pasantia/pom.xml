@@ -62,7 +62,7 @@
             <artifactId>primefaces-mobile</artifactId>  
             <version>0.9.3</version>  
         </dependency>
-       <dependency>  
+        <dependency>  
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>afternoon</artifactId>  
             <version>1.0.9</version>  
@@ -72,7 +72,17 @@
             <artifactId>pasantia</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency> 
-              
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
+        </dependency>              
         
     </dependencies>
 

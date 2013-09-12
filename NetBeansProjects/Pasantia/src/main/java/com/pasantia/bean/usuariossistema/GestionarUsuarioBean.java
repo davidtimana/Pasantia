@@ -16,6 +16,8 @@ import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,10 +36,9 @@ import org.primefaces.model.map.LatLng;
  */
 @Named(value = "gestionarUsuarioBean")
 @SessionScoped
-public class GestionarUsuarioBean extends CombosComunes implements Serializable{
+public class GestionarUsuarioBean extends CombosComunes implements Serializable {
 
-
-    private Integer paisSeleccionado,tipoIdentificacionSeleccionada,sexoSeleccionado,departamentoSeleccionado,ciudadSeleccionado,zoom,tipoPersonaSeleccionado;
+    private Integer paisSeleccionado, tipoIdentificacionSeleccionada, sexoSeleccionado, departamentoSeleccionado, ciudadSeleccionado, zoom, tipoPersonaSeleccionado;
     private Sexo sexo;
     private TipoPersona tipoPersona;
     private TipoIdentificacion tipoIdentificacion;
@@ -45,41 +46,41 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
     private Cargo cargo;
     private CatalogoVenta catalogoVenta;
     private Persona persona;
-    private Boolean deshabilitarDepartamento,deshabilitarCiudad,abrirSubir;
-    private String estErrDepartamento,estErrCiudad,estErrNombre,estErrapellido,estErrsexo,estErrtipoidenti,estErrfecha,estErrtelefono,
-            estErrmovil,estErremail,estErrPais,stErrbarrio,stErrdireccion,estErrMapa;
-    private Double latitud,longitud;
+    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir;
+    private String estErrDepartamento, estErrCiudad, estErrNombre, estErrapellido, estErrsexo, estErrtipoidenti, estErrfecha, estErrtelefono,
+            estErrmovil, estErremail, estErrPais, stErrbarrio, stErrdireccion, estErrMapa;
+    private Double latitud, longitud;
     private LatLng coordenadas;
-    private Integer contadorMapa;
+    private Integer contadorMapa;        
+    private InputStream fotoSeleccionada;
+    private String nombre_foto;
     
+    private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
     
-    private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());  
     
     @Inject
     DepartamentoDAO departamentoDAO;
     @Inject
     CiudadDAO ciudadDAO;
     
-    
-    
-    
+
     @PostConstruct
-    public void Init(){
-        logger.info("***********Inicianilizando"); 
+    public void Init() {
+        logger.info("***********Inicianilizando");
         logger.info("*****************Cargando Combo Paises");
         cargarComboPais();
         logger.info("*****************Fin Cargando Combo Paises");
         logger.info("*****************Cargando Combo TipoIdentificacion");
-        cargarComboTipoIdentificacion();        
+        cargarComboTipoIdentificacion();
         logger.info("*****************Fin Cargando Combo TipoIdentificacion");
         logger.info("*****************Cargando Combo Sexo");
-        cargarComboSexo();   
+        cargarComboSexo();
         logger.info("*****************Fin Cargando Combo Sexo");
         logger.info("*****************Cargando Combo Tipo Persona");
         cargarComboTiposPersonas();
         logger.info("*****************Fin Cargando Combo Tipo Persona");
     }
-    
+
     public String validarDatos(FlowEvent event) {
         String pestañaActual = event.getOldStep();
         String pestañaSiguiente = event.getNewStep();
@@ -186,7 +187,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
                                                     logger.info("****************Error...seleccion departamento vacio");
                                                     validador++;
                                                 } else {
-                                                    estErrDepartamento="";
+                                                    estErrDepartamento = "";
                                                     Utilidad.actualizarElemento("cmbdepartamentobper");
                                                     if (ciudadSeleccionado == null) {
                                                         estErrCiudad = Utilidad.estilosErrorInput();
@@ -226,115 +227,123 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
                                                                     Utilidad.actualizarElemento("lblmapPersonas");
                                                                     logger.info("****************Aqui validamos el mapa");
                                                                 }
-                                                                
-                                                                
+
+
                                                             }
                                                         }
-                                                        
+
                                                     }
                                                 }
 
                                             }
-                                            
+
                                         }
                                     }
                                 }
                             }
                         }
-                      
+
                     }
 
                 }
             }
 
         }
-        
-        if(validador>0){
+
+        if (validador > 0) {
             return "gestionusuarios";
-        }else{
+        } else {
             return "confiusuario";
         }
 
 
-        
+
     }
-    
+
     public void puntoSeleccionadoMapa(PointSelectEvent event) {
         coordenadas = event.getLatLng();
         contadorMapa++;
         logger.log(Level.INFO, "la longitud y la latitud seleccionada es la siguiente{0} y la longitud es--> {1}", new Object[]{coordenadas.getLat(), coordenadas.getLng()});
 
     }
-    
-    public void cargardDepartamentoxPais(){
+
+    public void cargardDepartamentoxPais() {
         logger.log(Level.INFO, "El pais seleccionado es el siguente..> {0}", paisSeleccionado);
-        if(paisSeleccionado!=null){                        
+        if (paisSeleccionado != null) {
             cargarComboDepartamento(paisSeleccionado);
-            deshabilitarDepartamento=false;            
-        }else{
-            deshabilitarDepartamento=true;
-            deshabilitarCiudad=true;
+            deshabilitarDepartamento = false;
+        } else {
+            deshabilitarDepartamento = true;
+            deshabilitarCiudad = true;
         }
         Utilidad.actualizarElemento("cmbdepartamentobper");
-        Utilidad.actualizarElemento("cmbciudadbper");        
-        
+        Utilidad.actualizarElemento("cmbciudadbper");
+
     }
-    
-    public void cargarCiudadesxDepartamento(){
+
+    public void cargarCiudadesxDepartamento() {
         Departamento d = new Departamento();
-        if(departamentoSeleccionado!=null){
+        if (departamentoSeleccionado != null) {
             cargarComboCiudad(departamentoSeleccionado);
-            d=departamentoDAO.buscarDepartamentoporIdUno(departamentoSeleccionado);
+            d = departamentoDAO.buscarDepartamentoporIdUno(departamentoSeleccionado);
             if (d.getLatitud() != null && d.getLongitud() != null) {
                 logger.info("***************Inicia la asignacion de coordenadas departamento al mapa");
                 latitud = d.getLatitud();
                 longitud = d.getLongitud();
-                zoom=10;
+                zoom = 10;
                 Utilidad.actualizarElemento("mapPersonas");
                 logger.info("***************Fin la asignacion de coordenadas departamento al mapa");
-            }else{
+            } else {
                 logger.info("***************Error. Departamento sin coordenadas");
             }
-            
-            deshabilitarCiudad=false;
-        }else{
-            deshabilitarCiudad=true;
+
+            deshabilitarCiudad = false;
+        } else {
+            deshabilitarCiudad = true;
         }
-        
+
         Utilidad.actualizarElemento("cmbciudadbper");
     }
-    
-    public void cambiarMapaxCiudad(){
+
+    public void cambiarMapaxCiudad() {
         Ciudad c = new Ciudad();
-        if(ciudadSeleccionado!=null){
-            c=ciudadDAO.buscarxid(ciudadSeleccionado);
-            if(c.getLatitud()!=null  && c.getLongitud()!=null){
+        if (ciudadSeleccionado != null) {
+            c = ciudadDAO.buscarxid(ciudadSeleccionado);
+            if (c.getLatitud() != null && c.getLongitud() != null) {
                 latitud = c.getLatitud();
                 longitud = c.getLongitud();
-                zoom=12;
+                zoom = 12;
                 Utilidad.actualizarElemento("mapPersonas");
                 logger.info("***************Fin la asignacion de coordenadas ciudad al mapa");
-            }else{
+            } else {
                 logger.info("***************Error. Ciudad sin coordenadas");
             }
-        }else{
-            
+        } else {
         }
     }
-    
-    public void abrirSubirFoto(){
-        abrirSubir=true;
+
+    public void abrirSubirFoto() {
+        abrirSubir = true;
         Utilidad.actualizarElemento("dlgsubirFoto");
     }
-    
-    public void cancelarSubirFoto(){
-        abrirSubir=false;
+
+    public void cancelarSubirFoto() {
+        abrirSubir = false;        
         Utilidad.actualizarElemento("dlgsubirFoto");
+    }    
+   
+
+    public void fincargaFoto(FileUploadEvent event) throws IOException {                    
+        
+        logger.info("**************Iniciamos seleccion foto");
+        nombre_foto=event.getFile().getFileName();
+        fotoSeleccionada=event.getFile().getInputstream();               
+        Utilidad.mensajeInfo("SICOVI", "Foto: "+nombre_foto+". Cargada Correctamente");       
+        logger.info("**************Fin seleccion foto");
+
     }
     
-      public void fincargaFoto(FileUploadEvent event) {          
-        Utilidad.mensajeInfo("SICOVI", "Foto: "+event.getFile().getFileName()+". Subido Correctamente.");
-    }  
+   
 
     public GestionarUsuarioBean() {
         sexo = new Sexo();
@@ -344,8 +353,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
         cargo = new Cargo();
         catalogoVenta = new CatalogoVenta();
         persona = new Persona();
-        deshabilitarCiudad=false;
-        deshabilitarDepartamento=false;
+        deshabilitarCiudad = false;
+        deshabilitarDepartamento = false;
         estErrDepartamento = "";
         estErrCiudad = "";
         estErrNombre = "";
@@ -359,16 +368,15 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
         estErrPais = "";
         stErrbarrio = "";
         stErrdireccion = "";
-        estErrMapa="";
+        estErrMapa = "";
         zoom = 6;
         latitud = 4.599047;
         longitud = -74.080917;
-        coordenadas = new LatLng(latitud,longitud);
-        contadorMapa=0;
-        abrirSubir=false;
+        coordenadas = new LatLng(latitud, longitud);
+        contadorMapa = 0;
+        abrirSubir = false;    
+        
     }
-    
-   
 
     public Integer getPaisSeleccionado() {
         return paisSeleccionado;
@@ -649,38 +657,31 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable{
     public void setAbrirSubir(Boolean abrirSubir) {
         this.abrirSubir = abrirSubir;
     }
-    
-    
-    
-    
+
+    public InputStream getFotoSeleccionada() {
+        return fotoSeleccionada;
+    }
+
+    public void setFotoSeleccionada(InputStream fotoSeleccionada) {
+        this.fotoSeleccionada = fotoSeleccionada;
+    }
+
+    public String getNombre_foto() {
+        return nombre_foto;
+    }
+
+    public void setNombre_foto(String nombre_foto) {
+        this.nombre_foto = nombre_foto;
+    }
+
+ 
     
     
     
     
 
+ 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
-    
-    
-    
-    
+
+ 
 }

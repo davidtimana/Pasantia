@@ -17,7 +17,10 @@ and open the template in the editor.
             <h:panelGrid columns="1" cellpadding="1" style="width: 100%">
 
                 <p:fileUpload fileUploadListener="#{gestionarUsuarioBean.fincargaFoto}" mode="advanced"  
-                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
+                              auto="true" sizeLimit="51200" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                              label="Seleccionar Foto" invalidSizeMessage="El tamaño maximo de la imagen es 10 Megabytes."
+                              invalidFileMessage="Solo se permite subir imagenes con extension gif, jpeg, jpeg y png."
+                              dragDropSupport="true" uploadLabel="Subir" cancelLabel="Cancelar"/>  
 
 
             </h:panelGrid>   

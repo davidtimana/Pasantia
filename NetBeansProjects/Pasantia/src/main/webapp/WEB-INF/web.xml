@@ -23,7 +23,42 @@
     </welcome-file-list>
     <!-- Tema de Primefaces -->
     <context-param>  
-    <param-name>primefaces.THEME</param-name>  
-    <param-value>pasantia</param-value>  
-</context-param> 
+        <param-name>primefaces.THEME</param-name>  
+        <param-value>pasantia</param-value>  
+    </context-param> 
+
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+
+        <init-param>
+            <param-name>thresholdSize</param-name>
+            <param-value>51200</param-value>
+        </init-param>
+
+        <!-- Optional
+        14.
+        <init-param>
+        15.
+        <param-name>uploadDirectory</param-name>
+        16.
+        <param-value>/var/bcom/temp</param-value>
+        17.
+        </init-param>
+        18.
+        -->
+
+    </filter>
+
+ 
+
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+    
+
+
+
 </web-app>

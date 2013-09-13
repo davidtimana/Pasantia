@@ -18,10 +18,10 @@ and open the template in the editor.
 
                 <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
                     <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
-                        <p:graphicImage value="../../FotosUsuarios/taliana-vargas-clara-cabello.jpg" height="160" width="140"/>
-                        <p:commandButton value="Cargar Foto" style="margin-left: 7%" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"
+                        <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" id="imgfotoCargar" />
+                        <p:commandButton value="Cargar Foto" style="margin-left: 7%;#{gestionarUsuarioBean.botonCargar}" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"
                                          id="btncargar"/>
-                        <p:outputLabel id="lblmensajefoto" value="Foto: #{gestionarUsuarioBean.nombre_foto} Seleccionada." />
+                        <p:outputLabel id="lblmensajefoto" style="#{gestionarUsuarioBean.lblCargar}" value="#{gestionarUsuarioBean.mensajeCarga}" />
                     </h:panelGrid>
 
                     <h:panelGrid columns="8" cellpadding="2" style="width: 100%;text-align: center;"    >  
@@ -55,7 +55,8 @@ and open the template in the editor.
                                          filterMatchMode="startsWith" 
                                          style="width: 100%;#{gestionarUsuarioBean.estErrsexo}">  
                             <f:selectItem itemLabel="...Seleccione..."  />  
-                            <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />                            
+                            <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />
+                            <p:ajax listener="#{gestionarUsuarioBean.cambiarAvatar()}" />
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Tipo Identificación *"  style="#{gestionarUsuarioBean.estErrtipoidenti}" id="lblTipIdenti"/>

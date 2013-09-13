@@ -17,6 +17,7 @@ import javax.ejb.Local;
 public interface TipoIdentificacionDAO {
     
     public List<TipoIdentificacion> buscarTipoIdentificaciones();
+    public TipoIdentificacion buscarTipoIdentificacionxId(Integer idTipoIdentificacion);
         
     
     

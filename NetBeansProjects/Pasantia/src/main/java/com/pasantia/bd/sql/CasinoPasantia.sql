@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-09-2013 a las 11:24:19
+-- Tiempo de generación: 12-09-2013 a las 19:39:45
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.8
 
@@ -9236,7 +9236,7 @@ CREATE TABLE IF NOT EXISTS `Cargo` (
   `idCargo` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idCargo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=16 ;
 
 --
 -- Volcado de datos para la tabla `Cargo`
@@ -9255,8 +9255,7 @@ INSERT INTO `Cargo` (`idCargo`, `descripcion`) VALUES
 (10, 'TENIENTE'),
 (11, 'CAPITAN'),
 (12, 'CORONEL'),
-(13, 'PRUEBA'),
-(14, 'PRUEBA RAPIDA');
+(15, 'CLIENTES EXTERNOS');
 
 -- --------------------------------------------------------
 
@@ -9287,7 +9286,18 @@ CREATE TABLE IF NOT EXISTS `Catalogo_Venta` (
   `idCatalogo_Venta` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idCatalogo_Venta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `Catalogo_Venta`
+--
+
+INSERT INTO `Catalogo_Venta` (`idCatalogo_Venta`, `descripcion`) VALUES
+(1, 'Carnicos'),
+(2, 'Dulces'),
+(3, 'Licores'),
+(4, 'Tabacos'),
+(5, 'Lacteos');
 
 -- --------------------------------------------------------
 

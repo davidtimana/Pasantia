@@ -16,7 +16,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 
 @Stateless
@@ -38,6 +38,25 @@ public class SexoDAOImpl implements SexoDAO{
         }
 
         return sexos;
+    }
+
+    @Override
+    public Sexo buscarSexoxId(Integer id) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        Sexo sexo=new Sexo();
+        try {
+            Query q = session.createQuery("from Sexo s WHERE s.idSexo=:id");
+            q.setInteger("id", id);
+            sexo = (Sexo)q.uniqueResult();
+        } catch (Exception e) {
+            sexo = null;
+            System.err.println("Error al  buscarSexoxId: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return sexo;
     }
     
 }

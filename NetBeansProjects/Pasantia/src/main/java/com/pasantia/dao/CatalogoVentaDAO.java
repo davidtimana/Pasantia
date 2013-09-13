@@ -4,7 +4,7 @@
  */
 package com.pasantia.dao;
 
-import com.pasantia.entidades.Sexo;
+import com.pasantia.entidades.CatalogoVenta;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,9 +14,8 @@ import javax.ejb.Local;
  */
 
 @Local
-public interface SexoDAO {
+public interface CatalogoVentaDAO {
     
-    public List<Sexo> buscarTodosSexo();
-    public Sexo buscarSexoxId(Integer id);
+    public List<CatalogoVenta> buscarCatalogos();
     
 }

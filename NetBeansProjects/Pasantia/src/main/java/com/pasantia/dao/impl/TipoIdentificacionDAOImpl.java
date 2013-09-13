@@ -38,5 +38,24 @@ public class TipoIdentificacionDAOImpl implements TipoIdentificacionDAO{
 
         return tipoIdentificaciones;
     }
+
+    @Override
+    public TipoIdentificacion buscarTipoIdentificacionxId(Integer idTipoIdentificacion) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        TipoIdentificacion tipoIdentificacion = new TipoIdentificacion();
+        try {
+            Query q = session.createQuery("from TipoIdentificacion t WHERE t.idTipoIdentificacion=:id");
+            q.setInteger("id", idTipoIdentificacion);
+            tipoIdentificacion = (TipoIdentificacion)q.list();
+        } catch (Exception e) {
+            tipoIdentificacion = null;
+            System.err.println("Error al  buscarTipoIdentificacionxId: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return tipoIdentificacion;
+    }
     
 }

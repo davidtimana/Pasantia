@@ -4,6 +4,8 @@
  */
 package com.pasantia.utilidades;
 
+import com.pasantia.dao.CargoDAO;
+import com.pasantia.dao.CatalogoVentaDAO;
 import com.pasantia.dao.CiudadDAO;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.dao.DivisionesDAO;
@@ -11,6 +13,8 @@ import com.pasantia.dao.PaisDAO;
 import com.pasantia.dao.SexoDAO;
 import com.pasantia.dao.TipoIdentificacionDAO;
 import com.pasantia.dao.TipoPersonaDAO;
+import com.pasantia.entidades.Cargo;
+import com.pasantia.entidades.CatalogoVenta;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
@@ -52,6 +56,12 @@ public class CombosComunes {
     //Atributos Combo Tipo Persona
     private List<TipoPersona> tipoPersonas;
     private List<SelectItem> comboTipoPersonas;
+    //Atributos Combo Cargo
+    private List<Cargo> cargos;
+    private List<SelectItem> comboCargos;
+    //Atributos Combo Catalogo Venta
+    private List<CatalogoVenta> catalogosVenta;
+    private List<SelectItem> comboCatalogoVenta;
     //Inyecciones
     @Inject
     TipoIdentificacionDAO tipoIdentificacionDAO;
@@ -67,6 +77,11 @@ public class CombosComunes {
     DivisionesDAO divisionesDAO;
     @Inject
     TipoPersonaDAO tipoPersonaDAO;
+    @Inject
+    CargoDAO cargoDAO;
+    @Inject
+    CatalogoVentaDAO catalogoVentaDAO;
+    
 
     /**
      * Metodo que se encarga de buscar y cargar un combo con Tipo
@@ -192,6 +207,38 @@ public class CombosComunes {
     private void cargaTiposPersonas(){
         tipoPersonas=tipoPersonaDAO.buscarTiposPersona();
     }
+    
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con los
+     * cargos de las personas militares
+     * @return List<SelecItem>
+     */
+     public List<SelectItem> cargarComboCargo(){
+        cargaCargos();
+        for (int i = 0; i < cargos.size(); i++) {
+            comboCargos.add(new SelectItem(cargos.get(i).getIdCargo(), cargos.get(i).getDescripcion()));
+        }
+        return comboCargos;
+    }
+    private void cargaCargos(){
+        cargos=cargoDAO.buscartodosCargos();
+    }
+    
+     /**
+     * Metodo que se encarga de buscar y cargar un combo con los
+     * catalogos para los vendedores proveedores
+     * @return List<SelecItem>
+     */
+     public List<SelectItem> cargarComboCatalogosVenta(){
+        cargarCatalogos();
+        for (int i = 0; i < catalogosVenta.size(); i++) {
+            comboCatalogoVenta.add(new SelectItem(catalogosVenta.get(i).getIdCatalogoVenta(), catalogosVenta.get(i).getDescripcion()));
+        }
+        return comboCatalogoVenta;
+    }
+    private void cargarCatalogos(){
+        catalogosVenta=catalogoVentaDAO.buscarCatalogos();
+    }
 
     //Constructor por Defecto
     public CombosComunes() {
@@ -202,6 +249,8 @@ public class CombosComunes {
         ciudades = new ArrayList<Ciudad>();
         divisionesAsociadas = new ArrayList<Divisiones>();
         tipoPersonas = new ArrayList<TipoPersona>();
+        cargos=new ArrayList<Cargo>();
+        catalogosVenta = new ArrayList<CatalogoVenta>();
 
         comboSexo = new ArrayList<SelectItem>();
         comboTipoIdentificacion = new ArrayList<SelectItem>();
@@ -210,6 +259,8 @@ public class CombosComunes {
         comboCiudades = new ArrayList<SelectItem>();
         comboDivisionesAsociadas = new ArrayList<SelectItem>();
         comboTipoPersonas = new ArrayList<SelectItem>();
+        comboCargos = new ArrayList<SelectItem>();
+        comboCatalogoVenta = new ArrayList<SelectItem>();
 
     }
 
@@ -325,6 +376,40 @@ public class CombosComunes {
     public void setComboTipoPersonas(List<SelectItem> comboTipoPersonas) {
         this.comboTipoPersonas = comboTipoPersonas;
     }
+
+    public List<Cargo> getCargos() {
+        return cargos;
+    }
+
+    public void setCargos(List<Cargo> cargos) {
+        this.cargos = cargos;
+    }
+
+    public List<SelectItem> getComboCargos() {
+        return comboCargos;
+    }
+
+    public void setComboCargos(List<SelectItem> comboCargos) {
+        this.comboCargos = comboCargos;
+    }
+
+    public List<CatalogoVenta> getCatalogosVenta() {
+        return catalogosVenta;
+    }
+
+    public void setCatalogosVenta(List<CatalogoVenta> catalogosVenta) {
+        this.catalogosVenta = catalogosVenta;
+    }
+
+    public List<SelectItem> getComboCatalogoVenta() {
+        return comboCatalogoVenta;
+    }
+
+    public void setComboCatalogoVenta(List<SelectItem> comboCatalogoVenta) {
+        this.comboCatalogoVenta = comboCatalogoVenta;
+    }
+    
+    
     
     
 }

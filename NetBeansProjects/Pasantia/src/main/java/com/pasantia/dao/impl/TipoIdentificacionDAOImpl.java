@@ -46,7 +46,7 @@ public class TipoIdentificacionDAOImpl implements TipoIdentificacionDAO{
         try {
             Query q = session.createQuery("from TipoIdentificacion t WHERE t.idTipoIdentificacion=:id");
             q.setInteger("id", idTipoIdentificacion);
-            tipoIdentificacion = (TipoIdentificacion)q.list();
+            tipoIdentificacion = (TipoIdentificacion)q.uniqueResult();
         } catch (Exception e) {
             tipoIdentificacion = null;
             System.err.println("Error al  buscarTipoIdentificacionxId: " + e.getMessage());

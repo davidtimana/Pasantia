@@ -14,7 +14,7 @@ and open the template in the editor.
         
         <h:panelGrid columns="2" cellpadding="1" style="width: 100%;text-align: center;">
             
-            <p:outputLabel value="Tipo Persona *" />
+            <p:outputLabel value="Tipo Persona *" style="text-align: right"/>
             <p:selectOneMenu id="cmbTipoPersona" value="#{gestionarUsuarioBean.tipoPersonaSeleccionado}"  
                                      validatorMessage="Debe seleccionar Tipo Persona" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"  
@@ -27,7 +27,7 @@ and open the template in the editor.
         
         <h:panelGrid columns="2" cellpadding="1" style="width: 100%;text-align: center;" >
             
-            <p:outputLabel value="Cargo *" />
+            <p:outputLabel value="Cargo *" style="#{gestionarUsuarioBean.ocultarCargo};text-align: right" id="lblcargo"/>
             <p:selectOneMenu id="cmbCargo" value="#{gestionarUsuarioBean.cargoSeleccionado}"  
                                      validatorMessage="Debe seleccionar Cargo" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"  
@@ -36,7 +36,7 @@ and open the template in the editor.
                         <f:selectItems value="#{gestionarUsuarioBean.comboCargos}"  />                        
                     </p:selectOneMenu>
             
-            <p:outputLabel value="Catalogo Venta *" />
+            <p:outputLabel value="Catalogo Venta *" style="#{gestionarUsuarioBean.ocultarCatalogo};text-align: right" id="lblcatalogo" />
             <p:selectOneMenu id="cmbCatalogos" value="#{gestionarUsuarioBean.catalogoSeleccionado}"  
                                      validatorMessage="Debe seleccionar Cargo" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"  

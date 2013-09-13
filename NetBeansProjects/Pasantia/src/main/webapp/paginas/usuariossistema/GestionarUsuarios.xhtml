@@ -11,7 +11,7 @@
     </ui:define>
 
     <ui:define name="abajo">
-        
+
     </ui:define>
 
     <ui:define name="tituloInsercion">
@@ -19,27 +19,30 @@
     </ui:define>
 
     <ui:define name="derecha">
-        
+
     </ui:define>
 
     <ui:define name="cuerpo">       
-   
+
         <p:spacer width="1%" height="2%" />
-        
+
         <h:form >
             <p:wizard  nextLabel="Siguiente" backLabel="Regresar"  flowListener="#{gestionarUsuarioBean.validarDatos}" >  
 
-                <p:tab title="Gestionar Usuarios" id="gestionusuarios">
-                                           
-                    
-                            <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
-                        
-                    
+                <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">
+
+                    <h:form id="frmdatosbasicosusuario">
+                        <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
+                    </h:form>
+
+
                 </p:tab>  
-                <p:tab title="Configuración Usuario" id="confiusuario" >  
+                <p:tab title="Configuración Usuario - Paso 2" id="confiusuario" >  
+                    <h:form id="frmconfigurarusuario">
                     <ui:include src="FrmconfigurarUsuario.xhtml" /> 
+                    </h:form>
                 </p:tab>  
-                <p:tab title="Godfather Part III">  
+                <p:tab title="Comfirmar" id="comfirmar">  
                     <h:panelGrid columns="2" cellpadding="10">  
                         <p:graphicImage value="/images/godfather/godfather3.jpg" />  
                         <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.   
@@ -48,15 +51,9 @@
                 </p:tab>  
 
             </p:wizard>
+      
 
 
-
-
-            <f:facet name="actions">                 
-                <p:commandButton styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" icon="ui-icon ui-icon-help" />
-            </f:facet>  
-        
-        
         </h:form>
     </ui:define>
 

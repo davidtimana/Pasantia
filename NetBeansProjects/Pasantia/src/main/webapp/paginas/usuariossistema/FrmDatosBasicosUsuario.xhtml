@@ -18,7 +18,7 @@ and open the template in the editor.
 
                 <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
                     <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
-                        <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" id="imgfotoCargar" />
+                        <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" id="imgfotoCargar" title="#{gestionarUsuarioBean.rutaFotoCargar}"/>
                         <p:commandButton value="Cargar Foto" style="margin-left: 7%;#{gestionarUsuarioBean.botonCargar}" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"
                                          id="btncargar"/>
                         <p:outputLabel id="lblmensajefoto" style="#{gestionarUsuarioBean.lblCargar}" value="#{gestionarUsuarioBean.mensajeCarga}" />
@@ -71,7 +71,7 @@ and open the template in the editor.
                         <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="lblfechanacimiento"/>
 
                         <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
-                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento" />
+                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento" locale="es"/>
 
                     </h:panelGrid> 
 

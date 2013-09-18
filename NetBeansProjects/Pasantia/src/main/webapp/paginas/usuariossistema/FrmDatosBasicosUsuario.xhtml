@@ -31,13 +31,13 @@ and open the template in the editor.
                                        style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre" validatorMessage="Primer Nombre: Solo se permite letras." >
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
-
+                        
                         <p:outputLabel value="Segundo Nombre: " />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" 
                                       style="width: 100%" id="txtsnombre" validatorMessage="Segundo Nombre: Solo se permite letras.">
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
-
+                        
                         <p:outputLabel value="Primer Apellido: *" style="#{gestionarUsuarioBean.estErrapellido}" id="lblpapellido" />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" 
                                       style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido" validatorMessage="Primer Apellido Solo se permite letras.">
@@ -58,7 +58,7 @@ and open the template in the editor.
                             <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />
                             <p:ajax listener="#{gestionarUsuarioBean.cambiarAvatar()}" />
                         </p:selectOneMenu>
-
+                    
                         <p:outputLabel value="Tipo Identificación *"  style="#{gestionarUsuarioBean.estErrtipoidenti}" id="lblTipIdenti"/>
                         <p:selectOneMenu id="cmbTipIdenti" value="#{gestionarUsuarioBean.tipoIdentificacionSeleccionada}"  
                                          validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 

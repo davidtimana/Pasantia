@@ -27,7 +27,7 @@ and open the template in the editor.
             <p:commandButton                                                   
                 actionListener="#{gestionarUsuarioBean.cancelarSubirFoto()}"  value="Cancelar" 
                 title="Cancelar" image="ui-icon-cancel" />       
-
+            <p:ajax event="close" listener="#{gestionarUsuarioBean.actualizarCargaFoto()}" />
         </p:dialog>
 
 

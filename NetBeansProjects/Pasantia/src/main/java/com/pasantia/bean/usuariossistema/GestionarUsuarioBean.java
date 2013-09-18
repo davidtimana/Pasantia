@@ -97,6 +97,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         cargarComboCatalogosVenta();
         logger.info("*****************Fin Cargando Combo Catalogos Venta");
     }
+    
+    public String navegarWizard(FlowEvent event){
+       return event.getNewStep();
+    }
 
     public String validarDatos(FlowEvent event) {
         String pestañaActual = event.getOldStep();
@@ -308,6 +312,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
             } else {
                 if(pestañaActual.equals("comfirmar")){
                     pestañaRetornar = "confiusuario";
+                }else{
+                    pestañaRetornar=event.getNewStep();
                 }
             }
         }
@@ -427,6 +433,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("lblmensajefoto");
 
     }
+    
+    public void actualizarCargaFoto(){
+        Utilidad.actualizarElemento("imgfotoCargar");
+    }
 
     public void cambiarAvatar() {
         if (sexoSeleccionado == 1) {
@@ -496,7 +506,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
         ocultarCargo = "display:none";
         ocultarCatalogo = "display:none";
-        urlTemporal="/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        urlTemporal="/home/david/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
 
     }
 

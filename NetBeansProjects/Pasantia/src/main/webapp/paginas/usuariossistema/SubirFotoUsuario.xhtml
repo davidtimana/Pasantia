@@ -13,21 +13,21 @@ and open the template in the editor.
         <p:dialog header="Subir Foto usuario" widgetVar="dlgsubirFoto" resizable="false" 
                   id="dlgsubirFoto" showEffect="explode" hideEffect="explode"  modal="true"  width="40%" 
                   minimizable="true" visible="#{gestionarUsuarioBean.abrirSubir}" closable="false" > 
-
+            <p:ajax event="close" listener="#{gestionarUsuarioBean.actualizarCargaFoto()}" />
             <h:panelGrid columns="1" cellpadding="1" style="width: 100%">
 
                 <p:fileUpload fileUploadListener="#{gestionarUsuarioBean.fincargaFoto}" mode="advanced"  
                               auto="true" sizeLimit="51200" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                               label="Seleccionar Foto" invalidSizeMessage="El tamaño maximo de la imagen es 10 Megabytes."
                               invalidFileMessage="Solo se permite subir imagenes con extension gif, jpeg, jpeg y png."
-                              dragDropSupport="true" uploadLabel="Subir" cancelLabel="Cancelar"/>  
+                              dragDropSupport="true" uploadLabel="Subir" cancelLabel="Cancelar" />  
 
 
             </h:panelGrid>   
             <p:commandButton                                                   
                 actionListener="#{gestionarUsuarioBean.cancelarSubirFoto()}"  value="Cancelar" 
                 title="Cancelar" image="ui-icon-cancel" />       
-            <p:ajax event="close" listener="#{gestionarUsuarioBean.actualizarCargaFoto()}" />
+            
         </p:dialog>
 
 

@@ -30,7 +30,7 @@
             <p:wizard  nextLabel="Siguiente" backLabel="Regresar"  flowListener="#{gestionarUsuarioBean.navegarWizard}" >  
 
                 <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">
-
+                    <p:tooltip showEffect="slide" hideEffect="slide" />
                     <h:form id="frmdatosbasicosusuario">
                         <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
                     </h:form>

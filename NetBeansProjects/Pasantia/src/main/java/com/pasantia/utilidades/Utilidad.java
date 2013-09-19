@@ -117,6 +117,25 @@ public class Utilidad {
 
     }
     
+    /**
+	 * Verifica si una cadena esta vacia o no
+	 * 
+	 * @param cadena
+	 *            a evaluar
+	 * @return true si esta vacia y false en caso contrario
+	 * 
+	 * @author David Timana
+	 */
+	public static boolean cadenaVacia(String cadena) {
+		boolean cadenaVacia = false;
+		if (cadena == null || cadena.trim().isEmpty()) {
+			cadenaVacia = true;
+		}
+		return cadenaVacia;
+	}
+    
+    
+    
     
     
 }

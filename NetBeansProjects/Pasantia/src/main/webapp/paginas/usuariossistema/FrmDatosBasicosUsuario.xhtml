@@ -15,12 +15,12 @@ and open the template in the editor.
         <p:accordionPanel >  
 
             <p:tab title="Datos Personales Usuario" >
-
+                <p:commandButton value="Actualizar" title="Actualizar" actionListener="#{gestionarUsuarioBean.actualizarFoto()}" />
                 <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
                     <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
-                        <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" id="imgfotoCargar" title="#{gestionarUsuarioBean.rutaFotoCargar}"/>
+                        <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" id="imgfotoCargar" title="Foto Usuario"/>
                         <p:commandButton value="Cargar Foto" style="margin-left: 7%;#{gestionarUsuarioBean.botonCargar}" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"
-                                         id="btncargar"/>
+                                         id="btncargar" title="clic para subir foto."/>
                         <p:outputLabel id="lblmensajefoto" style="#{gestionarUsuarioBean.lblCargar}" value="#{gestionarUsuarioBean.mensajeCarga}" />
                     </h:panelGrid>
 
@@ -28,24 +28,28 @@ and open the template in the editor.
 
                         <p:outputLabel value="Primer Nombre: *" style="#{gestionarUsuarioBean.estErrNombre}" id="lblpnombre" />
                         <p:inputText   value="#{gestionarUsuarioBean.persona.pnombre}" 
-                                       style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre" validatorMessage="Primer Nombre: Solo se permite letras." >
+                                       style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre" validatorMessage="Primer Nombre: Solo se permite letras." 
+                                       title="Registre el primer nombre del usuario." >
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
                         
                         <p:outputLabel value="Segundo Nombre: " />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" 
-                                      style="width: 100%" id="txtsnombre" validatorMessage="Segundo Nombre: Solo se permite letras.">
+                                      style="width: 100%" id="txtsnombre" validatorMessage="Segundo Nombre: Solo se permite letras."
+                                      title="Registre el segundo nombre del usuario.">
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
                         
                         <p:outputLabel value="Primer Apellido: *" style="#{gestionarUsuarioBean.estErrapellido}" id="lblpapellido" />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" 
-                                      style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido" validatorMessage="Primer Apellido Solo se permite letras.">
+                                      style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido" validatorMessage="Primer Apellido Solo se permite letras."
+                                      title="Registre el primer apellido del usuario.">
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
 
                         <p:outputLabel value="Segundo Apellido: " />
-                        <p:inputText  value="#{gestionarUsuarioBean.persona.sapellido}" style="width: 100%" id="txtsapellido" validatorMessage="Segundo Apellido: Solo se permite letras."> 
+                        <p:inputText  value="#{gestionarUsuarioBean.persona.sapellido}" style="width: 100%" id="txtsapellido" validatorMessage="Segundo Apellido: Solo se permite letras."
+                                      title="Registre el segundo apellido del usuario."> 
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
 
@@ -71,7 +75,8 @@ and open the template in the editor.
                         <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="lblfechanacimiento"/>
 
                         <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
-                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento" locale="es"/>
+                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento" locale="es" 
+                                    title="Seleccione fecha nacimiento usuario."/>
 
                     </h:panelGrid> 
 
@@ -80,28 +85,28 @@ and open the template in the editor.
 
 
             </p:tab>  
-            <p:tab title="Datos De Contacto Usuario">  
+            <p:tab title="Datos De Contacto Usuario" >  
 
                 <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center;#{gestionarUsuarioBean.estErremail}" cellspacing="15%"> 
 
                     <p:outputLabel value="Telefono: *" style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" id="lbltelefonoper"/>
-                    <p:inputText value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
-                                 style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" validatorMessage="Telefono: Se permite solo numeros del 0-9">
-                        <f:validateRegex pattern="[0-9]+" />
-                    </p:inputText>
+                    <p:inputMask value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
+                                 style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" validatorMessage="Telefono: Se permite solo numeros del 0-9"
+                                 title="Registre telefono del usuario." mask="(99)-999999"/>                        
+                    
                     <p:outputLabel value="Movil: *" style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" id="lblmovilper"/>
 
-                    <p:inputText value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
-                                 style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" validatorMessage="Telefono Movil: Se permite solo numeros del 0-9">
-                        <f:validateRegex pattern="[0-9]+" />
-                    </p:inputText>
-                    <p:outputLabel value="Email *" style="width: 100%;#{gestionarUsuarioBean.estErremail}" id="lblemailper"/>
+                    <p:inputMask value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
+                                 style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" validatorMessage="Telefono Movil: Se permite solo numeros del 0-9"
+                                 title="Registre telefono movil del usuario." mask="999-999-9999"/>                  
+                    
+                    
+                    <p:outputLabel value="E-mail *" style="width: 100%;#{gestionarUsuarioBean.estErremail}" id="lblemailper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.email}" id="txtemailper" 
                                  style="width: 100%;#{gestionarUsuarioBean.estErremail}"
-                                 validatorMessage="Formato Email Invalido">
-                        <f:validateRegex
-                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                    </p:inputText>                                        
+                                 validatorMessage="Formato E-mail Invalido" 
+                                 title="Registre e-mail del usuario." />                        
+                    
 
                 </h:panelGrid>                
 
@@ -149,18 +154,20 @@ and open the template in the editor.
 
                     <p:outputLabel value="Barrio: *"  style="#{gestionarUsuarioBean.stErrbarrio}" id="lblbarrioper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.barrio}" id="txtbarrioper" 
-                                 style="width: 100%;#{gestionarUsuarioBean.stErrbarrio}"/>
+                                 style="width: 100%;#{gestionarUsuarioBean.stErrbarrio}"
+                                 title="Registre barrio del usuario."/>
 
                     <p:outputLabel value="Dirección *" style="#{gestionarUsuarioBean.stErrdireccion}" id="lbldireccionper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.direccion}" id="txtdireccionper" 
-                                 style="width: 100%;#{gestionarUsuarioBean.stErrdireccion}"/>
+                                 style="width: 100%;#{gestionarUsuarioBean.stErrdireccion}"
+                                 title="Registre dirección del usuario."/>
                 </h:panelGrid>
 
             </p:tab> 
 
             <p:tab title="Geolocalización Usuario" >
 
-                <h:panelGrid columns="1" cellpadding="2" style="width: 100%;text-align: center" >
+                <h:panelGrid columns="1" cellpadding="2" style="width: 100%;text-align: center" title="Busque la direccion de su residencia actual." >
                     <p:outputLabel value="Seleccione la ubicacion de la vivienda actual:  *" style="#{gestionarUsuarioBean.estErrMapa}" id="lblmapPersonas"/>
                     <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
                             style="width:600px;height:400px"  streetView="true" >                         

@@ -6,6 +6,7 @@ package com.pasantia.bean.usuariossistema;
 
 import com.pasantia.dao.CiudadDAO;
 import com.pasantia.dao.DepartamentoDAO;
+import com.pasantia.dao.PersonaDAO;
 import com.pasantia.dao.SexoDAO;
 import com.pasantia.dao.TipoIdentificacionDAO;
 import com.pasantia.dao.TipoPersonaDAO;
@@ -17,6 +18,7 @@ import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
+import com.pasantia.excepciones.ExcepcionPersona;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import java.io.IOException;
@@ -74,6 +76,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     TipoIdentificacionDAO tipoIdentificacionDAO;
     @Inject
     TipoPersonaDAO tipoPersonaDAO;
+    @Inject
+    PersonaDAO personaDAO;
 
     @PostConstruct
     public void Init() {
@@ -101,6 +105,15 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public String navegarWizard(FlowEvent event){
        return event.getNewStep();
     }
+    
+    public void guardar(){
+//        String res="";
+//        try{
+//            persona.setPnombre("lskdfjskl");
+//        }catch(ExcepcionPersona e){
+//            res=e.getMessage();
+//        }
+    }
 
     public String validarDatos(FlowEvent event) {
         String pestañaActual = event.getOldStep();
@@ -122,7 +135,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         if (pestañaActual.equals("gestionusuarios")) {
 
             //Valido el primer nombre de la persona
-            if (persona.getPnombre().equals("")) {
+            if (Utilidad.cadenaVacia(persona.getPnombre())) {
                 estErrNombre = Utilidad.estilosErrorInput();
                 Utilidad.actualizarElemento("txtpnombre");
                 Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Nombre requerido.");
@@ -134,7 +147,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                 Utilidad.actualizarElemento("txtpnombre");
 
                 //Valido el primer apellido de la persona
-                if (persona.getPapellido().equals("")) {
+                if (Utilidad.cadenaVacia(persona.getPapellido())) {
                     estErrapellido = Utilidad.estilosErrorInput();
                     Utilidad.actualizarElemento("txtpapellido");
                     Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Apellido requerido.");
@@ -182,7 +195,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                 Utilidad.actualizarElemento("txtfechanacimiento");
 
                                 //Valido el telefono
-                                if (persona.getTelefono().equals("")) {
+                                if (Utilidad.cadenaVacia(persona.getTelefono())) {
                                     estErrtelefono = Utilidad.estilosErrorInput();
                                     Utilidad.actualizarElemento("txttelefonoper");
                                     Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: Telefono requerido.");
@@ -193,7 +206,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                     Utilidad.actualizarElemento("txttelefonoper");
 
                                     //Valido el telefono movil
-                                    if (persona.getMovil().equals("")) {
+                                    if (Utilidad.cadenaVacia(persona.getMovil())) {
                                         estErrmovil = Utilidad.estilosErrorInput();
                                         Utilidad.actualizarElemento("txtmovilper");
                                         Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: Telefono Movil requerido.");
@@ -204,7 +217,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                         Utilidad.actualizarElemento("txtmovilper");
 
                                         //Valido el email
-                                        if (persona.getEmail().equals("")) {
+                                        if (Utilidad.cadenaVacia(persona.getEmail())) {
                                             estErremail = Utilidad.estilosErrorInput();
                                             Utilidad.actualizarElemento("txtemailper");
                                             Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: E-mail requerido.");
@@ -250,7 +263,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                         Utilidad.actualizarElemento("cmbciudadbper");
 
                                                         //Valido el barrio 
-                                                        if (persona.getBarrio().equals("")) {
+                                                        if (Utilidad.cadenaVacia(persona.getBarrio())) {
                                                             stErrbarrio = Utilidad.estilosErrorInput();
                                                             Utilidad.actualizarElemento("txtbarrioper");
                                                             Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Barrio requerida.");
@@ -261,7 +274,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                             Utilidad.actualizarElemento("txtbarrioper");
 
                                                             //Valido la direccion
-                                                            if (persona.getDireccion().equals("")) {
+                                                            if (Utilidad.cadenaVacia(persona.getDireccion())) {
                                                                 stErrdireccion = Utilidad.estilosErrorInput();
                                                                 Utilidad.actualizarElemento("txtdireccionper");
                                                                 Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Dirección requerida.");
@@ -329,9 +342,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void puntoSeleccionadoMapa(PointSelectEvent event) {
         coordenadas = event.getLatLng();
         contadorMapa++;
-        logger.log(Level.INFO, "la longitud y la latitud seleccionada es la siguiente{0} y la longitud es--> {1}", new Object[]{coordenadas.getLat(), coordenadas.getLng()});
-        botonCargar = "display:block";
-        Utilidad.actualizarElemento("btncargar");
+        logger.log(Level.INFO, "la longitud y la latitud seleccionada es la siguiente{0} y la longitud es--> {1}", new Object[]{coordenadas.getLat(), coordenadas.getLng()});        
 
     }
 
@@ -435,6 +446,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
     
     public void actualizarCargaFoto(){
+        logger.info("llegue por aca---------__>>>>>>>>");
         Utilidad.actualizarElemento("imgfotoCargar");
     }
 
@@ -448,26 +460,56 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
 
     public void ocultarCombos() {
+        
+        
+        logger.log(Level.INFO, "el tipo Persona Seleccionado es el siguiente-->{0}", tipoPersonaSeleccionado);
+        ocultarCatalogo = "display:none";
+                        ocultarCargo = "display:none";
         if (tipoPersonaSeleccionado != null) {
-            if (tipoPersonaSeleccionado == 2 || tipoPersonaSeleccionado == 4 || tipoPersonaSeleccionado == 5 || tipoPersonaSeleccionado == 6) {
-                ocultarCatalogo = "diplay:none";
-                ocultarCargo = "diplay:block";
 
-            } else {
-                if (tipoPersonaSeleccionado == 3) {
-                    ocultarCatalogo = "diplay:block";
-                    ocultarCargo = "diplay:none";
-                }else{
-                    ocultarCatalogo = "diplay:none";
-                    ocultarCargo = "diplay:none";
+            TipoPersona t = tipoPersonaDAO.buscarTipoPersonasxId(tipoPersonaSeleccionado);
+            
+            if (t != null) {
+                if (t.getNombreTipoPersona().equals("Cliente Interno") || t.getNombreTipoPersona().equals("Comandante Batallon")
+                        || t.getNombreTipoPersona().equals("Comandante Casino") || t.getNombreTipoPersona().equals("Comandante Division")
+                        || t.getNombreTipoPersona().equals("Vendedor Casino Interno")) {
+
+                    ocultarCatalogo = "display:none";
+                    ocultarCargo = "display:block";
+
+                } else {
+                    if (t.getNombreTipoPersona().equals("Cliente Externo") || t.getNombreTipoPersona().equals("Vendedor Casino Externo")) {
+                        ocultarCatalogo = "display:none";
+                        ocultarCargo = "display:none";
+                    } else {
+                        if (t.getNombreTipoPersona().equals("Vendedor Proveedor")) {
+                            ocultarCatalogo = "display:block";
+                            ocultarCargo = "display:none";
+                        } else {
+                            ocultarCatalogo = "display:none";
+                            ocultarCargo = "display:none";
+                        }
+                    }
+
                 }
-            }
-            Utilidad.actualizarElemento("lblcatalogo");
-            Utilidad.actualizarElemento("lblcargo");
-            Utilidad.actualizarElemento("cmbCargo");
-            Utilidad.actualizarElemento("cmbCatalogos");
 
+            }
+
+
+
+
+        } else {
+            ocultarCatalogo = "display:none";
+            ocultarCargo = "display:none";
         }
+        Utilidad.actualizarElemento("lblcatalogo");
+        Utilidad.actualizarElemento("lblcargo");
+        Utilidad.actualizarElemento("cmbCargo");
+        Utilidad.actualizarElemento("cmbCatalogos");
+    }
+    
+    public void actualizarFoto(){
+        Utilidad.actualizarElemento("imgfotoCargar");
     }
 
     public GestionarUsuarioBean() {
@@ -500,13 +542,13 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         coordenadas = new LatLng(latitud, longitud);
         contadorMapa = 0;
         abrirSubir = false;
-        botonCargar = "display:none";
+        botonCargar = "display:block";
         lblCargar = "display:block";
         mensajeCarga = "Sin Selección de Foto.";
         rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
         ocultarCargo = "display:none";
         ocultarCatalogo = "display:none";
-        urlTemporal="/home/david/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        urlTemporal="/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
 
     }
 

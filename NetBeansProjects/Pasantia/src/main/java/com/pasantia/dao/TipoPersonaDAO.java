@@ -18,4 +18,6 @@ public interface TipoPersonaDAO {
     
     public List<TipoPersona> buscarTiposPersona();
     
+    public TipoPersona buscarTipoPersonasxId(Integer id);
+    
 }

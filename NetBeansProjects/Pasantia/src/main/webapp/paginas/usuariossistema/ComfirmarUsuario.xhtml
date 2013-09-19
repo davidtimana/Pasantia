@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+
+        <p:spacer height="2%"/>
+        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" id="paso1" >
+            <f:facet name="header">  
+                Gestionar Usuarios - Paso 1  
+            </f:facet>
+            <p:spacer height="2%"/>
+            <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                <f:facet name="header">  
+                    Foto Usuario  
+                </f:facet> 
+                <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" title="Foto Usuario"/>            
+            </p:panelGrid>
+            <p:spacer height="2%"/>
+            <p:panelGrid columns="8"  style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+
+                <f:facet name="header">  
+                    Datos Personales Usuario  
+                </f:facet> 
+
+                <p:outputLabel value="Primer Nombre: "  />
+                <p:outputLabel   value="#{gestionarUsuarioBean.persona.pnombre}" />        
+
+                <p:outputLabel value="Segundo Nombre: " />
+                <p:outputLabel  value="#{gestionarUsuarioBean.persona.snombre}" />             
+
+                <p:outputLabel value="Primer Apellido: "  />
+                <p:outputLabel  value="#{gestionarUsuarioBean.persona.papellido}" />                
+
+                <p:outputLabel value="Segundo Apellido: " />
+                <p:outputLabel  value="#{gestionarUsuarioBean.persona.sapellido}" />             
+
+                <p:outputLabel value="Sexo: " />
+                <p:outputLabel  value="#{gestionarUsuarioBean.sexo.nombreSexo}" /> 
+
+                <p:outputLabel value="Tipo Identificación: "  />
+                <p:outputLabel  value="#{gestionarUsuarioBean.tipoIdentificacion.nombreTipoIdentificacion}" /> 
+
+                <p:outputLabel value="Fecha Nacimiento: " />
+                <p:outputLabel  value="#{gestionarUsuarioBean.persona.fechaNacimiento}" /> 
+
+            </p:panelGrid>
+            <p:spacer height="2%"/>
+            <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <f:facet name="header">  
+                    Datos De Contacto Usuario  
+                </f:facet> 
+
+                <p:outputLabel value="Telefono: " />
+                <p:outputLabel value="#{gestionarUsuarioBean.persona.telefono}" />             
+
+                <p:outputLabel value="Movil: " />
+                <p:outputLabel value="#{gestionarUsuarioBean.persona.movil}"/> 
+
+                <p:outputLabel value="E-mail *" />
+                <p:outputLabel value="#{gestionarUsuarioBean.persona.email}" /> 
+
+            </p:panelGrid>
+            <p:spacer height="2%"/>
+            <p:panelGrid columns="10"  style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+
+                <f:facet name="header">  
+                    Domicilio Usuario   
+                </f:facet> 
+
+                <p:outputLabel value="Pais: "/>
+                <p:outputLabel value="#{gestionarUsuarioBean.ciudad.departamento.pais.nombrePais}"/>
+
+                <p:outputLabel value="Departamento : " />
+                <p:outputLabel value="#{gestionarUsuarioBean.ciudad.departamento.nombreDepartamento}"/>
+
+                <p:outputLabel value="Ciudad : " />
+                <p:outputLabel value="#{gestionarUsuarioBean.ciudad.nombreCiudad}"/>
+
+                <p:outputLabel value="Barrio: "  />
+                <p:outputLabel value="#{gestionarUsuarioBean.persona.barrio}" />
+
+                <p:outputLabel value="Dirección: " />
+                <p:outputLabel value="#{gestionarUsuarioBean.persona.direccion}" />
+
+            </p:panelGrid>
+            <p:spacer height="2%"/>
+            <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <f:facet name="header">  
+                    Geolocalización Usuario   
+                </f:facet> 
+
+                <p:outputLabel value="Latitud: " />
+                <p:outputLabel value="#{gestionarUsuarioBean.latitud}" />
+
+                <p:outputLabel value="Longitud " />
+                <p:outputLabel value="#{gestionarUsuarioBean.longitud}" />               
+
+                <f:facet name="footer">  
+                    <p:gmap center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
+                            style="width:600px;height:400px"  streetView="true" />                                                 
+                </f:facet>
+
+            </p:panelGrid>
+
+        </p:panelGrid>
+        <p:spacer height="4%"/>
+        <p:panelGrid columns="6" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" id="paso2" >
+
+            <f:facet name="header">  
+                Configuración Usuario - Paso 2   
+            </f:facet> 
+            <p:outputLabel value="Tipo Usuario: " />
+            <p:outputLabel value="#{gestionarUsuarioBean.tipoPersona.nombreTipoPersona}" />
+
+            <p:outputLabel value="Cargo Del Usuario: " />
+            <p:outputLabel value="#{gestionarUsuarioBean.cargo.descripcion}" />
+
+            <p:outputLabel value="Catalogo De Venta: " />
+            <p:outputLabel value="#{gestionarUsuarioBean.catalogoVenta.descripcion}" />
+
+        </p:panelGrid>
+        <p:spacer height="4%"/>
+        <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+            <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" />            
+            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-cancel" />            
+        </p:panelGrid>
+
+    </ui:composition>
+</html>

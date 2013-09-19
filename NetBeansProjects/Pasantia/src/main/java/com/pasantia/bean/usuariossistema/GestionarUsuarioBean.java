@@ -29,7 +29,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -103,6 +105,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
     
     public String navegarWizard(FlowEvent event){
+        Utilidad.actualizarElemento("paso1");
+        Utilidad.actualizarElemento("paso2");
        return event.getNewStep();
     }
     
@@ -413,7 +417,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         fotoSeleccionada = null;
     }
 
-    public void fincargaFoto(FileUploadEvent event) throws IOException {
+    public void fincargaFoto(FileUploadEvent event) throws IOException, InterruptedException {
 
         logger.info("**************Iniciamos seleccion foto");
         nombre_foto = event.getFile().getFileName();
@@ -441,14 +445,13 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("dlgsubirFoto");        
         Utilidad.actualizarElemento("imgfotoCargar");
         Utilidad.actualizarElemento("btncargar");
-        Utilidad.actualizarElemento("lblmensajefoto");
+        Utilidad.actualizarElemento("lblmensajefoto");        
+        Thread.sleep(4000);
+        Utilidad.actualizarElemento("imgfotoCargar");
 
     }
     
-    public void actualizarCargaFoto(){
-        logger.info("llegue por aca---------__>>>>>>>>");
-        Utilidad.actualizarElemento("imgfotoCargar");
-    }
+    
 
     public void cambiarAvatar() {
         if (sexoSeleccionado == 1) {
@@ -508,10 +511,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("cmbCatalogos");
     }
     
-    public void actualizarFoto(){
-        Utilidad.actualizarElemento("imgfotoCargar");
-    }
-
+   
     public GestionarUsuarioBean() {
         sexo = new Sexo();
         tipoPersona = new TipoPersona();

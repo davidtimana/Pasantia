@@ -29,8 +29,7 @@
         <h:form >
             <p:wizard  nextLabel="Siguiente" backLabel="Regresar"  flowListener="#{gestionarUsuarioBean.navegarWizard}" >  
 
-                <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">
-                    <p:tooltip showEffect="slide" hideEffect="slide" />
+                <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">                    
                     <h:form id="frmdatosbasicosusuario">
                         <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
                     </h:form>
@@ -43,11 +42,9 @@
                     </h:form>
                 </p:tab>  
                 <p:tab title="Comfirmar" id="comfirmar">  
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <p:graphicImage value="/images/godfather/godfather3.jpg" />  
-                        <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.   
-                                      Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."></h:outputText>  
-                    </h:panelGrid>  
+                    <h:form id="frmcomfirmarusuario">
+                    <ui:include src="ComfirmarUsuario.xhtml" /> 
+                    </h:form>
                 </p:tab>  
 
             </p:wizard>

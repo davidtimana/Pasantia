@@ -7,8 +7,12 @@ package com.pasantia.dao.impl;
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.CargoDAO;
 import com.pasantia.entidades.Cargo;
+import com.pasantia.entidades.CatalogoVenta;
+import com.pasantia.entidades.TipoPersona;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -80,11 +84,15 @@ public class CargoDAOImpl implements CargoDAO{
     @Override
     public Cargo buscarCargoporId(Integer id) {
         Session session = ConexionHibernate.getSessionFactory().openSession();
-        Cargo categoria=null;
+        Cargo categoria=new Cargo();
         try{
-            categoria=(Cargo)session.load(Cargo.class,id);
+            Query q = session.createQuery("from Cargo s WHERE s.idCargo=:id");
+            q.setInteger("id", id);
+            categoria = (Cargo)q.uniqueResult();
         }catch(Exception e){
-            System.out.println("Error al buscar el id: "+id+" :"+e.getMessage());
+            categoria=null;
+            System.out.println("Error al buscarCargoporId :"+e.getMessage());
+            session.beginTransaction().rollback();
         }
         finally{
             session.close();
@@ -95,7 +103,18 @@ public class CargoDAOImpl implements CargoDAO{
     @Override
     public List<Cargo> buscartodosCargos() {
         Session session = ConexionHibernate.getSessionFactory().openSession();
-        return session.createQuery("from Cargo").list();
+        List<Cargo> cargos = new ArrayList<Cargo>();
+        try {
+            Query q = session.createQuery("from Cargo s ORDER BY  s.descripcion ASC");
+            cargos = q.list();
+        } catch (Exception e) {
+            cargos = null;
+            System.err.println("Error al  buscartodosCargos: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return cargos;
     }
     
 }

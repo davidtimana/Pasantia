@@ -4,6 +4,8 @@
  */
 package com.pasantia.bean.usuariossistema;
 
+import com.pasantia.dao.CargoDAO;
+import com.pasantia.dao.CatalogoVentaDAO;
 import com.pasantia.dao.CiudadDAO;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.dao.PersonaDAO;
@@ -80,6 +82,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     TipoPersonaDAO tipoPersonaDAO;
     @Inject
     PersonaDAO personaDAO;
+    @Inject
+    CargoDAO cargoDAO;
+    @Inject
+    CatalogoVentaDAO catalogoVentaDAO;
 
     @PostConstruct
     public void Init() {
@@ -107,6 +113,9 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public String navegarWizard(FlowEvent event){
         Utilidad.actualizarElemento("paso1");
         Utilidad.actualizarElemento("paso2");
+        if(contadorMapa!=0){
+            zoom=zoom+4;
+        }
        return event.getNewStep();
     }
     
@@ -389,6 +398,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
 
     public void cambiarMapaxCiudad() {
+        asignarCiudad();
         Ciudad c = new Ciudad();
         if (ciudadSeleccionado != null) {
             c = ciudadDAO.buscarxid(ciudadSeleccionado);
@@ -454,6 +464,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     
 
     public void cambiarAvatar() {
+        asignarSexo();
         if (sexoSeleccionado == 1) {
             rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
         } else {
@@ -464,7 +475,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void ocultarCombos() {
         
-        
+        asignarTipoPersona();
         logger.log(Level.INFO, "el tipo Persona Seleccionado es el siguiente-->{0}", tipoPersonaSeleccionado);
         ocultarCatalogo = "display:none";
                         ocultarCargo = "display:none";
@@ -511,7 +522,43 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("cmbCatalogos");
     }
     
+    public void asignarSexo(){
+        if(sexoSeleccionado!=null){
+            sexo = sexoDAO.buscarSexoxId(sexoSeleccionado);
+        }        
+    }
+    
+    public void asignarTipoIdentificacion(){
+        if(tipoIdentificacionSeleccionada!=null){
+            tipoIdentificacion=tipoIdentificacionDAO.buscarTipoIdentificacionxId(tipoIdentificacionSeleccionada);
+        }
+    }
+    
+    public void asignarCiudad(){
+        if(ciudadSeleccionado!=null){
+            ciudad=ciudadDAO.buscarxid(ciudadSeleccionado);            
+        }
+    }
+    
+   public void asignarTipoPersona(){
+       if(tipoPersonaSeleccionado!=null){
+           tipoPersona=tipoPersonaDAO.buscarTipoPersonasxId(tipoPersonaSeleccionado);
+       }
+   }
    
+   
+   public void asignarCargo(){
+       if(cargoSeleccionado!=null){
+           cargo=cargoDAO.buscarCargoporId(cargoSeleccionado);
+       }
+   }
+   
+   public void asignarCatalogoVenta(){
+       if(catalogoSeleccionado!=null){
+           catalogoVenta=catalogoVentaDAO.buscarCatalogoxId(catalogoSeleccionado);
+       }
+   }
+    
     public GestionarUsuarioBean() {
         sexo = new Sexo();
         tipoPersona = new TipoPersona();

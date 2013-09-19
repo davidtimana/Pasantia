@@ -30,26 +30,28 @@ and open the template in the editor.
                     Datos Personales Usuario  
                 </f:facet> 
 
-                <p:outputLabel value="Primer Nombre: "  />
+                <p:outputLabel value="Primer Nombre: " style="font-weight:bold;" />
                 <p:outputLabel   value="#{gestionarUsuarioBean.persona.pnombre}" />        
 
-                <p:outputLabel value="Segundo Nombre: " />
+                <p:outputLabel value="Segundo Nombre: " style="font-weight:bold;"/>
                 <p:outputLabel  value="#{gestionarUsuarioBean.persona.snombre}" />             
 
-                <p:outputLabel value="Primer Apellido: "  />
+                <p:outputLabel value="Primer Apellido: "  style="font-weight:bold;"/>
                 <p:outputLabel  value="#{gestionarUsuarioBean.persona.papellido}" />                
 
-                <p:outputLabel value="Segundo Apellido: " />
+                <p:outputLabel value="Segundo Apellido: " style="font-weight:bold;"/>
                 <p:outputLabel  value="#{gestionarUsuarioBean.persona.sapellido}" />             
 
-                <p:outputLabel value="Sexo: " />
+                <p:outputLabel value="Sexo: " style="font-weight:bold;"/>
                 <p:outputLabel  value="#{gestionarUsuarioBean.sexo.nombreSexo}" /> 
 
-                <p:outputLabel value="Tipo Identificación: "  />
+                <p:outputLabel value="Tipo Identificación: "  style="font-weight:bold;"/>
                 <p:outputLabel  value="#{gestionarUsuarioBean.tipoIdentificacion.nombreTipoIdentificacion}" /> 
 
-                <p:outputLabel value="Fecha Nacimiento: " />
-                <p:outputLabel  value="#{gestionarUsuarioBean.persona.fechaNacimiento}" /> 
+                <p:outputLabel value="Fecha Nacimiento: " style="font-weight:bold;"/>
+                <p:outputLabel  value="#{gestionarUsuarioBean.persona.fechaNacimiento}" > 
+                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                </p:outputLabel>
 
             </p:panelGrid>
             <p:spacer height="2%"/>
@@ -59,13 +61,13 @@ and open the template in the editor.
                     Datos De Contacto Usuario  
                 </f:facet> 
 
-                <p:outputLabel value="Telefono: " />
+                <p:outputLabel value="Telefono: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.persona.telefono}" />             
 
-                <p:outputLabel value="Movil: " />
+                <p:outputLabel value="Movil: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.persona.movil}"/> 
 
-                <p:outputLabel value="E-mail *" />
+                <p:outputLabel value="E-mail: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.persona.email}" /> 
 
             </p:panelGrid>
@@ -76,19 +78,19 @@ and open the template in the editor.
                     Domicilio Usuario   
                 </f:facet> 
 
-                <p:outputLabel value="Pais: "/>
+                <p:outputLabel value="Pais: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.ciudad.departamento.pais.nombrePais}"/>
 
-                <p:outputLabel value="Departamento : " />
+                <p:outputLabel value="Departamento: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.ciudad.departamento.nombreDepartamento}"/>
 
-                <p:outputLabel value="Ciudad : " />
+                <p:outputLabel value="Ciudad: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.ciudad.nombreCiudad}"/>
 
-                <p:outputLabel value="Barrio: "  />
+                <p:outputLabel value="Barrio: " style="font-weight:bold;" />
                 <p:outputLabel value="#{gestionarUsuarioBean.persona.barrio}" />
 
-                <p:outputLabel value="Dirección: " />
+                <p:outputLabel value="Dirección: " style="font-weight:bold;" />
                 <p:outputLabel value="#{gestionarUsuarioBean.persona.direccion}" />
 
             </p:panelGrid>
@@ -99,10 +101,10 @@ and open the template in the editor.
                     Geolocalización Usuario   
                 </f:facet> 
 
-                <p:outputLabel value="Latitud: " />
+                <p:outputLabel value="Latitud: " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.latitud}" />
 
-                <p:outputLabel value="Longitud " />
+                <p:outputLabel value="Longitud " style="font-weight:bold;"/>
                 <p:outputLabel value="#{gestionarUsuarioBean.longitud}" />               
 
                 <f:facet name="footer">  
@@ -119,14 +121,14 @@ and open the template in the editor.
             <f:facet name="header">  
                 Configuración Usuario - Paso 2   
             </f:facet> 
-            <p:outputLabel value="Tipo Usuario: " />
+            <p:outputLabel value="Tipo Usuario: " style="font-weight:bold;"/>
             <p:outputLabel value="#{gestionarUsuarioBean.tipoPersona.nombreTipoPersona}" />
 
-            <p:outputLabel value="Cargo Del Usuario: " />
-            <p:outputLabel value="#{gestionarUsuarioBean.cargo.descripcion}" />
+            <p:outputLabel value="Cargo Del Usuario: " rendered="#{gestionarUsuarioBean.tipoPersonaSeleccionado != 3}" style="font-weight:bold;"/>
+            <p:outputLabel value="#{gestionarUsuarioBean.cargo.descripcion}" rendered="#{gestionarUsuarioBean.tipoPersonaSeleccionado != 3}"/>
 
-            <p:outputLabel value="Catalogo De Venta: " />
-            <p:outputLabel value="#{gestionarUsuarioBean.catalogoVenta.descripcion}" />
+            <p:outputLabel value="Catalogo De Venta: " rendered="#{gestionarUsuarioBean.tipoPersonaSeleccionado == 3}" style="font-weight:bold;"/>
+            <p:outputLabel value="#{gestionarUsuarioBean.catalogoVenta.descripcion}" rendered="#{gestionarUsuarioBean.tipoPersonaSeleccionado == 3}" />
 
         </p:panelGrid>
         <p:spacer height="4%"/>

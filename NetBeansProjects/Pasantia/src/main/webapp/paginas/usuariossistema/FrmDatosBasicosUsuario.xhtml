@@ -69,6 +69,7 @@ and open the template in the editor.
                                          style="width: 100%;#{gestionarUsuarioBean.estErrtipoidenti}">  
                             <f:selectItem itemLabel="...Seleccione..."  />  
                             <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
+                            <p:ajax listener="#{gestionarUsuarioBean.asignarTipoIdentificacion()}" />
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="lblfechanacimiento"/>

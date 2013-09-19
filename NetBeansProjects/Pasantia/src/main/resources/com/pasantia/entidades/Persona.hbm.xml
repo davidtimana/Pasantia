@@ -8,22 +8,22 @@
             <column name="idTBLPERSONA" />
             <generator class="identity" />
         </id>
-        <many-to-one name="catalogoVenta" class="com.pasantia.entidades.CatalogoVenta" fetch="select">
+        <many-to-one name="catalogoVenta" class="com.pasantia.entidades.CatalogoVenta" fetch="select" lazy="false">
             <column name="SECCATALOGO_VENTA" />
         </many-to-one>
         <many-to-one name="cargo" class="com.pasantia.entidades.Cargo" fetch="select">
             <column name="SECCARGO" />
         </many-to-one>
-        <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select">
+        <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select" lazy="false">
             <column name="SECCIUDAD" not-null="true" />
         </many-to-one>
-        <many-to-one name="tipoIdentificacion" class="com.pasantia.entidades.TipoIdentificacion" fetch="select">
+        <many-to-one name="tipoIdentificacion" class="com.pasantia.entidades.TipoIdentificacion" fetch="select" lazy="false">
             <column name="SECTIPO_IDENTIFICACION" not-null="true" />
         </many-to-one>
-        <many-to-one name="sexo" class="com.pasantia.entidades.Sexo" fetch="select">
+        <many-to-one name="sexo" class="com.pasantia.entidades.Sexo" fetch="select" lazy="false">
             <column name="SECSEXO" not-null="true" />
         </many-to-one>
-        <many-to-one name="tipoPersona" class="com.pasantia.entidades.TipoPersona" fetch="select">
+        <many-to-one name="tipoPersona" class="com.pasantia.entidades.TipoPersona" fetch="select" lazy="false">
             <column name="SECTIPO_PERSONA" not-null="true" />
         </many-to-one>
         <property name="pnombre" type="string">

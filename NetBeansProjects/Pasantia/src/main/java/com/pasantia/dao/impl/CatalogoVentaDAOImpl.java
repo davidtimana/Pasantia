@@ -38,5 +38,24 @@ public class CatalogoVentaDAOImpl implements CatalogoVentaDAO{
 
         return catalogos;
     }
+
+    @Override
+    public CatalogoVenta buscarCatalogoxId(Integer id) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        CatalogoVenta catalogo=null;
+        try{
+            Query q = session.createQuery("from CatalogoVenta s WHERE s.idCatalogoVenta=:id");
+            q.setInteger("id", id);
+            catalogo = (CatalogoVenta)q.uniqueResult();
+        }catch(Exception e){
+            catalogo=null;
+            System.out.println("Error al buscarCatalogoxId :"+e.getMessage());
+            session.beginTransaction().rollback();
+        }
+        finally{
+            session.close();
+        }
+        return catalogo;
+    }
     
 }

@@ -17,5 +17,6 @@ import javax.ejb.Local;
 public interface CatalogoVentaDAO {
     
     public List<CatalogoVenta> buscarCatalogos();
+    public CatalogoVenta buscarCatalogoxId(Integer id);
     
 }

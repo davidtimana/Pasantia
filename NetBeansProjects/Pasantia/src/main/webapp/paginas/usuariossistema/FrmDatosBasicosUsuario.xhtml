@@ -167,13 +167,25 @@ and open the template in the editor.
 
             <p:tab title="Geolocalización Usuario" >
 
-                <h:panelGrid columns="1" cellpadding="2" style="width: 100%;text-align: center" title="Busque la direccion de su residencia actual." >
-                    <p:outputLabel value="Seleccione la ubicacion de la vivienda actual:  *" style="#{gestionarUsuarioBean.estErrMapa}" id="lblmapPersonas"/>
-                    <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
-                            style="width:600px;height:400px"  streetView="true" >                         
-                        <p:ajax event="pointSelect" listener="#{gestionarUsuarioBean.puntoSeleccionadoMapa}" />
-                    </p:gmap>   
-                </h:panelGrid>
+
+                <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" id="geomapa" >                                    
+                    <p:outputLabel value="Latitud: " style="font-weight:bold;"/>
+                    <p:outputLabel value="#{gestionarUsuarioBean.latitud}" id="lbllan"/>
+
+                    <p:outputLabel value="Longitud " style="font-weight:bold;"/>
+                    <p:outputLabel value="#{gestionarUsuarioBean.longitud}" id="lbllon"/>               
+
+                    <f:facet name="footer">  
+                        <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
+                                style="width:600px;height:400px"  streetView="true" model="#{gestionarUsuarioBean.modMapa}" >                         
+                            <p:ajax event="pointSelect" listener="#{gestionarUsuarioBean.puntoSeleccionadoMapa}" />
+                        </p:gmap>   
+                    </f:facet>
+
+                </p:panelGrid>
+                <p:tooltip for="geomapa" value="Seleccione su domicilio en el mapa." />
+                    
+                
 
             </p:tab> 
 

@@ -37,7 +37,10 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 /**
  *
@@ -56,9 +59,9 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private Cargo cargo;
     private CatalogoVenta catalogoVenta;
     private Persona persona;
-    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir;
+    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir,fotoSubida;
     private String estErrDepartamento, estErrCiudad, estErrNombre, estErrapellido, estErrsexo, estErrtipoidenti, estErrfecha, estErrtelefono,
-            estErrmovil, estErremail, estErrPais, stErrbarrio, stErrdireccion, estErrMapa;
+            estErrmovil, estErremail, estErrPais, stErrbarrio, stErrdireccion, estErrMapa;    
     private Double latitud, longitud;
     private LatLng coordenadas;
     private Integer contadorMapa;
@@ -69,6 +72,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private String ocultarCargo;
     private String ocultarCatalogo;
     private String urlTemporal;
+    private MapModel modMapa;    
+    
     private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
     @Inject
     DepartamentoDAO departamentoDAO;
@@ -114,7 +119,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("paso1");
         Utilidad.actualizarElemento("paso2");
         if(contadorMapa!=0){
-            zoom=zoom+4;
+            zoom=zoom+3;
         }
        return event.getNewStep();
     }
@@ -355,6 +360,13 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void puntoSeleccionadoMapa(PointSelectEvent event) {
         coordenadas = event.getLatLng();
         contadorMapa++;
+        modMapa.addOverlay(new Marker(coordenadas));
+        latitud=coordenadas.getLat();
+        longitud=coordenadas.getLng();
+        zoom=zoom+3;
+        Utilidad.actualizarElemento("mapPersonas");
+        Utilidad.actualizarElemento("lbllan");
+        Utilidad.actualizarElemento("lbllon");
         logger.log(Level.INFO, "la longitud y la latitud seleccionada es la siguiente{0} y la longitud es--> {1}", new Object[]{coordenadas.getLat(), coordenadas.getLng()});        
 
     }
@@ -421,6 +433,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
 
     public void cancelarSubirFoto() {
+        fotoSubida=false;
         abrirSubir = false;
         Utilidad.actualizarElemento("dlgsubirFoto");
         nombre_foto = "";
@@ -428,7 +441,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
 
     public void fincargaFoto(FileUploadEvent event) throws IOException, InterruptedException {
-
+        
         logger.info("**************Iniciamos seleccion foto");
         nombre_foto = event.getFile().getFileName();
         fotoSeleccionada = event.getFile().getInputstream();
@@ -449,7 +462,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
             
         }
         Utilidad.mensajeInfo("SICOVI", "Foto: " + nombre_foto + ". Cargada Correctamente");
-        
+        fotoSubida=true;
         logger.info("**************Fin seleccion foto");
         abrirSubir = false;
         Utilidad.actualizarElemento("dlgsubirFoto");        
@@ -459,18 +472,18 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Thread.sleep(4000);
         Utilidad.actualizarElemento("imgfotoCargar");
 
-    }
-    
-    
+    }  
 
     public void cambiarAvatar() {
         asignarSexo();
-        if (sexoSeleccionado == 1) {
-            rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
-        } else {
-            rutaFotoCargar = "../../FotosUsuarios/sinfotom.jpeg";
+        if (!fotoSubida) {
+            if (sexoSeleccionado == 1) {
+                rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
+            } else {
+                rutaFotoCargar = "../../FotosUsuarios/sinfotom.jpeg";
+            }
+            Utilidad.actualizarElemento("imgfotoCargar");
         }
-        Utilidad.actualizarElemento("imgfotoCargar");
     }
 
     public void ocultarCombos() {
@@ -596,6 +609,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         ocultarCargo = "display:none";
         ocultarCatalogo = "display:none";
         urlTemporal="/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        fotoSubida=false;
+        modMapa=new DefaultMapModel();
 
     }
 
@@ -966,6 +981,26 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setUrlTemporal(String urlTemporal) {
         this.urlTemporal = urlTemporal;
     }
+
+    public Boolean getFotoSubida() {
+        return fotoSubida;
+    }
+
+    public void setFotoSubida(Boolean fotoSubida) {
+        this.fotoSubida = fotoSubida;
+    }
+
+    public MapModel getModMapa() {
+        return modMapa;
+    }
+
+    public void setModMapa(MapModel modMapa) {
+        this.modMapa = modMapa;
+    }
+    
+    
+    
+    
     
     
 }

@@ -18,7 +18,7 @@ and open the template in the editor.
             <p:selectOneMenu id="cmbTipoPersona" value="#{gestionarUsuarioBean.tipoPersonaSeleccionado}"  
                              validatorMessage="Debe seleccionar Tipo Persona" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  
-                             style="width: 40%;" >  
+                             style="width: 40%;#{gestionarUsuarioBean.estErrTipPerson}" >  
                 <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                 <f:selectItems value="#{gestionarUsuarioBean.comboTipoPersonas}"  />                        
                 <p:ajax listener="#{gestionarUsuarioBean.ocultarCombos()}" />

@@ -61,7 +61,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private Persona persona;
     private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir,fotoSubida;
     private String estErrDepartamento, estErrCiudad, estErrNombre, estErrapellido, estErrsexo, estErrtipoidenti, estErrfecha, estErrtelefono,
-            estErrmovil, estErremail, estErrPais, stErrbarrio, stErrdireccion, estErrMapa;    
+            estErrmovil, estErremail, estErrPais, stErrbarrio, stErrdireccion, estErrMapa,estErrTipPerson,estErrCargo,estErrCatalogo;    
     private Double latitud, longitud;
     private LatLng coordenadas;
     private Integer contadorMapa;
@@ -124,33 +124,18 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
        return event.getNewStep();
     }
     
-    public void guardar(){
-//        String res="";
-//        try{
-//            persona.setPnombre("lskdfjskl");
-//        }catch(ExcepcionPersona e){
-//            res=e.getMessage();
-//        }
+    public void guardar() {
+        if (validarDatos()) {
+            logger.info("Validacion correcta");
+        } else {
+            logger.info("Validacion incorrecta");
+        }
     }
 
-    public String validarDatos(FlowEvent event) {
-        String pestañaActual = event.getOldStep();
-        String pestañaSiguiente = event.getNewStep();
-        logger.log(Level.INFO, "pestaña donde estoy:{0}", pestañaActual);
-        logger.log(Level.INFO, "Siguiente pestaña:{0}", pestañaSiguiente);
-        logger.info("Validando datos");
-        String pestañaRetornar = "";
+    public Boolean validarDatos() {    
 
-        persona.setPnombre(persona.getPnombre().trim());
-        persona.setPapellido(persona.getPapellido().trim());
-        persona.setTelefono(persona.getTelefono().trim());
-        persona.setMovil(persona.getMovil().trim());
-        persona.setBarrio(persona.getBarrio().trim());
-        persona.setDireccion(persona.getDireccion().trim());
-
-
-        //Valido que este en la primera pestaña del wizard
-        if (pestañaActual.equals("gestionusuarios")) {
+              Boolean result=false;
+        
 
             //Valido el primer nombre de la persona
             if (Utilidad.cadenaVacia(persona.getPnombre())) {
@@ -158,7 +143,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                 Utilidad.actualizarElemento("txtpnombre");
                 Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Nombre requerido.");
                 logger.info("****************Error...Primer Nombre vacio");
-                pestañaRetornar = "gestionusuarios";
+                result=false;
 
             } else {
                 estErrNombre = "";
@@ -170,32 +155,30 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                     Utilidad.actualizarElemento("txtpapellido");
                     Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Primer Apellido requerido.");
                     logger.info("****************Error...Primer Apellido vacio");
-                    pestañaRetornar = "gestionusuarios";
+                    result=false;
                 } else {
                     estErrapellido = "";
                     Utilidad.actualizarElemento("txtpapellido");
 
                     //Valido que se haiga selecionado algun sexo
-                    if (sexoSeleccionado == null) {
+                    if (sexo==null) {
                         estErrsexo = Utilidad.estilosErrorInput();
                         Utilidad.actualizarElemento("cmbsexper");
                         Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Selección Sexo requerido.");
                         logger.info("****************Error...Sexo no seleccionado");
-                        pestañaRetornar = "gestionusuarios";
-                    } else {
-                        sexo = sexoDAO.buscarSexoxId(sexoSeleccionado);
+                        result=false;
+                    } else {                        
                         estErrsexo = "";
                         Utilidad.actualizarElemento("cmbsexper");
 
                         //Valido que se haiga seleccionado algun tipo de identificacion
-                        if (tipoIdentificacionSeleccionada == null) {
+                        if (tipoIdentificacion == null) {
                             estErrtipoidenti = Utilidad.estilosErrorInput();
                             Utilidad.actualizarElemento("cmbTipIdenti");
                             Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Selección Tipo Identificación requerido.");
                             logger.info("****************Error...Tipo Identificació no seleccionado");
-                            pestañaRetornar = "gestionusuarios";
-                        } else {
-                            tipoIdentificacion = tipoIdentificacionDAO.buscarTipoIdentificacionxId(tipoIdentificacionSeleccionada);
+                            result=false;
+                        } else {                            
                             estErrtipoidenti = "";
 
                             //Valido que se haiga seleccionado alguna fecha de nacimiento
@@ -205,7 +188,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                 Utilidad.actualizarElemento("txtfechanacimiento");
                                 Utilidad.mensajeError("SICOVI", "Sección Datos Personales Usuario: Selección Fecha Nacimiento requerida.");
                                 logger.info("****************Error...Fecha Nacimiento no seleccionada");
-                                pestañaRetornar = "gestionusuarios";
+                                result=false;
                             } else {
 
 
@@ -218,7 +201,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                     Utilidad.actualizarElemento("txttelefonoper");
                                     Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: Telefono requerido.");
                                     logger.info("****************Error...Telefono vacio");
-                                    pestañaRetornar = "gestionusuarios";
+                                    result=false;
                                 } else {
                                     estErrtelefono = "";
                                     Utilidad.actualizarElemento("txttelefonoper");
@@ -229,7 +212,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                         Utilidad.actualizarElemento("txtmovilper");
                                         Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: Telefono Movil requerido.");
                                         logger.info("****************Error...Telefono Movil vacio");
-                                        pestañaRetornar = "gestionusuarios";
+                                        result=false;
                                     } else {
                                         estErrmovil = "";
                                         Utilidad.actualizarElemento("txtmovilper");
@@ -240,7 +223,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                             Utilidad.actualizarElemento("txtemailper");
                                             Utilidad.mensajeError("SICOVI", "Sección Datos De Contacto Usuario: E-mail requerido.");
                                             logger.info("****************Error...E-maill vacio");
-                                            pestañaRetornar = "gestionusuarios";
+                                            result=false;
 
                                         } else {
                                             estErremail = Utilidad.estilosErrorInput();
@@ -252,7 +235,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                 Utilidad.actualizarElemento("cmbPaisPersona");
                                                 Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Selección País requerido.");
                                                 logger.info("****************Error...seleccion pais vacio");
-                                                pestañaRetornar = "gestionusuarios";
+                                                result=false;
                                             } else {
                                                 estErrPais = "";
                                                 Utilidad.actualizarElemento("cmbPaisPersona");
@@ -263,20 +246,20 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                     Utilidad.actualizarElemento("cmbdepartamentobper");
                                                     Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Selección Departamento requerido.");
                                                     logger.info("****************Error...seleccion departamento vacio");
-                                                    pestañaRetornar = "gestionusuarios";
+                                                    result=false;
                                                 } else {
                                                     estErrDepartamento = "";
                                                     Utilidad.actualizarElemento("cmbdepartamentobper");
 
                                                     //Valido la ciudad seleccionada
-                                                    if (ciudadSeleccionado == null) {
+                                                    if (ciudad == null) {
                                                         estErrCiudad = Utilidad.estilosErrorInput();
                                                         Utilidad.actualizarElemento("cmbciudadbper");
                                                         Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Selección Ciudad requerida.");
                                                         logger.info("****************Error...seleccion ciudad vacio");
-                                                        pestañaRetornar = "gestionusuarios";
+                                                        result=false;
                                                     } else {
-                                                        ciudad = ciudadDAO.buscarxid(ciudadSeleccionado);
+                                                        
                                                         estErrCiudad = "";
                                                         Utilidad.actualizarElemento("cmbciudadbper");
 
@@ -286,7 +269,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                             Utilidad.actualizarElemento("txtbarrioper");
                                                             Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Barrio requerida.");
                                                             logger.info("****************Error...barrio vacio");
-                                                            pestañaRetornar = "gestionusuarios";
+                                                            result=false;
                                                         } else {
                                                             stErrbarrio = "";
                                                             Utilidad.actualizarElemento("txtbarrioper");
@@ -297,7 +280,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                                 Utilidad.actualizarElemento("txtdireccionper");
                                                                 Utilidad.mensajeError("SICOVI", "Sección Domicilio Usuario: Dirección requerida.");
                                                                 logger.info("****************Error...Dirección vacio");
-                                                                pestañaRetornar = "gestionusuarios";
+                                                                result=false;
                                                             } else {
                                                                 stErrdireccion = "";
                                                                 Utilidad.actualizarElemento("txtdireccionper");
@@ -308,12 +291,24 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                                                     Utilidad.actualizarElemento("lblmapPersonas");
                                                                     Utilidad.mensajeError("SICOVI", "Sección Geolocalización Usuario: Seleccion de la direccion en el mapa requerida.");
                                                                     logger.info("****************Error...mapa vacio");
-                                                                    pestañaRetornar = "gestionusuarios";
+                                                                    result=false;
                                                                 } else {
                                                                     estErrMapa = "";
-                                                                    Utilidad.actualizarElemento("lblmapPersonas");
+                                                                    Utilidad.actualizarElemento("lblmapPersonas");                             
                                                                     logger.info("****************Aqui validamos el mapa");
-                                                                    pestañaRetornar = "confiusuario";
+                                                                    if (tipoPersona == null) {
+                                                                        estErrTipPerson = Utilidad.estilosErrorInput();
+                                                                        Utilidad.actualizarElemento("cmbTipoPersona");
+                                                                        Utilidad.mensajeError("SICOVI", "Configuración Usuario - Paso 2: Seleccion del tipo de persona requerido.");
+                                                                        logger.info("****************Error...tipo persona vacio");
+                                                                        result = false;
+                                                                    } else {
+                                                                        estErrTipPerson = "";
+                                                                        Utilidad.actualizarElemento("cmbTipoPersona");
+                                                                        result = true;
+                                                                    }
+                                                                    
+                
                                                                 }
 
 
@@ -336,22 +331,11 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                 }
             }
 
-        } else {
-            if (pestañaActual.equals("confiusuario")) {
-                logger.info("Estoy en la pestaña confiusuario");
-                pestañaRetornar = "comfirmar";
-            } else {
-                if(pestañaActual.equals("comfirmar")){
-                    pestañaRetornar = "confiusuario";
-                }else{
-                    pestañaRetornar=event.getNewStep();
-                }
-            }
-        }
-
-        logger.log(Level.INFO, "Voyr a retornar a la siguiente pesta\u00f1a--> {0}", pestañaRetornar);
         
-        return pestañaRetornar; 
+
+        
+        
+        return result; 
 
 
 
@@ -596,6 +580,9 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         stErrbarrio = "";
         stErrdireccion = "";
         estErrMapa = "";
+        estErrTipPerson="";
+        estErrCargo="";
+        estErrCatalogo="";
         zoom = 6;
         latitud = 4.599047;
         longitud = -74.080917;
@@ -997,6 +984,32 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setModMapa(MapModel modMapa) {
         this.modMapa = modMapa;
     }
+
+    public String getEstErrTipPerson() {
+        return estErrTipPerson;
+    }
+
+    public void setEstErrTipPerson(String estErrTipPerson) {
+        this.estErrTipPerson = estErrTipPerson;
+    }
+
+    public String getEstErrCargo() {
+        return estErrCargo;
+    }
+
+    public void setEstErrCargo(String estErrCargo) {
+        this.estErrCargo = estErrCargo;
+    }
+
+    public String getEstErrCatalogo() {
+        return estErrCatalogo;
+    }
+
+    public void setEstErrCatalogo(String estErrCatalogo) {
+        this.estErrCatalogo = estErrCatalogo;
+    }
+    
+    
     
     
     

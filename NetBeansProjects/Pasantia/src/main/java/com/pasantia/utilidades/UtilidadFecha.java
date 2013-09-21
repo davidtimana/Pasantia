@@ -1,4 +1,4 @@
-package com.hds.vpm.comun.util;
+package com.pasantia.utilidades;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

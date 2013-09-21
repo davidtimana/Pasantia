@@ -1,4 +1,4 @@
-package com.hds.vpm.comun.util;
+package com.pasantia.utilidades;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.List;
  * Clase de utilidad que re&uacute;ne un conjunto de funcionalidades comunes
  * para trabajar con numeros.
  * 
- * @author Fredy Dorado
+ * @author David Timana
  * 
- * @version 25/06/2013
+ * @version 20/09/2013
  * 
  */
 public final class UtilidadNumero {
@@ -24,7 +24,7 @@ public final class UtilidadNumero {
 	 * Genera un listado de numeros consecutivos desde un rango, incremento y
 	 * orden dado
 	 * 
-	 * @author Fredy Dorado
+	 * @author David Timana
 	 * 
 	 * @param numeroInicio
 	 *            n&uacute;mero inicio de la secuencia
@@ -55,5 +55,18 @@ public final class UtilidadNumero {
 
 		return listaNumeros;
 	}
+        
+        
+        /**
+	 * Genera un numero aleatorio de 1 a 100000000
+	 * 
+	 * @author David Timana
+	 * 
+	 
+	 * @return Numero
+	 */
+        public static Integer generarNumerosAleatorios(){
+            return (int)(Math.random()*100000000 + 1);
+        }
 
 }

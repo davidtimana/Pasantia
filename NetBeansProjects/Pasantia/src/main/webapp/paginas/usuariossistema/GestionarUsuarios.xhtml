@@ -26,32 +26,37 @@
 
         <p:spacer width="1%" height="2%" />
 
-        <h:form >
+        <h:form id="gestionusuarios">
             <p:wizard  nextLabel="Siguiente" backLabel="Regresar"  flowListener="#{gestionarUsuarioBean.navegarWizard}" >  
 
                 <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">                    
-                    <h:form id="frmdatosbasicosusuario">
-                        <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
-                    </h:form>
+
+                    <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
+
 
 
                 </p:tab>  
                 <p:tab title="Configuración Usuario - Paso 2" id="confiusuario" >  
-                    <h:form id="frmconfigurarusuario">
+
                     <ui:include src="FrmconfigurarUsuario.xhtml" /> 
-                    </h:form>
+
                 </p:tab>  
                 <p:tab title="Comfirmar" id="comfirmar">  
-                    <h:form id="frmcomfirmarusuario">
+
                     <ui:include src="ComfirmarUsuario.xhtml" /> 
-                    </h:form>
+
                 </p:tab>  
 
             </p:wizard>
-      
 
-
+            <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" />            
+                <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-cancel" />            
+            </p:panelGrid>
         </h:form>
+
+
+
     </ui:define>
 
 </ui:composition>

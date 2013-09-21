@@ -1,4 +1,4 @@
-package com.hds.vpm.comun.util;
+package com.pasantia.utilidades;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
  * Clase de utilidad que re&uacute;ne un conjunto de funcionalidades comunes
  * para tareas asociadas a la parte Web.
  * 
- * @author Fredy Dorado
+ * @author David Timana
  * 
- * @version 24/04/2013
+ * @version 20/09/2013
  * 
  */
 public final class UtilidadWeb {
@@ -29,7 +29,7 @@ public final class UtilidadWeb {
 	 * Retorna la ruta de la aplicacion siguiendo la estructura
 	 * http://IP:PUERTO/contexto. Por ejemplo http://192.168.0.10:8080/vpm
 	 * 
-	 * @author Fredy Dorado
+	 * @author David Timana
 	 * 
 	 * @param request objeto de tipo HttpServletRequest
 	 * 
@@ -45,7 +45,7 @@ public final class UtilidadWeb {
 	 * Retorna la ruta de la aplicacion siguiendo la estructura
 	 * http://IP:PUERTO/contexto. Por ejemplo http://192.168.0.10:8080/vpm
 	 * 
-	 * @author Fredy Dorado
+	 * @author David Timana
 	 * 
 	 * @return cadena con la ruta del servidor
 	 */
@@ -76,7 +76,7 @@ public final class UtilidadWeb {
 	 *            extension del archivo a enviar
 	 * @return true si todo ocurre bien y false en caso contrario
 	 * 
-	 * @author Fredy Dorado
+	 * @author David Timana
 	 */
 	public static boolean descargarArchivo(HttpServletRequest request,
 			HttpServletResponse response, String tipoMIME,

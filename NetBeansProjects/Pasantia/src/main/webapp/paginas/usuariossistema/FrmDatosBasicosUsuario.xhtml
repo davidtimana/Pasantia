@@ -168,7 +168,7 @@ and open the template in the editor.
             <p:tab title="Geolocalización Usuario" >
 
 
-                <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" id="geomapa" >                                    
+                <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;#{gestionarUsuarioBean.estErrMapa}" id="geomapa" >                                    
                     <p:outputLabel value="Latitud: " style="font-weight:bold;"/>
                     <p:outputLabel value="#{gestionarUsuarioBean.latitud}" id="lbllan"/>
 

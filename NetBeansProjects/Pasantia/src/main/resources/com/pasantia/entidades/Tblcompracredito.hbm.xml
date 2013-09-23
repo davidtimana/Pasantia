@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblcompracredito" table="tblcompracredito" catalog="CasinoPasantia">
         <id name="secompracredito" type="java.lang.Integer">
             <column name="SECOMPRACREDITO" />
             <generator class="identity" />
         </id>
-        <many-to-one name="tblcompra" class="com.pasantia.entidades.Tblcompra" fetch="select">
+        <many-to-one name="tblcompra" class="com.pasantia.entidades.Tblcompra" fetch="select" lazy="false">
             <column name="SECCOMPRA" not-null="true" />
         </many-to-one>
         <property name="fechaPago" type="date">
             <column name="FECHA_PAGO" length="10" not-null="true" />
         </property>
-        <property name="pagado" type="int">
+        <property name="pagado" type="boolean">
             <column name="PAGADO" not-null="true" />
         </property>
     </class>

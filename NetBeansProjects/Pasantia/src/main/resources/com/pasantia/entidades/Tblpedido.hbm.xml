@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblpedido" table="tblpedido" catalog="CasinoPasantia">
         <id name="secpedido" type="java.lang.Integer">
             <column name="SECPEDIDO" />
             <generator class="identity" />
         </id>
-        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select">
+        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select" lazy="false">
             <column name="SECCLIENTE" not-null="true" />
         </many-to-one>
-        <many-to-one name="tblproveedor" class="com.pasantia.entidades.Tblproveedor" fetch="select">
+        <many-to-one name="tblproveedor" class="com.pasantia.entidades.Tblproveedor" fetch="select" lazy="false">
             <column name="SECPROVEEDOR" not-null="true" />
         </many-to-one>
         <property name="totalpedido" type="long">
@@ -26,6 +26,12 @@
         <property name="observacion" type="string">
             <column name="OBSERVACION" length="250" />
         </property>
+        <set name="tblentregapedidos" inverse="true">
+            <key>
+                <column name="SECPEDIDO" not-null="true" />
+            </key>
+            <one-to-many class="com.pasantia.entidades.Tblentregapedido" />
+        </set>
         <set name="tbldetallepedidos" inverse="true">
             <key>
                 <column name="SECPEDIDO" not-null="true" />

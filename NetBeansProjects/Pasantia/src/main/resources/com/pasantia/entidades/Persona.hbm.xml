@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Persona" table="Persona" catalog="CasinoPasantia">
         <id name="idTblpersona" type="java.lang.Integer">
@@ -11,7 +11,7 @@
         <many-to-one name="catalogoVenta" class="com.pasantia.entidades.CatalogoVenta" fetch="select" lazy="false">
             <column name="SECCATALOGO_VENTA" />
         </many-to-one>
-        <many-to-one name="cargo" class="com.pasantia.entidades.Cargo" fetch="select">
+        <many-to-one name="cargo" class="com.pasantia.entidades.Cargo" fetch="select" lazy="false">
             <column name="SECCARGO" />
         </many-to-one>
         <many-to-one name="ciudad" class="com.pasantia.entidades.Ciudad" fetch="select" lazy="false">
@@ -39,7 +39,7 @@
             <column name="SAPELLIDO" length="45" />
         </property>
         <property name="cedula" type="string">
-            <column name="CEDULA" length="45" not-null="true" />
+            <column name="CEDULA" length="45" not-null="true" unique="true" />
         </property>
         <property name="fechaNacimiento" type="date">
             <column name="FECHA_NACIMIENTO" length="10" not-null="true" />
@@ -62,6 +62,12 @@
         <property name="barrio" type="string">
             <column name="BARRIO" length="45" not-null="true" />
         </property>
+        <property name="latitud" type="double">
+            <column name="LATITUD" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="longitud" type="double">
+            <column name="LONGITUD" precision="22" scale="0" not-null="true" />
+        </property>
         <set name="tblventasForSecvendedor" inverse="true">
             <key>
                 <column name="SECVENDEDOR" not-null="true" />
@@ -76,7 +82,7 @@
         </set>
         <set name="usuarios" inverse="true">
             <key>
-                <column name="secpersona" not-null="true" />
+                <column name="secpersona" not-null="true" unique="true" />
             </key>
             <one-to-many class="com.pasantia.entidades.Usuario" />
         </set>

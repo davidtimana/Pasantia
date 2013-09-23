@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Usuario" table="Usuario" catalog="CasinoPasantia">
         <id name="idUsuario" type="java.lang.Integer">
             <column name="idUsuario" />
             <generator class="identity" />
         </id>
-        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select">
-            <column name="secpersona" not-null="true" />
+        <many-to-one name="persona" class="com.pasantia.entidades.Persona" fetch="select" lazy="false">
+            <column name="secpersona" not-null="true" unique="true" />
         </many-to-one>
-        <many-to-one name="rol" class="com.pasantia.entidades.Rol" fetch="select">
+        <many-to-one name="rol" class="com.pasantia.entidades.Rol" fetch="select" lazy="false">
             <column name="secrol" not-null="true" />
         </many-to-one>
         <property name="clave" type="string">
-            <column name="clave" length="45" not-null="true" />
+            <column name="clave" length="45" not-null="true" unique="true" />
         </property>
         <property name="nomusuario" type="string">
-            <column name="nomusuario" length="45" not-null="true" />
+            <column name="nomusuario" length="45" not-null="true" unique="true" />
         </property>
         <property name="activo" type="boolean">
             <column name="activo" not-null="true" />
         </property>
-        <property name="sesion" type="string">
-            <column name="sesion" length="45" not-null="true" />
+        <property name="sesion" type="boolean">
+            <column name="sesion" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

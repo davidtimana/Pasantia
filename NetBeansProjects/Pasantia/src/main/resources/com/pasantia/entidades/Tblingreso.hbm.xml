@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblingreso" table="tblingreso" catalog="CasinoPasantia">
         <id name="secingreso" type="java.lang.Integer">
             <column name="SECINGRESO" />
             <generator class="identity" />
         </id>
-        <many-to-one name="tbltipoingreso" class="com.pasantia.entidades.Tbltipoingreso" fetch="select">
+        <many-to-one name="tbltipoingreso" class="com.pasantia.entidades.Tbltipoingreso" fetch="select" lazy="false">
             <column name="SECTIPOINGRESO" not-null="true" />
         </many-to-one>
-        <many-to-one name="tblventa" class="com.pasantia.entidades.Tblventa" fetch="select">
+        <many-to-one name="tblventa" class="com.pasantia.entidades.Tblventa" fetch="select" lazy="false">
             <column name="SECVENTA" not-null="true" />
         </many-to-one>
         <property name="fecha" type="date">

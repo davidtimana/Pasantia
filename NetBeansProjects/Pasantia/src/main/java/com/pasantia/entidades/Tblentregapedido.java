@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
+// Generated 23/09/2013 01:53:37 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +27,7 @@ public class Tblentregapedido  implements java.io.Serializable {
 
 
      private Integer secentregapedido;
+     private Tblpedido tblpedido;
      private Boolean lunes;
      private Boolean martes;
      private Boolean miercoles;
@@ -32,17 +35,17 @@ public class Tblentregapedido  implements java.io.Serializable {
      private Boolean viernes;
      private Boolean sabado;
      private Boolean domingo;
-     private boolean secpedido;
      private Set tblproveedors = new HashSet(0);
 
     public Tblentregapedido() {
     }
 
 	
-    public Tblentregapedido(boolean secpedido) {
-        this.secpedido = secpedido;
+    public Tblentregapedido(Tblpedido tblpedido) {
+        this.tblpedido = tblpedido;
     }
-    public Tblentregapedido(Boolean lunes, Boolean martes, Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado, Boolean domingo, boolean secpedido, Set tblproveedors) {
+    public Tblentregapedido(Tblpedido tblpedido, Boolean lunes, Boolean martes, Boolean miercoles, Boolean jueves, Boolean viernes, Boolean sabado, Boolean domingo, Set tblproveedors) {
+       this.tblpedido = tblpedido;
        this.lunes = lunes;
        this.martes = martes;
        this.miercoles = miercoles;
@@ -50,7 +53,6 @@ public class Tblentregapedido  implements java.io.Serializable {
        this.viernes = viernes;
        this.sabado = sabado;
        this.domingo = domingo;
-       this.secpedido = secpedido;
        this.tblproveedors = tblproveedors;
     }
    
@@ -63,6 +65,15 @@ public class Tblentregapedido  implements java.io.Serializable {
     
     public void setSecentregapedido(Integer secentregapedido) {
         this.secentregapedido = secentregapedido;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="SECPEDIDO", nullable=false)
+    public Tblpedido getTblpedido() {
+        return this.tblpedido;
+    }
+    
+    public void setTblpedido(Tblpedido tblpedido) {
+        this.tblpedido = tblpedido;
     }
     
     @Column(name="LUNES")
@@ -126,15 +137,6 @@ public class Tblentregapedido  implements java.io.Serializable {
     
     public void setDomingo(Boolean domingo) {
         this.domingo = domingo;
-    }
-    
-    @Column(name="SECPEDIDO", nullable=false)
-    public boolean isSecpedido() {
-        return this.secpedido;
-    }
-    
-    public void setSecpedido(boolean secpedido) {
-        this.secpedido = secpedido;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="tblentregapedido")
     public Set getTblproveedors() {

@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblentregapedido" table="tblentregapedido" catalog="CasinoPasantia">
         <id name="secentregapedido" type="java.lang.Integer">
             <column name="SECENTREGAPEDIDO" />
             <generator class="identity" />
         </id>
+        <many-to-one name="tblpedido" class="com.pasantia.entidades.Tblpedido" fetch="select" lazy="false">
+            <column name="SECPEDIDO" not-null="true" />
+        </many-to-one>
         <property name="lunes" type="java.lang.Boolean">
             <column name="LUNES" />
         </property>
@@ -28,9 +31,6 @@
         </property>
         <property name="domingo" type="java.lang.Boolean">
             <column name="DOMINGO" />
-        </property>
-        <property name="secpedido" type="boolean">
-            <column name="SECPEDIDO" not-null="true" />
         </property>
         <set name="tblproveedors" inverse="true">
             <key>

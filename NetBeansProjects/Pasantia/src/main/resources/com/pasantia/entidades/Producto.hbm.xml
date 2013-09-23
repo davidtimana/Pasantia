@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Producto" table="Producto" catalog="CasinoPasantia">
         <id name="idProducto" type="java.lang.Integer">
             <column name="idProducto" />
             <generator class="identity" />
         </id>
-        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select">
+        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select" lazy="false">
             <column name="fk_id_casino" not-null="true" />
         </many-to-one>
-        <many-to-one name="categoria" class="com.pasantia.entidades.Categoria" fetch="select">
+        <many-to-one name="categoria" class="com.pasantia.entidades.Categoria" fetch="select" lazy="false">
             <column name="fk_id_categoria" not-null="true" />
         </many-to-one>
-        <many-to-one name="precioCompra" class="com.pasantia.entidades.PrecioCompra" fetch="select">
+        <many-to-one name="precioCompra" class="com.pasantia.entidades.PrecioCompra" fetch="select" lazy="false">
             <column name="fk_id_precio_compra" not-null="true" />
         </many-to-one>
-        <many-to-one name="ubicacion" class="com.pasantia.entidades.Ubicacion" fetch="select">
+        <many-to-one name="ubicacion" class="com.pasantia.entidades.Ubicacion" fetch="select" lazy="false">
             <column name="fk_id_ubicacion" not-null="true" />
         </many-to-one>
-        <many-to-one name="tblunidad" class="com.pasantia.entidades.Tblunidad" fetch="select">
+        <many-to-one name="tblunidad" class="com.pasantia.entidades.Tblunidad" fetch="select" lazy="false">
             <column name="secunidad" not-null="true" />
         </many-to-one>
         <property name="descripcion" type="string">

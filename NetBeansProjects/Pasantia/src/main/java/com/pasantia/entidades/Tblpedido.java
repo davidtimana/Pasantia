@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
+// Generated 23/09/2013 01:53:37 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -36,6 +36,7 @@ public class Tblpedido  implements java.io.Serializable {
      private Integer totalCantidad;
      private Date fecha;
      private String observacion;
+     private Set tblentregapedidos = new HashSet(0);
      private Set tbldetallepedidos = new HashSet(0);
 
     public Tblpedido() {
@@ -48,13 +49,14 @@ public class Tblpedido  implements java.io.Serializable {
         this.totalpedido = totalpedido;
         this.fecha = fecha;
     }
-    public Tblpedido(Persona persona, Tblproveedor tblproveedor, long totalpedido, Integer totalCantidad, Date fecha, String observacion, Set tbldetallepedidos) {
+    public Tblpedido(Persona persona, Tblproveedor tblproveedor, long totalpedido, Integer totalCantidad, Date fecha, String observacion, Set tblentregapedidos, Set tbldetallepedidos) {
        this.persona = persona;
        this.tblproveedor = tblproveedor;
        this.totalpedido = totalpedido;
        this.totalCantidad = totalCantidad;
        this.fecha = fecha;
        this.observacion = observacion;
+       this.tblentregapedidos = tblentregapedidos;
        this.tbldetallepedidos = tbldetallepedidos;
     }
    
@@ -121,6 +123,14 @@ public class Tblpedido  implements java.io.Serializable {
     
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="tblpedido")
+    public Set getTblentregapedidos() {
+        return this.tblentregapedidos;
+    }
+    
+    public void setTblentregapedidos(Set tblentregapedidos) {
+        this.tblentregapedidos = tblentregapedidos;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="tblpedido")
     public Set getTbldetallepedidos() {

@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
+// Generated 23/09/2013 01:53:37 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -30,7 +30,7 @@ public class PrecioCompra  implements java.io.Serializable {
      private Integer idPrecioCompra;
      private Date fecha;
      private long precio;
-     private Integer activo;
+     private Boolean activo;
      private Set productos = new HashSet(0);
 
     public PrecioCompra() {
@@ -41,7 +41,7 @@ public class PrecioCompra  implements java.io.Serializable {
         this.fecha = fecha;
         this.precio = precio;
     }
-    public PrecioCompra(Date fecha, long precio, Integer activo, Set productos) {
+    public PrecioCompra(Date fecha, long precio, Boolean activo, Set productos) {
        this.fecha = fecha;
        this.precio = precio;
        this.activo = activo;
@@ -78,11 +78,11 @@ public class PrecioCompra  implements java.io.Serializable {
     }
     
     @Column(name="activo")
-    public Integer getActivo() {
+    public Boolean getActivo() {
         return this.activo;
     }
     
-    public void setActivo(Integer activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="precioCompra")

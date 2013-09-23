@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-09-2013 a las 19:39:45
+-- Tiempo de generación: 23-09-2013 a las 14:09:22
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.8
 
@@ -9286,7 +9286,7 @@ CREATE TABLE IF NOT EXISTS `Catalogo_Venta` (
   `idCatalogo_Venta` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idCatalogo_Venta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `Catalogo_Venta`
@@ -12675,7 +12675,7 @@ CREATE TABLE IF NOT EXISTS `DivisionesUbicacion` (
   PRIMARY KEY (`idDivisionesUbicacion`),
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_departamento_idx` (`secdepartamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Volcado de datos para la tabla `DivisionesUbicacion`
@@ -12702,7 +12702,8 @@ INSERT INTO `DivisionesUbicacion` (`idDivisionesUbicacion`, `secdepartamento`, `
 (23, 54, 22),
 (24, 63, 22),
 (25, 66, 22),
-(26, 68, 23);
+(26, 68, 23),
+(27, 88, 10);
 
 -- --------------------------------------------------------
 
@@ -12715,7 +12716,7 @@ CREATE TABLE IF NOT EXISTS `Imagen` (
   `direccion` varchar(100) NOT NULL,
   `titulo` varchar(100) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
-  `principal` int(11) NOT NULL,
+  `principal` tinyint(1) NOT NULL,
   PRIMARY KEY (`secimagen`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -13029,7 +13030,10 @@ CREATE TABLE IF NOT EXISTS `Persona` (
   `BARRIO` varchar(45) NOT NULL,
   `SECCATALOGO_VENTA` int(11) DEFAULT NULL,
   `SECCARGO` int(11) DEFAULT NULL,
+  `LATITUD` double NOT NULL,
+  `LONGITUD` double NOT NULL,
   PRIMARY KEY (`idTBLPERSONA`),
+  UNIQUE KEY `CEDULA_UNIQUE` (`CEDULA`),
   KEY `fk_tipo_persona_idx` (`SECTIPO_PERSONA`),
   KEY `fk_tipo_identificacion_idx` (`SECTIPO_IDENTIFICACION`),
   KEY `fk_sexo_idx` (`SECSEXO`),
@@ -13048,7 +13052,7 @@ CREATE TABLE IF NOT EXISTS `Precio_Compra` (
   `idPrecio_Compra` int(11) NOT NULL AUTO_INCREMENT COMMENT '		',
   `fecha` datetime NOT NULL,
   `precio` decimal(10,0) NOT NULL,
-  `activo` int(11) DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idPrecio_Compra`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encarga de guardar el historial de precios de ' AUTO_INCREMENT=1 ;
 
@@ -13176,7 +13180,7 @@ CREATE TABLE IF NOT EXISTS `TBLCOMPRA` (
 CREATE TABLE IF NOT EXISTS `tblcompracredito` (
   `SECOMPRACREDITO` int(11) NOT NULL AUTO_INCREMENT,
   `FECHA_PAGO` date NOT NULL,
-  `PAGADO` int(11) NOT NULL,
+  `PAGADO` tinyint(1) NOT NULL,
   `SECCOMPRA` int(11) NOT NULL,
   PRIMARY KEY (`SECOMPRACREDITO`),
   KEY `fk_tblcompracredito_1_idx` (`SECCOMPRA`)
@@ -13280,7 +13284,7 @@ CREATE TABLE IF NOT EXISTS `tblentregapedido` (
   `VIERNES` tinyint(1) DEFAULT '0',
   `SABADO` tinyint(1) DEFAULT '0',
   `DOMINGO` tinyint(1) DEFAULT '0',
-  `SECPEDIDO` tinyint(1) NOT NULL DEFAULT '0',
+  `SECPEDIDO` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`SECENTREGAPEDIDO`),
   KEY `FK_PEDIDO_idx` (`SECPEDIDO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -13457,7 +13461,7 @@ CREATE TABLE IF NOT EXISTS `tblvisitapedidos` (
 
 CREATE TABLE IF NOT EXISTS `Tipo_Identificacion` (
   `idTipo_Identificacion` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_tipo_identificacion` varchar(45) DEFAULT NULL,
+  `nombre_tipo_identificacion` varchar(45) NOT NULL,
   PRIMARY KEY (`idTipo_Identificacion`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
@@ -13482,19 +13486,21 @@ CREATE TABLE IF NOT EXISTS `Tipo_Persona` (
   `idTipo_Persona` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_tipo_persona` varchar(45) NOT NULL,
   PRIMARY KEY (`idTipo_Persona`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `Tipo_Persona`
 --
 
 INSERT INTO `Tipo_Persona` (`idTipo_Persona`, `nombre_tipo_persona`) VALUES
-(1, 'Vendedor'),
-(2, 'Cliente'),
+(1, 'Vendedor Casino Interno'),
+(2, 'Cliente Interno'),
 (3, 'Vendedor Proveedor'),
 (4, 'Comandante Casino'),
 (5, 'Comandante Batallon'),
-(6, 'Comandante Division');
+(6, 'Comandante Division'),
+(7, 'Cliente Externo'),
+(8, 'Vendedor Casino Externo');
 
 -- --------------------------------------------------------
 
@@ -13506,14 +13512,14 @@ CREATE TABLE IF NOT EXISTS `Ubicacion` (
   `idUbicacion` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idUbicacion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encargara de guardar informacion de la ubicaci' AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encargara de guardar informacion de la ubicaci' AUTO_INCREMENT=35 ;
 
 --
 -- Volcado de datos para la tabla `Ubicacion`
 --
 
 INSERT INTO `Ubicacion` (`idUbicacion`, `descripcion`) VALUES
-(1, 'BODEGA PRINCIPAL'),
+(1, 'BODEGA PRINCIPALSAD'),
 (2, 'PUNTO DE VENTA'),
 (3, 'BODEGA 1'),
 (4, 'BODEGA 2'),
@@ -13533,13 +13539,15 @@ INSERT INTO `Ubicacion` (`idUbicacion`, `descripcion`) VALUES
 (18, 'PRUEBA NUEVAMENTE'),
 (19, 'PRUEBA MENSAJE'),
 (20, 'PRUEBA'),
-(21, 'PRUEBA MAS'),
+(21, 'PRUEBA MAS D'),
 (22, 'PRUEBA FINAL'),
 (23, 'OTRA PRUEBA MAS'),
 (27, 'PRUEBA 10002'),
 (28, 'PRUEBA10003'),
 (29, 'SDFSASDFS'),
-(31, 'PRUEBA ANCHICO 321');
+(31, 'PRUEBA ANCHICO 321'),
+(33, 'PRUEBA MENSAJE'),
+(34, 'PROBANDO CUY');
 
 -- --------------------------------------------------------
 
@@ -13554,8 +13562,11 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `secpersona` int(11) NOT NULL,
   `secrol` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
-  `sesion` varchar(45) NOT NULL DEFAULT '0',
+  `sesion` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idUsuario`),
+  UNIQUE KEY `clave_UNIQUE` (`clave`),
+  UNIQUE KEY `nomusuario_UNIQUE` (`nomusuario`),
+  UNIQUE KEY `secpersona_UNIQUE` (`secpersona`),
   KEY `fk_rol_idx` (`secrol`),
   KEY `fk_persona_usuario_idx` (`secpersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla que se encarga de manejar la informacion de los usuarios de acceso a la aplicacion*/' AUTO_INCREMENT=1 ;
@@ -13673,6 +13684,12 @@ ALTER TABLE `TBLDETALLE_VENTA`
 ALTER TABLE `tblegreso`
   ADD CONSTRAINT `fk_tblegreso_1` FOREIGN KEY (`SECCOMPRA`) REFERENCES `TBLCOMPRA` (`SECCOMPRA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_tblegreso_2` FOREIGN KEY (`SECTIPOEGRESO`) REFERENCES `tbltipoegreso` (`SECTIPOINGRESO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblentregapedido`
+--
+ALTER TABLE `tblentregapedido`
+  ADD CONSTRAINT `fk_tblentregapedido_1` FOREIGN KEY (`SECPEDIDO`) REFERENCES `tblpedido` (`SECPEDIDO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `tblingreso`

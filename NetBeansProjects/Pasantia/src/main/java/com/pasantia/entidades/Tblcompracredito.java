@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
+// Generated 23/09/2013 01:53:37 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -28,12 +28,12 @@ public class Tblcompracredito  implements java.io.Serializable {
      private Integer secompracredito;
      private Tblcompra tblcompra;
      private Date fechaPago;
-     private int pagado;
+     private boolean pagado;
 
     public Tblcompracredito() {
     }
 
-    public Tblcompracredito(Tblcompra tblcompra, Date fechaPago, int pagado) {
+    public Tblcompracredito(Tblcompra tblcompra, Date fechaPago, boolean pagado) {
        this.tblcompra = tblcompra;
        this.fechaPago = fechaPago;
        this.pagado = pagado;
@@ -69,11 +69,11 @@ public class Tblcompracredito  implements java.io.Serializable {
     }
     
     @Column(name="PAGADO", nullable=false)
-    public int getPagado() {
+    public boolean isPagado() {
         return this.pagado;
     }
     
-    public void setPagado(int pagado) {
+    public void setPagado(boolean pagado) {
         this.pagado = pagado;
     }
 

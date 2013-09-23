@@ -1,5 +1,5 @@
 package com.pasantia.entidades;
-// Generated 10/09/2013 10:40:59 AM by Hibernate Tools 3.2.1.GA
+// Generated 23/09/2013 01:53:37 PM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -23,12 +23,12 @@ public class Imagen  implements java.io.Serializable {
      private String direccion;
      private String titulo;
      private String descripcion;
-     private int principal;
+     private boolean principal;
 
     public Imagen() {
     }
 
-    public Imagen(String direccion, String titulo, String descripcion, int principal) {
+    public Imagen(String direccion, String titulo, String descripcion, boolean principal) {
        this.direccion = direccion;
        this.titulo = titulo;
        this.descripcion = descripcion;
@@ -74,11 +74,11 @@ public class Imagen  implements java.io.Serializable {
     }
     
     @Column(name="principal", nullable=false)
-    public int getPrincipal() {
+    public boolean isPrincipal() {
         return this.principal;
     }
     
-    public void setPrincipal(int principal) {
+    public void setPrincipal(boolean principal) {
         this.principal = principal;
     }
 

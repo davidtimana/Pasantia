@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10/09/2013 10:41:00 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblcompra" table="TBLCOMPRA" catalog="CasinoPasantia">
         <id name="seccompra" type="java.lang.Integer">
             <column name="SECCOMPRA" />
             <generator class="identity" />
         </id>
-        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select">
+        <many-to-one name="casino" class="com.pasantia.entidades.Casino" fetch="select" lazy="false">
             <column name="SECCASINO" not-null="true" />
         </many-to-one>
-        <many-to-one name="tblproveedor" class="com.pasantia.entidades.Tblproveedor" fetch="select">
+        <many-to-one name="tblproveedor" class="com.pasantia.entidades.Tblproveedor" fetch="select" lazy="false">
             <column name="SECPROVEEDOR" not-null="true" />
         </many-to-one>
-        <many-to-one name="tblformaPago" class="com.pasantia.entidades.TblformaPago" fetch="select">
+        <many-to-one name="tblformaPago" class="com.pasantia.entidades.TblformaPago" fetch="select" lazy="false">
             <column name="SECFORMAPAGO" not-null="true" />
         </many-to-one>
         <property name="total" type="java.lang.Long">

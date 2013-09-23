@@ -71,6 +71,13 @@ and open the template in the editor.
                             <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
                             <p:ajax listener="#{gestionarUsuarioBean.asignarTipoIdentificacion()}" />
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="N° Identificación *"  style="#{gestionarUsuarioBean.estErrtipoidenti}" id="lblTipnroIdenti"/>
+                        <p:inputText  value="#{gestionarUsuarioBean.persona.cedula}" style="width: 100%" id="txtnroidentificacion" 
+                                      validatorMessage="N° Identificación: Solo permite Números."
+                                      title="Registre el N° Identificación del usuario."> 
+                            <f:validateRegex pattern="[0-9]+" />
+                        </p:inputText>
 
                         <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="lblfechanacimiento"/>
 

@@ -199,7 +199,7 @@ public class Persona  implements java.io.Serializable {
         this.sapellido = sapellido;
     }
     
-    @Column(name="CEDULA", nullable=false, length=45)
+    @Column(name="CEDULA", nullable=false,unique = true, length=45)
     public String getCedula() {
         return this.cedula;
     }

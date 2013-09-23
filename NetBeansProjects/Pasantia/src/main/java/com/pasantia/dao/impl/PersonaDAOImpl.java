@@ -11,13 +11,13 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author david
+ * @author David Timana
  */
 @Stateless
 public class PersonaDAOImpl  implements PersonaDAO{
 
     @Override
-    public void insertarPersona(Persona persona) {
+    public Boolean insertarPersona(Persona persona) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

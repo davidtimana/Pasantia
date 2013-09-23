@@ -12,13 +12,13 @@
 
 
         <script language="text/javascript">
-      
-      
-          
-            
+
+
+
+
         </script>
 
-      
+
         <title><ui:insert name="titulo"></ui:insert></title>
 
 
@@ -147,20 +147,27 @@
         <h:form id="frmubicacionMapaDivisiones">
             <ui:include src="../paginas/configpuntoventa/UbicacionMapa.xhtml"  />           
         </h:form>
-        
+
         <!-- Formulario asignar departamentos a division -->
         <h:form id="asignarDepartamentosaDivision">
             <ui:include src="../paginas/configpuntoventa/asignarDepartamentosaDivision.xhtml" />
         </h:form>
-        
+
         <!-- Formulario subir fotos de usuario -->
         <h:form id="subirfotoUsuario" enctype="multipart/form-data">
             <ui:include src="../paginas/usuariossistema/SubirFotoUsuario.xhtml" />
         </h:form>
         
+        <!-- Formulario subir fotos de usuario -->
+        <h:form id="guardarsinfoto" >
+            <ui:include src="../paginas/usuariossistema/ComfirmarGuardarSinFoto.xhtml" />
+        </h:form>
 
 
 
+        <div style="position: absolute;width: 100%;margin-left: auto;margin-right: auto;z-index: 50000;margin-top: 5%">            
+            <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />       
+        </div>
 
 
 
@@ -183,22 +190,21 @@
             </p:layoutUnit>
 
 
-            <div style="bottom: 0;position: absolute;width: 80%;z-index: 500000;text-align: center;margin-left: 8%;margin-right: 10%">
-                <p:layoutUnit id="bottom" position="south" size="14%" header="Estado">
-                    <p:clock pattern="HH:mm:ss dd.MM.yyyy" />  
-                    <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    
-                    <ui:insert name="abajo">
+            <div style="bottom: 0;position: absolute;width: 80%;text-align: center;margin-left: 8%;margin-right: 10%">
+                
+                <!--<p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    -->
+                <ui:insert name="abajo">
 
 
-                    </ui:insert>
-                </p:layoutUnit>
+                </ui:insert>
+
             </div>                
 
 
 
 
 
-            <p:layoutUnit id="right" position="east" size="17%" header="Menu" resizable="true" collapsible="true">
+            <p:layoutUnit id="right" position="east" size="17%" header="Menu" resizable="true" collapsible="true" >
 
                 <h:form>
                     <div  style="width: 98%;margin-left: auto;margin-right: auto;"   >
@@ -321,21 +327,31 @@
                 <ui:insert name="derecha">
 
                 </ui:insert>
-
+                <div style="text-align: center">
+                    <br />
+                    <p:clock pattern="HH:mm:ss dd.MM.yyyy" />  
+                </div>
+                
             </p:layoutUnit>
 
             <p:layoutUnit id="center" position="center">                
-                <div  style="width: 85%;margin-left: auto;margin-right: auto;border: 1px;-moz-border-radius:3px;margin-top: 2%"   >
+                <div  style="width: 92%;margin-left: auto;margin-right: auto;border: 1px;-moz-border-radius:3px;margin-top: 2%"   >
                     <p:panel >
-                        
+
                         <f:facet name="header">
                             <ui:insert name="tituloInsercion" />
                         </f:facet>
                         <ui:insert name="cuerpo" >
-                            
+
                             <!-- AQUI IRA TODO LO DEL CUERPO DE LA PAGINA -->  
 
+
                         </ui:insert>
+                        <f:facet name="footer">
+                            <div style="margin-left: auto;margin-right: auto;text-align: center">                                
+                                <p:outputLabel value="Reservados Todos Los Derechos &copy;" style="font-weight:bold;" />
+                            </div>
+                        </f:facet>
                     </p:panel>
                 </div>
             </p:layoutUnit>

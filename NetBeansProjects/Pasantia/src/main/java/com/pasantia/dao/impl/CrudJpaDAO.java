@@ -17,28 +17,20 @@ import org.hibernate.Session;
  */
 
 @Stateless
-public class CrudJpaDAO<T> implements CrudDAO<T>{
+public class CrudJpaDAO<T> implements CrudDAO<T>{  
     
     
-    private Session session;
    
-
-    public CrudJpaDAO() {
-        session = ConexionHibernate.getSessionFactory().openSession();  
-    }
-    
-    @PreDestroy
-    public void destruirSession(){
-        session.close();
-    }
 
     @Override
     public void commitTransaccion() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
         session.flush();
     }
 
     @Override
     public Boolean crear(T entity) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
         Boolean result=false;
         try{   
             session.beginTransaction();
@@ -58,6 +50,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
 
     @Override
     public Boolean editar(T entity) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
         Boolean result=false;
         try{         
             session.beginTransaction();
@@ -77,6 +70,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
 
     @Override
     public Boolean remover(T entity) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
         Boolean result = false;
         try {
             session.beginTransaction();
@@ -101,6 +95,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
 
     @Override
     public T buscar(Class<T> entityClass, Object id) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
         return (T) session.get(entityClass, (Integer) id);
     }
 

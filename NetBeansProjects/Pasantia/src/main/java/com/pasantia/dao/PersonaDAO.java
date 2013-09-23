@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author david
+ * @author David Timana
  */
 @Local
 public interface PersonaDAO {
@@ -20,7 +20,7 @@ public interface PersonaDAO {
      * insercion de un nuev persona
      * @param persona 
      */
-    public void insertarPersona(Persona persona);
+    public Boolean insertarPersona(Persona persona);
     /**
      *Metodo que se encarga de la
      * actualizacion de un nueva persona

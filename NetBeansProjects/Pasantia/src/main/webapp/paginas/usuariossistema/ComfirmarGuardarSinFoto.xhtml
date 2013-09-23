@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:confirmDialog message="Esta seguro que desea guardar el usuario sin foto?" 
+                         header="Comfirmar Guardado Sin Foto" severity="alert" 
+                         widgetVar="dlgsinfoto" id="dlgsinfoto"
+                         visible="#{guardarSinFotoBean.abrirSinFoto}" >	
+            <p:commandButton value="Continuar" icon="ui-icon-check" actionListener="#{gestionarUsuarioBean.continuarSinFoto()}"  />	
+            <p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{guardarSinFotoBean.cerrarComfirmar()}" />
+        </p:confirmDialog>
+
+    </ui:composition>
+</html>

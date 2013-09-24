@@ -35,4 +35,22 @@ public final class UtilidadCadena {
 		matcher = pattern.matcher(correo);
 		return matcher.matches();
 	}
+        
+        
+        /**
+	 * Parte la cadena en las posiciones especificadas
+	 * 
+	 * @param cadena
+	 *            cadena a partir
+         * @param posIni
+         *              posicion inicial
+         * @param posFin
+         *              posicion final
+	 * @return cadena partida segun los parametros	 
+	 * @autor David Timana
+	 */
+        public static String partirCadena(String cadena,int posIni,int posFin){
+            String cadenaEnviar=cadena.substring(posIni, posFin);
+            return cadenaEnviar;
+        }
 }

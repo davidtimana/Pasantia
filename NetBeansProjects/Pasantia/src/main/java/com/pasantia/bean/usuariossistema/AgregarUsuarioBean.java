@@ -14,6 +14,7 @@ import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
+import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import java.io.InputStream;
@@ -69,7 +70,7 @@ public class AgregarUsuarioBean implements Serializable{
      * @return Mensaje de guardado correcto o no.
      */
     public void guardarUsuario(Persona p, Ciudad c, Sexo s, TipoIdentificacion ti, TipoPersona tp,
-            Cargo ca, CatalogoVenta cv,  String rutaTemp, Boolean fotoSubida) {
+            Cargo ca, CatalogoVenta cv, String nombreFoto, Boolean fotoSubida, Double latitud, Double longitud) {
 
         log.log(Level.INFO, "************Iniciando a guardar la persona: {0}", p.getPnombre());
 
@@ -79,17 +80,25 @@ public class AgregarUsuarioBean implements Serializable{
             p.setTipoIdentificacion(ti);
             p.setCiudad(c);
             p.setTipoPersona(tp);
-            p.setFoto(rutaTemp);
-            if(tp.getNombreTipoPersona().equals("Vendedor Proveedor")){
+            if (!Utilidad.cadenaVacia(nombreFoto)) {
+                p.setFoto("../../" + nombreFoto);
+            }
+
+            p.setLatitud(latitud);
+            p.setLongitud(longitud);
+            if (tp.getNombreTipoPersona().equals("Vendedor Proveedor")) {
                 p.setCatalogoVenta(cv);
-            }else{
-                p.setCargo(ca);
-            }    
-            
-            if (crudDAO.crear(p)) {
-                Utilidad.mensajeInfo("SICOVI", "Usuario: "+p.getPnombre()+" "+p.getPapellido()+". Guardado Correctamente");
             } else {
-                Utilidad.mensajeFatal("SICOVI", "Usuario: "+p.getPnombre()+" "+p.getPapellido()+". No pudo ser guardado");
+                p.setCargo(ca);
+            }
+
+            try {
+                if (crudDAO.crear(p)) {
+                    Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Guardado Correctamente");
+                }
+
+            } catch (PersonaIdentificacionDuplicadoException e) {
+                Utilidad.mensajeError("SICOVI", e.getMessage());
             }
 
         } else {

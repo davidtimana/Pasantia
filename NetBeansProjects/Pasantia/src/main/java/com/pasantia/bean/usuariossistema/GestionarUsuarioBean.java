@@ -20,24 +20,21 @@ import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
-import com.pasantia.excepciones.ExcepcionPersona;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import com.pasantia.utilidades.UtilidadCadena;
+import com.pasantia.utilidades.UtilidadFecha;
 import com.pasantia.utilidades.UtilidadNumero;
-import com.pasantia.utilidades.UtilidadWeb;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -78,6 +75,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private String ocultarCatalogo;
     private String urlTemporal;
     private MapModel modMapa;
+    private String fechaConvertida;
     private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
     @Inject
     DepartamentoDAO departamentoDAO;
@@ -99,10 +97,19 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     AgregarUsuarioBean agregarUsuarioBean;
     @Inject
     GuardarSinFotoBean guardarSinFotoBean;
+    
 
+    @PreDestroy
+    public void Fin(){
+        logger.info("ejecute Fin");
+        limpiarObjetos();
+        actualizarformulario();
+    }
+    
     @PostConstruct
     public void Init() {
-        logger.info("***********Iniciando");
+        
+        logger.info("***********Iniciando");        
         logger.info("*****************Cargando Combo Paises");
         cargarComboPais();
         logger.info("*****************Fin Cargando Combo Paises");
@@ -120,7 +127,27 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         logger.info("*****************Fin Cargando Combo Cargos");
         logger.info("*****************Cargando Combo Catalogos Venta");
         cargarComboCatalogosVenta();
-        logger.info("*****************Fin Cargando Combo Catalogos Venta");
+        logger.info("*****************Fin Cargando Combo Catalogos Venta");        
+        logger.info("*****************Cargando Ultimo Usuario Ingresado");
+        cargarUltimo();
+        logger.info("*****************Fin Ultimo Usuario Ingresado");
+    }
+    
+    public void cargarUltimo(){
+        persona=personaDAO.buscarUltimoIngresado();
+        sexoSeleccionado=persona.getSexo().getIdSexo();
+        tipoIdentificacionSeleccionada=persona.getTipoIdentificacion().getIdTipoIdentificacion();
+        paisSeleccionado=persona.getCiudad().getDepartamento().getPais().getIdPais();
+        departamentoSeleccionado=persona.getCiudad().getDepartamento().getIdDepartamento();
+        ciudadSeleccionado=persona.getCiudad().getIdCiudad();
+        latitud=persona.getLatitud();
+        longitud=persona.getLongitud();
+        rutaFotoCargar=persona.getFoto();
+        tipoPersonaSeleccionado=persona.getTipoPersona().getIdTipoPersona();
+        catalogoSeleccionado=persona.getCatalogoVenta().getIdCatalogoVenta();
+        /*cargoSeleccionado=persona.getCargo().getIdCargo();
+        
+        */
     }
 
     public String navegarWizard(FlowEvent event) {
@@ -136,7 +163,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
         if (validarDatos()) {
             logger.info("Validacion correcta");
-            agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, urlTemporal, fotoSubida);
+            agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, nombre_foto, fotoSubida,latitud,longitud);
         } else {
             logger.info("Validacion incorrecta");
 
@@ -208,7 +235,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                             logger.info("****************Error...Fecha Nacimiento no seleccionada");
                             result = false;
                         } else {
-
+                            
                             estErrfecha = "";
                             Utilidad.actualizarElemento("txtfechanacimiento");
 
@@ -651,6 +678,64 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
             catalogoVenta.setDescripcion("");
         }
     }
+    
+    public void limpiarObjetos(){
+        
+        sexo = new Sexo();
+        tipoPersona = new TipoPersona();
+        tipoIdentificacion = new TipoIdentificacion();
+        ciudad = new Ciudad();
+        cargo = new Cargo();
+        catalogoVenta = new CatalogoVenta();
+        persona = new Persona();
+        deshabilitarCiudad = false;
+        deshabilitarDepartamento = false;
+        estErrDepartamento = "";
+        estErrCiudad = "";
+        estErrNombre = "";
+        estErrapellido = "";
+        estErrsexo = "";
+        estErrtipoidenti = "";
+        estErrfecha = "";
+        estErrtelefono = "";
+        estErrmovil = "";
+        estErremail = "";
+        estErrPais = "";
+        stErrbarrio = "";
+        stErrdireccion = "";
+        estErrMapa = "";
+        estErrTipPerson = "";
+        estErrCargo = "";
+        estErrCatalogo = "";
+        estErrNroIdenti = "";
+        fechaConvertida="";
+        zoom = 6;
+        latitud = 4.599047;
+        longitud = -74.080917;
+        coordenadas = new LatLng(latitud, longitud);
+        contadorMapa = 0;
+        abrirSubir = false;
+        botonCargar = "display:block";
+        lblCargar = "display:block";
+        mensajeCarga = "Sin Selección de Foto.";
+        rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
+        ocultarCargo = "display:none";
+        ocultarCatalogo = "display:none";
+        urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        fotoSubida = false;
+        modMapa = new DefaultMapModel();
+        
+    }
+    
+    public void actualizarformulario(){
+        
+    }
+    
+    public void convertirFecha(){
+        fechaConvertida=UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
+    }
+    
+ 
 
     public GestionarUsuarioBean() {
         sexo = new Sexo();
@@ -692,7 +777,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
         ocultarCargo = "display:none";
         ocultarCatalogo = "display:none";
-        urlTemporal = "/home/david/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
         fotoSubida = false;
         modMapa = new DefaultMapModel();
 
@@ -1114,4 +1199,16 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setEstErrNroIdenti(String estErrNroIdenti) {
         this.estErrNroIdenti = estErrNroIdenti;
     }
+
+    public String getFechaConvertida() {
+        return fechaConvertida;
+    }
+
+    public void setFechaConvertida(String fechaConvertida) {
+        this.fechaConvertida = fechaConvertida;
+    }
+
+    
+    
+    
 }

@@ -47,4 +47,14 @@ public interface PersonaDAO {
      */
     public List<Persona> buscartodosPersona();
     
+    /**
+     *Metodo que se encarga de
+     * listar las personas
+     * @return Persona
+     *          Objeto persona encontrado
+     * @author David Timana
+     */
+    public Persona buscarUltimoIngresado();        
+    
+    
 }

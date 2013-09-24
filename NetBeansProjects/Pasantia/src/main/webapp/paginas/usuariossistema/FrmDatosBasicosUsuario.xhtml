@@ -82,15 +82,16 @@ and open the template in the editor.
                         <p:outputLabel value="Fecha Nacimiento: *" style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="lblfechanacimiento"/>
 
                         <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
-                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento" locale="es" 
-                                    title="Seleccione fecha nacimiento usuario."/>
-
+                                    style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento"  
+                                    title="Seleccione fecha nacimiento usuario." navigator="true"  pattern="dd/MM/yyyy">
+                            <p:ajax event="dateSelect" listener="#{gestionarUsuarioBean.convertirFecha()}" />
+                        </p:calendar>
+                        
                     </h:panelGrid> 
 
 
                 </h:panelGrid>
-
-
+              
             </p:tab>  
             <p:tab title="Datos De Contacto Usuario" >  
 

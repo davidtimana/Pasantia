@@ -52,9 +52,8 @@ and open the template in the editor.
                 <p:outputLabel  value="#{gestionarUsuarioBean.persona.cedula}" /> 
 
                 <p:outputLabel value="Fecha Nacimiento: " style="font-weight:bold;"/>
-                <p:outputLabel  value="#{gestionarUsuarioBean.persona.fechaNacimiento}" > 
-                    <f:convertDateTime pattern="dd-MM-yyyy" />
-                </p:outputLabel>
+                <p:outputLabel  value="#{gestionarUsuarioBean.fechaConvertida}" />                  
+                
 
             </p:panelGrid>
             <p:spacer height="2%"/>

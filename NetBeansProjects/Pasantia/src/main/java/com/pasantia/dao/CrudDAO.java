@@ -4,6 +4,7 @@
  */
 package com.pasantia.dao;
 
+import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,7 +27,16 @@ public interface CrudDAO<T> {
 	 * @param entity
 	 *            objeto a almacenar
 	 */
-	public Boolean crear(T entity);
+	public Boolean crear (T entity) throws PersonaIdentificacionDuplicadoException;
+        
+        
+        /*
+         * Metodo generico que busca la ultima entidad ingresada
+         * 
+         *  @param entity
+         *          entidad a buscar
+         */
+        public T buscarUltimo(T entity);
 
 		
 	/**

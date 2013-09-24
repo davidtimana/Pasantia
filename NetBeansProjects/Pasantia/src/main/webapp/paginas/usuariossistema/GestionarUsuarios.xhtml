@@ -24,35 +24,39 @@
 
     <ui:define name="cuerpo">       
 
-        <p:spacer width="1%" height="2%" />
-
+        <p:spacer width="1%" height="2%" />  
+        
+        
         <h:form id="gestionarusuarios">
-            <p:wizard  nextLabel="Siguiente" backLabel="Regresar"  flowListener="#{gestionarUsuarioBean.navegarWizard}" >  
+                    <p:wizard  nextLabel="Siguiente" backLabel="Regresar"  flowListener="#{gestionarUsuarioBean.navegarWizard}" >  
 
-                <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">                    
+                        <p:tab title="Gestionar Usuarios - Paso 1" id="gestionusuarios">                    
 
-                    <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
+                            <ui:include src="FrmDatosBasicosUsuario.xhtml" /> 
 
 
 
-                </p:tab>  
-                <p:tab title="Configuración Usuario - Paso 2" id="confiusuario" >  
+                        </p:tab>  
+                        <p:tab title="Configuración Usuario - Paso 2" id="confiusuario" >  
 
-                    <ui:include src="FrmconfigurarUsuario.xhtml" /> 
+                            <ui:include src="FrmconfigurarUsuario.xhtml" /> 
 
-                </p:tab>  
-                <p:tab title="Comfirmar" id="comfirmar">  
+                        </p:tab>  
+                        <p:tab title="Comfirmar" id="comfirmar">  
 
-                    <ui:include src="ComfirmarUsuario.xhtml" /> 
+                            <ui:include src="ComfirmarUsuario.xhtml" /> 
 
-                </p:tab>  
+                        </p:tab>  
 
-            </p:wizard>
+                    </p:wizard>
 
-            <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" />            
-                <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-cancel" />            
-            </p:panelGrid>
+                    <p:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-document-b" />
+                        <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-pencil" />            
+                        <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" />            
+                        <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-cancel" />
+                        <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarUsuarioBean.abrirBuscador()}" icon="ui-icon-search" />
+                    </p:panelGrid>
         </h:form>
 
 

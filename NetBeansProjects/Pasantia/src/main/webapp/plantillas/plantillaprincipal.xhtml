@@ -162,31 +162,38 @@
         <h:form id="guardarsinfoto" >
             <ui:include src="../paginas/usuariossistema/ComfirmarGuardarSinFoto.xhtml" />
         </h:form>
+        
+        <!-- Formulario buscar usuarios -->
+        <h:form id="buscarusuarios" >
+            <ui:include src="../paginas/usuariossistema/BuscarUsuarios.xhtml" />
+        </h:form>
 
 
+        <div style="position: absolute;width: 100%;margin-left: auto;margin-right: auto;z-index: 50000;margin-top: 5%;text-align: center">            
+            <!--<p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />       -->
+            <h:form>
+                <p:growl id="growl" showDetail="true" autoUpdate="true" life="5000" />  
+            </h:form>
 
-        <div style="position: absolute;width: 100%;margin-left: auto;margin-right: auto;z-index: 50000;margin-top: 5%">            
-            <p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />       
         </div>
-
+        
 
 
         <p:layout fullPage="true" >
 
 
             <p:layoutUnit id="top" position="north"   size="17%">
-                <div style="top:  0;position: absolute;width: 80%;margin-left: 17%;margin-right: 17%;z-index: 50000">
+                
 
-                    <h:panelGrid columns="3" cellpadding="1">
-
+                    
+                    <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;border-style: hidden !important;"  >
                         <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
                         <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
                         <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
+                    </p:panelGrid>
 
-                    </h:panelGrid>
 
-
-                </div>
+                
             </p:layoutUnit>
 
 

@@ -7,6 +7,7 @@ package com.pasantia.bean.usuariossistema;
 import com.pasantia.dao.CargoDAO;
 import com.pasantia.dao.CatalogoVentaDAO;
 import com.pasantia.dao.CiudadDAO;
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.dao.PersonaDAO;
 import com.pasantia.dao.SexoDAO;
@@ -97,6 +98,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     AgregarUsuarioBean agregarUsuarioBean;
     @Inject
     GuardarSinFotoBean guardarSinFotoBean;
+    @Inject
+    CrudDAO<Persona> crudDAO;
     
 
     @PreDestroy
@@ -134,7 +137,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
     
     public void cargarUltimo(){
-        persona=personaDAO.buscarUltimoIngresado();
+        persona=crudDAO.buscarUltimo(Persona.class);
         sexoSeleccionado=persona.getSexo().getIdSexo();
         tipoIdentificacionSeleccionada=persona.getTipoIdentificacion().getIdTipoIdentificacion();
         paisSeleccionado=persona.getCiudad().getDepartamento().getPais().getIdPais();

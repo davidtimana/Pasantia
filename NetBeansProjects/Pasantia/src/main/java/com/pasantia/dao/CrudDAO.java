@@ -36,7 +36,7 @@ public interface CrudDAO<T> {
          *  @param entity
          *          entidad a buscar
          */
-        public T buscarUltimo(T entity);
+        public T buscarUltimo(Class<T> entityClass);
 
 		
 	/**
@@ -86,7 +86,7 @@ public interface CrudDAO<T> {
 	 * 
 	 * @return objeto buscado
 	 * 
-	 * @author "Fredy Dorado"
+	 * @author "David Timana"
 	 */
 	public List<T> buscarTodos(Class<T> entityClass);
 

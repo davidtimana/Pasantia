@@ -10,6 +10,7 @@ import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import com.pasantia.utilidades.UtilidadCadena;
 import java.util.List;
 import javax.ejb.Stateless;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -110,7 +111,26 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
 
     @Override
     public List<T> buscarTodos(Class<T> entityClass) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        StringBuilder jpql = new StringBuilder();
+        List<T> listaEntidad = null;
+        try {
+            jpql.append("SELECT miEntidad FROM ");
+            jpql.append(entityClass.getSimpleName());
+            jpql.append(" miEntidad ");
+
+            Query q = session.createQuery(jpql.toString());
+            listaEntidad = (List<T>) q.list();
+            session.flush();
+        } catch (Exception e) {
+            listaEntidad=null;
+            System.err.println("Error al buscarTodos Generico: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return listaEntidad;
     }
 
     @Override
@@ -129,8 +149,26 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
     }
 
     @Override
-    public T buscarUltimo(T entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public T buscarUltimo(Class<T> entityClass) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        StringBuilder jpql = new StringBuilder();
+        T retornar=null;
+        try {
+            jpql.append("SELECT MAX(miEntidad) FROM ");
+            jpql.append(entityClass.getSimpleName());
+            jpql.append(" miEntidad ");
+
+            Query q = session.createQuery(jpql.toString());
+            retornar = (T) q.uniqueResult();
+            session.flush();
+        } catch (Exception e) {
+            retornar=null;
+            System.err.println("Error al buscarUltimo Generico: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return retornar;
     }
     
     

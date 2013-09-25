@@ -13,7 +13,7 @@ and open the template in the editor.
 
 
         <p:accordionPanel >  
-
+            <p:ajax event="tabChange" listener="#{validarUsuarioBean.onTabChange}" />
             <p:tab title="Datos Personales Usuario" >                
                 <h:panelGrid columns="2" cellpadding="1" style="width: 100%" >
                     <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >

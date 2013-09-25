@@ -157,7 +157,7 @@ public final class UtilidadFecha {
         double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
         return ((int) dias);
     }
-    
+
     public static Calendar dateToCalendar(Date date) {
         Calendar cal = null;
         try {
@@ -170,5 +170,42 @@ public final class UtilidadFecha {
         }
         return cal;
 
+    }
+
+    /**
+     * Metodo que se encarga de calcular la edad de una persona apartir de la
+     * fecha de nacimiento
+     *
+     * @param fecha_nacimiento Fecha nacimiento de la persona en formato
+     * dd/MM/yyyy
+     * @return anos 
+     * Edad de la persona
+     * @author David Timana
+     */
+    public static Integer calcularEdad(String fecha_nacimiento) {
+
+        Date fechaActual = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String hoy = formato.format(fechaActual);
+        String[] dat1 = fecha_nacimiento.split("/");
+        String[] dat2 = hoy.split("/");
+        int anos = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
+        int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+        if (mes < 0) {
+            anos = anos - 1;
+        } else if (mes == 0) {
+            int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+            if (dia > 0) {
+                anos = anos - 1;
+            }
+        }
+        return anos;
+    }
+    
+    public static String obtenerFechaActualFormatoString(String format) {
+        Date fechaActualDate = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat(format);
+        String fechaActual = formato.format(fechaActualDate);
+        return fechaActual;
     }
 }

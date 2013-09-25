@@ -14,6 +14,7 @@ $(document).ready(function() {
 //        console.log(".....Hize clic en editar Usuario");
 //        $("#gestionarusuarios:cmbTipoPersona_input").change();
 //    });
+
    
    
    
@@ -25,6 +26,10 @@ $(document).ready(function() {
    
    
 });
+
+function clickpestañaPersonales(){
+    $("#datperusu").click();
+}
 //Fin jquery
 
 

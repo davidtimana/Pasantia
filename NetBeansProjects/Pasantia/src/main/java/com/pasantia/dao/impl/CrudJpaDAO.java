@@ -106,7 +106,16 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
     @Override
     public T buscar(Class<T> entityClass, Object id) {
         Session session = ConexionHibernate.getSessionFactory().openSession();
-        return (T) session.get(entityClass, (Integer) id);
+        try{            
+            return (T) session.get(entityClass, (Integer) id);
+        }catch(Exception e){
+            return null;
+        }
+        finally{
+            session.close();
+        }
+        
+        
     }
 
     @Override
@@ -164,6 +173,34 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
         } catch (Exception e) {
             retornar=null;
             System.err.println("Error al buscarUltimo Generico: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return retornar;
+    }
+
+    @Override
+    public T buscarxAlgunCampoString(Class<T> entityClass, Object campo, Object parametro) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        StringBuilder jpql = new StringBuilder();
+        T retornar=null;
+        try {
+            jpql.append("SELECT miEntidad FROM ");
+            jpql.append(entityClass.getSimpleName());
+            jpql.append(" miEntidad ");
+            jpql.append(" WHERE ");
+            jpql.append(" miEntidad.");
+            jpql.append(campo.toString());
+            jpql.append(" = ");
+            jpql.append(":string");            
+            Query q = session.createQuery(jpql.toString());
+            q.setString("string", parametro.toString());
+            retornar = (T) q.uniqueResult();
+            session.flush();
+        } catch (Exception e) {
+            retornar=null;
+            System.err.println("Error al buscarxAlgunCampoString Generico: " + e.getMessage());
             session.beginTransaction().rollback();
         } finally {
             session.close();

@@ -21,6 +21,11 @@ import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
+import com.pasantia.excepciones.DatosPersonalesPersonaException;
+import com.pasantia.excepciones.FechaNacimientoMenorException;
+import com.pasantia.excepciones.FechaNacimientoPersonaMayorActualException;
+import com.pasantia.excepciones.ImagenNoSelecionadaException;
+import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import com.pasantia.utilidades.UtilidadCadena;
@@ -63,10 +68,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private Cargo cargo;
     private CatalogoVenta catalogoVenta;
     private Persona persona;
-    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir, fotoSubida;
-    private String estErrDepartamento, estErrCiudad, estErrNombre, estErrapellido, estErrsexo, estErrtipoidenti, estErrfecha, estErrtelefono,
-            estErrmovil, estErremail, estErrPais, stErrbarrio, stErrdireccion, estErrMapa, estErrTipPerson, estErrCargo, estErrCatalogo,
-            estErrNroIdenti;
+    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir, fotoSubida;    
     private Double latitud, longitud;
     private LatLng coordenadas;
     private Integer contadorMapa;
@@ -81,7 +83,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private String fechaConvertida;
     private List<Integer> listaControlBotones;
     private List<Boolean> listaControlReadonly;
+    private String tabsSeleccionados;
+    private List<Boolean> listControlAccordion;
     private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
+    
     @Inject
     DepartamentoDAO departamentoDAO;
     @Inject
@@ -104,6 +109,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     GuardarSinFotoBean guardarSinFotoBean;
     @Inject
     CrudDAO<Persona> crudDAO;
+    @Inject
+    ValidarUsuarioBean validarUsuarioBean;
     
 
     @PreDestroy
@@ -123,6 +130,9 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         logger.info("*****************Cargando Inicio de Readonly");
         iniciarReadonly();
         logger.info("*****************Fin Inicio de Readonly");
+        logger.info("*****************Cargando Inicio de Accordion");
+        iniciarAccordion();
+        logger.info("*****************Fin Inicio de Accordion");
         logger.info("*****************Cargando Combo Paises");
         cargarComboPais();
         logger.info("*****************Fin Cargando Combo Paises");
@@ -211,17 +221,23 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
 
     public String navegarWizard(FlowEvent event) {
+        String pestaña=event.getNewStep();
         Utilidad.actualizarElemento("paso1");
         Utilidad.actualizarElemento("paso2");
         if (contadorMapa != 0) {
             zoom = zoom + 3;
         }
-        return event.getNewStep();
+        if(!validarUsuarioBean.validarAccordion(listControlAccordion)){
+            Utilidad.mensajePeligro("SICOVI", "Diligencie primero todos los campos requeridos * antes de continuar.");
+            pestaña="gestionusuarios";
+        }
+        
+        return pestaña;
     }
 
     public void guardar() {
 
-        if (validarDatos()) {
+        if (true) {
             logger.info("Validacion correcta");
             agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, nombre_foto, fotoSubida,latitud,longitud);
         } else {
@@ -230,286 +246,67 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         }
 
     }
+    
+    public void validarTabAccordion() {
+        logger.log(Level.INFO, "el tabseleccionado es el siguiente-->{0}", tabsSeleccionados);
+        if (tabsSeleccionados.equals("0,1") || 
+                tabsSeleccionados.equals("0,2") || 
+                    tabsSeleccionados.equals("0,3") ||
+                        tabsSeleccionados.equals("1") ||
+                            tabsSeleccionados.equals("2") ||
+                                tabsSeleccionados.equals("3")) {            
+            try {
+
+                validarUsuarioBean.validarDatosPersonalesUsuario(persona, sexo, tipoIdentificacion,fotoSubida);
+                tabsSeleccionados = "1";
+                listControlAccordion.set(0, true);
+                Utilidad.actualizarElemento("accordionUsur");
+
+            } catch (DatosPersonalesPersonaException e) {
+                tabsSeleccionados = "0";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            } catch (PersonaIdentificacionDuplicadoException e) {
+                tabsSeleccionados = "0";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            } catch (FechaNacimientoMenorException e) {
+                tabsSeleccionados = "0";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            }catch(FechaNacimientoPersonaMayorActualException e){
+                tabsSeleccionados = "0";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            }catch(ImagenNoSelecionadaException e){
+                tabsSeleccionados = "0";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            }
+        }
+
+    }
 
     public void continuarSinFoto() {
         guardarSinFotoBean.cerrarComfirmar();
         fotoSubida = true;
-        guardar();
+        tabsSeleccionados="0,1";
+        mensajeCarga = "Sin Selección de Foto.";        
+        Utilidad.actualizarElemento("lblmensajefoto");
+        validarTabAccordion();
     }
 
-    public Boolean validarDatos() {
-
-        Boolean result = false;
-
-
-        //Valido el primer nombre de la persona
-        if (Utilidad.cadenaVacia(persona.getPnombre())) {
-            estErrNombre = Utilidad.estilosErrorInput();
-            Utilidad.actualizarElemento("txtpnombre");
-            Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: Primer Nombre requerido.");
-            logger.info("****************Error...Primer Nombre vacio");
-            result = false;
-
-        } else {
-            estErrNombre = "";
-            Utilidad.actualizarElemento("txtpnombre");
-
-            //Valido el primer apellido de la persona
-            if (Utilidad.cadenaVacia(persona.getPapellido())) {
-                estErrapellido = Utilidad.estilosErrorInput();
-                Utilidad.actualizarElemento("txtpapellido");
-                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: Primer Apellido requerido.");
-                logger.info("****************Error...Primer Apellido vacio");
-                result = false;
-            } else {
-                estErrapellido = "";
-                Utilidad.actualizarElemento("txtpapellido");
-
-                //Valido que se haiga selecionado algun sexo
-                if (Utilidad.cadenaVacia(sexo.getNombreSexo())) {
-                    estErrsexo = Utilidad.estilosErrorInput();
-                    Utilidad.actualizarElemento("cmbsexper");
-                    Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: Selección Sexo requerido.");
-                    logger.info("****************Error...Sexo no seleccionado");
-                    result = false;
-                } else {
-                    estErrsexo = "";
-                    Utilidad.actualizarElemento("cmbsexper");
-
-                    //Valido que se haiga seleccionado algun tipo de identificacion
-                    if (Utilidad.cadenaVacia(tipoIdentificacion.getNombreTipoIdentificacion())) {
-                        estErrtipoidenti = Utilidad.estilosErrorInput();
-                        Utilidad.actualizarElemento("cmbTipIdenti");
-                        Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: Selección Tipo Identificación requerido.");
-                        logger.info("****************Error...Tipo Identificació no seleccionado");
-                        result = false;
-                    } else {
-                        estErrtipoidenti = "";
-
-                        //Valido que se haiga seleccionado alguna fecha de nacimiento
-                        Utilidad.actualizarElemento("cmbTipIdenti");
-                        if (persona.getFechaNacimiento() == null) {
-                            estErrfecha = Utilidad.estilosErrorInput();
-                            Utilidad.actualizarElemento("txtfechanacimiento");
-                            Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: Selección Fecha Nacimiento requerida.");
-                            logger.info("****************Error...Fecha Nacimiento no seleccionada");
-                            result = false;
-                        } else {
-                            
-                            estErrfecha = "";
-                            Utilidad.actualizarElemento("txtfechanacimiento");
-
-                            //Validamos que se haiga registrado el numero de identificacion
-                            if (Utilidad.cadenaVacia(persona.getCedula())) {
-                                estErrNroIdenti = Utilidad.estilosErrorInput();
-                                Utilidad.actualizarElemento("txtnroidentificacion");
-                                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: N° identificación requerido.");
-                                logger.info("****************Error...numero identificacion vacio");
-                                result = false;
-                            } else {
-                                estErrNroIdenti = "";
-                                Utilidad.actualizarElemento("txtnroidentificacion");
-
-                                //Valido el telefono
-                                if (Utilidad.cadenaVacia(persona.getTelefono())) {
-                                    estErrtelefono = Utilidad.estilosErrorInput();
-                                    Utilidad.actualizarElemento("txttelefonoper");
-                                    Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos De Contacto Usuario: Telefono requerido.");
-                                    logger.info("****************Error...Telefono vacio");
-                                    result = false;
-                                } else {
-                                    estErrtelefono = "";
-                                    Utilidad.actualizarElemento("txttelefonoper");
-
-                                    //Valido el telefono movil
-                                    if (Utilidad.cadenaVacia(persona.getMovil())) {
-                                        estErrmovil = Utilidad.estilosErrorInput();
-                                        Utilidad.actualizarElemento("txtmovilper");
-                                        Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos De Contacto Usuario: Telefono Movil requerido.");
-                                        logger.info("****************Error...Telefono Movil vacio");
-                                        result = false;
-                                    } else {
-                                        estErrmovil = "";
-                                        Utilidad.actualizarElemento("txtmovilper");
-
-                                        //Valido el email
-                                        if (Utilidad.cadenaVacia(persona.getEmail())) {
-                                            estErremail = Utilidad.estilosErrorInput();
-                                            Utilidad.actualizarElemento("txtemailper");
-                                            Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos De Contacto Usuario: E-mail requerido.");
-                                            logger.info("****************Error...E-maill vacio");
-                                            result = false;
-
-                                        } else {
-                                            estErremail = Utilidad.estilosErrorInput();
-                                            Utilidad.actualizarElemento("txtemailper");
-
-                                            //Valido que sea una email correcto
-                                            if (!UtilidadCadena.esUnCorreoElectronico(persona.getEmail())) {
-                                                estErremail = Utilidad.estilosErrorInput();
-                                                Utilidad.actualizarElemento("txtemailper");
-                                                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos De Contacto Usuario: E-mail No valido.");
-                                                logger.info("****************Error...E-maill No valido");
-                                                result = false;
-                                            } else {
-                                                estErremail = "";
-                                                Utilidad.actualizarElemento("txtemailper");
-
-                                                //Valido el pais seleccionado
-                                                if (paisSeleccionado == null) {
-                                                    estErrPais = Utilidad.estilosErrorInput();
-                                                    Utilidad.actualizarElemento("cmbPaisPersona");
-                                                    Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio Usuario: Selección País requerido.");
-                                                    logger.info("****************Error...seleccion pais vacio");
-                                                    result = false;
-                                                } else {
-                                                    estErrPais = "";
-                                                    Utilidad.actualizarElemento("cmbPaisPersona");
-
-                                                    //Valido el departamento seleccionado
-                                                    if (departamentoSeleccionado == null) {
-                                                        estErrDepartamento = Utilidad.estilosErrorInput();
-                                                        Utilidad.actualizarElemento("cmbdepartamentobper");
-                                                        Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio Usuario: Selección Departamento requerido.");
-                                                        logger.info("****************Error...seleccion departamento vacio");
-                                                        result = false;
-                                                    } else {
-                                                        estErrDepartamento = "";
-                                                        Utilidad.actualizarElemento("cmbdepartamentobper");
-
-                                                        //Valido la ciudad seleccionada
-                                                        if (Utilidad.cadenaVacia(ciudad.getNombreCiudad())) {
-                                                            estErrCiudad = Utilidad.estilosErrorInput();
-                                                            Utilidad.actualizarElemento("cmbciudadbper");
-                                                            Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio Usuario: Selección Ciudad requerida.");
-                                                            logger.info("****************Error...seleccion ciudad vacio");
-                                                            result = false;
-                                                        } else {
-
-                                                            estErrCiudad = "";
-                                                            Utilidad.actualizarElemento("cmbciudadbper");
-
-                                                            //Valido el barrio 
-                                                            if (Utilidad.cadenaVacia(persona.getBarrio())) {
-                                                                stErrbarrio = Utilidad.estilosErrorInput();
-                                                                Utilidad.actualizarElemento("txtbarrioper");
-                                                                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio Usuario: Barrio requerida.");
-                                                                logger.info("****************Error...barrio vacio");
-                                                                result = false;
-                                                            } else {
-                                                                stErrbarrio = "";
-                                                                Utilidad.actualizarElemento("txtbarrioper");
-
-                                                                //Valido la direccion
-                                                                if (Utilidad.cadenaVacia(persona.getDireccion())) {
-                                                                    stErrdireccion = Utilidad.estilosErrorInput();
-                                                                    Utilidad.actualizarElemento("txtdireccionper");
-                                                                    Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio Usuario: Dirección requerida.");
-                                                                    logger.info("****************Error...Dirección vacio");
-                                                                    result = false;
-                                                                } else {
-                                                                    stErrdireccion = "";
-                                                                    Utilidad.actualizarElemento("txtdireccionper");
-
-                                                                    //Valido que se haiga seleccionado el punto de la direccion en el mapa
-                                                                    if (contadorMapa == 0) {
-                                                                        estErrMapa = Utilidad.estilosErrorInput();
-                                                                        Utilidad.actualizarElemento("geomapa");
-                                                                        Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Geolocalización Usuario: Seleccion de la direccion en el mapa requerida.");
-                                                                        logger.info("****************Error...mapa vacio");
-                                                                        result = false;
-                                                                    } else {
-                                                                        estErrMapa = "";
-                                                                        Utilidad.actualizarElemento("geomapa");
-                                                                        if (Utilidad.cadenaVacia(tipoPersona.getNombreTipoPersona())) {
-                                                                            estErrTipPerson = Utilidad.estilosErrorInput();
-                                                                            Utilidad.actualizarElemento("cmbTipoPersona");
-                                                                            Utilidad.mensajeError("SICOVI", "Configuración Usuario - Paso 2: Seleccion del tipo de persona requerido.");
-                                                                            logger.info("****************Error...tipo persona vacio");
-                                                                            result = false;
-
-                                                                        } else {
-                                                                            estErrTipPerson = "";
-                                                                            Utilidad.actualizarElemento("cmbTipoPersona");
-                                                                            if (tipoPersona.getNombreTipoPersona().equals("Vendedor Proveedor")) {
-                                                                                if (Utilidad.cadenaVacia(catalogoVenta.getDescripcion())) {
-                                                                                    estErrCatalogo = Utilidad.estilosErrorInput();
-                                                                                    Utilidad.actualizarElemento("cmbCatalogos");
-                                                                                    Utilidad.mensajeError("SICOVI", "Configuración Usuario - Paso 2: Seleccion del catalogo del vendedor requerida.");
-                                                                                    logger.info("****************Error...catalogo no seleccionado");
-                                                                                    result = false;
-
-                                                                                } else {
-                                                                                    estErrCatalogo = "";
-                                                                                    Utilidad.actualizarElemento("cmbCatalogos");
-                                                                                    result = true;
-                                                                                }
-                                                                            } else {
-
-                                                                                if (tipoPersona.getNombreTipoPersona().equals("Vendedor Casino Externo") || tipoPersona.getNombreTipoPersona().equals("Cliente Externo")) {
-                                                                                    result = true;
-                                                                                } else {
-
-                                                                                    if (Utilidad.cadenaVacia(cargo.getDescripcion())) {
-                                                                                        estErrCargo = Utilidad.estilosErrorInput();
-                                                                                        Utilidad.actualizarElemento("cmbCargo");
-                                                                                        Utilidad.mensajeError("SICOVI", "Configuración Usuario - Paso 2: Seleccion del cargo para el usuario requerido.");
-                                                                                        logger.info("****************Error...cargo no seleccionado");
-                                                                                        result = false;
-
-                                                                                    } else {
-                                                                                        estErrCargo = "";
-                                                                                        Utilidad.actualizarElemento("cmbCargo");
-                                                                                        result = true;
-                                                                                    }
-
-                                                                                }
-
-
-                                                                            }
-
-                                                                        }
-
-
-                                                                    }
-
-
-                                                                }
-                                                            }
-
-                                                        }
-                                                    }
-
-                                                }
-
-                                            }
-
-
-
-                                        }
-                                    }
-                                }
-
-                            }
-
-
-                        }
-                    }
-
-                }
-
-            }
-        }
-
-
-
-
-
-        return result;
-
-
-
-    }
+    
 
     public void puntoSeleccionadoMapa(PointSelectEvent event) {
         coordenadas = event.getLatLng();
@@ -749,25 +546,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         catalogoVenta = new CatalogoVenta();
         persona = new Persona();
         deshabilitarCiudad = false;
-        deshabilitarDepartamento = false;
-        estErrDepartamento = "";
-        estErrCiudad = "";
-        estErrNombre = "";
-        estErrapellido = "";
-        estErrsexo = "";
-        estErrtipoidenti = "";
-        estErrfecha = "";
-        estErrtelefono = "";
-        estErrmovil = "";
-        estErremail = "";
-        estErrPais = "";
-        stErrbarrio = "";
-        stErrdireccion = "";
-        estErrMapa = "";
-        estErrTipPerson = "";
-        estErrCargo = "";
-        estErrCatalogo = "";
-        estErrNroIdenti = "";
+        deshabilitarDepartamento = false;       
         fechaConvertida="";
         zoom = 6;
         latitud = 4.599047;
@@ -808,7 +587,12 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         fechaConvertida=UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
     }
     
- 
+    public void iniciarAccordion(){
+        listControlAccordion.add(false);
+        listControlAccordion.add(false);
+        listControlAccordion.add(false);
+        listControlAccordion.add(false);
+    }
 
     public GestionarUsuarioBean() {
         sexo = new Sexo();
@@ -819,25 +603,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         catalogoVenta = new CatalogoVenta();
         persona = new Persona();
         deshabilitarCiudad = false;
-        deshabilitarDepartamento = false;
-        estErrDepartamento = "";
-        estErrCiudad = "";
-        estErrNombre = "";
-        estErrapellido = "";
-        estErrsexo = "";
-        estErrtipoidenti = "";
-        estErrfecha = "";
-        estErrtelefono = "";
-        estErrmovil = "";
-        estErremail = "";
-        estErrPais = "";
-        stErrbarrio = "";
-        stErrdireccion = "";
-        estErrMapa = "";
-        estErrTipPerson = "";
-        estErrCargo = "";
-        estErrCatalogo = "";
-        estErrNroIdenti = "";
+        deshabilitarDepartamento = false;      
         zoom = 6;
         latitud = 4.599047;
         longitud = -74.080917;
@@ -855,7 +621,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         modMapa = new DefaultMapModel();
         listaControlBotones=new ArrayList<Integer>();
         listaControlReadonly = new ArrayList<Boolean>();
-
+        tabsSeleccionados="0";
+        listControlAccordion=new ArrayList<Boolean>();
 
     }
 
@@ -971,110 +738,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         this.deshabilitarCiudad = deshabilitarCiudad;
     }
 
-    public String getEstErrDepartamento() {
-        return estErrDepartamento;
-    }
-
-    public void setEstErrDepartamento(String estErrDepartamento) {
-        this.estErrDepartamento = estErrDepartamento;
-    }
-
-    public String getEstErrCiudad() {
-        return estErrCiudad;
-    }
-
-    public void setEstErrCiudad(String estErrCiudad) {
-        this.estErrCiudad = estErrCiudad;
-    }
-
-    public String getEstErrNombre() {
-        return estErrNombre;
-    }
-
-    public void setEstErrNombre(String estErrNombre) {
-        this.estErrNombre = estErrNombre;
-    }
-
-    public String getEstErrapellido() {
-        return estErrapellido;
-    }
-
-    public void setEstErrapellido(String estErrapellido) {
-        this.estErrapellido = estErrapellido;
-    }
-
-    public String getEstErrsexo() {
-        return estErrsexo;
-    }
-
-    public void setEstErrsexo(String estErrsexo) {
-        this.estErrsexo = estErrsexo;
-    }
-
-    public String getEstErrtipoidenti() {
-        return estErrtipoidenti;
-    }
-
-    public void setEstErrtipoidenti(String estErrtipoidenti) {
-        this.estErrtipoidenti = estErrtipoidenti;
-    }
-
-    public String getEstErrfecha() {
-        return estErrfecha;
-    }
-
-    public void setEstErrfecha(String estErrfecha) {
-        this.estErrfecha = estErrfecha;
-    }
-
-    public String getEstErrtelefono() {
-        return estErrtelefono;
-    }
-
-    public void setEstErrtelefono(String estErrtelefono) {
-        this.estErrtelefono = estErrtelefono;
-    }
-
-    public String getEstErrmovil() {
-        return estErrmovil;
-    }
-
-    public void setEstErrmovil(String estErrmovil) {
-        this.estErrmovil = estErrmovil;
-    }
-
-    public String getEstErremail() {
-        return estErremail;
-    }
-
-    public void setEstErremail(String estErremail) {
-        this.estErremail = estErremail;
-    }
-
-    public String getEstErrPais() {
-        return estErrPais;
-    }
-
-    public void setEstErrPais(String estErrPais) {
-        this.estErrPais = estErrPais;
-    }
-
-    public String getStErrbarrio() {
-        return stErrbarrio;
-    }
-
-    public void setStErrbarrio(String stErrbarrio) {
-        this.stErrbarrio = stErrbarrio;
-    }
-
-    public String getStErrdireccion() {
-        return stErrdireccion;
-    }
-
-    public void setStErrdireccion(String stErrdireccion) {
-        this.stErrdireccion = stErrdireccion;
-    }
-
+    
     public Double getLatitud() {
         return latitud;
     }
@@ -1097,15 +761,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void setZoom(Integer zoom) {
         this.zoom = zoom;
-    }
-
-    public String getEstErrMapa() {
-        return estErrMapa;
-    }
-
-    public void setEstErrMapa(String estErrMapa) {
-        this.estErrMapa = estErrMapa;
-    }
+    }    
 
     public LatLng getCoordenadas() {
         return coordenadas;
@@ -1241,39 +897,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void setModMapa(MapModel modMapa) {
         this.modMapa = modMapa;
-    }
-
-    public String getEstErrTipPerson() {
-        return estErrTipPerson;
-    }
-
-    public void setEstErrTipPerson(String estErrTipPerson) {
-        this.estErrTipPerson = estErrTipPerson;
-    }
-
-    public String getEstErrCargo() {
-        return estErrCargo;
-    }
-
-    public void setEstErrCargo(String estErrCargo) {
-        this.estErrCargo = estErrCargo;
-    }
-
-    public String getEstErrCatalogo() {
-        return estErrCatalogo;
-    }
-
-    public void setEstErrCatalogo(String estErrCatalogo) {
-        this.estErrCatalogo = estErrCatalogo;
-    }
-
-    public String getEstErrNroIdenti() {
-        return estErrNroIdenti;
-    }
-
-    public void setEstErrNroIdenti(String estErrNroIdenti) {
-        this.estErrNroIdenti = estErrNroIdenti;
-    }
+    }    
 
     public String getFechaConvertida() {
         return fechaConvertida;
@@ -1298,6 +922,25 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setListaControlReadonly(List<Boolean> listaControlReadonly) {
         this.listaControlReadonly = listaControlReadonly;
     }
+
+    public String getTabsSeleccionados() {
+        return tabsSeleccionados;
+    }
+
+    public void setTabsSeleccionados(String tabsSeleccionados) {
+        this.tabsSeleccionados = tabsSeleccionados;
+    }
+
+    public List<Boolean> getListControlAccordion() {
+        return listControlAccordion;
+    }
+
+    public void setListControlAccordion(List<Boolean> listControlAccordion) {
+        this.listControlAccordion = listControlAccordion;
+    }
+    
+    
+    
     
     
     

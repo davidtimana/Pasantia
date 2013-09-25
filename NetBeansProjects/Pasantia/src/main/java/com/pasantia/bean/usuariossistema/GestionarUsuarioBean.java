@@ -230,7 +230,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         if(!validarUsuarioBean.validarAccordion(listControlAccordion)){
             Utilidad.mensajePeligro("SICOVI", "Diligencie primero todos los campos requeridos * antes de continuar.");
             pestaña="gestionusuarios";
-        }
+        }//Prueba bikjkjkc
         
         return pestaña;
     }

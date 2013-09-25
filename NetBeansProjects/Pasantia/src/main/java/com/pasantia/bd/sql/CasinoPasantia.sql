@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-09-2013 a las 14:09:22
+-- Tiempo de generación: 24-09-2013 a las 19:12:05
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.8
 
@@ -12675,7 +12675,7 @@ CREATE TABLE IF NOT EXISTS `DivisionesUbicacion` (
   PRIMARY KEY (`idDivisionesUbicacion`),
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_departamento_idx` (`secdepartamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Volcado de datos para la tabla `DivisionesUbicacion`
@@ -12703,7 +12703,8 @@ INSERT INTO `DivisionesUbicacion` (`idDivisionesUbicacion`, `secdepartamento`, `
 (24, 63, 22),
 (25, 66, 22),
 (26, 68, 23),
-(27, 88, 10);
+(27, 88, 10),
+(28, 81, 16);
 
 -- --------------------------------------------------------
 
@@ -13040,7 +13041,16 @@ CREATE TABLE IF NOT EXISTS `Persona` (
   KEY `fk_ciudad_origen_idx` (`SECCIUDAD`),
   KEY `fk_catalogo_venta_idx` (`SECCATALOGO_VENTA`),
   KEY `fk_cargo_idx` (`SECCARGO`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla encargada de registrar la informacion de la persona.*/' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla encargada de registrar la informacion de la persona.*/' AUTO_INCREMENT=18 ;
+
+--
+-- Volcado de datos para la tabla `Persona`
+--
+
+INSERT INTO `Persona` (`idTBLPERSONA`, `PNOMBRE`, `SNOMBRE`, `PAPELLIDO`, `SAPELLIDO`, `CEDULA`, `FECHA_NACIMIENTO`, `EMAIL`, `TELEFONO`, `MOVIL`, `SECTIPO_IDENTIFICACION`, `SECSEXO`, `SECCIUDAD`, `SECTIPO_PERSONA`, `FOTO`, `DIRECCION`, `BARRIO`, `SECCATALOGO_VENTA`, `SECCARGO`, `LATITUD`, `LONGITUD`) VALUES
+(1, 'David', 'Orlando', 'Timaná', 'Leytón', '1061734652', '2012-08-05', 'david.timana@saludhds.com.co', '(28)-383011', '320-222-5256', 5, 1, 19001, 5, '../../94591395camaro.jpg', 'Carrera 19 B 12-15', 'Pajonal', NULL, 12, 2.4388040352396345, -76.61955606941774),
+(16, 'Jose', 'Orlando', 'Timaná', 'Portilla', '5379450', '2003-09-01', 'joseorlandotimana@hotmail.com', '(28)-383011', '320-222-5256', 1, 1, 52885, 3, '../../28557821Plus-UI-64.png', 'Yacuanquer', 'Yacuanquer', 1, NULL, 1.1146918624612487, -77.40216279038577),
+(17, 'Rene', 'Alexander', 'Timana', 'Leyton', '5207332', '2003-01-01', 'renetima@gmail.com', '(28)-383011', '320-397-3022', 5, 1, 19001, 2, '../../29515604IMG_0006.JPG', 'Calle 10 - 15-40', 'Las americas', NULL, 6, 2.4388941203353363, -76.6147838831057);
 
 -- --------------------------------------------------------
 
@@ -13520,7 +13530,7 @@ CREATE TABLE IF NOT EXISTS `Ubicacion` (
 
 INSERT INTO `Ubicacion` (`idUbicacion`, `descripcion`) VALUES
 (1, 'BODEGA PRINCIPALSAD'),
-(2, 'PUNTO DE VENTA'),
+(2, 'PUNTO DE VENTA EDITANDO'),
 (3, 'BODEGA 1'),
 (4, 'BODEGA 2'),
 (5, 'BODEGA 3'),

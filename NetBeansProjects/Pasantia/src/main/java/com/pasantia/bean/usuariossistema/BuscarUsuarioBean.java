@@ -40,6 +40,7 @@ public class BuscarUsuarioBean implements Serializable {
         buscador=true;        
         personaSeleccionada=new Persona();
         Utilidad.actualizarElemento("dlgbuscadorusuarios");
+        cargarBuscador();
         Utilidad.actualizarElemento("tblusuarios");
     }
     

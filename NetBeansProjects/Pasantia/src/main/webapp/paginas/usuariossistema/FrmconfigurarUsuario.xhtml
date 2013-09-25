@@ -18,7 +18,8 @@ and open the template in the editor.
             <p:selectOneMenu id="cmbTipoPersona" value="#{gestionarUsuarioBean.tipoPersonaSeleccionado}"  
                              validatorMessage="Debe seleccionar Tipo Persona" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  
-                             style="width: 40%;#{gestionarUsuarioBean.estErrTipPerson}" >  
+                             style="width: 40%;#{gestionarUsuarioBean.estErrTipPerson}" 
+                             disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                 <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                 <f:selectItems value="#{gestionarUsuarioBean.comboTipoPersonas}"  />                        
                 <p:ajax listener="#{gestionarUsuarioBean.ocultarCombos()}" />
@@ -31,7 +32,8 @@ and open the template in the editor.
             <p:selectOneMenu id="cmbCargo" value="#{gestionarUsuarioBean.cargoSeleccionado}"  
                              validatorMessage="Debe seleccionar Cargo" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  
-                             style="#{gestionarUsuarioBean.estErrCargo};width: 40%;#{gestionarUsuarioBean.ocultarCargo}" >  
+                             style="#{gestionarUsuarioBean.estErrCargo};width: 40%;#{gestionarUsuarioBean.ocultarCargo}" 
+                             disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                 <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                 <f:selectItems value="#{gestionarUsuarioBean.comboCargos}"  />                        
                 <p:ajax listener="#{gestionarUsuarioBean.asignarCargo()}" />
@@ -41,7 +43,8 @@ and open the template in the editor.
             <p:selectOneMenu id="cmbCatalogos" value="#{gestionarUsuarioBean.catalogoSeleccionado}"  
                              validatorMessage="Debe seleccionar Cargo" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  
-                             style="#{gestionarUsuarioBean.estErrCatalogo};width: 40%;#{gestionarUsuarioBean.ocultarCatalogo}" >  
+                             style="#{gestionarUsuarioBean.estErrCatalogo};width: 40%;#{gestionarUsuarioBean.ocultarCatalogo}" 
+                             disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                 <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                 <f:selectItems value="#{gestionarUsuarioBean.comboCatalogoVenta}"  />                        
                 <p:ajax listener="#{gestionarUsuarioBean.asignarCatalogoVenta()}" />

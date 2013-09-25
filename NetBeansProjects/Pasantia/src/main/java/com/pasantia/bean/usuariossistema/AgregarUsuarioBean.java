@@ -83,22 +83,31 @@ public class AgregarUsuarioBean implements Serializable{
             if (!Utilidad.cadenaVacia(nombreFoto)) {
                 p.setFoto("../../" + nombreFoto);
             }
-
             p.setLatitud(latitud);
             p.setLongitud(longitud);
+            
+            log.log(Level.INFO, "**************El tipo de persona seleccionado es el siguiente---->{0}", tp.getNombreTipoPersona());
             if (tp.getNombreTipoPersona().equals("Vendedor Proveedor")) {
-                p.setCatalogoVenta(cv);
-            } else {
-                p.setCargo(ca);
+                cv=null;
+            } 
+            if(tp.getNombreTipoPersona().equals("Cliente Externo") || tp.getNombreTipoPersona().equals("Vendedor Casino Externo")){
+                ca=null;
             }
+            
+            p.setCatalogoVenta(cv);
+            p.setCargo(ca);
 
             try {
                 if (crudDAO.crear(p)) {
                     Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Guardado Correctamente");
+                }else{
+                    Utilidad.mensajeError("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". No se pudo Guardar.");
                 }
 
             } catch (PersonaIdentificacionDuplicadoException e) {
                 Utilidad.mensajeError("SICOVI", e.getMessage());
+            }catch(Exception e){
+                log.log(Level.INFO, "Error al guardar el error es el siguiente-->{0}", e.getMessage());
             }
 
         } else {

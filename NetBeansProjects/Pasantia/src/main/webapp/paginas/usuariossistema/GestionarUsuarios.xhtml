@@ -50,13 +50,18 @@
 
                     </p:wizard>
 
-                    <p:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                        <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-document-b" />
-                        <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-pencil" />            
-                        <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" />            
-                        <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-cancel" />
-                        <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarUsuarioBean.abrirBuscador()}" icon="ui-icon-search" />
-                    </p:panelGrid>
+            <p:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" id="grupobotones" >
+                <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarUsuarioBean.nuevo()}" icon="ui-icon-document-b" 
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(0)==1}"/>
+                <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarUsuarioBean.editar()}" icon="ui-icon-pencil" 
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(1)==1}" id="editarUsuario"/>            
+                <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" 
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(2)==1}"/>            
+                <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.cancelar()}" icon="ui-icon-cancel" 
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(3)==1}"/>
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarUsuarioBean.abrirBuscador()}" icon="ui-icon-search" 
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(4)==1}"/>
+            </p:panelGrid>
         </h:form>
 
 

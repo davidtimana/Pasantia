@@ -29,6 +29,8 @@ import com.pasantia.utilidades.UtilidadNumero;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -77,6 +79,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private String urlTemporal;
     private MapModel modMapa;
     private String fechaConvertida;
+    private List<Integer> listaControlBotones;
+    private List<Boolean> listaControlReadonly;
     private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
     @Inject
     DepartamentoDAO departamentoDAO;
@@ -112,7 +116,13 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     @PostConstruct
     public void Init() {
         
-        logger.info("***********Iniciando");        
+        logger.info("***********Iniciando");
+        logger.info("*****************Cargando Inicio de Botones");
+        iniciarBotones();
+        logger.info("*****************Fin Inicio de Botones");
+        logger.info("*****************Cargando Inicio de Readonly");
+        iniciarReadonly();
+        logger.info("*****************Fin Inicio de Readonly");
         logger.info("*****************Cargando Combo Paises");
         cargarComboPais();
         logger.info("*****************Fin Cargando Combo Paises");
@@ -136,6 +146,53 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         logger.info("*****************Fin Ultimo Usuario Ingresado");
     }
     
+    public void editar(){
+        listaControlReadonly.set(0, false);        
+        deshabilitarBotonesEditaroNuevo();
+        logger.info("******************************Iniciamos Edicion de usuarios.");
+        
+        
+    }
+    
+    public void cancelar(){
+        cargarUltimo();
+        listaControlBotones.removeAll(listaControlBotones);
+        iniciarBotones();
+        Utilidad.actualizarElemento("gestionarusuarios");
+        logger.info("******************************Iniciamos Cancelar de usuarios dejando todo como estaba.");
+    }
+    
+    public void deshabilitarBotonesEditaroNuevo(){
+        listaControlBotones.removeAll(listaControlBotones);
+        listaControlBotones.add(0);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        Utilidad.actualizarElemento("gestionarusuarios");
+    }
+    
+    public void nuevo(){
+        listaControlReadonly.set(0, false);        
+        deshabilitarBotonesEditaroNuevo();
+        limpiarObjetos();
+        limpiarSeleccionados();
+        Utilidad.actualizarElemento("gestionarusuarios");
+        logger.info("******************************Iniciamos Creacion de usuarios.");
+    }
+    
+    public void limpiarSeleccionados(){
+        sexoSeleccionado=null;
+        tipoIdentificacionSeleccionada=null;
+        paisSeleccionado=null;
+        departamentoSeleccionado=null;
+        ciudadSeleccionado=null;
+        tipoPersonaSeleccionado=null;
+        cargoSeleccionado=null;
+        catalogoSeleccionado=null;
+        
+    }
+    
     public void cargarUltimo(){
         persona=crudDAO.buscarUltimo(Persona.class);
         sexoSeleccionado=persona.getSexo().getIdSexo();
@@ -147,8 +204,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         longitud=persona.getLongitud();
         rutaFotoCargar=persona.getFoto();
         tipoPersonaSeleccionado=persona.getTipoPersona().getIdTipoPersona();
-        catalogoSeleccionado=persona.getCatalogoVenta().getIdCatalogoVenta();
-        /*cargoSeleccionado=persona.getCargo().getIdCargo();
+        /*catalogoSeleccionado=persona.getCatalogoVenta().getIdCatalogoVenta();
+        cargoSeleccionado=persona.getCargo().getIdCargo();
         
         */
     }
@@ -734,6 +791,19 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         
     }
     
+    public void iniciarBotones(){
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        listaControlBotones.add(0);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+    }
+    
+    public void iniciarReadonly(){
+        listaControlReadonly.add(true);
+        listaControlReadonly.add(false);
+    }
+    
     public void convertirFecha(){
         fechaConvertida=UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
     }
@@ -783,6 +853,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
         fotoSubida = false;
         modMapa = new DefaultMapModel();
+        listaControlBotones=new ArrayList<Integer>();
+        listaControlReadonly = new ArrayList<Boolean>();
 
 
     }
@@ -1210,6 +1282,30 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setFechaConvertida(String fechaConvertida) {
         this.fechaConvertida = fechaConvertida;
     }
+
+    public List<Integer> getListaControlBotones() {
+        return listaControlBotones;
+    }
+
+    public void setListaControlBotones(List<Integer> listaControlBotones) {
+        this.listaControlBotones = listaControlBotones;
+    }
+
+    public List<Boolean> getListaControlReadonly() {
+        return listaControlReadonly;
+    }
+
+    public void setListaControlReadonly(List<Boolean> listaControlReadonly) {
+        this.listaControlReadonly = listaControlReadonly;
+    }
+    
+    
+    
+    
+
+    
+    
+    
 
     
     

@@ -42,10 +42,10 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
             result = true;            
         }
         catch(Exception e){
-            System.err.println("******************* Error en Crear Generico ->" + e.getMessage()+"la causa es la siguiente"+e.getCause().getMessage());            
+//            System.err.println("******************* Error en Crear Generico ->" + e.getMessage()+"la causa es la siguiente"+e.getCause().getMessage());            
             session.beginTransaction().rollback();
             result = false;
-            String causa= UtilidadCadena.partirCadena(e.getCause().getMessage(), 0, 15);            
+            String causa= "";//UtilidadCadena.partirCadena(e.getCause().getMessage(), 0, 15);            
             if(causa.equals("Duplicate entry")){
                 throw new PersonaIdentificacionDuplicadoException("Número De Identificación Usuario Duplicado.");            
             }

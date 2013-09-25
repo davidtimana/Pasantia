@@ -19,7 +19,7 @@ and open the template in the editor.
                     <h:panelGrid columns="1" cellpadding="2" style="margin-left: 3%"  >
                         <p:graphicImage value="#{gestionarUsuarioBean.rutaFotoCargar}" height="160" width="140" id="imgfotoCargar" title="Foto Usuario"/>
                         <p:commandButton value="Cargar Foto" style="margin-left: 7%;#{gestionarUsuarioBean.botonCargar}" actionListener="#{gestionarUsuarioBean.abrirSubirFoto()}"
-                                         id="btncargar" title="clic para subir foto."/>
+                                         id="btncargar" title="clic para subir foto." disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}" />
                         <p:outputLabel id="lblmensajefoto" style="#{gestionarUsuarioBean.lblCargar}" value="#{gestionarUsuarioBean.mensajeCarga}" />
                     </h:panelGrid>
 
@@ -28,27 +28,31 @@ and open the template in the editor.
                         <p:outputLabel value="Primer Nombre: *" style="#{gestionarUsuarioBean.estErrNombre}" id="lblpnombre" />
                         <p:inputText   value="#{gestionarUsuarioBean.persona.pnombre}" 
                                        style="width: 100%;#{gestionarUsuarioBean.estErrNombre}" id="txtpnombre" validatorMessage="Primer Nombre: Solo se permite letras." 
-                                       title="Registre el primer nombre del usuario." >
+                                       title="Registre el primer nombre del usuario." 
+                                       readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
                         
                         <p:outputLabel value="Segundo Nombre: " />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.snombre}" 
                                       style="width: 100%" id="txtsnombre" validatorMessage="Segundo Nombre: Solo se permite letras."
-                                      title="Registre el segundo nombre del usuario.">
+                                      title="Registre el segundo nombre del usuario."
+                                      readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
                         
                         <p:outputLabel value="Primer Apellido: *" style="#{gestionarUsuarioBean.estErrapellido}" id="lblpapellido" />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.papellido}" 
                                       style="width: 100%;#{gestionarUsuarioBean.estErrapellido}" id="txtpapellido" validatorMessage="Primer Apellido Solo se permite letras."
-                                      title="Registre el primer apellido del usuario.">
+                                      title="Registre el primer apellido del usuario."
+                                      readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
 
                         <p:outputLabel value="Segundo Apellido: " />
                         <p:inputText  value="#{gestionarUsuarioBean.persona.sapellido}" style="width: 100%" id="txtsapellido" validatorMessage="Segundo Apellido: Solo se permite letras."
-                                      title="Registre el segundo apellido del usuario."> 
+                                      title="Registre el segundo apellido del usuario."
+                                      readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"> 
                             <f:validateRegex pattern="^[a-zA-Z_áéíóúñ\s]*$" />
                         </p:inputText>
 
@@ -56,7 +60,8 @@ and open the template in the editor.
                         <p:selectOneMenu id="cmbsexper" value="#{gestionarUsuarioBean.sexoSeleccionado}"  
                                          validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
                                          filterMatchMode="startsWith" 
-                                         style="width: 100%;#{gestionarUsuarioBean.estErrsexo}">  
+                                         style="width: 100%;#{gestionarUsuarioBean.estErrsexo}" 
+                                         disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                             <f:selectItem itemLabel="...Seleccione..."  />  
                             <f:selectItems value="#{gestionarUsuarioBean.comboSexo}"  />
                             <p:ajax listener="#{gestionarUsuarioBean.cambiarAvatar()}" />
@@ -66,7 +71,8 @@ and open the template in the editor.
                         <p:selectOneMenu id="cmbTipIdenti" value="#{gestionarUsuarioBean.tipoIdentificacionSeleccionada}"  
                                          validatorMessage="Debe seleccionar Tipo Identificación" effect="fold" filter="true" 
                                          filterMatchMode="startsWith" 
-                                         style="width: 100%;#{gestionarUsuarioBean.estErrtipoidenti}">  
+                                         style="width: 100%;#{gestionarUsuarioBean.estErrtipoidenti}"
+                                         disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                             <f:selectItem itemLabel="...Seleccione..."  />  
                             <f:selectItems value="#{gestionarUsuarioBean.comboTipoIdentificacion}"  />                            
                             <p:ajax listener="#{gestionarUsuarioBean.asignarTipoIdentificacion()}" />
@@ -75,7 +81,8 @@ and open the template in the editor.
                         <p:outputLabel value="N° Identificación *"  style="#{gestionarUsuarioBean.estErrtipoidenti}" id="lblTipnroIdenti"/>
                         <p:inputText  value="#{gestionarUsuarioBean.persona.cedula}" style="width: 100%" id="txtnroidentificacion" 
                                       validatorMessage="N° Identificación: Solo permite Números."
-                                      title="Registre el N° Identificación del usuario."> 
+                                      title="Registre el N° Identificación del usuario."
+                                      readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"> 
                             <f:validateRegex pattern="[0-9]*" />
                         </p:inputText>
 
@@ -83,7 +90,8 @@ and open the template in the editor.
 
                         <p:calendar value="#{gestionarUsuarioBean.persona.fechaNacimiento}"  size="24" 
                                     style="width: 100%;#{gestionarUsuarioBean.estErrfecha}" id="txtfechanacimiento"  
-                                    title="Seleccione fecha nacimiento usuario." navigator="true"  pattern="dd/MM/yyyy">
+                                    title="Seleccione fecha nacimiento usuario." navigator="true"  pattern="dd/MM/yyyy" 
+                                    disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">
                             <p:ajax event="dateSelect" listener="#{gestionarUsuarioBean.convertirFecha()}" />
                         </p:calendar>
                         
@@ -100,20 +108,23 @@ and open the template in the editor.
                     <p:outputLabel value="Telefono: *" style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" id="lbltelefonoper"/>
                     <p:inputMask value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
                                  style="width: 100%;#{gestionarUsuarioBean.estErrtelefono}" validatorMessage="Telefono: Se permite solo numeros del 0-9"
-                                 title="Registre telefono del usuario." mask="(99)-999999"/>                        
+                                 title="Registre telefono del usuario." mask="(99)-999999"
+                                 readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>                        
                     
                     <p:outputLabel value="Movil: *" style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" id="lblmovilper"/>
 
                     <p:inputMask value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
                                  style="width: 100%;#{gestionarUsuarioBean.estErrmovil}" validatorMessage="Telefono Movil: Se permite solo numeros del 0-9"
-                                 title="Registre telefono movil del usuario." mask="999-999-9999"/>                  
+                                 title="Registre telefono movil del usuario." mask="999-999-9999"
+                                 readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>                  
                     
                     
                     <p:outputLabel value="E-mail *" style="width: 100%;#{gestionarUsuarioBean.estErremail}" id="lblemailper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.email}" id="txtemailper" 
                                  style="width: 100%;#{gestionarUsuarioBean.estErremail}"
                                  validatorMessage="Formato E-mail Invalido" 
-                                 title="Registre e-mail del usuario." />                        
+                                 title="Registre e-mail del usuario." 
+                                 readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>                        
                     
 
                 </h:panelGrid>                
@@ -129,7 +140,8 @@ and open the template in the editor.
                     <p:selectOneMenu id="cmbPaisPersona" value="#{gestionarUsuarioBean.paisSeleccionado}"  
                                      validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"  
-                                     style="width: 100%;#{gestionarUsuarioBean.estErrPais}">  
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrPais}"
+                                     disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{gestionarUsuarioBean.comboPais}"  />
                         <p:ajax listener="#{gestionarUsuarioBean.cargardDepartamentoxPais()}" />
@@ -140,7 +152,8 @@ and open the template in the editor.
                                      validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"
                                      disabled="#{gestionarUsuarioBean.deshabilitarDepartamento}"
-                                     style="width: 100%;#{gestionarUsuarioBean.estErrDepartamento}">  
+                                     style="width: 100%;#{gestionarUsuarioBean.estErrDepartamento}">
+                                     
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{gestionarUsuarioBean.comboDepartamento}"  />
                         <p:ajax listener="#{gestionarUsuarioBean.cargarCiudadesxDepartamento()}" />
@@ -163,12 +176,14 @@ and open the template in the editor.
                     <p:outputLabel value="Barrio: *"  style="#{gestionarUsuarioBean.stErrbarrio}" id="lblbarrioper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.barrio}" id="txtbarrioper" 
                                  style="width: 100%;#{gestionarUsuarioBean.stErrbarrio}"
-                                 title="Registre barrio del usuario."/>
+                                 title="Registre barrio del usuario."
+                                 readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"   />
 
                     <p:outputLabel value="Dirección *" style="#{gestionarUsuarioBean.stErrdireccion}" id="lbldireccionper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.direccion}" id="txtdireccionper" 
                                  style="width: 100%;#{gestionarUsuarioBean.stErrdireccion}"
-                                 title="Registre dirección del usuario."/>
+                                 title="Registre dirección del usuario."
+                                 readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>
                 </h:panelGrid>
 
             </p:tab> 
@@ -185,7 +200,8 @@ and open the template in the editor.
 
                     <f:facet name="footer">  
                         <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
-                                style="width:600px;height:400px"  streetView="true" model="#{gestionarUsuarioBean.modMapa}" >                         
+                                style="width:600px;height:400px"  streetView="true" model="#{gestionarUsuarioBean.modMapa}" 
+                                disableDefaultUI="#{gestionarUsuarioBean.listaControlReadonly.get(0)}" >                         
                             <p:ajax event="pointSelect" listener="#{gestionarUsuarioBean.puntoSeleccionadoMapa}" />
                         </p:gmap>   
                     </f:facet>

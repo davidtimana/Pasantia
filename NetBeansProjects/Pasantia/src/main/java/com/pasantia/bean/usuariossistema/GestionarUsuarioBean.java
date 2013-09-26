@@ -21,11 +21,15 @@ import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
+import com.pasantia.excepciones.CorreoInvalidoException;
 import com.pasantia.excepciones.DatosPersonalesPersonaException;
+import com.pasantia.excepciones.CadenaVaciaException;
+import com.pasantia.excepciones.ComboNoSeleccionadoException;
 import com.pasantia.excepciones.FechaNacimientoMenorException;
 import com.pasantia.excepciones.FechaNacimientoPersonaMayorActualException;
 import com.pasantia.excepciones.ImagenNoSelecionadaException;
 import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
+import com.pasantia.excepciones.UbicacionNoSeleccionadaMapaException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import com.pasantia.utilidades.UtilidadCadena;
@@ -221,17 +225,31 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
 
     public String navegarWizard(FlowEvent event) {
-        String pestaña=event.getNewStep();
+        String pestaña = event.getNewStep();
         Utilidad.actualizarElemento("paso1");
         Utilidad.actualizarElemento("paso2");
         if (contadorMapa != 0) {
             zoom = zoom + 3;
         }
-        if(!validarUsuarioBean.validarAccordion(listControlAccordion)){
+        if (!listControlAccordion.get(3)) {
+            try {
+                validarUsuarioBean.validarGeolocalizacionUsuario(contadorMapa);
+                Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente puedo continuar con el paso 2.");
+                listControlAccordion.set(3, true);
+            } catch (UbicacionNoSeleccionadaMapaException e) {
+                tabsSeleccionados = "3";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Geolocalización "
+                        + "Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            }
+        }
+        if (!validarUsuarioBean.validarAccordion(listControlAccordion)) {
             Utilidad.mensajePeligro("SICOVI", "Diligencie primero todos los campos requeridos * antes de continuar.");
-            pestaña="gestionusuarios";
-        }//Prueba bikjkjkc
-        
+            pestaña = "gestionusuarios";
+        }
+
         return pestaña;
     }
 
@@ -254,7 +272,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                     tabsSeleccionados.equals("0,3") ||
                         tabsSeleccionados.equals("1") ||
                             tabsSeleccionados.equals("2") ||
-                                tabsSeleccionados.equals("3")) {            
+                                tabsSeleccionados.equals("3") &&
+                                    !listControlAccordion.get(0)) {            
             try {
 
                 validarUsuarioBean.validarDatosPersonalesUsuario(persona, sexo, tipoIdentificacion,fotoSubida);
@@ -293,6 +312,74 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                         + e.getMessage());
                 logger.info(e.getMessage());
             }
+        } 
+        
+        if (tabsSeleccionados.equals("0,1")
+                && listControlAccordion.get(0)
+                || tabsSeleccionados.equals("1,2")
+                || tabsSeleccionados.equals("1,3")
+                || tabsSeleccionados.equals("1,0,2")
+                || tabsSeleccionados.equals("1,0,3")
+                || tabsSeleccionados.equals("1,0,2,3")) {
+
+            try {
+                validarUsuarioBean.validarDatosDeContactoDeUsuario(persona);
+                tabsSeleccionados = "2";
+                listControlAccordion.set(1, true);
+                Utilidad.actualizarElemento("accordionUsur");
+            } catch (CadenaVaciaException e) {
+                tabsSeleccionados = "1";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos "
+                        + "Contacto Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            } catch (CorreoInvalidoException e) {
+                tabsSeleccionados = "1";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos "
+                        + "Contacto Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            }
+
+        }
+        
+        if (tabsSeleccionados.equals("1,2")
+                && listControlAccordion.get(1)
+                || tabsSeleccionados.equals("2,3")
+                || tabsSeleccionados.equals("2,0,3")
+                || tabsSeleccionados.equals("2,0,1,3")
+                || tabsSeleccionados.equals("2,1,3")){
+            logger.info("entre al if");
+            try {
+                validarUsuarioBean.validarDomicilioUsuario(paisSeleccionado, departamentoSeleccionado, 
+                        ciudadSeleccionado, persona);
+                tabsSeleccionados = "3";
+                Utilidad.actualizarElemento("accordionUsur");
+                listControlAccordion.set(2, true);
+            } catch (ComboNoSeleccionadoException e) {
+                tabsSeleccionados = "2";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio "
+                        + "Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            } catch (CadenaVaciaException e) {
+                tabsSeleccionados = "2";
+                Utilidad.actualizarElemento("accordionUsur");
+                Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Domicilio "
+                        + "Usuario: "
+                        + e.getMessage());
+                logger.info(e.getMessage());
+            }
+        }
+        
+        if (tabsSeleccionados.equals("2,3")
+                && listControlAccordion.get(2)){
+                Utilidad.mensajeInfo("SICOVI", "Por favor busque y haga click en su ubicación actual.");
+                Utilidad.actualizarElemento("mapPersonas");
+            
         }
 
     }
@@ -318,6 +405,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("mapPersonas");
         Utilidad.actualizarElemento("lbllan");
         Utilidad.actualizarElemento("lbllon");
+        Utilidad.mensajeInfo("SICOVI", "La ubicación seleccionada es la siguiente: "
+                + "Latitud: "+latitud+" Longitud: "+longitud);
         logger.log(Level.INFO, "la longitud y la latitud seleccionada es la siguiente{0} y la longitud es--> {1}", new Object[]{coordenadas.getLat(), coordenadas.getLng()});
 
     }

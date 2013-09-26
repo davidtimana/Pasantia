@@ -83,7 +83,8 @@ and open the template in the editor.
                                       id="txtnroidentificacion" 
                                       validatorMessage="N° Identificación: Solo permite Números."
                                       title="Registre el N° Identificación del usuario."
-                                      readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"> 
+                                      readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"
+                                      onkeypress="return permitirSoloNumeros(event);"> 
                             <f:validateRegex pattern="[0-9]*" />
                         </p:inputText>
 
@@ -104,25 +105,31 @@ and open the template in the editor.
             </p:tab>  
             <p:tab title="Datos De Contacto Usuario" id="datoscontacto" >  
 
-                <h:panelGrid columns="6" cellpadding="1" style="width: 100%;text-align: center;" cellspacing="15%"> 
+                <h:panelGrid columns="6" cellpadding="1" 
+                             style="width: 100%;text-align: center;" cellspacing="15%"> 
 
-                    <p:outputLabel value="Telefono: *" style="width: 100%;" id="lbltelefonoper"/>
+                    <p:outputLabel value="Telefono: *" style="width: 100%;#{validarUsuarioBean.estilosError.get(6)}" 
+                                   id="lbltelefonoper"/>
                     <p:inputMask value="#{gestionarUsuarioBean.persona.telefono}" id="txttelefonoper"
-                                 style="width: 100%;" validatorMessage="Telefono: Se permite solo numeros del 0-9"
+                                 style="width: 100%;#{validarUsuarioBean.estilosError.get(6)}" 
+                                 validatorMessage="Telefono: Se permite solo numeros del 0-9"
                                  title="Registre telefono del usuario." mask="(99)-999999"
                                  readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>                        
                     
-                    <p:outputLabel value="Movil: *" style="width: 100%;" id="lblmovilper"/>
+                    <p:outputLabel value="Movil: *" style="width: 100%;#{validarUsuarioBean.estilosError.get(7)}" 
+                                   id="lblmovilper"/>
 
                     <p:inputMask value="#{gestionarUsuarioBean.persona.movil}" id="txtmovilper" 
-                                 style="width: 100%;" validatorMessage="Telefono Movil: Se permite solo numeros del 0-9"
+                                 style="width: 100%;#{validarUsuarioBean.estilosError.get(7)}" 
+                                 validatorMessage="Telefono Movil: Se permite solo numeros del 0-9"
                                  title="Registre telefono movil del usuario." mask="999-999-9999"
                                  readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>                  
                     
                     
-                    <p:outputLabel value="E-mail *" style="width: 100%;" id="lblemailper"/>
+                    <p:outputLabel value="E-mail *" style="width: 100%;#{validarUsuarioBean.estilosError.get(8)}" 
+                                   id="lblemailper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.email}" id="txtemailper" 
-                                 style="width: 100%;"
+                                 style="width: 100%;#{validarUsuarioBean.estilosError.get(8)}"
                                  validatorMessage="Formato E-mail Invalido" 
                                  title="Registre e-mail del usuario." 
                                  readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>                        
@@ -137,35 +144,38 @@ and open the template in the editor.
 
                 <h:panelGrid columns="6" cellpadding="2" style="width: 100%;text-align: center" cellspacing="15%">
 
-                    <p:outputLabel value="País: *" style="width: 100%;" id="lblPaisPersona"/>
+                    <p:outputLabel value="País: *" style="width: 100%;#{validarUsuarioBean.estilosError.get(9)}" 
+                                   id="lblPaisPersona"/>
                     <p:selectOneMenu id="cmbPaisPersona" value="#{gestionarUsuarioBean.paisSeleccionado}"  
                                      validatorMessage="Debe seleccionar País" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"  
-                                     style="width: 100%;"
+                                     style="width: 100%;#{validarUsuarioBean.estilosError.get(9)}"
                                      disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{gestionarUsuarioBean.comboPais}"  />
                         <p:ajax listener="#{gestionarUsuarioBean.cargardDepartamentoxPais()}" />
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="Departamento : * " style="" id="lbldepartamentobper"/>
+                    <p:outputLabel value="Departamento : * " style="#{validarUsuarioBean.estilosError.get(10)}" 
+                                   id="lbldepartamentobper"/>
                     <p:selectOneMenu id="cmbdepartamentobper" value="#{gestionarUsuarioBean.departamentoSeleccionado}"  
                                      validatorMessage="Debe seleccionar Departamento" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"
                                      disabled="#{gestionarUsuarioBean.deshabilitarDepartamento}"
-                                     style="width: 100%;">
+                                     style="width: 100%;#{validarUsuarioBean.estilosError.get(10)}">
                                      
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{gestionarUsuarioBean.comboDepartamento}"  />
                         <p:ajax listener="#{gestionarUsuarioBean.cargarCiudadesxDepartamento()}" />
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="Ciudad : * " style="" id="lblciudadbper"/>
+                    <p:outputLabel value="Ciudad : * " style="#{validarUsuarioBean.estilosError.get(11)}" 
+                                   id="lblciudadbper"/>
                     <p:selectOneMenu id="cmbciudadbper" value="#{gestionarUsuarioBean.ciudadSeleccionado}"  
                                      validatorMessage="Debe seleccionar Ciudad" effect="fold" filter="true" 
                                      filterMatchMode="startsWith"
                                      disabled="#{gestionarUsuarioBean.deshabilitarCiudad}"
-                                     style="width: 100%;">  
+                                     style="width: 100%;#{validarUsuarioBean.estilosError.get(11)}">  
                         <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                         <f:selectItems value="#{gestionarUsuarioBean.comboCiudades}"  />           
                         <p:ajax listener="#{gestionarUsuarioBean.cambiarMapaxCiudad()}" />
@@ -174,15 +184,17 @@ and open the template in the editor.
 
 
 
-                    <p:outputLabel value="Barrio: *"  style="" id="lblbarrioper"/>
+                    <p:outputLabel value="Barrio: *"  style="#{validarUsuarioBean.estilosError.get(12)}" 
+                                   id="lblbarrioper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.barrio}" id="txtbarrioper" 
-                                 style="width: 100%;"
+                                 style="width: 100%;#{validarUsuarioBean.estilosError.get(12)}"
                                  title="Registre barrio del usuario."
                                  readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"   />
 
-                    <p:outputLabel value="Dirección *" style="" id="lbldireccionper"/>
+                    <p:outputLabel value="Dirección *" style="#{validarUsuarioBean.estilosError.get(13)}" 
+                                   id="lbldireccionper"/>
                     <p:inputText value="#{gestionarUsuarioBean.persona.direccion}" id="txtdireccionper" 
-                                 style="width: 100%;"
+                                 style="width: 100%;#{validarUsuarioBean.estilosError.get(13)}"
                                  title="Registre dirección del usuario."
                                  readonly="#{gestionarUsuarioBean.listaControlReadonly.get(0)}"/>
                 </h:panelGrid>
@@ -192,16 +204,22 @@ and open the template in the editor.
             <p:tab title="Geolocalización Usuario" >
 
 
-                <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;" id="geomapa" >                                    
-                    <p:outputLabel value="Latitud: " style="font-weight:bold;"/>
+                <p:panelGrid columns="4" 
+                             style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;
+                             #{validarUsuarioBean.estilosError.get(14)}" 
+                             id="geomapa" >                                    
+                    <p:outputLabel value="Latitud: " 
+                                   style="font-weight:bold;#{validarUsuarioBean.estilosError.get(14)}"/>
                     <p:outputLabel value="#{gestionarUsuarioBean.latitud}" id="lbllan"/>
 
-                    <p:outputLabel value="Longitud " style="font-weight:bold;"/>
+                    <p:outputLabel value="Longitud " 
+                                   style="font-weight:bold;#{validarUsuarioBean.estilosError.get(14)}"/>
                     <p:outputLabel value="#{gestionarUsuarioBean.longitud}" id="lbllon"/>               
 
                     <f:facet name="footer">  
                         <p:gmap id="mapPersonas" center="#{gestionarUsuarioBean.latitud}, #{gestionarUsuarioBean.longitud}" zoom="#{gestionarUsuarioBean.zoom}" type="ROADMAP" 
-                                style="width:600px;height:400px"  streetView="true" model="#{gestionarUsuarioBean.modMapa}" 
+                                style="width:600px;height:400px"  
+                                streetView="true" model="#{gestionarUsuarioBean.modMapa}" 
                                 disableDefaultUI="#{gestionarUsuarioBean.listaControlReadonly.get(0)}" >                         
                             <p:ajax event="pointSelect" listener="#{gestionarUsuarioBean.puntoSeleccionadoMapa}" />
                         </p:gmap>   

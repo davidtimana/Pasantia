@@ -5,15 +5,21 @@
 package com.pasantia.bean.usuariossistema;
 
 import com.pasantia.dao.CrudDAO;
+import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
+import com.pasantia.excepciones.CadenaVaciaException;
+import com.pasantia.excepciones.ComboNoSeleccionadoException;
+import com.pasantia.excepciones.CorreoInvalidoException;
 import com.pasantia.excepciones.DatosPersonalesPersonaException;
 import com.pasantia.excepciones.FechaNacimientoMenorException;
 import com.pasantia.excepciones.FechaNacimientoPersonaMayorActualException;
 import com.pasantia.excepciones.ImagenNoSelecionadaException;
 import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
+import com.pasantia.excepciones.UbicacionNoSeleccionadaMapaException;
 import com.pasantia.utilidades.Utilidad;
+import com.pasantia.utilidades.UtilidadCadena;
 import com.pasantia.utilidades.UtilidadFecha;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -62,6 +68,138 @@ public class ValidarUsuarioBean implements Serializable {
         validarFechaNacimiento(p.getFechaNacimiento(), "lblfechanacimiento", "txtfechanacimiento", 5,ti);        
         validarFechaMenosaActual(p.getFechaNacimiento(), "lblfechanacimiento", "txtfechanacimiento", 5);
         validarImagenCargada(imagenCargada);
+    }
+    
+    public void validarDatosDeContactoDeUsuario(Persona p) 
+            throws CorreoInvalidoException, CadenaVaciaException{
+         validarCadenasVacias(p.getTelefono(), "lbltelefonoper", "txttelefonoper",
+                 6, "Telefono requerido.");
+         validarCadenasVacias(p.getMovil(), "lblmovilper", "txtmovilper",
+                 7, "Telefono Movil requerido.");
+         validarCadenasVacias(p.getEmail(), "lblemailper", "txtemailper",
+                 8, "Email requerido.");
+         validarCorreoValido(p.getEmail(), "lblemailper", "txtemailper", 8);
+    }
+    
+   
+    public void validarDomicilioUsuario(Integer paisSelect,Integer departamentoSelect,
+            Integer ciudadSelect, Persona p) 
+            throws ComboNoSeleccionadoException, CadenaVaciaException{
+        validarComboNoSeleccionado(paisSelect, "lblPaisPersona", "cmbPaisPersona", 9, 
+                "País No Seleccionado");
+        validarComboNoSeleccionado(departamentoSelect, "lbldepartamentobper", "cmbdepartamentobper", 10, 
+                "Departamento No Seleccionado");
+        validarComboNoSeleccionado(ciudadSelect, "lblciudadbper", "cmbciudadbper", 11, 
+                "Ciudad No Seleccionado");
+        validarCadenasVacias(p.getBarrio(), "lblbarrioper", "txtbarrioper", 12, 
+                "Barrio requerido.");
+        validarCadenasVacias(p.getDireccion(), "lbldireccionper", "txtdireccionper", 13, 
+                "Dirección requerido.");       
+        
+    }
+    
+    public void validarGeolocalizacionUsuario(int bandera) throws UbicacionNoSeleccionadaMapaException{
+          if (bandera==0) {
+            estilosError.set(14, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento("geomapa");            
+            throw new UbicacionNoSeleccionadaMapaException("No se ha seleccionado su ubicación actual en el mapa.");
+        } else {
+            estilosError.set(14, "");            
+            Utilidad.actualizarElemento("geomapa");
+        }
+    }
+    
+    /**
+     * Metodo que se encarga de validar cualquier si el
+     * combo se selecciono o no.
+     * @param select
+     *          Value del combo.
+     * @param idLbl
+     *          Id del label de la informacion del campo
+     *          para ser actualizado y cambiar sus estilos
+     *          a clase error.
+     * @param idtxt
+     *          Id del textbox del registro del campo
+     *          para ser actualizado y cambiar sus 
+     *          estilos a clase error.
+     * @param  posEstilo
+     *          Pocision del array en donde se encuentra
+     *          el estilo correspondiente para este campo.
+     * @param  mensaje
+     *          Mensaje que arroja la excepcion en caso
+     *          de que la cadena este vacia.
+     * @exception ComboNoSeleccionadoException
+     *          Si la cadena esta vacia
+     * @author David Timana
+     * @since 1.0
+     */   
+    public void validarComboNoSeleccionado(Integer select, String idLbl, String idtxt, 
+            Integer posEstilo, String mensaje) throws ComboNoSeleccionadoException 
+              
+             {
+        if (select==null) {
+            estilosError.set(posEstilo, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento(idLbl);
+            Utilidad.actualizarElemento(idtxt);
+            throw new ComboNoSeleccionadoException(mensaje);
+        } else {
+            estilosError.set(posEstilo, "");            
+            Utilidad.actualizarElemento(idLbl);
+            Utilidad.actualizarElemento(idtxt);
+        }
+    }
+    
+    /**
+     * Metodo que se encarga de validar cualquier campo string.
+     * @param cadena
+     *          Campo a validar.
+     * @param idLbl
+     *          Id del label de la informacion del campo
+     *          para ser actualizado y cambiar sus estilos
+     *          a clase error.
+     * @param idtxt
+     *          Id del textbox del registro del campo
+     *          para ser actualizado y cambiar sus 
+     *          estilos a clase error.
+     * @param  posEstilo
+     *          Pocision del array en donde se encuentra
+     *          el estilo correspondiente para este campo.
+     * @param  mensaje
+     *          Mensaje que arroja la excepcion en caso
+     *          de que la cadena este vacia.
+     * @exception CadenaVaciaException
+     *          Si la cadena esta vacia
+     * @author David Timana
+     * @since 1.0
+     */    
+    public void validarCadenasVacias(String cadena, String idLbl, String idtxt, 
+            Integer posEstilo, String mensaje) 
+            throws CadenaVaciaException 
+             {
+        if (Utilidad.cadenaVacia(cadena)) {
+            estilosError.set(posEstilo, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento(idLbl);
+            Utilidad.actualizarElemento(idtxt);
+            throw new CadenaVaciaException(mensaje);
+        } else {
+            estilosError.set(posEstilo, "");            
+            Utilidad.actualizarElemento(idLbl);
+            Utilidad.actualizarElemento(idtxt);
+        }
+    }
+    
+    public void validarCorreoValido(String correo,String idLbl,String idtxt,Integer posEstilo) throws CorreoInvalidoException{
+        if (!UtilidadCadena.esUnCorreoElectronico(correo)) {
+            estilosError.set(posEstilo, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento(idLbl);
+            Utilidad.actualizarElemento(idtxt);
+            throw new CorreoInvalidoException("El Correo Ingresado no es valido. Ej. alguien@gmail.com");
+        } else {
+            estilosError.set(posEstilo, "");
+            Utilidad.actualizarElemento("txtpapellido");
+            Utilidad.actualizarElemento(idLbl);
+            Utilidad.actualizarElemento(idtxt);
+        }
     }
 
     public Boolean validarPrimerNombre(String nombre, String idTxt, String idLbl, int posEstilo) 
@@ -262,6 +400,15 @@ public class ValidarUsuarioBean implements Serializable {
 
     @PostConstruct
     public void cargarEstilosSinError() {
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
         estilosError.add("");
         estilosError.add("");
         estilosError.add("");

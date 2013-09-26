@@ -26,11 +26,29 @@ $(document).ready(function() {
    
    
 });
+//Fin jquery
 
 function clickpestañaPersonales(){
     $("#datperusu").click();
 }
-//Fin jquery
+
+function permitirSoloNumeros(e) {
+    var tecla;
+	tecla = (document.all) ? e.keyCode : e.which;        
+	if (tecla == 8) {
+		return true; // Tecla de retroceso (para poder borrar)
+	}
+	var patron = /d/;
+        var te;
+        if(tecla>=48 && tecla <=57){
+            te = String.fromCharCode(tecla);            
+            return true;
+        }else{
+            te="";
+            return false;
+        }              
+	
+}
 
 
 

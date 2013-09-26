@@ -5,6 +5,7 @@
 package com.pasantia.bean.usuariossistema;
 
 import com.pasantia.entidades.Persona;
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.model.ListDataModel;
 import org.primefaces.model.SelectableDataModel;
@@ -13,7 +14,7 @@ import org.primefaces.model.SelectableDataModel;
  *
  * @author David Timana
  */
-public class ModeloUsuarios extends ListDataModel<Persona> implements SelectableDataModel<Persona>{
+public class ModeloUsuarios extends ListDataModel<Persona> implements SelectableDataModel<Persona>, Serializable{
 
     @Override
     public Object getRowKey(Persona t) {

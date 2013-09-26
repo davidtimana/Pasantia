@@ -4,11 +4,13 @@
  */
 package com.pasantia.bean.configpuntoventa.divisiones;
 
+import java.io.Serializable;
+
 /**
  *
  * @author david
  */
-public class DepartamentoTemp {
+public class DepartamentoTemp implements Serializable{
     
     private Integer idDepartamento;
     private String nombreDepartamento;

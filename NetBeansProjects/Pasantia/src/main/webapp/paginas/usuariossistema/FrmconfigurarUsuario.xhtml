@@ -14,11 +14,13 @@ and open the template in the editor.
 
         <h:panelGrid columns="2" cellpadding="1" style="width: 40%;text-align: center;margin-left: auto;margin-right: auto">
 
-            <p:outputLabel value="Tipo Persona *" style="text-align: right" />
+            <p:outputLabel value="Tipo Persona *" 
+                           style="text-align: right;#{validarUsuarioBean.estilosError.get(15)}" 
+                           id="lbltipper"/>
             <p:selectOneMenu id="cmbTipoPersona" value="#{gestionarUsuarioBean.tipoPersonaSeleccionado}"  
                              validatorMessage="Debe seleccionar Tipo Persona" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  
-                             style="width: 40%;" 
+                             style="width: 40%;#{validarUsuarioBean.estilosError.get(15)}" 
                              disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                 <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                 <f:selectItems value="#{gestionarUsuarioBean.comboTipoPersonas}"  />                        
@@ -28,18 +30,26 @@ and open the template in the editor.
 
         <h:panelGrid columns="2" cellpadding="1" style="width: 40%;text-align: center;margin-left: auto;margin-right: auto" >
 
-            <p:outputLabel value="Cargo *" style="#{gestionarUsuarioBean.ocultarCargo};text-align: right" id="lblcargo"/>
+            <p:outputLabel value="Cargo *" 
+                           style="#{gestionarUsuarioBean.ocultarCargo};
+                           #{validarUsuarioBean.estilosError.get(16)};
+                           text-align: right" 
+                           id="lblcargo"/>
             <p:selectOneMenu id="cmbCargo" value="#{gestionarUsuarioBean.cargoSeleccionado}"  
                              validatorMessage="Debe seleccionar Cargo" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  
-                             style="width: 40%;#{gestionarUsuarioBean.ocultarCargo}" 
+                             style="width: 40%;
+                             #{gestionarUsuarioBean.ocultarCargo}" 
                              disabled="#{gestionarUsuarioBean.listaControlReadonly.get(0)}">  
                 <f:selectItem itemLabel="...Seleccione..." itemValue=""  />  
                 <f:selectItems value="#{gestionarUsuarioBean.comboCargos}"  />                        
                 <p:ajax listener="#{gestionarUsuarioBean.asignarCargo()}" />
             </p:selectOneMenu>
 
-            <p:outputLabel value="Catalogo Venta *" style="#{gestionarUsuarioBean.ocultarCatalogo};text-align: right" id="lblcatalogo" />
+            <p:outputLabel value="Catalogo Venta *" style="#{gestionarUsuarioBean.ocultarCatalogo};
+                           text-align: right;
+                           #{validarUsuarioBean.estilosError.get(17)}" 
+                           id="lblcatalogo" />
             <p:selectOneMenu id="cmbCatalogos" value="#{gestionarUsuarioBean.catalogoSeleccionado}"  
                              validatorMessage="Debe seleccionar Cargo" effect="fold" filter="true" 
                              filterMatchMode="startsWith"  

@@ -5,10 +5,13 @@
 package com.pasantia.bean.usuariossistema;
 
 import com.pasantia.dao.CrudDAO;
+import com.pasantia.entidades.Cargo;
+import com.pasantia.entidades.CatalogoVenta;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
+import com.pasantia.entidades.TipoPersona;
 import com.pasantia.excepciones.CadenaVaciaException;
 import com.pasantia.excepciones.ComboNoSeleccionadoException;
 import com.pasantia.excepciones.CorreoInvalidoException;
@@ -54,6 +57,48 @@ public class ValidarUsuarioBean implements Serializable {
     @Inject
     GuardarSinFotoBean guardarSinFotoBean;
 
+    public void validarConfiguracionUsuarioPaso2(TipoPersona tipoPersona,
+            CatalogoVenta catalogoVenta, Cargo cargo)
+            throws ComboNoSeleccionadoException {
+
+        if (Utilidad.cadenaVacia(tipoPersona.getNombreTipoPersona())) {
+            estilosError.set(15, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento("lbltipper");
+            Utilidad.actualizarElemento("cmbTipoPersona");
+            throw new ComboNoSeleccionadoException("Selección tipo persona requerido.");
+        } else {
+            estilosError.set(15, "");
+            Utilidad.actualizarElemento("lbltipper");
+            Utilidad.actualizarElemento("cmbTipoPersona");
+            if (tipoPersona.getNombreTipoPersona().equals("Vendedor Proveedor")) {
+                if (Utilidad.cadenaVacia(catalogoVenta.getDescripcion())) {
+                    estilosError.set(17, Utilidad.estilosErrorInput());
+                    Utilidad.actualizarElemento("lblcatalogo");
+                    throw new ComboNoSeleccionadoException("Selección catalogo venta requerido.");
+                } else {
+                    estilosError.set(17, "");
+                    Utilidad.actualizarElemento("lblcatalogo");
+                }
+            } else {
+
+                if (tipoPersona.getNombreTipoPersona().equals("Vendedor Casino Externo")
+                        || tipoPersona.getNombreTipoPersona().equals("Cliente Externo")) {
+                } else {
+
+                    if (Utilidad.cadenaVacia(cargo.getDescripcion())) {
+                        estilosError.set(16, Utilidad.estilosErrorInput());
+                        Utilidad.actualizarElemento("lblcargo");
+                        throw new ComboNoSeleccionadoException("Selección cargo requerido.");
+
+                    } else {
+                        estilosError.set(16, "");
+                        Utilidad.actualizarElemento("lblcargo");
+                    }
+                }
+            }
+        }
+    }
+    
     public void validarDatosPersonalesUsuario(Persona p, Sexo s, TipoIdentificacion ti,Boolean imagenCargada) 
             throws DatosPersonalesPersonaException, 
             PersonaIdentificacionDuplicadoException, 
@@ -400,6 +445,9 @@ public class ValidarUsuarioBean implements Serializable {
 
     @PostConstruct
     public void cargarEstilosSinError() {
+        estilosError.add("");
+        estilosError.add("");
+        estilosError.add("");
         estilosError.add("");
         estilosError.add("");
         estilosError.add("");

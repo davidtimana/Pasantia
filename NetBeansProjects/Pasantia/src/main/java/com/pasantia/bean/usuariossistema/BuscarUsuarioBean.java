@@ -8,6 +8,7 @@ import com.pasantia.dao.CrudDAO;
 import com.pasantia.entidades.Persona;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
+import java.io.InputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -16,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -29,6 +32,7 @@ public class BuscarUsuarioBean implements Serializable {
     private List<Persona> personas;    
     private ModeloUsuarios modeloUsuarios;
     private Persona personaSeleccionada;
+    private StreamedContent foto;
     
     @Inject
     CrudDAO<Persona> crudDAO;
@@ -56,9 +60,20 @@ public class BuscarUsuarioBean implements Serializable {
         Utilidad.actualizarElemento("dlgbuscadorusuarios");
     }
     
+    public StreamedContent getFoto(String ruta) {
+        log.log(Level.INFO, "la ruta de la foto es la siguiente-->{0}", ruta);
+        InputStream stream = this.getClass().getResourceAsStream(ruta);
+        foto = new DefaultStreamedContent(stream, "image/jpeg");
+        return null;
+    }
+    
     public void cargarBuscador(){        
         personas=crudDAO.buscarTodos(Persona.class);
         modeloUsuarios=new ModeloUsuarios(personas);        
+    }
+    
+    public void cargarImagen(){
+        
     }
     
     public Integer totalUsuarios(){
@@ -108,6 +123,16 @@ public class BuscarUsuarioBean implements Serializable {
     public void setPersonaSeleccionada(Persona personaSeleccionada) {
         this.personaSeleccionada = personaSeleccionada;
     }
+
+    public StreamedContent getFoto() {
+        return foto;
+    }
+
+    public void setFoto(StreamedContent foto) {
+        this.foto = foto;
+    }
+    
+    
     
     
     

@@ -161,7 +161,7 @@ public final class UtilidadFecha {
     public static Calendar dateToCalendar(Date date) {
         Calendar cal = null;
         try {
-            DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             date = (Date) formatter.parse(date.toString());
             cal = Calendar.getInstance();
             cal.setTime(date);

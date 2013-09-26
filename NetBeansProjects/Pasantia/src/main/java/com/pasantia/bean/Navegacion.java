@@ -31,9 +31,7 @@ public class Navegacion implements Serializable{
     @Inject
     UbicacionBean ubicacionBean;
     @Inject
-    CategoriaBean categoriaBean;
-    @Inject
-    RolBean rolBean;
+    CategoriaBean categoriaBean;    
     @Inject
     DivisionesBean divisionesBean;
     
@@ -65,9 +63,8 @@ public class Navegacion implements Serializable{
     public String ir_a_Listar_Variaciones(){
         return "listarvariaciones";
     }
-    public String ir_a_Gestionar_Roles(){
-        rolBean.cargarRoles();
-        return "gestionarroles";
+    public String ir_a_Gestionar_Roles(){        
+        return "gestionroles";
     }
     public String ir_a_Listar_Roles(){        
         return "listarroles";

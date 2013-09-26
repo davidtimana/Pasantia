@@ -81,7 +81,7 @@ public class AgregarUsuarioBean implements Serializable{
             p.setCiudad(c);
             p.setTipoPersona(tp);
             if (!Utilidad.cadenaVacia(nombreFoto)) {
-                p.setFoto("../../" + nombreFoto);
+                p.setFoto("../../temp/" + nombreFoto);
             }
             p.setLatitud(latitud);
             p.setLongitud(longitud);

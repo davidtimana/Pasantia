@@ -63,8 +63,8 @@
         </navigation-case>
         <navigation-case>
             <from-action>#{navegacion.ir_a_Gestionar_Roles()}</from-action> 
-            <from-outcome>gestionarroles</from-outcome>
-            <to-view-id>/paginas/accesoyseguridad/GestionarRoles.xhtml</to-view-id>
+            <from-outcome>gestionroles</from-outcome>
+            <to-view-id>/paginas/accesoyseguridad/GestionRoles.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{navegacion.ir_a_Listar_Roles()}</from-action> 

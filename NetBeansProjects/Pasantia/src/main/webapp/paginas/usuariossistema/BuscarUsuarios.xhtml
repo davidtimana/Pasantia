@@ -18,7 +18,7 @@ and open the template in the editor.
             <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
 
                 <p:dataTable id="tblusuarios" var="usuarios" value="#{buscarUsuarioBean.modeloUsuarios}" sortMode="multiple"  emptyMessage="No hay Usuarios disponibles"
-                             paginator="true" rows="5" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             paginator="true" rows="3" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                              {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                              selection="#{buscarUsuarioBean.personaSeleccionada}" selectionMode="single">
                     
@@ -29,8 +29,7 @@ and open the template in the editor.
                     </f:facet>
                     
                     <p:column headerText="Foto" style="text-align: center"  >  
-                        <p:graphicImage value="#{usuarios.foto}" height="120" width="100" title="Foto Usuario"/>
-                        #{usuarios.foto}
+                        <p:graphicImage value="#{usuarios.foto}" height="120" width="100" title="Foto Usuario"/>                        
                     </p:column>
                    
                     <p:column headerText="Nombre" style="text-align: center" sortBy="#{usuarios.pnombre}" filterBy="#{usuarios.pnombre}" >  

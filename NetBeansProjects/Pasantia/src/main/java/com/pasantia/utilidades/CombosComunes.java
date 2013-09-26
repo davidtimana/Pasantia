@@ -152,6 +152,7 @@ public class CombosComunes {
     }
 
     private void cargarDepartamentos(Integer idPais) {
+        departamentos = new ArrayList<Departamento>();
         departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);        
     }
 

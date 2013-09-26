@@ -4,6 +4,7 @@
  */
 package com.pasantia.bean.usuariossistema;
 
+import com.pasantia.bean.Navegacion;
 import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.PaisDAO;
 import com.pasantia.dao.PersonaDAO;
@@ -17,6 +18,7 @@ import com.pasantia.entidades.TipoPersona;
 import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
@@ -46,7 +50,13 @@ public class AgregarUsuarioBean implements Serializable{
     @Inject
     GuardarSinFotoBean guardarSinFotoBean;
     @Inject
-    CrudDAO crudDAO;
+    CrudDAO<Persona> crudDAO;
+    @Inject
+    CrudDAO<CatalogoVenta> crudDAO1;
+    @Inject
+    CrudDAO<Cargo> crudDAO2;
+    @Inject
+    GestionarUsuarioBean gestionarUsuarioBean;
     
     @PostConstruct
     public void Init(){
@@ -70,8 +80,11 @@ public class AgregarUsuarioBean implements Serializable{
      * @return Mensaje de guardado correcto o no.
      */
     public void guardarUsuario(Persona p, Ciudad c, Sexo s, TipoIdentificacion ti, TipoPersona tp,
-            Cargo ca, CatalogoVenta cv, String nombreFoto, Boolean fotoSubida, Double latitud, Double longitud) {
+            Cargo ca, CatalogoVenta cv, String nombreFoto, Boolean fotoSubida, Double latitud, Double longitud,
+            Boolean estaEditando) 
+            throws IOException, InterruptedException {
 
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         log.log(Level.INFO, "************Iniciando a guardar la persona: {0}", p.getPnombre());
 
         if (fotoSubida) {
@@ -82,33 +95,52 @@ public class AgregarUsuarioBean implements Serializable{
             p.setTipoPersona(tp);
             if (!Utilidad.cadenaVacia(nombreFoto)) {
                 p.setFoto("../../temp/" + nombreFoto);
+            }else{
+                if(p.getSexo().getNombreSexo().equals("Masculino")){
+                    p.setFoto("../../FotosUsuarios/sinfotoh.jpeg");
+                }else{
+                    p.setFoto("../../FotosUsuarios/sinfotom.jpeg");
+                }
             }
             p.setLatitud(latitud);
             p.setLongitud(longitud);
             
-            log.log(Level.INFO, "**************El tipo de persona seleccionado es el siguiente---->{0}", tp.getNombreTipoPersona());
-            if (tp.getNombreTipoPersona().equals("Vendedor Proveedor")) {
-                cv=null;
-            } 
-            if(tp.getNombreTipoPersona().equals("Cliente Externo") || tp.getNombreTipoPersona().equals("Vendedor Casino Externo")){
-                ca=null;
-            }
+           if(Utilidad.cadenaVacia(cv.getDescripcion())){
+               cv=crudDAO1.buscarxAlgunCampoString(CatalogoVenta.class, "descripcion", "No aplica");
+           }
+           if(Utilidad.cadenaVacia(ca.getDescripcion())){
+               ca=crudDAO2.buscarxAlgunCampoString(Cargo.class, "descripcion", "NO APLICA");
+           }
             
             p.setCatalogoVenta(cv);
             p.setCargo(ca);
 
-            try {
-                if (crudDAO.crear(p)) {
-                    Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Guardado Correctamente");
-                }else{
-                    Utilidad.mensajeError("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". No se pudo Guardar.");
+            if (estaEditando) {
+                if (crudDAO.editar(p)) {                    
+                    Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Actualizado Correctamente");
+                    gestionarUsuarioBean.cancelar();                    
+                    Thread.sleep(3000);
+                    ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
+                    
+                } else {
+                    Utilidad.mensajeError("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". No se pudo Actualizar.");
                 }
 
-            } catch (PersonaIdentificacionDuplicadoException e) {
-                Utilidad.mensajeError("SICOVI", e.getMessage());
-            }catch(Exception e){
-                log.log(Level.INFO, "Error al guardar el error es el siguiente-->{0}", e.getMessage());
+            } else {
+                if (crudDAO.crear(p)) {
+                    Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Guardado Correctamente");
+                    gestionarUsuarioBean.cancelar();                    
+                    Thread.sleep(3000);
+                    ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
+                    
+                } else {
+                    Utilidad.mensajeError("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". No se pudo Guardar.");
+                }
             }
+            
+                
+
+           
 
         } else {
             log.info("***********Foto Nooooo subida");

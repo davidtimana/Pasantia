@@ -36,6 +36,8 @@ public class BuscarUsuarioBean implements Serializable {
     
     @Inject
     CrudDAO<Persona> crudDAO;
+    @Inject
+    GestionarUsuarioBean gestionarUsuarioBean;
     
     private static Logger log = Logger.getLogger(BuscarUsuarioBean.class.getName());
     
@@ -58,15 +60,12 @@ public class BuscarUsuarioBean implements Serializable {
         log.log(Level.INFO, "La persona seleccionada es la siguiente-->{0}", personaSeleccionada.getPnombre());
         buscador=false;
         Utilidad.actualizarElemento("dlgbuscadorusuarios");
+        gestionarUsuarioBean.cargarObjetoPersona(personaSeleccionada);
+        Utilidad.actualizarElemento("gestionarusuarios");
+        log.log(Level.INFO, "*******************Cargando objeto buscando-->{0}", personaSeleccionada.getPnombre());
     }
     
-    public StreamedContent getFoto(String ruta) {
-        log.log(Level.INFO, "la ruta de la foto es la siguiente-->{0}", ruta);
-        InputStream stream = this.getClass().getResourceAsStream(ruta);
-        foto = new DefaultStreamedContent(stream, "image/jpeg");
-        return null;
-    }
-    
+        
     public void cargarBuscador(){        
         personas=crudDAO.buscarTodos(Persona.class);
         modeloUsuarios=new ModeloUsuarios(personas);        

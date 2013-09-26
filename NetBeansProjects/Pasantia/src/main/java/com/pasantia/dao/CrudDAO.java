@@ -25,7 +25,7 @@ public interface CrudDAO<T> {
      *
      * @param entity objeto a almacenar
      */
-    public Boolean crear(T entity) throws PersonaIdentificacionDuplicadoException;
+    public Boolean crear(T entity);
 
     
 

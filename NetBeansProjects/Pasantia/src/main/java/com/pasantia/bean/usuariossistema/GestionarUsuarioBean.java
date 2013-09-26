@@ -89,6 +89,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private List<Boolean> listaControlReadonly;
     private String tabsSeleccionados;
     private List<Boolean> listControlAccordion;
+    private Boolean estaEditando;
     private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
     
     @Inject
@@ -161,9 +162,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     }
     
     public void editar(){
+        estaEditando=true;
         listaControlReadonly.set(0, false);        
         deshabilitarBotonesEditaroNuevo();
-        logger.info("******************************Iniciamos Edicion de usuarios.");
+        logger.log(Level.INFO, "******************************Iniciamos Edicion de usuarios.{0}", estaEditando);
         
         
     }
@@ -172,6 +174,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         cargarUltimo();
         listaControlBotones.removeAll(listaControlBotones);
         iniciarBotones();
+        tabsSeleccionados="0";
         Utilidad.actualizarElemento("gestionarusuarios");
         logger.info("******************************Iniciamos Cancelar de usuarios dejando todo como estaba.");
     }
@@ -186,12 +189,16 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("gestionarusuarios");
     }
     
-    public void nuevo(){
-        listaControlReadonly.set(0, false);        
+    public void nuevo() {
+        estaEditando = false;
+        listaControlReadonly.set(0, false);
         deshabilitarBotonesEditaroNuevo();
         limpiarObjetos();
         limpiarSeleccionados();
-        Utilidad.actualizarElemento("gestionarusuarios");
+        fotoSubida = false;
+        contadorMapa = 0;
+        zoom=6;
+        Utilidad.actualizarElemento("gestionarusuarios");        
         logger.info("******************************Iniciamos Creacion de usuarios.");
     }
     
@@ -207,21 +214,39 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         
     }
     
-    public void cargarUltimo(){
-        persona=crudDAO.buscarUltimo(Persona.class);
+    public void cargarObjetoPersona(Persona p){
+        persona=p;
         sexoSeleccionado=persona.getSexo().getIdSexo();
-        tipoIdentificacionSeleccionada=persona.getTipoIdentificacion().getIdTipoIdentificacion();
-        paisSeleccionado=persona.getCiudad().getDepartamento().getPais().getIdPais();
-        departamentoSeleccionado=persona.getCiudad().getDepartamento().getIdDepartamento();
-        ciudadSeleccionado=persona.getCiudad().getIdCiudad();
+        asignarSexo();
+        tipoIdentificacionSeleccionada=persona.getTipoIdentificacion().getIdTipoIdentificacion();        
+        asignarTipoIdentificacion();
+        paisSeleccionado=persona.getCiudad().getDepartamento().getPais().getIdPais();        
+        cargarComboDepartamento(paisSeleccionado);
+        departamentoSeleccionado=persona.getCiudad().getDepartamento().getIdDepartamento();        
+        ciudadSeleccionado=persona.getCiudad().getIdCiudad();        
+        cargarComboCiudad(departamentoSeleccionado);
+        asignarCiudad();
         latitud=persona.getLatitud();
         longitud=persona.getLongitud();
         rutaFotoCargar=persona.getFoto();
         tipoPersonaSeleccionado=persona.getTipoPersona().getIdTipoPersona();
-        /*catalogoSeleccionado=persona.getCatalogoVenta().getIdCatalogoVenta();
-        cargoSeleccionado=persona.getCargo().getIdCargo();
+        asignarTipoPersona();
+        catalogoSeleccionado=persona.getCatalogoVenta().getIdCatalogoVenta();
+        asignarCatalogoVenta();
+        cargoSeleccionado=persona.getCargo().getIdCargo();     
+        asignarCargo(); 
+        coordenadas=new LatLng(latitud, longitud);        
+        modMapa.addOverlay(new Marker(coordenadas));        
+        fechaConvertida=UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
+        fotoSubida=true;
+        contadorMapa++;
+        zoom=13;
         
-        */
+    }
+    
+    public void cargarUltimo(){
+        persona=crudDAO.buscarUltimo(Persona.class);
+        cargarObjetoPersona(persona);
     }
 
     public String navegarWizard(FlowEvent event) {
@@ -236,9 +261,11 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         }
         if (!listControlAccordion.get(3)) {
             try {
-                validarUsuarioBean.validarGeolocalizacionUsuario(contadorMapa);
-                Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente puedo continuar con el paso 2.");
-                listControlAccordion.set(3, true);
+                
+                    validarUsuarioBean.validarGeolocalizacionUsuario(contadorMapa);
+                    Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente puedo continuar con el paso 2.");
+                    listControlAccordion.set(3, true);
+                
             } catch (UbicacionNoSeleccionadaMapaException e) {
                 tabsSeleccionados = "3";
                 Utilidad.actualizarElemento("accordionUsur");
@@ -265,15 +292,9 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         return pestaña;
     }
 
-    public void guardar() {
-
-        if (true) {
-            logger.info("Validacion correcta");
-            agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, nombre_foto, fotoSubida,latitud,longitud);
-        } else {
-            logger.info("Validacion incorrecta");
-
-        }
+    public void guardar() throws IOException, InterruptedException {        
+        
+            agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, nombre_foto, fotoSubida,latitud,longitud,estaEditando);        
 
     }
     
@@ -288,7 +309,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                                     !listControlAccordion.get(0)) {            
             try {
 
-                validarUsuarioBean.validarDatosPersonalesUsuario(persona, sexo, tipoIdentificacion,fotoSubida);
+                validarUsuarioBean.validarDatosPersonalesUsuario(persona, sexo, tipoIdentificacion,fotoSubida,estaEditando);
                 tabsSeleccionados = "1";
                 listControlAccordion.set(0, true);
                 Utilidad.actualizarElemento("accordionUsur");
@@ -1039,6 +1060,16 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setListControlAccordion(List<Boolean> listControlAccordion) {
         this.listControlAccordion = listControlAccordion;
     }
+
+    public Boolean getEstaEditando() {
+        return estaEditando;
+    }
+
+    public void setEstaEditando(Boolean estaEditando) {
+        this.estaEditando = estaEditando;
+    }
+    
+    
     
     
     

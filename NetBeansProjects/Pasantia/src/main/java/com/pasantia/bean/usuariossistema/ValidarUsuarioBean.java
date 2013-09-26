@@ -99,7 +99,7 @@ public class ValidarUsuarioBean implements Serializable {
         }
     }
     
-    public void validarDatosPersonalesUsuario(Persona p, Sexo s, TipoIdentificacion ti,Boolean imagenCargada) 
+    public void validarDatosPersonalesUsuario(Persona p, Sexo s, TipoIdentificacion ti,Boolean imagenCargada,Boolean estaeditando) 
             throws DatosPersonalesPersonaException, 
             PersonaIdentificacionDuplicadoException, 
             FechaNacimientoMenorException, FechaNacimientoPersonaMayorActualException, 
@@ -109,7 +109,7 @@ public class ValidarUsuarioBean implements Serializable {
         validarPrimerApellido(p.getPapellido(), "txtpapellido", "lblpapellido", 1);
         validarSexo(s.getNombreSexo(), "lblsexper", "cmbsexper", 2);
         validarTipoIdentificacion(ti.getNombreTipoIdentificacion(), "cmbTipIdenti", "lblTipIdenti", 3);
-        validarNroIdentificacion(p.getCedula(), "lblTipnroIdenti", "txtnroidentificacion", 4);
+        validarNroIdentificacion(p.getCedula(), "lblTipnroIdenti", "txtnroidentificacion", 4,estaeditando);
         validarFechaNacimiento(p.getFechaNacimiento(), "lblfechanacimiento", "txtfechanacimiento", 5,ti);        
         validarFechaMenosaActual(p.getFechaNacimiento(), "lblfechanacimiento", "txtfechanacimiento", 5);
         validarImagenCargada(imagenCargada);
@@ -323,7 +323,7 @@ public class ValidarUsuarioBean implements Serializable {
 
     }
     
-    public Boolean validarNroIdentificacion(String nroidentificacion, String idTxt, String idLbl, int posEstilo) 
+    public Boolean validarNroIdentificacion(String nroidentificacion, String idTxt, String idLbl, int posEstilo,Boolean estaEditando) 
             throws DatosPersonalesPersonaException, PersonaIdentificacionDuplicadoException {
         Boolean resultado = false;
         Persona p = new Persona();
@@ -338,7 +338,7 @@ public class ValidarUsuarioBean implements Serializable {
             Utilidad.actualizarElemento(idTxt);
             Utilidad.actualizarElemento(idLbl);
             p = crudDAO.buscarxAlgunCampoString(Persona.class, "cedula", nroidentificacion);
-            if (p != null) {
+            if (p != null && !estaEditando) {
                 resultado = false;
                 estilosError.set(posEstilo, Utilidad.estilosErrorInput());
                 Utilidad.actualizarElemento(idTxt);

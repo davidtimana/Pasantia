@@ -144,6 +144,7 @@ public class CombosComunes {
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboDepartamento(Integer idPais) {        
+        comboDepartamento=new ArrayList<SelectItem>();
         cargarDepartamentos(idPais);        
         for (int i = 0; i < departamentos.size(); i++) {            
             comboDepartamento.add(new SelectItem(departamentos.get(i).getIdDepartamento(), departamentos.get(i).getNombreDepartamento()));
@@ -151,8 +152,7 @@ public class CombosComunes {
         return comboDepartamento;
     }
 
-    private void cargarDepartamentos(Integer idPais) {
-        departamentos = new ArrayList<Departamento>();
+    private void cargarDepartamentos(Integer idPais) {        
         departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);        
     }
 
@@ -164,6 +164,7 @@ public class CombosComunes {
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboCiudad(Integer idDepartamento) {
+        comboCiudades=new ArrayList<SelectItem>();
         cargaCiudades(idDepartamento);
         for (int i = 0; i < ciudades.size(); i++) {
             comboCiudades.add(new SelectItem(ciudades.get(i).getIdCiudad(), ciudades.get(i).getNombreCiudad()));

@@ -72,7 +72,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private Cargo cargo;
     private CatalogoVenta catalogoVenta;
     private Persona persona;
-    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir, fotoSubida;    
+    private Boolean deshabilitarDepartamento, deshabilitarCiudad, abrirSubir, fotoSubida;
     private Double latitud, longitud;
     private LatLng coordenadas;
     private Integer contadorMapa;
@@ -91,7 +91,6 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     private List<Boolean> listControlAccordion;
     private Boolean estaEditando;
     private static Logger logger = Logger.getLogger(GestionarUsuarioBean.class.getName());
-    
     @Inject
     DepartamentoDAO departamentoDAO;
     @Inject
@@ -116,18 +115,17 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     CrudDAO<Persona> crudDAO;
     @Inject
     ValidarUsuarioBean validarUsuarioBean;
-    
 
     @PreDestroy
-    public void Fin(){
+    public void Fin() {
         logger.info("ejecute Fin");
         limpiarObjetos();
         actualizarformulario();
     }
-    
+
     @PostConstruct
     public void Init() {
-        
+
         logger.info("***********Iniciando");
         logger.info("*****************Cargando Inicio de Botones");
         iniciarBotones();
@@ -155,31 +153,32 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         logger.info("*****************Fin Cargando Combo Cargos");
         logger.info("*****************Cargando Combo Catalogos Venta");
         cargarComboCatalogosVenta();
-        logger.info("*****************Fin Cargando Combo Catalogos Venta");        
+        logger.info("*****************Fin Cargando Combo Catalogos Venta");
         logger.info("*****************Cargando Ultimo Usuario Ingresado");
         cargarUltimo();
         logger.info("*****************Fin Ultimo Usuario Ingresado");
     }
-    
-    public void editar(){
-        estaEditando=true;
-        listaControlReadonly.set(0, false);        
+
+    public void editar() {
+        estaEditando = true;
+        listaControlReadonly.set(0, false);
         deshabilitarBotonesEditaroNuevo();
         logger.log(Level.INFO, "******************************Iniciamos Edicion de usuarios.{0}", estaEditando);
-        
-        
+
+
     }
-    
-    public void cancelar(){
+
+    public void cancelar() {
         cargarUltimo();
         listaControlBotones.removeAll(listaControlBotones);
         iniciarBotones();
-        tabsSeleccionados="0";
+        tabsSeleccionados = "0";
+        listaControlReadonly.set(0, true);
         Utilidad.actualizarElemento("gestionarusuarios");
         logger.info("******************************Iniciamos Cancelar de usuarios dejando todo como estaba.");
     }
-    
-    public void deshabilitarBotonesEditaroNuevo(){
+
+    public void deshabilitarBotonesEditaroNuevo() {
         listaControlBotones.removeAll(listaControlBotones);
         listaControlBotones.add(0);
         listaControlBotones.add(0);
@@ -188,7 +187,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         listaControlBotones.add(1);
         Utilidad.actualizarElemento("gestionarusuarios");
     }
-    
+
     public void nuevo() {
         estaEditando = false;
         listaControlReadonly.set(0, false);
@@ -197,60 +196,67 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         limpiarSeleccionados();
         fotoSubida = false;
         contadorMapa = 0;
-        zoom=6;
-        Utilidad.actualizarElemento("gestionarusuarios");        
+        zoom = 6;
+        Utilidad.actualizarElemento("gestionarusuarios");
         logger.info("******************************Iniciamos Creacion de usuarios.");
     }
-    
-    public void limpiarSeleccionados(){
-        sexoSeleccionado=null;
-        tipoIdentificacionSeleccionada=null;
-        paisSeleccionado=null;
-        departamentoSeleccionado=null;
-        ciudadSeleccionado=null;
-        tipoPersonaSeleccionado=null;
-        cargoSeleccionado=null;
-        catalogoSeleccionado=null;
-        
+
+    public void limpiarSeleccionados() {
+        sexoSeleccionado = null;
+        tipoIdentificacionSeleccionada = null;
+        paisSeleccionado = null;
+        departamentoSeleccionado = null;
+        ciudadSeleccionado = null;
+        tipoPersonaSeleccionado = null;
+        cargoSeleccionado = null;
+        catalogoSeleccionado = null;
+
     }
-    
-    public void cargarObjetoPersona(Persona p){
-        persona=p;
-        sexoSeleccionado=persona.getSexo().getIdSexo();
+
+    public void cargarObjetoPersona(Persona p) {
+        modMapa = new DefaultMapModel();
+        persona = p;
+        sexoSeleccionado = persona.getSexo().getIdSexo();
         asignarSexo();
-        tipoIdentificacionSeleccionada=persona.getTipoIdentificacion().getIdTipoIdentificacion();        
+        tipoIdentificacionSeleccionada = persona.getTipoIdentificacion().getIdTipoIdentificacion();
         asignarTipoIdentificacion();
-        paisSeleccionado=persona.getCiudad().getDepartamento().getPais().getIdPais();        
+        paisSeleccionado = persona.getCiudad().getDepartamento().getPais().getIdPais();
         cargarComboDepartamento(paisSeleccionado);
-        departamentoSeleccionado=persona.getCiudad().getDepartamento().getIdDepartamento();        
-        ciudadSeleccionado=persona.getCiudad().getIdCiudad();        
+        departamentoSeleccionado = persona.getCiudad().getDepartamento().getIdDepartamento();
+        ciudadSeleccionado = persona.getCiudad().getIdCiudad();
         cargarComboCiudad(departamentoSeleccionado);
         asignarCiudad();
-        latitud=persona.getLatitud();
-        longitud=persona.getLongitud();
-        rutaFotoCargar=persona.getFoto();
-        tipoPersonaSeleccionado=persona.getTipoPersona().getIdTipoPersona();
+        latitud = persona.getLatitud();
+        longitud = persona.getLongitud();
+        rutaFotoCargar = persona.getFoto();
+        if (!rutaFotoCargar.equals("../../FotosUsuarios/sinfotoh.jpeg") || !rutaFotoCargar.equals("../../FotosUsuarios/sinfotom.jpeg")) {
+            int tam = rutaFotoCargar.length();
+            nombre_foto = UtilidadCadena.partirCadena(rutaFotoCargar, 11, tam);
+            logger.log(Level.INFO, "la foto partida es la siguiente-->{0}", nombre_foto);
+        }     
+        tipoPersonaSeleccionado = persona.getTipoPersona().getIdTipoPersona();
         asignarTipoPersona();
-        catalogoSeleccionado=persona.getCatalogoVenta().getIdCatalogoVenta();
+        catalogoSeleccionado = persona.getCatalogoVenta().getIdCatalogoVenta();
         asignarCatalogoVenta();
-        cargoSeleccionado=persona.getCargo().getIdCargo();     
-        asignarCargo(); 
-        coordenadas=new LatLng(latitud, longitud);        
-        modMapa.addOverlay(new Marker(coordenadas));        
-        fechaConvertida=UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
-        fotoSubida=true;
+        cargoSeleccionado = persona.getCargo().getIdCargo();
+        asignarCargo();
+        coordenadas = new LatLng(latitud, longitud);
+        modMapa.addOverlay(new Marker(coordenadas));
+        fechaConvertida = UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
+        fotoSubida = true;
         contadorMapa++;
-        zoom=13;
-        
+        zoom = 13;
+        listaControlReadonly.set(0, true);
+
     }
-    
-    public void cargarUltimo(){
-        persona=crudDAO.buscarUltimo(Persona.class);
+
+    public void cargarUltimo() {
+        persona = crudDAO.buscarUltimo(Persona.class);
         cargarObjetoPersona(persona);
     }
 
     public String navegarWizard(FlowEvent event) {
-        String actual=event.getOldStep();
+        String actual = event.getOldStep();
         logger.log(Level.INFO, "estoy en la pesta\u00f1a-->{0}", actual);
         String pestaña = event.getNewStep();
         logger.log(Level.INFO, "estoy en la pesta\u00f1a-->{0}", pestaña);
@@ -261,11 +267,11 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         }
         if (!listControlAccordion.get(3)) {
             try {
-                
-                    validarUsuarioBean.validarGeolocalizacionUsuario(contadorMapa);
-                    Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente puedo continuar con el paso 2.");
-                    listControlAccordion.set(3, true);
-                
+
+                validarUsuarioBean.validarGeolocalizacionUsuario(contadorMapa);
+                Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente puedo continuar con el paso 2.");
+                listControlAccordion.set(3, true);
+
             } catch (UbicacionNoSeleccionadaMapaException e) {
                 tabsSeleccionados = "3";
                 Utilidad.actualizarElemento("accordionUsur");
@@ -279,7 +285,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
             Utilidad.mensajePeligro("SICOVI", "Diligencie primero todos los campos requeridos * antes de continuar.");
             pestaña = "gestionusuarios";
         }
-        if(actual.equals("confiusuario")){
+        if (actual.equals("confiusuario")) {
             try {
                 validarUsuarioBean.validarConfiguracionUsuarioPaso2(tipoPersona, catalogoVenta, cargo);
             } catch (ComboNoSeleccionadoException ex) {
@@ -292,24 +298,23 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         return pestaña;
     }
 
-    public void guardar() throws IOException, InterruptedException {        
-        
-            agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, nombre_foto, fotoSubida,latitud,longitud,estaEditando);        
+    public void guardar() throws IOException, InterruptedException {
+
+        agregarUsuarioBean.guardarUsuario(persona, ciudad, sexo, tipoIdentificacion, tipoPersona, cargo, catalogoVenta, nombre_foto, fotoSubida, latitud, longitud, estaEditando);
 
     }
-    
+
     public void validarTabAccordion() {
-        logger.log(Level.INFO, "el tabseleccionado es el siguiente-->{0}", tabsSeleccionados);
-        if (tabsSeleccionados.equals("0,1") || 
-                tabsSeleccionados.equals("0,2") || 
-                    tabsSeleccionados.equals("0,3") ||
-                        tabsSeleccionados.equals("1") ||
-                            tabsSeleccionados.equals("2") ||
-                                tabsSeleccionados.equals("3") &&
-                                    !listControlAccordion.get(0)) {            
+        if (tabsSeleccionados.equals("0,1")
+                || tabsSeleccionados.equals("0,2")
+                || tabsSeleccionados.equals("0,3")
+                || tabsSeleccionados.equals("1")
+                || tabsSeleccionados.equals("2")
+                || tabsSeleccionados.equals("3")
+                && !listControlAccordion.get(0)) {
             try {
 
-                validarUsuarioBean.validarDatosPersonalesUsuario(persona, sexo, tipoIdentificacion,fotoSubida,estaEditando);
+                validarUsuarioBean.validarDatosPersonalesUsuario(persona, sexo, tipoIdentificacion, fotoSubida, estaEditando);
                 tabsSeleccionados = "1";
                 listControlAccordion.set(0, true);
                 Utilidad.actualizarElemento("accordionUsur");
@@ -332,21 +337,21 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                 Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
                         + e.getMessage());
                 logger.info(e.getMessage());
-            }catch(FechaNacimientoPersonaMayorActualException e){
+            } catch (FechaNacimientoPersonaMayorActualException e) {
                 tabsSeleccionados = "0";
                 Utilidad.actualizarElemento("accordionUsur");
                 Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
                         + e.getMessage());
                 logger.info(e.getMessage());
-            }catch(ImagenNoSelecionadaException e){
+            } catch (ImagenNoSelecionadaException e) {
                 tabsSeleccionados = "0";
                 Utilidad.actualizarElemento("accordionUsur");
                 Utilidad.mensajeError("SICOVI", "Gestionar Usuarios - Paso 1-Sección Datos Personales Usuario: "
                         + e.getMessage());
                 logger.info(e.getMessage());
             }
-        } 
-        
+        }
+
         if (tabsSeleccionados.equals("0,1")
                 && listControlAccordion.get(0)
                 || tabsSeleccionados.equals("1,2")
@@ -377,16 +382,16 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
             }
 
         }
-        
+
         if (tabsSeleccionados.equals("1,2")
                 && listControlAccordion.get(1)
                 || tabsSeleccionados.equals("2,3")
                 || tabsSeleccionados.equals("2,0,3")
                 || tabsSeleccionados.equals("2,0,1,3")
-                || tabsSeleccionados.equals("2,1,3")){
+                || tabsSeleccionados.equals("2,1,3")) {
             logger.info("entre al if");
             try {
-                validarUsuarioBean.validarDomicilioUsuario(paisSeleccionado, departamentoSeleccionado, 
+                validarUsuarioBean.validarDomicilioUsuario(paisSeleccionado, departamentoSeleccionado,
                         ciudadSeleccionado, persona);
                 tabsSeleccionados = "3";
                 Utilidad.actualizarElemento("accordionUsur");
@@ -407,12 +412,12 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
                 logger.info(e.getMessage());
             }
         }
-        
+
         if (tabsSeleccionados.equals("2,3")
-                && listControlAccordion.get(2)){
-                Utilidad.mensajeInfo("SICOVI", "Por favor busque y haga click en su ubicación actual.");
-                Utilidad.actualizarElemento("mapPersonas");
-            
+                && listControlAccordion.get(2)) {
+            Utilidad.mensajeInfo("SICOVI", "Por favor busque y haga click en su ubicación actual.");
+            Utilidad.actualizarElemento("mapPersonas");
+
         }
 
     }
@@ -420,13 +425,11 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void continuarSinFoto() {
         guardarSinFotoBean.cerrarComfirmar();
         fotoSubida = true;
-        tabsSeleccionados="0,1";
-        mensajeCarga = "Sin Selección de Foto.";        
+        tabsSeleccionados = "0,1";
+        mensajeCarga = "Sin Selección de Foto.";
         Utilidad.actualizarElemento("lblmensajefoto");
         validarTabAccordion();
     }
-
-    
 
     public void puntoSeleccionadoMapa(PointSelectEvent event) {
         coordenadas = event.getLatLng();
@@ -439,7 +442,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         Utilidad.actualizarElemento("lbllan");
         Utilidad.actualizarElemento("lbllon");
         Utilidad.mensajeInfo("SICOVI", "La ubicación seleccionada es la siguiente: "
-                + "Latitud: "+latitud+" Longitud: "+longitud);
+                + "Latitud: " + latitud + " Longitud: " + longitud);
         logger.log(Level.INFO, "la longitud y la latitud seleccionada es la siguiente{0} y la longitud es--> {1}", new Object[]{coordenadas.getLat(), coordenadas.getLng()});
 
     }
@@ -658,8 +661,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         }
     }
     
-    public void limpiarObjetos(){
-        
+  
+
+    public void limpiarObjetos() {
+
         sexo = new Sexo();
         tipoPersona = new TipoPersona();
         tipoIdentificacion = new TipoIdentificacion();
@@ -668,8 +673,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         catalogoVenta = new CatalogoVenta();
         persona = new Persona();
         deshabilitarCiudad = false;
-        deshabilitarDepartamento = false;       
-        fechaConvertida="";
+        deshabilitarDepartamento = false;
+        fechaConvertida = "";
         zoom = 6;
         latitud = 4.599047;
         longitud = -74.080917;
@@ -685,31 +690,30 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
         fotoSubida = false;
         modMapa = new DefaultMapModel();
-        
+
     }
-    
-    public void actualizarformulario(){
-        
+
+    public void actualizarformulario() {
     }
-    
-    public void iniciarBotones(){
+
+    public void iniciarBotones() {
         listaControlBotones.add(1);
         listaControlBotones.add(1);
         listaControlBotones.add(0);
         listaControlBotones.add(0);
         listaControlBotones.add(1);
     }
-    
-    public void iniciarReadonly(){
+
+    public void iniciarReadonly() {
         listaControlReadonly.add(true);
         listaControlReadonly.add(false);
     }
-    
-    public void convertirFecha(){
-        fechaConvertida=UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
+
+    public void convertirFecha() {
+        fechaConvertida = UtilidadFecha.obtenerFechaEnFormatoTexto(persona.getFechaNacimiento(), "dd/MM/yyyy");
     }
-    
-    public void iniciarAccordion(){
+
+    public void iniciarAccordion() {
         listControlAccordion.add(false);
         listControlAccordion.add(false);
         listControlAccordion.add(false);
@@ -725,7 +729,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         catalogoVenta = new CatalogoVenta();
         persona = new Persona();
         deshabilitarCiudad = false;
-        deshabilitarDepartamento = false;      
+        deshabilitarDepartamento = false;
         zoom = 6;
         latitud = 4.599047;
         longitud = -74.080917;
@@ -741,10 +745,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
         fotoSubida = false;
         modMapa = new DefaultMapModel();
-        listaControlBotones=new ArrayList<Integer>();
+        listaControlBotones = new ArrayList<Integer>();
         listaControlReadonly = new ArrayList<Boolean>();
-        tabsSeleccionados="0";
-        listControlAccordion=new ArrayList<Boolean>();
+        tabsSeleccionados = "0";
+        listControlAccordion = new ArrayList<Boolean>();
 
     }
 
@@ -860,7 +864,6 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         this.deshabilitarCiudad = deshabilitarCiudad;
     }
 
-    
     public Double getLatitud() {
         return latitud;
     }
@@ -883,7 +886,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void setZoom(Integer zoom) {
         this.zoom = zoom;
-    }    
+    }
 
     public LatLng getCoordenadas() {
         return coordenadas;
@@ -1019,7 +1022,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void setModMapa(MapModel modMapa) {
         this.modMapa = modMapa;
-    }    
+    }
 
     public String getFechaConvertida() {
         return fechaConvertida;
@@ -1068,21 +1071,4 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void setEstaEditando(Boolean estaEditando) {
         this.estaEditando = estaEditando;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-
-    
-    
-    
 }

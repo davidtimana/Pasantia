@@ -59,7 +59,7 @@ public class BuscarUsuarioBean implements Serializable {
     public void cargarSeleccinado(){
         log.log(Level.INFO, "La persona seleccionada es la siguiente-->{0}", personaSeleccionada.getPnombre());
         buscador=false;
-        Utilidad.actualizarElemento("dlgbuscadorusuarios");
+        Utilidad.actualizarElemento("dlgbuscadorusuarios");        
         gestionarUsuarioBean.cargarObjetoPersona(personaSeleccionada);
         Utilidad.actualizarElemento("gestionarusuarios");
         log.log(Level.INFO, "*******************Cargando objeto buscando-->{0}", personaSeleccionada.getPnombre());

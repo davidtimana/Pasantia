@@ -26,7 +26,7 @@ public class CatalogoVentaDAOImpl implements CatalogoVentaDAO{
          Session session = ConexionHibernate.getSessionFactory().openSession();
         List<CatalogoVenta> catalogos = new ArrayList<CatalogoVenta>();
         try {
-            Query q = session.createQuery("from CatalogoVenta s ORDER BY  s.descripcion ASC");
+            Query q = session.createQuery("from CatalogoVenta s WHERE s.descripcion <> 'No aplica' ORDER BY  s.descripcion ASC");
             catalogos = q.list();
         } catch (Exception e) {
             catalogos = null;

@@ -18,6 +18,7 @@ import com.pasantia.entidades.TipoPersona;
 import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
+import com.pasantia.utilidades.UtilidadCadena;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,11 +42,9 @@ import javax.inject.Inject;
  */
 @Named(value = "agregarUsuarioBean")
 @SessionScoped
-public class AgregarUsuarioBean implements Serializable{
+public class AgregarUsuarioBean implements Serializable {
 
-    
     private static Logger log = Logger.getLogger(AgregarUsuarioBean.class.getName());
-    
     @Inject
     PersonaDAO personaDAO;
     @Inject
@@ -57,35 +57,40 @@ public class AgregarUsuarioBean implements Serializable{
     CrudDAO<Cargo> crudDAO2;
     @Inject
     GestionarUsuarioBean gestionarUsuarioBean;
-    
+
     @PostConstruct
-    public void Init(){
-        System.out.println("***********Inicianilizando");        
-        
+    public void Init() {
+        System.out.println("***********Inicianilizando");
+
     }
-    
-    
-     /** 
-     * Guarda los usuarios de la aplicacion con sus respectivos
-     * roles.
+
+    /**
+     * Guarda los usuarios de la aplicacion con sus respectivos roles.
+     *
      * @param p Datos comunes de la persona.
      * @param c Ciudad de la persona.
      * @param s Sexo de la persona.
      * @param ti TipoIdentificacion de la persona.
      * @param tp TipoPersona de la persona.
      * @param ca Cargo de la persona.
-     * @param cv CatalogoVenta de la persona.     
-     * @param rutaTemp ruta temporal de donde se encuentra la foto del usuario ubicada.     
+     * @param cv CatalogoVenta de la persona.
+     * @param rutaTemp ruta temporal de donde se encuentra la foto del usuario
+     * ubicada.
      * @param fotoSubida bandera que indica si se subio o no la foto.
      * @return Mensaje de guardado correcto o no.
      */
     public void guardarUsuario(Persona p, Ciudad c, Sexo s, TipoIdentificacion ti, TipoPersona tp,
             Cargo ca, CatalogoVenta cv, String nombreFoto, Boolean fotoSubida, Double latitud, Double longitud,
-            Boolean estaEditando) 
+            Boolean estaEditando)
             throws IOException, InterruptedException {
-
+        Boolean r = false;
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        FacesContext fCtx = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
+        log.log(Level.INFO, "el session id es el siguiente-->{0}", session.getId());
+        p=formatearNombresYApellidos(p);
         log.log(Level.INFO, "************Iniciando a guardar la persona: {0}", p.getPnombre());
+        
 
         if (fotoSubida) {
             log.info("***********Foto subida");
@@ -95,72 +100,73 @@ public class AgregarUsuarioBean implements Serializable{
             p.setTipoPersona(tp);
             if (!Utilidad.cadenaVacia(nombreFoto)) {
                 p.setFoto("../../temp/" + nombreFoto);
-            }else{
-                if(p.getSexo().getNombreSexo().equals("Masculino")){
+            } else {
+                if (p.getSexo().getNombreSexo().equals("Masculino")) {
                     p.setFoto("../../FotosUsuarios/sinfotoh.jpeg");
-                }else{
+                } else {
                     p.setFoto("../../FotosUsuarios/sinfotom.jpeg");
                 }
             }
             p.setLatitud(latitud);
             p.setLongitud(longitud);
-            
-           if(Utilidad.cadenaVacia(cv.getDescripcion())){
-               cv=crudDAO1.buscarxAlgunCampoString(CatalogoVenta.class, "descripcion", "No aplica");
-           }
-           if(Utilidad.cadenaVacia(ca.getDescripcion())){
-               ca=crudDAO2.buscarxAlgunCampoString(Cargo.class, "descripcion", "NO APLICA");
-           }
-            
+
+            if (Utilidad.cadenaVacia(cv.getDescripcion())) {
+                cv = crudDAO1.buscarxAlgunCampoString(CatalogoVenta.class, "descripcion", "No aplica");
+            }
+            if (Utilidad.cadenaVacia(ca.getDescripcion())) {
+                ca = crudDAO2.buscarxAlgunCampoString(Cargo.class, "descripcion", "NO APLICA");
+            }
+
             p.setCatalogoVenta(cv);
             p.setCargo(ca);
 
             if (estaEditando) {
-                if (crudDAO.editar(p)) {                    
+                if (crudDAO.editar(p)) {
                     Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Actualizado Correctamente");
-                    gestionarUsuarioBean.cancelar();                    
-                    Thread.sleep(3000);
-                    ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
-                    
+                    r = true;
+
                 } else {
+                    r = false;
                     Utilidad.mensajeError("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". No se pudo Actualizar.");
                 }
 
             } else {
                 if (crudDAO.crear(p)) {
                     Utilidad.mensajeInfo("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". Guardado Correctamente");
-                    gestionarUsuarioBean.cancelar();                    
-                    Thread.sleep(3000);
-                    ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
-                    
+                    r = true;
                 } else {
+                    r = false;
                     Utilidad.mensajeError("SICOVI", "Usuario: " + p.getPnombre() + " " + p.getPapellido() + ". No se pudo Guardar.");
                 }
             }
-            
-                
 
-           
+
+
+
+
+
 
         } else {
             log.info("***********Foto Nooooo subida");
             guardarSinFotoBean.abrirComfirmar();
         }
 
+
+        if (r) {
+            gestionarUsuarioBean.cancelar();
+            ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
+        }
+
     }
-    
-    
-    
-   
-    
-    
+
+    public Persona formatearNombresYApellidos(Persona p) {
+        p.setPnombre(UtilidadCadena.cambiarPrimeraLetraAMayuscula(p.getPnombre()));
+        p.setSnombre(UtilidadCadena.cambiarPrimeraLetraAMayuscula(p.getSnombre()));
+        p.setPapellido(UtilidadCadena.cambiarPrimeraLetraAMayuscula(p.getPapellido()));
+        p.setSapellido(UtilidadCadena.cambiarPrimeraLetraAMayuscula(p.getSapellido()));
+        return p;
+    }
+
     public AgregarUsuarioBean() {
-        
     }
-
-    
-    
-        
-    
-
 }

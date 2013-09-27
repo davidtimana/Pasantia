@@ -105,7 +105,7 @@ public class CargoDAOImpl implements CargoDAO{
         Session session = ConexionHibernate.getSessionFactory().openSession();
         List<Cargo> cargos = new ArrayList<Cargo>();
         try {
-            Query q = session.createQuery("from Cargo s ORDER BY  s.descripcion ASC");
+            Query q = session.createQuery("from Cargo s ORDER BY  s.descripcion ASC where s.descripcion <> 'NO APLICA'");
             cargos = q.list();
         } catch (Exception e) {
             cargos = null;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-09-2013 a las 19:12:05
+-- Tiempo de generación: 26-09-2013 a las 19:46:39
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.8
 
@@ -9236,7 +9236,7 @@ CREATE TABLE IF NOT EXISTS `Cargo` (
   `idCargo` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idCargo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=17 ;
 
 --
 -- Volcado de datos para la tabla `Cargo`
@@ -9255,7 +9255,8 @@ INSERT INTO `Cargo` (`idCargo`, `descripcion`) VALUES
 (10, 'TENIENTE'),
 (11, 'CAPITAN'),
 (12, 'CORONEL'),
-(15, 'CLIENTES EXTERNOS');
+(15, 'CLIENTES EXTERNOS'),
+(16, 'NO APLICA');
 
 -- --------------------------------------------------------
 
@@ -9286,7 +9287,7 @@ CREATE TABLE IF NOT EXISTS `Catalogo_Venta` (
   `idCatalogo_Venta` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idCatalogo_Venta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `Catalogo_Venta`
@@ -9297,7 +9298,8 @@ INSERT INTO `Catalogo_Venta` (`idCatalogo_Venta`, `descripcion`) VALUES
 (2, 'Dulces'),
 (3, 'Licores'),
 (4, 'Tabacos'),
-(5, 'Lacteos');
+(5, 'Lacteos'),
+(6, 'No aplica');
 
 -- --------------------------------------------------------
 
@@ -13041,16 +13043,21 @@ CREATE TABLE IF NOT EXISTS `Persona` (
   KEY `fk_ciudad_origen_idx` (`SECCIUDAD`),
   KEY `fk_catalogo_venta_idx` (`SECCATALOGO_VENTA`),
   KEY `fk_cargo_idx` (`SECCARGO`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla encargada de registrar la informacion de la persona.*/' AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla encargada de registrar la informacion de la persona.*/' AUTO_INCREMENT=23 ;
 
 --
 -- Volcado de datos para la tabla `Persona`
 --
 
 INSERT INTO `Persona` (`idTBLPERSONA`, `PNOMBRE`, `SNOMBRE`, `PAPELLIDO`, `SAPELLIDO`, `CEDULA`, `FECHA_NACIMIENTO`, `EMAIL`, `TELEFONO`, `MOVIL`, `SECTIPO_IDENTIFICACION`, `SECSEXO`, `SECCIUDAD`, `SECTIPO_PERSONA`, `FOTO`, `DIRECCION`, `BARRIO`, `SECCATALOGO_VENTA`, `SECCARGO`, `LATITUD`, `LONGITUD`) VALUES
-(1, 'David', 'Orlando', 'Timaná', 'Leytón', '1061734652', '2012-08-05', 'david.timana@saludhds.com.co', '(28)-383011', '320-222-5256', 5, 1, 19001, 5, '../../94591395camaro.jpg', 'Carrera 19 B 12-15', 'Pajonal', NULL, 12, 2.4388040352396345, -76.61955606941774),
-(16, 'Jose', 'Orlando', 'Timaná', 'Portilla', '5379450', '2003-09-01', 'joseorlandotimana@hotmail.com', '(28)-383011', '320-222-5256', 1, 1, 52885, 3, '../../28557821Plus-UI-64.png', 'Yacuanquer', 'Yacuanquer', 1, NULL, 1.1146918624612487, -77.40216279038577),
-(17, 'Rene', 'Alexander', 'Timana', 'Leyton', '5207332', '2003-01-01', 'renetima@gmail.com', '(28)-383011', '320-397-3022', 5, 1, 19001, 2, '../../29515604IMG_0006.JPG', 'Calle 10 - 15-40', 'Las americas', NULL, 6, 2.4388941203353363, -76.6147838831057);
+(1, 'David', 'Orlando', 'Timaná', 'Leytón', '1061734652', '1990-03-04', 'david.timana@saludhds.com.co', '(28)-383011', '320-222-5256', 5, 1, 19001, 5, '../../FotosUsuarios/sinfotoh.jpeg', 'Carrera 19 B 12-15', 'Pajonal', 6, 12, 2.4388040352396345, -76.61955606941774),
+(16, 'Jose', 'Orlando', 'Timaná', 'Portilla', '5379450', '2003-09-01', 'joseorlandotimana@hotmail.com', '(28)-383011', '320-222-5256', 1, 1, 52885, 3, '../../temp/28557821Plus-UI-64.png', 'Yacuanquer', 'Yacuanquer', 1, 16, 1.1146918624612487, -77.40216279038577),
+(17, 'Rene', 'Alexander', 'Timana', 'Leyton', '5207332', '1993-01-06', 'renetima@gmail.com', '(28)-383011', '320-397-3022', 5, 1, 19001, 2, '../../temp/29515604IMG_0006.JPG', 'Calle 10 - 15-40', 'Las americas', 6, 6, 2.4388941203353363, -76.6147838831057),
+(18, 'Paula', 'Andrea', 'Timana', 'Leyton', '30719540', '1985-07-07', 'paulaandreatimana@hotmail.com', '(28)-383011', '316-220-4501', 1, 2, 52001, 7, '../../FotosUsuarios/sinfotom.jpeg', 'Jamondino', 'Jamondino', 6, 16, 1.1755833638527642, -77.25383028388023),
+(19, 'Mayerline', '', 'Gamboa', 'Gomez', '1089481017', '1989-03-21', 'mafelu1221@hotmail.com', '(28)-383011', '321-576-6572', 1, 2, 19001, 8, '../../FotosUsuarios/sinfotom.jpeg', 'Calle 2N 1-30', 'Antitulo Liceo', 6, 16, 2.442956726743829, -76.60159818828106),
+(20, 'Emma', 'Gladys', 'Leyton', 'De Timana', '30719811', '1966-03-08', 'gladystimana@hotmail.com', '(28)-383011', '316-832-0230', 1, 2, 19001, 4, '../../FotosUsuarios/sinfotom.jpeg', 'Carrera 19 b 12-15', 'Pajonal', 6, 3, 2.43869684405224, -76.61954534058168),
+(21, 'Carlos', 'Javier', 'Anchico', 'Peña', '6546512316', '1970-01-13', 'carlos.anchico@saludhds.com.co', '(28)-343640', '318-520-4170', 1, 1, 19001, 5, '../../FotosUsuarios/sinfotoh.jpeg', 'La paz', 'La paz', 6, 8, 2.4765596315891854, -76.56057581305504),
+(22, 'EyderPruebaAKJDKKDJK', 'Albeiro', 'Ascuntar', 'Rosales', '20401050', '1983-07-19', 'eyder.ascuntar@saludhds.com.co', '(28)-201040', '312-450-7189', 1, 1, 19001, 2, '../../FotosUsuarios/Usuarios/sinfotoh.jpeg', 'La estancia', 'La estancia', 6, 2, 2.452249136504725, -76.5966247022152);
 
 -- --------------------------------------------------------
 

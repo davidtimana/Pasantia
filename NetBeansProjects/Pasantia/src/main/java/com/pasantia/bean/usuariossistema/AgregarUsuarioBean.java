@@ -44,7 +44,9 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class AgregarUsuarioBean implements Serializable {
 
+    private static final long serialVersionUID = -8367053396853933675L;
     private static Logger log = Logger.getLogger(AgregarUsuarioBean.class.getName());
+    
     @Inject
     PersonaDAO personaDAO;
     @Inject
@@ -154,7 +156,7 @@ public class AgregarUsuarioBean implements Serializable {
 
         if (r) {
             gestionarUsuarioBean.cancelar();
-            ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
+            //ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
         }
 
     }

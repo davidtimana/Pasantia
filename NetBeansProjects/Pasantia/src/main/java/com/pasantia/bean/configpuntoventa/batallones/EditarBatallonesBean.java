@@ -24,6 +24,8 @@ import org.primefaces.context.RequestContext;
 @Named(value = "editarBatallonesBean")
 @SessionScoped
 public class EditarBatallonesBean implements Serializable{
+    
+    private static final long serialVersionUID = 1937646137691903578L;
 
     
     

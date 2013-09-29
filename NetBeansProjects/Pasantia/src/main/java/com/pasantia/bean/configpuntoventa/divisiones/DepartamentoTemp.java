@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 /**
  *
- * @author david
+ * @author David Timana
  */
 public class DepartamentoTemp implements Serializable{
+    
+    private static final long serialVersionUID = -7233253807367934610L;
     
     private Integer idDepartamento;
     private String nombreDepartamento;

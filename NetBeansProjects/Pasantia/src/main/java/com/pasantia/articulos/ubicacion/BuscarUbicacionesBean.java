@@ -20,6 +20,8 @@ import javax.inject.Inject;
 @Named(value = "buscabicacionesBean")
 @SessionScoped
 public class BuscarUbicacionesBean implements Serializable{
+    
+    private static final long serialVersionUID = 4309346182351504853L;
 
     private Boolean abrirBuscadorUbicacion;
     private String nombreBuscar;

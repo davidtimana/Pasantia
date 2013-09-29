@@ -45,6 +45,8 @@ import org.primefaces.event.TabChangeEvent;
 @Named(value = "validarUsuarioBean")
 @SessionScoped
 public class ValidarUsuarioBean implements Serializable {
+    
+    private static final long serialVersionUID = 4198300994964280834L;
 
     /**
      * Creates a new instance of ValidarUsuarioBean

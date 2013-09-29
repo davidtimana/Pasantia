@@ -12,16 +12,19 @@ import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import org.primefaces.component.dialog.Dialog;
 import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 @Named(value = "eliminarDivisionesBean")
-@RequestScoped
+@SessionScoped
 public class eliminarDivisionesUbicacionBean implements Serializable{
+    
+    private static final long serialVersionUID = 6310464022129801144L;
 
     private DivisionesUbicacionDAO divisionUbicacionDAO;
     private DivisionesUbicacion divisionesUbicacionEliminar;

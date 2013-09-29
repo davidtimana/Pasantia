@@ -2,6 +2,7 @@ package com.pasantia.entidades;
 // Generated 23/09/2013 01:53:37 PM by Hibernate Tools 3.2.1.GA
 
 
+import com.pasantia.utilidades.UtilidadFecha;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -31,33 +33,72 @@ import javax.persistence.UniqueConstraint;
 public class Persona  implements java.io.Serializable {
 
 
+     @Id
+     @GeneratedValue(strategy=IDENTITY)
+     @Column(name="idTBLPERSONA", unique=true, nullable=false)
      private Integer idTblpersona;
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="SECCATALOGO_VENTA")
      private CatalogoVenta catalogoVenta;
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="SECCARGO")
      private Cargo cargo;
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="SECCIUDAD", nullable=false)
      private Ciudad ciudad;
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="SECTIPO_IDENTIFICACION", nullable=false)
      private TipoIdentificacion tipoIdentificacion;
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="SECSEXO", nullable=false)
      private Sexo sexo;
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="SECTIPO_PERSONA", nullable=false)
      private TipoPersona tipoPersona;
+     @Column(name="PNOMBRE", nullable=false, length=45)
      private String pnombre;
+     @Column(name="SNOMBRE", length=45)
      private String snombre;
+     @Column(name="PAPELLIDO", nullable=false, length=45)
      private String papellido;
+     @Column(name="SAPELLIDO", length=45)
      private String sapellido;
+     @Column(name="CEDULA", unique=true, nullable=false, length=45)
      private String cedula;
+     @Temporal(TemporalType.DATE)
+     @Column(name="FECHA_NACIMIENTO", nullable=false, length=10)
      private Date fechaNacimiento;
+     @Column(name="EMAIL", length=45)
      private String email;
+     @Column(name="TELEFONO", length=45)
      private String telefono;
+     @Column(name="MOVIL", length=45)
      private String movil;
+     @Column(name="FOTO")
      private String foto;
+     @Column(name="DIRECCION", nullable=false, length=45)
      private String direccion;
+     @Column(name="BARRIO", nullable=false, length=45)
      private String barrio;
+     @Column(name="LATITUD", nullable=false, precision=22, scale=0)
      private double latitud;
+     @Column(name="LONGITUD", nullable=false, precision=22, scale=0)
      private double longitud;
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="personaBySecvendedor")
      private Set tblventasForSecvendedor = new HashSet(0);
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
      private Set batallons = new HashSet(0);
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
      private Set usuarios = new HashSet(0);
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
      private Set tblpedidos = new HashSet(0);
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="personaBySeccliente")
      private Set tblventasForSeccliente = new HashSet(0);
+     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
      private Set casinos = new HashSet(0);
+     
+     @Transient
+     private Integer edad;
 
     public Persona() {
     }
@@ -106,18 +147,13 @@ public class Persona  implements java.io.Serializable {
        this.casinos = casinos;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
-    
-    @Column(name="idTBLPERSONA", unique=true, nullable=false)
-    public Integer getIdTblpersona() {
+         public Integer getIdTblpersona() {
         return this.idTblpersona;
     }
     
     public void setIdTblpersona(Integer idTblpersona) {
         this.idTblpersona = idTblpersona;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECCATALOGO_VENTA")
     public CatalogoVenta getCatalogoVenta() {
         return this.catalogoVenta;
     }
@@ -125,8 +161,6 @@ public class Persona  implements java.io.Serializable {
     public void setCatalogoVenta(CatalogoVenta catalogoVenta) {
         this.catalogoVenta = catalogoVenta;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECCARGO")
     public Cargo getCargo() {
         return this.cargo;
     }
@@ -134,8 +168,6 @@ public class Persona  implements java.io.Serializable {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECCIUDAD", nullable=false)
     public Ciudad getCiudad() {
         return this.ciudad;
     }
@@ -143,8 +175,6 @@ public class Persona  implements java.io.Serializable {
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECTIPO_IDENTIFICACION", nullable=false)
     public TipoIdentificacion getTipoIdentificacion() {
         return this.tipoIdentificacion;
     }
@@ -152,8 +182,6 @@ public class Persona  implements java.io.Serializable {
     public void setTipoIdentificacion(TipoIdentificacion tipoIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECSEXO", nullable=false)
     public Sexo getSexo() {
         return this.sexo;
     }
@@ -161,8 +189,6 @@ public class Persona  implements java.io.Serializable {
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECTIPO_PERSONA", nullable=false)
     public TipoPersona getTipoPersona() {
         return this.tipoPersona;
     }
@@ -171,8 +197,7 @@ public class Persona  implements java.io.Serializable {
         this.tipoPersona = tipoPersona;
     }
     
-    @Column(name="PNOMBRE", nullable=false, length=45)
-    public String getPnombre() {
+        public String getPnombre() {
         return this.pnombre;
     }
     
@@ -180,8 +205,7 @@ public class Persona  implements java.io.Serializable {
         this.pnombre = pnombre;
     }
     
-    @Column(name="SNOMBRE", length=45)
-    public String getSnombre() {
+        public String getSnombre() {
         return this.snombre;
     }
     
@@ -189,8 +213,7 @@ public class Persona  implements java.io.Serializable {
         this.snombre = snombre;
     }
     
-    @Column(name="PAPELLIDO", nullable=false, length=45)
-    public String getPapellido() {
+        public String getPapellido() {
         return this.papellido;
     }
     
@@ -198,8 +221,7 @@ public class Persona  implements java.io.Serializable {
         this.papellido = papellido;
     }
     
-    @Column(name="SAPELLIDO", length=45)
-    public String getSapellido() {
+        public String getSapellido() {
         return this.sapellido;
     }
     
@@ -207,17 +229,14 @@ public class Persona  implements java.io.Serializable {
         this.sapellido = sapellido;
     }
     
-    @Column(name="CEDULA", unique=true, nullable=false, length=45)
-    public String getCedula() {
+        public String getCedula() {
         return this.cedula;
     }
     
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-    @Temporal(TemporalType.DATE)
-    @Column(name="FECHA_NACIMIENTO", nullable=false, length=10)
-    public Date getFechaNacimiento() {
+        public Date getFechaNacimiento() {
         return this.fechaNacimiento;
     }
     
@@ -225,8 +244,7 @@ public class Persona  implements java.io.Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
     
-    @Column(name="EMAIL", length=45)
-    public String getEmail() {
+        public String getEmail() {
         return this.email;
     }
     
@@ -234,8 +252,7 @@ public class Persona  implements java.io.Serializable {
         this.email = email;
     }
     
-    @Column(name="TELEFONO", length=45)
-    public String getTelefono() {
+        public String getTelefono() {
         return this.telefono;
     }
     
@@ -243,8 +260,7 @@ public class Persona  implements java.io.Serializable {
         this.telefono = telefono;
     }
     
-    @Column(name="MOVIL", length=45)
-    public String getMovil() {
+        public String getMovil() {
         return this.movil;
     }
     
@@ -252,8 +268,7 @@ public class Persona  implements java.io.Serializable {
         this.movil = movil;
     }
     
-    @Column(name="FOTO")
-    public String getFoto() {
+        public String getFoto() {
         return this.foto;
     }
     
@@ -261,8 +276,7 @@ public class Persona  implements java.io.Serializable {
         this.foto = foto;
     }
     
-    @Column(name="DIRECCION", nullable=false, length=45)
-    public String getDireccion() {
+        public String getDireccion() {
         return this.direccion;
     }
     
@@ -270,8 +284,7 @@ public class Persona  implements java.io.Serializable {
         this.direccion = direccion;
     }
     
-    @Column(name="BARRIO", nullable=false, length=45)
-    public String getBarrio() {
+        public String getBarrio() {
         return this.barrio;
     }
     
@@ -279,8 +292,7 @@ public class Persona  implements java.io.Serializable {
         this.barrio = barrio;
     }
     
-    @Column(name="LATITUD", nullable=false, precision=22, scale=0)
-    public double getLatitud() {
+        public double getLatitud() {
         return this.latitud;
     }
     
@@ -288,15 +300,13 @@ public class Persona  implements java.io.Serializable {
         this.latitud = latitud;
     }
     
-    @Column(name="LONGITUD", nullable=false, precision=22, scale=0)
-    public double getLongitud() {
+        public double getLongitud() {
         return this.longitud;
     }
     
     public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="personaBySecvendedor")
     public Set getTblventasForSecvendedor() {
         return this.tblventasForSecvendedor;
     }
@@ -304,7 +314,6 @@ public class Persona  implements java.io.Serializable {
     public void setTblventasForSecvendedor(Set tblventasForSecvendedor) {
         this.tblventasForSecvendedor = tblventasForSecvendedor;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
     public Set getBatallons() {
         return this.batallons;
     }
@@ -312,7 +321,6 @@ public class Persona  implements java.io.Serializable {
     public void setBatallons(Set batallons) {
         this.batallons = batallons;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
     public Set getUsuarios() {
         return this.usuarios;
     }
@@ -320,7 +328,6 @@ public class Persona  implements java.io.Serializable {
     public void setUsuarios(Set usuarios) {
         this.usuarios = usuarios;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
     public Set getTblpedidos() {
         return this.tblpedidos;
     }
@@ -328,7 +335,6 @@ public class Persona  implements java.io.Serializable {
     public void setTblpedidos(Set tblpedidos) {
         this.tblpedidos = tblpedidos;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="personaBySeccliente")
     public Set getTblventasForSeccliente() {
         return this.tblventasForSeccliente;
     }
@@ -336,7 +342,6 @@ public class Persona  implements java.io.Serializable {
     public void setTblventasForSeccliente(Set tblventasForSeccliente) {
         this.tblventasForSeccliente = tblventasForSeccliente;
     }
-@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="persona")
     public Set getCasinos() {
         return this.casinos;
     }
@@ -344,6 +349,22 @@ public class Persona  implements java.io.Serializable {
     public void setCasinos(Set casinos) {
         this.casinos = casinos;
     }
+
+    public Integer getEdad() {  
+        if(this.fechaNacimiento!=null){
+            edad=UtilidadFecha.calcularEdad(UtilidadFecha.
+                    obtenerFechaEnFormatoTexto(this.fechaNacimiento, "dd/MM/yyyy"));
+        }else{
+            edad=0;
+        }
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+    
+    
 
 
 

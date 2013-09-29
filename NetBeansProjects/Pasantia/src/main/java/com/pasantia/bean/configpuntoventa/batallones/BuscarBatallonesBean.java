@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -26,11 +27,13 @@ import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "buscarBatallonesBean")
-@ApplicationScoped
+@SessionScoped
 public class BuscarBatallonesBean implements Serializable {
+    
+    private static final long serialVersionUID = -9113906109286281398L;
 
     private Boolean abrirBuscador;
     private List<SelectItem> comboOpciones;

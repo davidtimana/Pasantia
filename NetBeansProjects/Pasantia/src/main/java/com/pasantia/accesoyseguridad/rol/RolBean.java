@@ -17,11 +17,14 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "rolBean")
 @SessionScoped
 public class RolBean implements Serializable {
+    
+    
+    private static final long serialVersionUID = 4584997035234020741L;
 
     /**
      * Creates a new instance of RolBean

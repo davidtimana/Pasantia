@@ -16,11 +16,13 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "imagenesControlBean")
 @SessionScoped
 public class ImagenesControlBean implements Serializable {
+    
+    private static final long serialVersionUID = -8550200053499635470L;
 
   
     private List<Imagen> imagenes;

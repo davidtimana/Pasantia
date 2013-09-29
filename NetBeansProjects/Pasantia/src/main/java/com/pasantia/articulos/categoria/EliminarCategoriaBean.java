@@ -19,6 +19,8 @@ import javax.inject.Inject;
 @Named(value = "eliminarCategoriaBean")
 @SessionScoped
 public class EliminarCategoriaBean implements Serializable {
+    
+    private static final long serialVersionUID = -3686112827798692519L;
 
     private Categoria categoria;
     private Boolean abrirEliminarcategoria;

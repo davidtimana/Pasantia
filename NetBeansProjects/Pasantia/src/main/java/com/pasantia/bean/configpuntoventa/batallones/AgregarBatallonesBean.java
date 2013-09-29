@@ -27,7 +27,9 @@ import javax.inject.Named;
  */
 @Named(value = "agregarBatallonesBean")
 @SessionScoped
-public class AgregarBatallonesBean implements Serializable{   
+public class AgregarBatallonesBean implements Serializable{ 
+    
+    private static final long serialVersionUID = -5640681740816488106L;
  
     
     @Inject 

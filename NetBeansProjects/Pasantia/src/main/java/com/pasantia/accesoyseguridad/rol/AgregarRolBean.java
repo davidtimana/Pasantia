@@ -20,6 +20,8 @@ import javax.inject.Inject;
 @Named(value = "agregarRolBean")
 @SessionScoped
 public class AgregarRolBean implements Serializable {
+    
+    private static final long serialVersionUID = -7958216362146036809L;
 
     private Boolean abrirGuardarRol;
     private Rol rol;

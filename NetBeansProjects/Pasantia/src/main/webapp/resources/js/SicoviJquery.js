@@ -50,6 +50,10 @@ function permitirSoloNumeros(e) {
 	
 }
 
+function resetWizard() {
+    wizusu.loadStep(wizusu.cfg.steps[0], true);
+}
+
 
 
 

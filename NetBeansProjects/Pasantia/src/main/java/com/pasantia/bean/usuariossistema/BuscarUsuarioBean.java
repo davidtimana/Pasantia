@@ -27,6 +27,8 @@ import org.primefaces.model.StreamedContent;
 @Named(value = "buscarUsuarioBean")
 @SessionScoped
 public class BuscarUsuarioBean implements Serializable {
+    
+    private static final long serialVersionUID = -6597846946216270432L;
 
     private Boolean buscador;
     private List<Persona> personas;    

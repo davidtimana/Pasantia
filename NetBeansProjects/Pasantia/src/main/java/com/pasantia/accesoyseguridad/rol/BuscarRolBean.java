@@ -13,11 +13,13 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "buscarRolBean")
 @SessionScoped
 public class BuscarRolBean implements Serializable {
+    
+    private static final long serialVersionUID = -2422516055662581824L;
 
     private Boolean abrirBuscadorRol;
     private Integer idRol;

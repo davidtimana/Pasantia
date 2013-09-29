@@ -29,6 +29,8 @@ import org.primefaces.model.map.Marker;
 @Named(value = "batallonControllerBean")
 @SessionScoped
 public class BatallonControllerBean extends CombosComunes implements Serializable {
+    
+    private static final long serialVersionUID = 4380986264906281512L;
 
     private Batallon batallon;
     private Divisiones divisiones;

@@ -27,6 +27,7 @@ import com.pasantia.excepciones.CadenaVaciaException;
 import com.pasantia.excepciones.ComboNoSeleccionadoException;
 import com.pasantia.excepciones.FechaNacimientoMenorException;
 import com.pasantia.excepciones.FechaNacimientoPersonaMayorActualException;
+import com.pasantia.excepciones.FotoNoCopiadaException;
 import com.pasantia.excepciones.ImagenNoSelecionadaException;
 import com.pasantia.excepciones.PersonaIdentificacionDuplicadoException;
 import com.pasantia.excepciones.UbicacionNoSeleccionadaMapaException;
@@ -62,6 +63,9 @@ import org.primefaces.model.map.Marker;
 @Named(value = "gestionarUsuarioBean")
 @SessionScoped
 public class GestionarUsuarioBean extends CombosComunes implements Serializable {
+    
+    private static final long serialVersionUID = -8605387909514813370L;    
+    
 
     private Integer paisSeleccionado, tipoIdentificacionSeleccionada, sexoSeleccionado, departamentoSeleccionado, ciudadSeleccionado, zoom, tipoPersonaSeleccionado,
             cargoSeleccionado, catalogoSeleccionado;
@@ -516,7 +520,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         fotoSeleccionada = null;
     }
 
-    public void fincargaFoto(FileUploadEvent event) throws IOException, InterruptedException {
+    public void fincargaFoto(FileUploadEvent event) throws InterruptedException, IOException {
 
 
         logger.info("**************Iniciamos seleccion foto");
@@ -525,30 +529,29 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         fotoSeleccionada = event.getFile().getInputstream();
         logger.log(Level.INFO, "El nombre de la imagen seleccionada es-->{0}", nombre_foto);
         botonCargar = "display:none";
-        mensajeCarga = "Foto Cargada: " + nombre_foto;
-        Boolean result = false;
+        mensajeCarga = "Foto Cargada: " + nombre_foto;        
         try {
             Utilidad.copiarArchivo(nombre_foto, fotoSeleccionada, urlTemporal);
-            result = true;
-        } catch (Exception e) {
-            result = false;
-            logger.info("*************Error al copiar el archivo");
-        }
-        if (result) {
+
+
             rutaFotoCargar = "../../temp/" + nombre_foto;
             logger.log(Level.INFO, "La ruta temporal de la foto es la siguiente--->{0}", rutaFotoCargar);
 
+            Utilidad.mensajeInfo("SICOVI", "Foto: " + nombre_foto + ". Cargada Correctamente");
+            fotoSubida = true;
+            logger.info("**************Fin seleccion foto");
+            abrirSubir = false;
+            Utilidad.actualizarElemento("dlgsubirFoto");
+            Utilidad.actualizarElemento("imgfotoCargar");
+            Utilidad.actualizarElemento("btncargar");
+            Utilidad.actualizarElemento("lblmensajefoto");
+            Thread.sleep(4000);
+            Utilidad.actualizarElemento("imgfotoCargar");
+        } catch (FotoNoCopiadaException e) {
+
+            logger.info("*************Error al copiar el archivo");
+            Utilidad.mensajeFatal("SICOVI", e.getMessage());
         }
-        Utilidad.mensajeInfo("SICOVI", "Foto: " + nombre_foto + ". Cargada Correctamente");
-        fotoSubida = true;
-        logger.info("**************Fin seleccion foto");
-        abrirSubir = false;
-        Utilidad.actualizarElemento("dlgsubirFoto");
-        Utilidad.actualizarElemento("imgfotoCargar");
-        Utilidad.actualizarElemento("btncargar");
-        Utilidad.actualizarElemento("lblmensajefoto");
-        Thread.sleep(4000);
-        Utilidad.actualizarElemento("imgfotoCargar");
 
     }
 
@@ -742,7 +745,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
         ocultarCargo = "display:none";
         ocultarCatalogo = "display:none";
-        urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        urlTemporal = "/home/david/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
         fotoSubida = false;
         modMapa = new DefaultMapModel();
         listaControlBotones = new ArrayList<Integer>();

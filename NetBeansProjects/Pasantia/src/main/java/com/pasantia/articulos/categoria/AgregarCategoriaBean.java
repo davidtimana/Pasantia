@@ -21,6 +21,8 @@ import org.primefaces.context.RequestContext;
 @Named(value = "agregarCategoriaBean")
 @SessionScoped
 public class AgregarCategoriaBean implements Serializable {
+    
+    private static final long serialVersionUID = -3648479977859418443L;
 
     private Boolean abrirNuevaCateogira;
     private Categoria categoria;

@@ -14,11 +14,13 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "editarDivisionBean")
 @SessionScoped
 public class EditarDivisionBean implements Serializable {
+    
+    private static final long serialVersionUID = -2856394802833946671L;
 
     private Divisiones division;    
     private Boolean abrirEdicionDivision;

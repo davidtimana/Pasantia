@@ -22,11 +22,13 @@ import javax.inject.Inject;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 @Named(value = "categoriaBean")
 @SessionScoped
 public class CategoriaBean implements Serializable{
+    
+    private static final long serialVersionUID = -7667885495071378226L;
 
     private Categoria categoria;
     private List<Categoria> categorias;

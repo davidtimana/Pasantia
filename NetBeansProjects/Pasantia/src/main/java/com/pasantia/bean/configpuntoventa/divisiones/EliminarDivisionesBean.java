@@ -26,6 +26,8 @@ import org.primefaces.component.dialog.Dialog;
 @Named(value = "eliminarDivisionesPriBean")
 @SessionScoped
 public class EliminarDivisionesBean implements Serializable{
+    
+    private static final long serialVersionUID = -6335337966813337344L;
 
     private Divisiones division;    
     private List<DivisionesUbicacion> listDivisiones;

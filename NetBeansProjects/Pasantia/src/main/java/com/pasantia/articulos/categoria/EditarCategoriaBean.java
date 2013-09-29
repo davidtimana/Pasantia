@@ -19,6 +19,8 @@ import javax.inject.Inject;
 @Named(value = "editarCategoriaBean")
 @SessionScoped
 public class EditarCategoriaBean implements Serializable {
+    
+    private static final long serialVersionUID = 5646580735064014089L;
 
    
     private Categoria categoria;

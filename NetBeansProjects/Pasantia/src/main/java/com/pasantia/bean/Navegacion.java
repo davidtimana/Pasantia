@@ -25,6 +25,8 @@ import javax.inject.Named;
 @Named(value = "navegacion")
 @SessionScoped
 public class Navegacion implements Serializable{
+    
+    private static final long serialVersionUID = -2006712404197067346L;
 
    
     

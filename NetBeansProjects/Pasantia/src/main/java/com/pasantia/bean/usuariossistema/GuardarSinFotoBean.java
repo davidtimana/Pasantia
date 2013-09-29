@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Named(value = "guardarSinFotoBean")
 @SessionScoped
 public class GuardarSinFotoBean implements Serializable {
+    
+    private static final long serialVersionUID = 6456698470907868098L;
 
     
     private Boolean abrirSinFoto;

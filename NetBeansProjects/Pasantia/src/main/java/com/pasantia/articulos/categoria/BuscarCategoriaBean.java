@@ -17,6 +17,8 @@ import javax.inject.Inject;
 @Named(value = "buscarCategoriaBean")
 @SessionScoped
 public class BuscarCategoriaBean implements Serializable {
+    
+    private static final long serialVersionUID = 8511246634713274374L;
 
     private Boolean abrirBuscadorCategoria;
     private Integer idCategoria;

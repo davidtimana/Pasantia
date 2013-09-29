@@ -14,11 +14,13 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jbuitron
+ * @author David Timana
  */
 @Named(value = "eliminarRolBean")
 @SessionScoped
 public class EliminarRolBean implements Serializable {
+    
+    private static final long serialVersionUID = 7149612653092940188L;
     
     private Boolean abrirEliminarRol;
     private Rol rol;

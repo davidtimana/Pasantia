@@ -136,7 +136,8 @@ and open the template in the editor.
         <p:spacer height="4%"/>
         <p:panelGrid columns="6" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto"  >            
             <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarUsuarioBean.guardar()}" icon="ui-icon-disk" 
-                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(2)==1}"/>            
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(2)==1}"
+                                 oncomplete="resetWizard()"/>            
         </p:panelGrid>
         
         

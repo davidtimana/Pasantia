@@ -28,6 +28,8 @@ import org.primefaces.event.ToggleEvent;
 @Named(value = "divisionesBean")
 @SessionScoped
 public class DivisionesBean implements Serializable{
+    
+    private static final long serialVersionUID = 9026494547309076435L;
                          //******************************Inicio divisionBean*********************************************   
     
     

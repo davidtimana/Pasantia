@@ -18,11 +18,13 @@ import org.primefaces.component.dialog.Dialog;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 @Named(value = "agregarDivisionesBean")
 @SessionScoped
 public class agregarDivisionesBean implements Serializable{
+    
+    private static final long serialVersionUID = -1005502037010274240L;
     
     private Divisiones divisiones;
     private Boolean abrirNuevaDivision;

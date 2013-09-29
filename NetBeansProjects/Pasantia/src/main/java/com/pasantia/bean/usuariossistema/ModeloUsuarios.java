@@ -15,6 +15,8 @@ import org.primefaces.model.SelectableDataModel;
  * @author David Timana
  */
 public class ModeloUsuarios extends ListDataModel<Persona> implements SelectableDataModel<Persona>, Serializable{
+    
+    private static final long serialVersionUID = -6376583208786005379L;
 
     @Override
     public Object getRowKey(Persona t) {

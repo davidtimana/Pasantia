@@ -5,6 +5,7 @@
 package com.pasantia.bean.configpuntoventa.divisiones;
 
 import com.pasantia.entidades.Departamento;
+import java.io.Serializable;
 import java.util.List;  
 import javax.faces.model.ListDataModel;  
 import org.primefaces.model.SelectableDataModel; 
@@ -13,7 +14,9 @@ import org.primefaces.model.SelectableDataModel;
  *
  * @author David Timana
  */
-public class ModeloDatosDepartamento extends ListDataModel<Departamento> implements SelectableDataModel<Departamento> {
+public class ModeloDatosDepartamento extends ListDataModel<Departamento> implements SelectableDataModel<Departamento>, Serializable {
+    
+    private static final long serialVersionUID = -1128006821432520054L;
 
     public ModeloDatosDepartamento() {
     }

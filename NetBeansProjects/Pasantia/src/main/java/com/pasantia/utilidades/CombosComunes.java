@@ -22,6 +22,7 @@ import com.pasantia.entidades.Pais;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
@@ -33,7 +34,9 @@ import javax.inject.Inject;
  *
  * @author David Timana
  */
-public class CombosComunes {
+public class CombosComunes implements Serializable{
+    
+    private static final long serialVersionUID = 6985371832447944178L;
 
     //Atributos Combo Tipo Identificacion
     private List<TipoIdentificacion> tipoIdentificaciones;

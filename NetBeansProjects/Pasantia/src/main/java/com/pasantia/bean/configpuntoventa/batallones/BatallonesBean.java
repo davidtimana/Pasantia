@@ -19,11 +19,13 @@ import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 @Named(value = "batallonesBean")
 @SessionScoped
 public class BatallonesBean implements Serializable{
+    
+    private static final long serialVersionUID = 5482033212307691504L;
 
     private List<Batallon> batallones;    
     private Boolean panel;

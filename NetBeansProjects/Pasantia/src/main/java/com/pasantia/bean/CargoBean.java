@@ -25,6 +25,8 @@ import org.primefaces.component.inputtext.InputText;
 @Named(value = "cargoBean")
 @RequestScoped
 public class CargoBean implements Serializable{
+    
+    private static final long serialVersionUID = -33590772278215818L;
 
     private Cargo cargo;
     private List<Cargo> cargos;

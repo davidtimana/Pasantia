@@ -27,11 +27,13 @@ import org.primefaces.model.map.Marker;
 
 /**
  *
- * @author root
+ * @author David Timana
  */
 @Named(value = "controlMapaBean")
 @SessionScoped
 public class ControlMapaBean implements Serializable {
+    
+    private static final long serialVersionUID = 6327793204738190453L;
 
     private List<DivisionesUbicacion> listaGeo;
     private MapModel modMapa;    

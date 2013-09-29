@@ -19,6 +19,8 @@ import javax.inject.Inject;
 @Named(value = "editarRolBean")
 @SessionScoped
 public class EditarRolBean implements Serializable {
+    
+    private static final long serialVersionUID = -9071477296666878183L;
 
    
     private Rol rol;

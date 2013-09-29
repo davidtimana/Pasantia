@@ -29,6 +29,8 @@ import org.primefaces.model.DualListModel;
 @Named(value = "asignarUbicacionesBean")
 @SessionScoped
 public class AsignarUbicacionesBean implements Serializable {
+    
+    private static final long serialVersionUID = 7826632365609626117L;
 
     private Boolean abrirAsignaciones;
     private List<Departamento> departamentos;    

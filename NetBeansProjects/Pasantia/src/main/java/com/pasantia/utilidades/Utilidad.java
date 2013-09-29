@@ -4,12 +4,15 @@
  */
 package com.pasantia.utilidades;
 
+import com.pasantia.excepciones.FotoNoCopiadaException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -23,10 +26,12 @@ import org.primefaces.context.RequestContext;
 
    
 
-public class Utilidad {
+public class Utilidad implements Serializable{
     
+    private static final long serialVersionUID = 4251226551916517595L;
     
     private static Logger logger = Logger.getLogger(Utilidad.class.getName());
+    
     
     
     public static void mensajeError(String titulo, String mensaje) {
@@ -81,7 +86,7 @@ public class Utilidad {
         return "border-color:#e9322d;-webkit-box-shadow:0 0 6px #f8b9b7;-moz-box-shadow: 0 0 6px #f8b9b7;box-shadow: 0 0 6px #f8b9b7";
     }
     
-    public static void copiarArchivo(String fileName, InputStream in,String destination) {
+    public static void copiarArchivo(String fileName, InputStream in,String destination) throws FotoNoCopiadaException {
 
         try {
 
@@ -111,7 +116,8 @@ public class Utilidad {
 
         } catch (IOException e) {
 
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Error al copiar el archivo{0}", e.getMessage());
+            throw new FotoNoCopiadaException("Error al copiar la foto: "+fileName);
 
         }
 

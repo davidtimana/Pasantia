@@ -19,11 +19,13 @@ import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author david
+ * @author David Timana
  */
 @Named(value = "ubicacionBean")
 @SessionScoped
 public class UbicacionBean implements Serializable{
+    
+    private static final long serialVersionUID = -1830365077554339706L;
 
     private Ubicacion ubicacion;
     private List<Ubicacion> ubicaciones; 

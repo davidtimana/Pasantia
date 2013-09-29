@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
+-- version 3.5.8.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-09-2013 a las 19:46:39
--- Versión del servidor: 5.5.32
--- Versión de PHP: 5.3.10-1ubuntu3.8
+-- Tiempo de generación: 29-09-2013 a las 13:57:00
+-- Versión del servidor: 5.5.32-0ubuntu0.13.04.1
+-- Versión de PHP: 5.4.9-4ubuntu2.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -12457,14 +12457,6 @@ INSERT INTO `CiudadesColombia` (`idCiudadesColombia`, `Ciudad`, `latitud`, `long
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ciudadesSIN`
---
--- en uso(#1356 - View 'CasinoPasantia.ciudadesSIN' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
--- en uso (#1356 - View 'CasinoPasantia.ciudadesSIN' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `coordenadas`
 --
 
@@ -12490,14 +12482,6 @@ CREATE TABLE IF NOT EXISTS `CoordenadasCiudad` (
   `longitud` double DEFAULT NULL,
   PRIMARY KEY (`idCoordenadasCiudad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `coordenadasSIN`
---
--- en uso(#1356 - View 'CasinoPasantia.coordenadasSIN' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
--- en uso (#1356 - View 'CasinoPasantia.coordenadasSIN' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
 
 -- --------------------------------------------------------
 
@@ -12677,7 +12661,7 @@ CREATE TABLE IF NOT EXISTS `DivisionesUbicacion` (
   PRIMARY KEY (`idDivisionesUbicacion`),
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_departamento_idx` (`secdepartamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Volcado de datos para la tabla `DivisionesUbicacion`
@@ -12706,7 +12690,9 @@ INSERT INTO `DivisionesUbicacion` (`idDivisionesUbicacion`, `secdepartamento`, `
 (25, 66, 22),
 (26, 68, 23),
 (27, 88, 10),
-(28, 81, 16);
+(28, 81, 16),
+(29, 91, 4),
+(30, 85, 4);
 
 -- --------------------------------------------------------
 
@@ -13043,21 +13029,22 @@ CREATE TABLE IF NOT EXISTS `Persona` (
   KEY `fk_ciudad_origen_idx` (`SECCIUDAD`),
   KEY `fk_catalogo_venta_idx` (`SECCATALOGO_VENTA`),
   KEY `fk_cargo_idx` (`SECCARGO`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla encargada de registrar la informacion de la persona.*/' AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla encargada de registrar la informacion de la persona.*/' AUTO_INCREMENT=24 ;
 
 --
 -- Volcado de datos para la tabla `Persona`
 --
 
 INSERT INTO `Persona` (`idTBLPERSONA`, `PNOMBRE`, `SNOMBRE`, `PAPELLIDO`, `SAPELLIDO`, `CEDULA`, `FECHA_NACIMIENTO`, `EMAIL`, `TELEFONO`, `MOVIL`, `SECTIPO_IDENTIFICACION`, `SECSEXO`, `SECCIUDAD`, `SECTIPO_PERSONA`, `FOTO`, `DIRECCION`, `BARRIO`, `SECCATALOGO_VENTA`, `SECCARGO`, `LATITUD`, `LONGITUD`) VALUES
-(1, 'David', 'Orlando', 'Timaná', 'Leytón', '1061734652', '1990-03-04', 'david.timana@saludhds.com.co', '(28)-383011', '320-222-5256', 5, 1, 19001, 5, '../../FotosUsuarios/sinfotoh.jpeg', 'Carrera 19 B 12-15', 'Pajonal', 6, 12, 2.4388040352396345, -76.61955606941774),
-(16, 'Jose', 'Orlando', 'Timaná', 'Portilla', '5379450', '2003-09-01', 'joseorlandotimana@hotmail.com', '(28)-383011', '320-222-5256', 1, 1, 52885, 3, '../../temp/28557821Plus-UI-64.png', 'Yacuanquer', 'Yacuanquer', 1, 16, 1.1146918624612487, -77.40216279038577),
-(17, 'Rene', 'Alexander', 'Timana', 'Leyton', '5207332', '1993-01-06', 'renetima@gmail.com', '(28)-383011', '320-397-3022', 5, 1, 19001, 2, '../../temp/29515604IMG_0006.JPG', 'Calle 10 - 15-40', 'Las americas', 6, 6, 2.4388941203353363, -76.6147838831057),
-(18, 'Paula', 'Andrea', 'Timana', 'Leyton', '30719540', '1985-07-07', 'paulaandreatimana@hotmail.com', '(28)-383011', '316-220-4501', 1, 2, 52001, 7, '../../FotosUsuarios/sinfotom.jpeg', 'Jamondino', 'Jamondino', 6, 16, 1.1755833638527642, -77.25383028388023),
-(19, 'Mayerline', '', 'Gamboa', 'Gomez', '1089481017', '1989-03-21', 'mafelu1221@hotmail.com', '(28)-383011', '321-576-6572', 1, 2, 19001, 8, '../../FotosUsuarios/sinfotom.jpeg', 'Calle 2N 1-30', 'Antitulo Liceo', 6, 16, 2.442956726743829, -76.60159818828106),
-(20, 'Emma', 'Gladys', 'Leyton', 'De Timana', '30719811', '1966-03-08', 'gladystimana@hotmail.com', '(28)-383011', '316-832-0230', 1, 2, 19001, 4, '../../FotosUsuarios/sinfotom.jpeg', 'Carrera 19 b 12-15', 'Pajonal', 6, 3, 2.43869684405224, -76.61954534058168),
+(1, 'David', 'Orlando', 'Timaná', 'Leytón', '1061734652', '1990-03-04', 'david.timana@saludhds.com.co', '(28)-383011', '320-222-5256', 5, 1, 19001, 5, '../../temp/82136251IMG00159-20130107-1257.jpg', 'Carrera 19 B 12-15', 'Pajonal', 6, 12, 2.4388040352396345, -76.61955606941774),
+(16, 'Jose', 'Orlando', 'Timaná', 'Portilla', '5379450', '1993-09-01', 'joseorlandotimana@hotmail.com', '(28)-383011', '320-222-5256', 1, 1, 52885, 3, '../../temp/65449096IMG00098-20121202-0954.jpg', 'Yacuanquer', 'Yacuanquer', 1, 16, 1.1146918624612487, -77.40216279038577),
+(17, 'Rene', 'Alexander', 'Timana', 'Leyton', '5207332', '1993-01-06', 'renetima@gmail.com', '(28)-383011', '320-397-3022', 5, 1, 19001, 2, '../../temp/59878162IMG00176-20130222-1615.jpg', 'Calle 10 - 15-40', 'Las americas', 6, 6, 2.4388941203353363, -76.6147838831057),
+(18, 'Paula', 'Andrea', 'Timana', 'Leyton', '30719540', '1985-07-07', 'paulaandreatimana@hotmail.com', '(28)-383011', '316-220-4501', 1, 2, 52001, 7, '../../temp/61558125•?°?°?•Lucia Campo•?°?°?•.jpg', 'Jamondino', 'Jamondino', 6, 16, 1.1755833638527642, -77.25383028388023),
+(19, 'Mayerline', '', 'Gamboa', 'Gomez', '1089481017', '1989-03-21', 'mafelu1221@hotmail.com', '(28)-383011', '321-576-6572', 1, 2, 19001, 8, '../../temp/38763676IMG00094-20121202-0946.jpg', 'Carrera 4 -2n-06', 'Antiguo Liceo', 6, 16, 2.442956726743829, -76.60159818828106),
+(20, 'Emma', 'Gladys', 'Leyton', 'De Timana', '30719811', '1966-03-08', 'gladystimana@hotmail.com', '(28)-383011', '316-832-0230', 1, 2, 19001, 4, '../../temp/45673860IMG00133-20121202-1546.jpg', 'Carrera 19 b 12-15', 'Pajonal', 6, 3, 2.43869684405224, -76.61954534058168),
 (21, 'Carlos', 'Javier', 'Anchico', 'Peña', '6546512316', '1970-01-13', 'carlos.anchico@saludhds.com.co', '(28)-343640', '318-520-4170', 1, 1, 19001, 5, '../../FotosUsuarios/sinfotoh.jpeg', 'La paz', 'La paz', 6, 8, 2.4765596315891854, -76.56057581305504),
-(22, 'EyderPruebaAKJDKKDJK', 'Albeiro', 'Ascuntar', 'Rosales', '20401050', '1983-07-19', 'eyder.ascuntar@saludhds.com.co', '(28)-201040', '312-450-7189', 1, 1, 19001, 2, '../../FotosUsuarios/Usuarios/sinfotoh.jpeg', 'La estancia', 'La estancia', 6, 2, 2.452249136504725, -76.5966247022152);
+(22, 'Eyder', 'Albeiro', 'Ascuntar', 'Rosales', '20401050', '1983-07-19', 'eyder.ascuntar@saludhds.com.co', '(28)-201040', '312-450-7189', 1, 1, 19001, 2, '../../temp/37614119????????¥¤H@?N!T@?.jpg', 'La estancia', 'La estancia', 6, 2, 2.452249136504725, -76.5966247022152),
+(23, 'Bruno', '', 'Timana', 'Gamboa', '10617346521', '2012-07-23', 'bruno.timana@gmail.com', '(28)-383011', '321-576-6572', 2, 1, 19001, 7, '../../temp/81276156IMG00061-20120923-1630.jpg', 'Carrera 19 b - 12 - 15', 'Pajonal', 6, 16, 2.438796710334318, -76.61956278607249);
 
 -- --------------------------------------------------------
 
@@ -13536,7 +13523,7 @@ CREATE TABLE IF NOT EXISTS `Ubicacion` (
 --
 
 INSERT INTO `Ubicacion` (`idUbicacion`, `descripcion`) VALUES
-(1, 'BODEGA PRINCIPALSAD'),
+(1, 'BODEGA PRINCIPAL'),
 (2, 'PUNTO DE VENTA EDITANDO'),
 (3, 'BODEGA 1'),
 (4, 'BODEGA 2'),
@@ -13545,7 +13532,7 @@ INSERT INTO `Ubicacion` (`idUbicacion`, `descripcion`) VALUES
 (7, 'BODEGA 5'),
 (8, 'BODEGA 6'),
 (9, 'BODEGA 7'),
-(10, 'BODEGA 8'),
+(10, 'BODEGA 800000'),
 (11, 'BODEGA 9'),
 (12, 'BODEGA 10'),
 (13, 'PRUEBA GUARDADO'),

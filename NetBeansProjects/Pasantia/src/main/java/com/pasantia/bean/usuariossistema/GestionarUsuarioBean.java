@@ -171,6 +171,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void editar() {
         estaEditando = true;
+        botonCargar="display:block";
         listaControlReadonly.set(0, false);
         listControlAccordion.set(0,true);
         listControlAccordion.set(1,true);
@@ -186,6 +187,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         cargarUltimo();
         listaControlBotones.removeAll(listaControlBotones);
         iniciarBotones();
+        botonCargar="display:none";
         tabsSeleccionados = "0";
         listaControlReadonly.set(0, true);
          listControlAccordion.set(0,true);
@@ -219,6 +221,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         fotoSubida = false;
         contadorMapa = 0;
         zoom = 6;
+        botonCargar="display:block";
         Utilidad.actualizarElemento("gestionarusuarios");
         logger.info("******************************Iniciamos Creacion de usuarios.");
     }

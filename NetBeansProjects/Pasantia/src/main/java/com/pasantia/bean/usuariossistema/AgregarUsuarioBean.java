@@ -155,8 +155,13 @@ public class AgregarUsuarioBean implements Serializable {
 
 
         if (r) {
-            gestionarUsuarioBean.cancelar();
-            //ec.redirect(ec.getRequestContextPath() + "/faces/paginas/usuariossistema/GestionarUsuarios.xhtml");
+            if (estaEditando) {
+                gestionarUsuarioBean.cargarObjetoPersona(p);
+
+            } else {
+                gestionarUsuarioBean.cancelar();
+            }
+
         }
 
     }

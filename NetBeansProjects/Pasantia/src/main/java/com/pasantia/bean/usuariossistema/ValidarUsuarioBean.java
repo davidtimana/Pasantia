@@ -431,6 +431,7 @@ public class ValidarUsuarioBean implements Serializable {
         Integer total = list.size();
         Integer cont = 0;
         for (Boolean b : list) {
+            System.out.println("los true son-->"+b);
             if (b == true) {
                 cont++;
             }

@@ -53,13 +53,17 @@
 
             <p:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" id="grupobotones" >
                 <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarUsuarioBean.nuevo()}" icon="ui-icon-document-b" 
-                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(0)==1}"/>
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(0)==1}"
+                                 onclick="resetWizard();"/>
                 <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarUsuarioBean.editar()}" icon="ui-icon-pencil" 
-                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(1)==1}" id="editarUsuario"/>    
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(1)==1}" id="editarUsuario"
+                                 onclick="resetWizard();"/>    
                 <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.cancelar()}" icon="ui-icon-cancel" 
-                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(3)==1}"/>
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(3)==1}"
+                                 onclick="resetWizard();"/>
                 <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarUsuarioBean.abrirBuscador()}" icon="ui-icon-search" 
-                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(4)==1}"/>
+                                 rendered="#{gestionarUsuarioBean.listaControlBotones.get(4)==1}"
+                                 onclick="resetWizard();"/>
             </p:panelGrid>
         </h:form>
 

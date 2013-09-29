@@ -47,7 +47,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -161,11 +163,19 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         logger.info("*****************Cargando Ultimo Usuario Ingresado");
         cargarUltimo();
         logger.info("*****************Fin Ultimo Usuario Ingresado");
+        listControlAccordion.set(0,true);
+        listControlAccordion.set(1,true);
+        listControlAccordion.set(2,true);
+        listControlAccordion.set(3,true);
     }
 
     public void editar() {
         estaEditando = true;
         listaControlReadonly.set(0, false);
+        listControlAccordion.set(0,true);
+        listControlAccordion.set(1,true);
+        listControlAccordion.set(2,true);
+        listControlAccordion.set(3,true);
         deshabilitarBotonesEditaroNuevo();
         logger.log(Level.INFO, "******************************Iniciamos Edicion de usuarios.{0}", estaEditando);
 
@@ -178,6 +188,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         iniciarBotones();
         tabsSeleccionados = "0";
         listaControlReadonly.set(0, true);
+         listControlAccordion.set(0,true);
+        listControlAccordion.set(1,true);
+        listControlAccordion.set(2,true);
+        listControlAccordion.set(3,true);
         Utilidad.actualizarElemento("gestionarusuarios");
         logger.info("******************************Iniciamos Cancelar de usuarios dejando todo como estaba.");
     }
@@ -198,6 +212,10 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         deshabilitarBotonesEditaroNuevo();
         limpiarObjetos();
         limpiarSeleccionados();
+        listControlAccordion.set(0,false);
+        listControlAccordion.set(1,false);
+        listControlAccordion.set(2,false);
+        listControlAccordion.set(3,false);
         fotoSubida = false;
         contadorMapa = 0;
         zoom = 6;
@@ -219,6 +237,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
 
     public void cargarObjetoPersona(Persona p) {
         modMapa = new DefaultMapModel();
+        ocultarCargo="display:none";
+        ocultarCatalogo="display:none";
         persona = p;
         sexoSeleccionado = persona.getSexo().getIdSexo();
         asignarSexo();
@@ -251,6 +271,13 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         contadorMapa++;
         zoom = 13;
         listaControlReadonly.set(0, true);
+        estaEditando=true;
+        if(!persona.getCargo().getDescripcion().equals("NO APLICA")){
+            ocultarCargo="display:block";
+        }
+        if(!persona.getCatalogoVenta().getDescripcion().equals("No aplica")){
+            ocultarCatalogo="display:block";
+        }
 
     }
 
@@ -273,7 +300,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
             try {
 
                 validarUsuarioBean.validarGeolocalizacionUsuario(contadorMapa);
-                Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente puedo continuar con el paso 2.");
+                Utilidad.mensajeInfo("SICOVI", "Gestionar Usuarios - Paso 1. Validado Correctamente "
+                        + "puedo continuar con el paso 2.");
                 listControlAccordion.set(3, true);
 
             } catch (UbicacionNoSeleccionadaMapaException e) {
@@ -292,6 +320,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         if (actual.equals("confiusuario")) {
             try {
                 validarUsuarioBean.validarConfiguracionUsuarioPaso2(tipoPersona, catalogoVenta, cargo);
+                Utilidad.mensajeInfo("SICOVI", "Configurar Usuarios - Paso 2. Validado Correctamente "
+                        + "puede conmfirmar y guardar ahora.");
             } catch (ComboNoSeleccionadoException ex) {
                 pestaña = "confiusuario";
                 Utilidad.mensajeError("SICOVI", "Configuración Usuarios - Paso 2: "

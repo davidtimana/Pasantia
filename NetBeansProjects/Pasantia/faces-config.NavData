@@ -4,24 +4,24 @@
     <Scope Scope="Project">
         <Node id="paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" x="12" y="1048" zoom="true"/>
         <Node id="paginas/accesoyseguridad/BuscarRol.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="paginas/configpuntoventa/frmagregarbatallon.xhtml" x="1368" y="1149" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Ubicaciones.xhtml" x="61" y="34" zoom="true"/>
+        <Node id="paginas/configpuntoventa/frmagregarbatallon.xhtml" x="1368" y="1149" zoom="true"/>
         <Node id="paginas/configpuntoventa/asignarDepartamentosaDivision.xhtml" x="479" y="1081" zoom="true"/>
         <Node id="paginas/configpuntoventa/buscadorBatallones.xhtml" x="915" y="1119" zoom="true"/>
         <Node id="paginas/configpuntoventa/frmagregardivision.xhtml" x="1416" y="1113" zoom="true"/>
-        <Node id="paginas/test/responsablet.xhtml" x="1071" y="1083" zoom="true"/>
         <Node id="paginas/configpuntoventa/GestionarBatallones.xhtml" x="1309" y="13" zoom="true"/>
+        <Node id="paginas/test/responsablet.xhtml" x="1071" y="1083" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Categorias.xhtml" x="40" y="136" zoom="true"/>
         <Node id="paginas/articulos/EditarCategoria.xhtml" x="150" y="150" zoom="true"/>
         <Node id="paginas/articulos/AgregarUbicaciones.xhtml" x="1900" y="150" zoom="true"/>
         <Node id="paginas/configpuntoventa/UbicacionMapa.xhtml" x="442" y="1117" zoom="true"/>
-        <Node id="paginas/articulos/EditarUbicaciones.xhtml" x="2150" y="150" zoom="true"/>
-        <Node id="paginas/articulos/EliminarUbicaciones.xhtml" x="3" y="1114" zoom="true"/>
         <Node id="paginas/accesoyseguridad/Gestionar_Cargo.xhtml" x="1373" y="301" zoom="true"/>
+        <Node id="paginas/articulos/EditarUbicaciones.xhtml" x="2150" y="150" zoom="true"/>
         <Node id="paginas/menuPrincipal.xhtml" x="1475" y="1171" zoom="true"/>
+        <Node id="paginas/articulos/EliminarUbicaciones.xhtml" x="3" y="1114" zoom="true"/>
         <Node id="paginas/configpuntoventa/eliminarUbicaciones.xhtml" x="945" y="1180" zoom="true"/>
-        <Node id="paginas/articulos/BuscarCategoria.xhtml" x="150" y="300" zoom="true"/>
         <Node id="paginas/configpuntoventa/tblGeolocalizacion.xhtml" x="869" y="1151" zoom="true"/>
+        <Node id="paginas/articulos/BuscarCategoria.xhtml" x="150" y="300" zoom="true"/>
         <Node id="paginas/configpuntoventa/frmeditardivision.xhtml" x="11" y="1081" zoom="true"/>
         <Node id="paginas/accesoyseguridad/Listar_Roles.xhtml" x="49" y="181" zoom="true"/>
         <Node id="paginas/articulos/Gestion_Articulos.xhtml" x="49" y="90" zoom="true"/>
@@ -29,8 +29,8 @@
         <Node id="paginas/articulos/AgregarCategoria.xhtml" x="400" y="150" zoom="true"/>
         <Node id="paginas/accesoyseguridad/EliminarRol.xhtml" x="150" y="450" zoom="true"/>
         <Node id="paginas/articulos/EliminarCategoria.xhtml" x="650" y="300" zoom="true"/>
-        <Node id="paginas/articulos/prueba.xhtml" x="1435" y="1081" zoom="true"/>
         <Node id="*" x="887" y="168" zoom="true"/>
+        <Node id="paginas/articulos/prueba.xhtml" x="1435" y="1081" zoom="true"/>
         <Node id="paginas/articulos/Listar_Variaciones.xhtml" x="24" y="236" zoom="true"/>
         <Node id="paginas/configpuntoventa/frmeliminardivision.xhtml" x="7" y="1148" zoom="true"/>
         <Node id="paginas/articulos/Listar_Categorias.xhtml" x="1410" y="166" zoom="true"/>
@@ -42,8 +42,8 @@
         <Node id="index.xhtml" x="874" y="795" zoom="true"/>
         <Node id="paginas/menu/menuInicial.xhtml" x="1449" y="264" zoom="true"/>
         <Node id="paginas/articulos/buscarUbicaciones.xhtml" x="529" y="1178" zoom="true"/>
-        <Node id="paginas/accesoyseguridad/AgregarRol.xhtml" x="900" y="150" zoom="true"/>
         <Node id="paginas/configpuntoventa/GestionarCasinos.xhtml" x="1228" y="356" zoom="true"/>
+        <Node id="paginas/accesoyseguridad/AgregarRol.xhtml" x="900" y="150" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Precios.xhtml" x="1404" y="108" zoom="true"/>
         <Node id="paginas/articulos/Listar_Ubicaciones.xhtml" x="1419" y="52" zoom="true"/>
     </Scope>

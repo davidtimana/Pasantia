@@ -723,7 +723,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         rutaFotoCargar = "../../FotosUsuarios/sinfotoh.jpeg";
         ocultarCargo = "display:none";
         ocultarCatalogo = "display:none";
-        urlTemporal = "/home/jbuitron/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
+        urlTemporal = "/home/david/NetBeansProjects/Pasantia/NetBeansProjects/Pasantia/src/main/webapp/temp/";
         fotoSubida = false;
         modMapa = new DefaultMapModel();
 

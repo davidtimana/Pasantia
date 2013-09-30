@@ -96,6 +96,11 @@ public class Navegacion implements Serializable{
         return "retornarPaginaAdministrador";
     }
     
+    public String ir_a_Gestionar_Acceso(){
+        System.out.println("llegue a gestionar acceso");
+        return "gestionaracceso";
+    }
+    
     
     
 }

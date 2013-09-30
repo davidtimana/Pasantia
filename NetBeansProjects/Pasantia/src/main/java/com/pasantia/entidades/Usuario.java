@@ -31,17 +31,19 @@ public class Usuario  implements java.io.Serializable {
      private String nomusuario;
      private boolean activo;
      private boolean sesion;
+     private String Thema;
 
     public Usuario() {
     }
 
-    public Usuario(Persona persona, Rol rol, String clave, String nomusuario, boolean activo, boolean sesion) {
+    public Usuario(Persona persona, Rol rol, String clave, String nomusuario, boolean activo, boolean sesion,String Thema) {
        this.persona = persona;
        this.rol = rol;
        this.clave = clave;
        this.nomusuario = nomusuario;
        this.activo = activo;
        this.sesion = sesion;
+       this.Thema=Thema;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -108,6 +110,17 @@ public class Usuario  implements java.io.Serializable {
     public void setSesion(boolean sesion) {
         this.sesion = sesion;
     }
+
+    @Column(name = "Thema", nullable = false)
+    public String getThema() {
+        return Thema;
+    }
+
+    public void setThema(String Thema) {
+        this.Thema = Thema;
+    }
+    
+    
 
 
 

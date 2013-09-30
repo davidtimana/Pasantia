@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="titulo">
+        Gestion De Acceso - SICOVI
+    </ui:define>
+
+    <ui:define name="abajo">
+
+    </ui:define>
+
+    <ui:define name="derecha">
+
+    </ui:define>
+
+    <ui:define name="tituloInsercion">
+        Control Acceso Al Sistema
+    </ui:define>
+
+    <ui:define name="cuerpo">
+
+        <h:form id="frmaccesousur"  >
+            <p:commandButton value="Buscar Usuario" title="Buscar Usuario" icon="ui-icon-search" 
+                                         actionListener="#{buscarUsuarioBean.abrirBuscador()}" />
+            <p:accordionPanel  id="accordionacceso" multiple="true" >  
+
+                <p:tab title="Usuario ha ingresar">
+
+                    
+                        
+                    
+                    
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                        <p:outputLabel value="Nombres" />
+                        <p:outputLabel value="Nombres" />
+
+                        <p:outputLabel value="Apellidos" />
+                        <p:outputLabel value="Apellidos" />
+
+                        <p:outputLabel value="N° Identificación" />
+                        <p:outputLabel value="N° Identificación" />
+                        
+                        <p:outputLabel value="Tipo Usuario:" />
+                        <p:outputLabel value="N° Identificación" />
+
+                    </p:panelGrid> 
+
+                </p:tab>
+
+                <p:tab title="Parametros de Acceso">
+
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                        <p:outputLabel value="Rol: " />
+                        <p:selectOneMenu id="cmbrol" value="#{gestionarAcceso.rol.idRol}"  
+                                         validatorMessage="Debe seleccionar Rol" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith" 
+                                          >  
+                            <f:selectItem itemLabel="...Seleccione..."  />  
+                            <f:selectItems value="#{gestionarAcceso.cargarComboRoles()}"  />
+                            <p:ajax listener="#{gestionarAcceso.cargarRol()}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Login: "  />
+                        <p:inputText value="#{gestionarAcceso.usuario.nomusuario}" />
+
+                        <p:outputLabel value="Password: " />
+                        <p:password id="passusur" feedback="true" promptLabel="Ingrese Su Contraseña" 
+                                        weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
+                                        strongLabel="Seguridad: Alta" 
+                                        label="Contraseña" value="#{gestionarAcceso.usuario.nomusuario}" />                                    
+
+                        <p:outputLabel value="Password(Repitalo Por favor):" />
+                        <p:password id="passusurvalidacion" feedback="true" promptLabel="Ingrese Su Contraseña" 
+                                        weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
+                                        strongLabel="Seguridad: Alta" 
+                                        label="Contraseña" value="#{gestionarAcceso.verificarPass}" /> 
+
+                        
+
+                    </p:panelGrid> 
+                    <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:outputLabel value="Estado Usuario" />
+                        <p:selectOneRadio id="estatus" value="#{gestionarAcceso.usuario.activo}">  
+                            <f:selectItem itemLabel="Activo" itemValue="true" />  
+                            <f:selectItem itemLabel="Inactivo" itemValue="true" />                              
+                        </p:selectOneRadio> 
+                        
+                        <p:outputLabel value="Tema Usuario:" />
+                        <p:outputLabel value="Tema Usuario:" />
+                        
+                    </p:panelGrid>
+
+                </p:tab>
+
+
+
+            </p:accordionPanel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

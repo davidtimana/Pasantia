@@ -10,6 +10,7 @@ import com.pasantia.dao.CiudadDAO;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.dao.DivisionesDAO;
 import com.pasantia.dao.PaisDAO;
+import com.pasantia.dao.RolDAO;
 import com.pasantia.dao.SexoDAO;
 import com.pasantia.dao.TipoIdentificacionDAO;
 import com.pasantia.dao.TipoPersonaDAO;
@@ -19,6 +20,7 @@ import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.Pais;
+import com.pasantia.entidades.Rol;
 import com.pasantia.entidades.Sexo;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
@@ -65,6 +67,9 @@ public class CombosComunes implements Serializable{
     //Atributos Combo Catalogo Venta
     private List<CatalogoVenta> catalogosVenta;
     private List<SelectItem> comboCatalogoVenta;
+    //Atributos Combo Ro
+    private List<Rol> roles;
+    private List<SelectItem> comboRoles;
     //Inyecciones
     @Inject
     TipoIdentificacionDAO tipoIdentificacionDAO;
@@ -84,6 +89,8 @@ public class CombosComunes implements Serializable{
     CargoDAO cargoDAO;
     @Inject
     CatalogoVentaDAO catalogoVentaDAO;
+    @Inject
+    RolDAO rolDAO;
     
 
     /**
@@ -244,6 +251,22 @@ public class CombosComunes implements Serializable{
     private void cargarCatalogos(){
         catalogosVenta=catalogoVentaDAO.buscarCatalogos();
     }
+    
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con los
+     * roles para los usuarios de la aplicacion
+     * @return comboRoles
+     */
+     public List<SelectItem> cargarComboRoles(){
+        cargarRoles();
+        for (int i = 0; i < roles.size(); i++) {
+            comboRoles.add(new SelectItem(roles.get(i).getIdRol(), roles.get(i).getDescripcion()));
+        }
+        return comboRoles;
+    }
+    private void cargarRoles(){
+        roles=rolDAO.buscartodosRoles();
+    }
 
     //Constructor por Defecto
     public CombosComunes() {
@@ -256,6 +279,7 @@ public class CombosComunes implements Serializable{
         tipoPersonas = new ArrayList<TipoPersona>();
         cargos=new ArrayList<Cargo>();
         catalogosVenta = new ArrayList<CatalogoVenta>();
+        roles=new ArrayList<Rol>();
 
         comboSexo = new ArrayList<SelectItem>();
         comboTipoIdentificacion = new ArrayList<SelectItem>();
@@ -266,6 +290,7 @@ public class CombosComunes implements Serializable{
         comboTipoPersonas = new ArrayList<SelectItem>();
         comboCargos = new ArrayList<SelectItem>();
         comboCatalogoVenta = new ArrayList<SelectItem>();
+        comboRoles = new ArrayList<SelectItem>();
 
     }
 
@@ -413,6 +438,24 @@ public class CombosComunes implements Serializable{
     public void setComboCatalogoVenta(List<SelectItem> comboCatalogoVenta) {
         this.comboCatalogoVenta = comboCatalogoVenta;
     }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
+
+    public List<SelectItem> getComboRoles() {
+        return comboRoles;
+    }
+
+    public void setComboRoles(List<SelectItem> comboRoles) {
+        this.comboRoles = comboRoles;
+    }
+    
+    
     
     
     

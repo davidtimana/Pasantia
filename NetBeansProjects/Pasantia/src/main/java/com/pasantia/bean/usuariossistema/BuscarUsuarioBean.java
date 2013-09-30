@@ -45,6 +45,7 @@ public class BuscarUsuarioBean implements Serializable {
     
     
     public void abrirBuscador(){
+        log.info("Llegue a buscador generico Usuarios");
         buscador=true;        
         personaSeleccionada=new Persona();
         Utilidad.actualizarElemento("dlgbuscadorusuarios");

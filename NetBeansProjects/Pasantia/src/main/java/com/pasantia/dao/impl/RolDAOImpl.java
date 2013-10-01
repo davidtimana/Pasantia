@@ -62,6 +62,7 @@ public class RolDAOImpl implements RolDAO{
             session.merge(rol);
             session.beginTransaction().commit(); 
             session.flush();
+            session.refresh(rol);
             result=true;
         }catch(Exception e){
             result=false;

@@ -121,6 +121,8 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     CrudDAO<Persona> crudDAO;
     @Inject
     ValidarUsuarioBean validarUsuarioBean;
+    @Inject
+    BuscarUsuarioBean buscarUsuarioBean;
 
     @PreDestroy
     public void Fin() {
@@ -287,6 +289,17 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
     public void cargarUltimo() {
         persona = crudDAO.buscarUltimo(Persona.class);
         cargarObjetoPersona(persona);
+    }
+    
+    public void cargarBuscadorUsuarios(){
+        buscarUsuarioBean.abrirBuscador();
+    }
+    
+    public void buscarUsuario(){       
+        
+        persona=buscarUsuarioBean.cargarSeleccinado();
+        cargarObjetoPersona(persona);
+        Utilidad.actualizarElemento("gestionarusuarios");
     }
 
     public String navegarWizard(FlowEvent event) {

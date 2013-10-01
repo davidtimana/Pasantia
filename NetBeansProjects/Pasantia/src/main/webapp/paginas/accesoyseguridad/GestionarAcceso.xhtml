@@ -25,29 +25,33 @@
     <ui:define name="cuerpo">
 
         <h:form id="frmaccesousur"  >
-            <p:commandButton value="Buscar Usuario" title="Buscar Usuario" icon="ui-icon-search" 
-                                         actionListener="#{buscarUsuarioBean.abrirBuscador()}" />
+
             <p:accordionPanel  id="accordionacceso" multiple="true" >  
 
                 <p:tab title="Usuario ha ingresar">
 
-                    
-                        
-                    
-                    
+
                     <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:commandButton value="Buscar Usuario" title="Buscar Usuario" icon="ui-icon-search" 
+                                         actionListener="#{buscarUsuarioBean.abrirBuscador()}" update="perencontrada"  >
+                            <p:ajax  listener="#{gestionarAcceso.cargarPersona()}" />
+                        </p:commandButton>
+                    </p:panelGrid>
+                    <p:separator   />
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto"
+                                 id="perencontrada">
 
                         <p:outputLabel value="Nombres" />
-                        <p:outputLabel value="Nombres" />
+                        <p:outputLabel value="#{gestionarAcceso.persona.pnombre} #{gestionarAcceso.persona.snombre}" />
 
                         <p:outputLabel value="Apellidos" />
-                        <p:outputLabel value="Apellidos" />
+                        <p:outputLabel value="#{gestionarAcceso.persona.papellido} #{gestionarAcceso.persona.sapellido}" />
 
                         <p:outputLabel value="N° Identificación" />
-                        <p:outputLabel value="N° Identificación" />
-                        
+                        <p:outputLabel value="#{gestionarAcceso.persona.cedula}" />
+
                         <p:outputLabel value="Tipo Usuario:" />
-                        <p:outputLabel value="N° Identificación" />
+                        <p:outputLabel value="N#{gestionarAcceso.persona.tipoPersona.nombreTipoPersona}" />
 
                     </p:panelGrid> 
 
@@ -61,7 +65,7 @@
                         <p:selectOneMenu id="cmbrol" value="#{gestionarAcceso.rol.idRol}"  
                                          validatorMessage="Debe seleccionar Rol" effect="fold" filter="true" 
                                          filterMatchMode="startsWith" 
-                                          >  
+                                         >  
                             <f:selectItem itemLabel="...Seleccione..."  />  
                             <f:selectItems value="#{gestionarAcceso.cargarComboRoles()}"  />
                             <p:ajax listener="#{gestionarAcceso.cargarRol()}" />
@@ -72,29 +76,25 @@
 
                         <p:outputLabel value="Password: " />
                         <p:password id="passusur" feedback="true" promptLabel="Ingrese Su Contraseña" 
-                                        weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
-                                        strongLabel="Seguridad: Alta" 
-                                        label="Contraseña" value="#{gestionarAcceso.usuario.nomusuario}" />                                    
+                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
+                                    strongLabel="Seguridad: Alta" 
+                                    label="Contraseña" value="#{gestionarAcceso.usuario.nomusuario}" />                                    
 
                         <p:outputLabel value="Password(Repitalo Por favor):" />
                         <p:password id="passusurvalidacion" feedback="true" promptLabel="Ingrese Su Contraseña" 
-                                        weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
-                                        strongLabel="Seguridad: Alta" 
-                                        label="Contraseña" value="#{gestionarAcceso.verificarPass}" /> 
-
-                        
+                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
+                                    strongLabel="Seguridad: Alta" 
+                                    label="Contraseña" value="#{gestionarAcceso.verificarPass}" /> 
 
                     </p:panelGrid> 
                     <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                        <p:outputLabel value="Estado Usuario" />
-                        <p:selectOneRadio id="estatus" value="#{gestionarAcceso.usuario.activo}">  
-                            <f:selectItem itemLabel="Activo" itemValue="true" />  
-                            <f:selectItem itemLabel="Inactivo" itemValue="true" />                              
-                        </p:selectOneRadio> 
+                        <p:outputLabel value="Estado Usuario (Activo/Inactivo)" />
+                        <p:selectBooleanCheckbox value="#{gestionarAcceso.usuario.activo}" />  
                         
+
                         <p:outputLabel value="Tema Usuario:" />
                         <p:outputLabel value="Tema Usuario:" />
-                        
+
                     </p:panelGrid>
 
                 </p:tab>
@@ -102,6 +102,8 @@
 
 
             </p:accordionPanel>
+
+
         </h:form>
     </ui:define>
 

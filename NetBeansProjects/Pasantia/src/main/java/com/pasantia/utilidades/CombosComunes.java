@@ -259,12 +259,14 @@ public class CombosComunes implements Serializable{
      */
      public List<SelectItem> cargarComboRoles(){
         cargarRoles();
+        comboRoles=new ArrayList<SelectItem>();
         for (int i = 0; i < roles.size(); i++) {
             comboRoles.add(new SelectItem(roles.get(i).getIdRol(), roles.get(i).getDescripcion()));
         }
         return comboRoles;
     }
     private void cargarRoles(){
+        roles=new ArrayList<Rol>();
         roles=rolDAO.buscartodosRoles();
     }
 

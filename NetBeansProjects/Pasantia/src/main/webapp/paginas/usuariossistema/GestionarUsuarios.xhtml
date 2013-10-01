@@ -61,7 +61,7 @@
                 <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarUsuarioBean.cancelar()}" icon="ui-icon-cancel" 
                                  rendered="#{gestionarUsuarioBean.listaControlBotones.get(3)==1}"
                                  onclick="resetWizard();"/>
-                <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarUsuarioBean.abrirBuscador()}" icon="ui-icon-search" 
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionarUsuarioBean.cargarBuscadorUsuarios()}" icon="ui-icon-search" 
                                  rendered="#{gestionarUsuarioBean.listaControlBotones.get(4)==1}"
                                  onclick="resetWizard();"/>
             </p:panelGrid>

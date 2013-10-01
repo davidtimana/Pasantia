@@ -4,7 +4,9 @@
  */
 package com.pasantia.accesoyseguridad.acceso;
 
+import com.pasantia.bean.usuariossistema.BuscarUsuarioBean;
 import com.pasantia.dao.RolDAO;
+import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Rol;
 import com.pasantia.entidades.Usuario;
 import com.pasantia.utilidades.CombosComunes;
@@ -30,9 +32,17 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
     private Rol rol;  
     private Usuario usuario;
     private String verificarPass;
+    private Persona persona;
+    
     
     @Inject
     RolDAO rolDAO;
+    @Inject
+    BuscarUsuarioBean buscarUsuarioBean;
+    
+    public void cargarPersona(){
+        log.info("aqui cargare la persona");
+    }
     
     public void cargarRol(){
      if(rol.getIdRol()!=null){
@@ -49,6 +59,7 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
     public GestionarAcceso() {
         rol = new Rol();
         usuario=new Usuario();
+        persona=new Persona();
     }
 
     public Rol getRol() {
@@ -74,6 +85,19 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
     public void setVerificarPass(String verificarPass) {
         this.verificarPass = verificarPass;
     }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    
+   
+    
+    
     
     
     

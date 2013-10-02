@@ -4,6 +4,7 @@
  */
 package com.pasantia.bean.usuariossistema;
 
+import com.pasantia.accesoyseguridad.acceso.GestionarAcceso;
 import com.pasantia.dao.CrudDAO;
 import com.pasantia.entidades.Persona;
 import com.pasantia.utilidades.CombosComunes;
@@ -40,6 +41,8 @@ public class BuscarUsuarioBean implements Serializable {
     CrudDAO<Persona> crudDAO;
     @Inject
     GestionarUsuarioBean gestionarUsuarioBean;
+    @Inject
+    GestionarAcceso acceso;
     
     private static Logger log = Logger.getLogger(BuscarUsuarioBean.class.getName());
     
@@ -59,16 +62,22 @@ public class BuscarUsuarioBean implements Serializable {
         Utilidad.actualizarElemento("dlgbuscadorusuarios");
     }
     
-    public Persona cargarSeleccinado(){
+    public void cargarSeleccinado(){
         log.log(Level.INFO, "La persona seleccionada es la siguiente-->{0}", personaSeleccionada.getPnombre());
         buscador=false;
-        Utilidad.actualizarElemento("dlgbuscadorusuarios");              
+        Utilidad.actualizarElemento("dlgbuscadorusuarios");        
+        gestionarUsuarioBean.cargarObjetoPersona(personaSeleccionada);
+        Utilidad.actualizarElemento("gestionarusuarios");
         log.log(Level.INFO, "*******************Cargando objeto buscando-->{0}", personaSeleccionada.getPnombre());
-        return personaSeleccionada;
     }
     
-    public Persona cargarSeleccinadoGenerico(){
-        return personaSeleccionada;
+    public void cargarSeleccinadoAcceso(){
+        log.log(Level.INFO, "La persona seleccionada es la siguiente-->{0}", personaSeleccionada.getPnombre());
+        buscador=false;
+        Utilidad.actualizarElemento("dlgbuscadorusuarios");        
+        acceso.cargarPersona(personaSeleccionada);
+        Utilidad.actualizarElemento("frmaccesousur");
+        log.log(Level.INFO, "*******************Cargando objeto buscando-->{0}", personaSeleccionada.getPnombre());
     }
     
         

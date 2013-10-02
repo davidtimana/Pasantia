@@ -151,4 +151,6 @@ public interface CrudDAO<T> {
      */
     public Long consultaEscalar(Class entityClass, String alias,
             String campoSelect, String condicionWhere);
+    
+    public T buscarObjetoConJoin(Class<T> entityClass, Object campo, Object parametro,Object entidad);
 }

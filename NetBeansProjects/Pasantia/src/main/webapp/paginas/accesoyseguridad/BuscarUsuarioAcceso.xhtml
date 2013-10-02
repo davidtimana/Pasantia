@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+
+        <p:dialog header="Buscador de Usuarios" widgetVar="dlgbuscadorusuarios" resizable="false" 
+                  id="dlgbuscadorusuariosacceso" showEffect="explode" hideEffect="explode"  modal="true"  width="80%" height="80%" 
+                  minimizable="true" visible="#{buscarUsuarioAcceso.buscador}" closable="false" >
+
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <p:dataTable id="tblusuariosacceso" var="usuarios" value="#{buscarUsuarioAcceso.modeloUsuarios}" sortMode="multiple"  emptyMessage="No hay Usuarios disponibles"
+                             paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             selection="#{buscarUsuarioAcceso.personaSeleccionada}" selectionMode="single">
+
+                    <p:ajax event="rowSelect" listener="#{buscarUsuarioAcceso.cargarSeleccinadoAcceso()}"/> 
+
+                    <f:facet name="header">  
+                        Lista de Usuarios Del Sistema 
+                    </f:facet>
+
+                    <p:column style="width:2%" headerText="Ubicaciones">  
+                        <p:rowToggler />  
+                    </p:column>                   
+
+                    <p:column headerText="Nombre" style="text-align: center" sortBy="#{usuarios.pnombre}" filterBy="#{usuarios.pnombre}" >  
+                        <h:outputText value="#{usuarios.pnombre}"  />  
+                    </p:column>
+
+                    <p:column headerText="Apellido" style="text-align: center" sortBy="#{usuarios.papellido}" filterBy="#{usuarios.papellido}" >  
+                        <h:outputText value="#{usuarios.papellido}"  />  
+                    </p:column>
+
+                    <p:column headerText="N° Identificación" style="text-align: center" sortBy="#{usuarios.cedula}" filterBy="#{usuarios.cedula}" >  
+                        <h:outputText value="#{usuarios.cedula}"  />  
+                    </p:column>
+
+                    <p:column headerText="Telefono" style="text-align: center" sortBy="#{usuarios.telefono}" filterBy="#{usuarios.telefono}" >  
+                        <h:outputText value="#{usuarios.telefono}"  />  
+                    </p:column>                
+
+                    <p:column headerText="Tipo" style="text-align: center" 
+                              sortBy="#{usuarios.tipoPersona.nombreTipoPersona}" 
+                              filterBy="#{usuarios.tipoPersona.nombreTipoPersona}" >  
+                        <h:outputText value="#{usuarios.tipoPersona.nombreTipoPersona}"  />  
+                    </p:column>
+
+                    <p:column headerText="Cargo" style="text-align: center" 
+                              sortBy="#{usuarios.cargo.descripcion}" 
+                              filterBy="#{usuarios.cargo.descripcion}">  
+                        <h:outputText value="#{usuarios.cargo.descripcion}"  />  
+                    </p:column>
+
+                    <p:column headerText="Catalogo" style="text-align: center" 
+                              sortBy="#{usuarios.catalogoVenta.descripcion}" 
+                              filterBy="#{usuarios.catalogoVenta.descripcion}" >  
+                        <h:outputText value="#{usuarios.catalogoVenta.descripcion}"  />  
+                    </p:column>
+
+                    <p:column headerText="Departamento" style="text-align: center" 
+                              sortBy="#{usuarios.ciudad.departamento.nombreDepartamento}" 
+                              filterBy="#{usuarios.ciudad.departamento.nombreDepartamento}" >  
+                        <h:outputText value="#{usuarios.ciudad.departamento.nombreDepartamento}"  />  
+                    </p:column>
+
+                    <p:column headerText="Ciudad" style="text-align: center" 
+                              sortBy="#{usuarios.ciudad.nombreCiudad}" 
+                              filterBy="#{usuarios.ciudad.nombreCiudad}" >  
+                        <h:outputText value="#{usuarios.ciudad.nombreCiudad}"  />  
+                    </p:column>
+
+                    <p:rowExpansion>
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <p:graphicImage value="#{usuarios.foto}" height="120" width="100" title="Foto Usuario"/>                        
+                        </p:panelGrid>
+                    </p:rowExpansion> 
+
+                    <f:facet name="footer">  
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{buscarUsuarioAcceso.cerrarBuscador()}" icon="ui-icon-cancel" />
+                            <p:outputLabel value="En total hay #{buscarUsuarioAcceso.totalUsuarios()} Usuarios.  " />                            
+                        </p:panelGrid>
+
+                    </f:facet>
+                </p:dataTable>
+
+                <p:tooltip for="tblusuariosacceso" value="Seleccione el usuario que desee gestionar."  />
+
+
+
+            </p:panelGrid>                     
+
+
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

@@ -26,5 +26,9 @@
         <property name="sesion" type="boolean">
             <column name="sesion" not-null="true" />
         </property>
+        
+        <property name="Thema" type="string">
+            <column name="Thema" length="45" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

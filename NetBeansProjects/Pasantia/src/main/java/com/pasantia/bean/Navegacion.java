@@ -4,6 +4,7 @@
  */
 package com.pasantia.bean;
 
+import com.pasantia.accesoyseguridad.acceso.GestionarAcceso;
 import com.pasantia.accesoyseguridad.rol.RolBean;
 import com.pasantia.articulos.categoria.CategoriaBean;
 import com.pasantia.articulos.ubicacion.UbicacionBean;
@@ -36,6 +37,8 @@ public class Navegacion implements Serializable{
     CategoriaBean categoriaBean;    
     @Inject
     DivisionesBean divisionesBean;
+    @Inject
+    GestionarAcceso gestionarAcceso;
     
     public Navegacion() {
     }
@@ -97,7 +100,7 @@ public class Navegacion implements Serializable{
     }
     
     public String ir_a_Gestionar_Acceso(){
-        System.out.println("llegue a gestionar acceso");
+        gestionarAcceso.Init();
         return "gestionaracceso";
     }
     

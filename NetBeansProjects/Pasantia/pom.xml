@@ -64,9 +64,9 @@
         </dependency>
         <dependency>  
             <groupId>org.primefaces.themes</groupId>  
-            <artifactId>afternoon</artifactId>  
-            <version>1.0.9</version>  
-        </dependency>  
+            <artifactId>all-themes</artifactId>  
+            <version>1.0.10</version>  
+        </dependency>   
         <dependency>
             <groupId>com.pasantia</groupId>
             <artifactId>pasantia</artifactId>
@@ -82,7 +82,14 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.1</version>
-        </dependency>              
+        </dependency>   
+        
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.1</version>
+            <scope>compile</scope>
+        </dependency>           
         
     </dependencies>
 

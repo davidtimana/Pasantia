@@ -291,17 +291,7 @@ public class GestionarUsuarioBean extends CombosComunes implements Serializable 
         cargarObjetoPersona(persona);
     }
     
-    public void cargarBuscadorUsuarios(){
-        buscarUsuarioBean.abrirBuscador();
-    }
-    
-    public void buscarUsuario(){       
-        
-        persona=buscarUsuarioBean.cargarSeleccinado();
-        cargarObjetoPersona(persona);
-        Utilidad.actualizarElemento("gestionarusuarios");
-    }
-
+   
     public String navegarWizard(FlowEvent event) {
         String actual = event.getOldStep();
         logger.log(Level.INFO, "estoy en la pesta\u00f1a-->{0}", actual);

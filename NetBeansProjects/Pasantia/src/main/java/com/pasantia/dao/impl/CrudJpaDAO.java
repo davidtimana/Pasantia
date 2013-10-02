@@ -38,6 +38,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
             session.beginTransaction();
             session.save(entity);
             session.flush();
+            session.refresh(entity);
             session.beginTransaction().commit();
             result = true;            
         }
@@ -197,6 +198,39 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
         } catch (Exception e) {
             retornar=null;
             System.err.println("Error al buscarxAlgunCampoString Generico: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return retornar;
+    }
+
+    @Override
+    public T buscarObjetoConJoin(Class<T> entityClass, Object campo, Object parametro,Object entidad) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        StringBuilder jpql = new StringBuilder();
+        T retornar=null;
+        try {
+            jpql.append("SELECT miEntidad FROM ");
+            jpql.append(entityClass.getSimpleName());
+            jpql.append(" miEntidad ");
+            jpql.append(" JOIN ");
+            jpql.append(" miEntidad.");
+            jpql.append(entidad.toString());
+            jpql.append(" miEntidadBuscada ");
+            jpql.append(" WHERE ");
+            jpql.append(" miEntidadBuscada.");
+            jpql.append(campo.toString());
+            jpql.append(" = ");
+            jpql.append(":Integer");            
+            Query q = session.createQuery(jpql.toString());
+            System.out.println("el jpql es el siguiente-->"+jpql.toString());
+            q.setInteger("Integer", (Integer)parametro);
+            retornar = (T) q.uniqueResult();
+            session.flush();
+        } catch (Exception e) {
+            retornar=null;
+            System.err.println("Error al buscarObjetoConJoin Generico: " + e.getMessage());
             session.beginTransaction().rollback();
         } finally {
             session.close();

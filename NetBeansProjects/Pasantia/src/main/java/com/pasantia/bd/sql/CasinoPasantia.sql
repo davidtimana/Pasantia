@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 29-09-2013 a las 13:57:00
--- Versión del servidor: 5.5.32-0ubuntu0.13.04.1
--- Versión de PHP: 5.4.9-4ubuntu2.3
+-- Tiempo de generación: 01-10-2013 a las 20:44:48
+-- Versión del servidor: 5.5.32
+-- Versión de PHP: 5.3.10-1ubuntu3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -13098,22 +13098,18 @@ CREATE TABLE IF NOT EXISTS `Rol` (
   `idRol` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=13 ;
 
 --
 -- Volcado de datos para la tabla `Rol`
 --
 
 INSERT INTO `Rol` (`idRol`, `descripcion`) VALUES
-(1, 'ADMINISTRADOR'),
+(1, 'SUPER ADMINISTRADOR'),
 (2, 'VENDEDOR'),
 (3, 'PROVEEDOR'),
 (4, 'CLIENTE'),
-(6, 'ROL DE PRUEBA 1'),
-(7, 'ROL DE PRUEBA 2'),
-(8, 'ROL DE PRUEBA 3 PRUEBA'),
-(10, 'ROL ACTUALIZADO'),
-(11, 'ROL DE PRUEBA 6');
+(12, 'COMANDANTE CASINO');
 
 -- --------------------------------------------------------
 
@@ -13567,13 +13563,23 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `secrol` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '0',
   `sesion` tinyint(1) NOT NULL DEFAULT '0',
+  `Thema` varchar(45) NOT NULL,
   PRIMARY KEY (`idUsuario`),
   UNIQUE KEY `clave_UNIQUE` (`clave`),
   UNIQUE KEY `nomusuario_UNIQUE` (`nomusuario`),
   UNIQUE KEY `secpersona_UNIQUE` (`secpersona`),
   KEY `fk_rol_idx` (`secrol`),
   KEY `fk_persona_usuario_idx` (`secpersona`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla que se encarga de manejar la informacion de los usuarios de acceso a la aplicacion*/' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT=' /* comment truncated */ /*Tabla que se encarga de manejar la informacion de los usuarios de acceso a la aplicacion*/' AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `Usuario`
+--
+
+INSERT INTO `Usuario` (`idUsuario`, `clave`, `nomusuario`, `secpersona`, `secrol`, `activo`, `sesion`, `Thema`) VALUES
+(1, 'KVoLbvij6FYT4HpFRebOjZRL+cd61SGUyOZenEg0iqY=', 'david1061', 1, 1, 1, 0, 'pasantia'),
+(2, 'yssg4+e2MSJQdUi/4LLVAalgApbzfy4o', 'renetima123', 17, 4, 1, 0, 'pasantia'),
+(3, 'FE0szVtPHS7pabE+HwWV+QocV7WUBHYP', 'mafelu1221', 19, 2, 1, 0, 'pasantia');
 
 --
 -- Restricciones para tablas volcadas

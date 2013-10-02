@@ -150,7 +150,7 @@
                                  rendered="#{gestionarAcceso.listaControlBotones.get(1)==1}"/>    
                 <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarAcceso.cancelar()}" icon="ui-icon-cancel"                                  
                                  rendered="#{gestionarAcceso.listaControlBotones.get(2)==1}"/>
-                <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarAccesosBean.abrirBuscador()}" icon="ui-icon-search"                                  
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionarAcceso.buscar()}" icon="ui-icon-search"                                  
                                  rendered="#{gestionarAcceso.listaControlBotones.get(3)==1}"/>
                 <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarAcceso.guardarAcceso()}" icon="ui-icon-disk"                                  
                                  rendered="#{gestionarAcceso.listaControlBotones.get(4)==1}"/>

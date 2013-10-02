@@ -20,7 +20,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author david
+ * @author David Timana
  */
 
 @Named(value = "navegacion")
@@ -99,8 +99,7 @@ public class Navegacion implements Serializable{
         return "retornarPaginaAdministrador";
     }
     
-    public String ir_a_Gestionar_Acceso(){
-        gestionarAcceso.Init();
+    public String ir_a_Gestionar_Acceso(){        
         return "gestionaracceso";
     }
     

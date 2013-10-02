@@ -5,6 +5,7 @@
 package com.pasantia.accesoyseguridad.acceso;
 
 import com.pasantia.bean.usuariossistema.BuscarUsuarioBean;
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.RolDAO;
 import com.pasantia.entidades.Persona;
 import com.pasantia.entidades.Rol;
@@ -53,7 +54,25 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
     ValidarAccesoBean validaraccesoBean;
     @Inject
     GuardarAccesoBean accesoBean;
+    @Inject
+    BuscarAccesosBean buscarAccesosBean;
+    @Inject
+    CrudDAO<Usuario> crudDAOUsur;
 
+    public void buscar() {
+        listaControlReadonly.set(0, true);
+        listaControlReadonly.set(1, false);
+        listaControlReadonly.set(2, true);
+        validaraccesoBean.limpiarElementos();        
+        deshabilitarBotonesCancelar();
+        buscarAccesosBean.abrirBuscador();
+    }
+    
+    public void cargarUltimo(){
+        usuario=crudDAOUsur.buscarUltimo(Usuario.class);
+        cargarObjetoUsuario(usuario);
+    }
+    
      public void iniciarReadonly() {
         listaControlReadonly.add(true);
         listaControlReadonly.add(false);
@@ -61,7 +80,14 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
     }
     
     public void cancelar() {
+        listaControlReadonly.set(0,true);
+        listaControlReadonly.set(1,false);
+        listaControlReadonly.set(2,true);
+        validaraccesoBean.limpiarElementos();
+        cargarUltimo();
+        Utilidad.actualizarElemento("frmaccesousur");
         deshabilitarBotonesCancelar();
+        
     }
 
     public void cargarObjetoUsuario(Usuario s) {
@@ -73,6 +99,9 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
 
     public void nuevo() {
         estaEditando = false;
+        listaControlReadonly.set(0,false);
+        listaControlReadonly.set(1,true);
+        listaControlReadonly.set(2,false);
         deshabilitarBotonesEditaroNuevo();
         persona = new Persona();
         usuario = new Usuario();
@@ -83,6 +112,10 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
 
     public void editar() {
         estaEditando = true;
+        listaControlReadonly.set(0,false);
+        listaControlReadonly.set(1,true);
+        listaControlReadonly.set(2,true);
+        Utilidad.actualizarElemento("frmaccesousur");
         deshabilitarBotonesEditaroNuevo();
     }
 
@@ -166,6 +199,7 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
         cargarComboRoles();
         iniciarBotones();
         iniciarReadonly();
+        cargarUltimo();
     }
 
     public GestionarAcceso() {

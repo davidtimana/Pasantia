@@ -121,31 +121,6 @@ and open the template in the editor.
                 </div>
             </p:tab>  
         </p:accordionPanel>
-        <p:separator  style="width:95%;height:2%"  />
-
-        <h:panelGrid columns="4" cellpadding="1">
-            <p:commandButton value="Nuevo Batallon" title="Nuevo Batallon" 
-                             action="#{batallonControllerBean.nuevoBatallon()}" 
-                             icon="ui-icon-plusthick" style="#{batallonControllerBean.ocultarNuevo}"
-                             id="btnnuevobat"/>           
-            <p:commandButton value="Editar Batallon" title="Editar Batallon" 
-                             action="#{batallonControllerBean.editarBatallon()}" 
-                             icon="ui-icon-pencil" style="#{batallonControllerBean.ocultarEdit}"
-                             id="btneditarbat"/>           
-            <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
-                             action="#{batallonControllerBean.guardarBatallon()}" 
-                             icon="ui-icon-disk" style="#{batallonControllerBean.ocultarGuardar}" 
-                             id="btnguardarBatallon"/>           
-            <p:commandButton value="Cancelar" title="Cancelar" icon="ui-icon-cancel"
-                             actionListener="#{batallonControllerBean.cancelarBatallon()}"
-                             id="btncancelarbat" style="#{batallonControllerBean.ocultarCancelar}"/>                               
-        </h:panelGrid>
-
-
-
-
-
-
 
 
     </ui:composition>

@@ -1,145 +1,163 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
 
-    <body>
+    <ui:define name="titulo">
+        Gestion De Productos - SICOVI
+    </ui:define>
 
-        <ui:composition template="./../../plantillas/plantillaprincipal.xhtml">
+    <ui:define name="abajo">
+
+    </ui:define>
+
+    <ui:define name="derecha">
+
+    </ui:define>
+
+    <ui:define name="tituloInsercion">
+        Gestion De Productos A La Venta
+    </ui:define>
+
+    <ui:define name="cuerpo">
+
+        <h:form id="frmproductos"  >
+
+            <p:accordionPanel  id="accordio" multiple="true" >  
+
+                <p:tab title="Usuario ha ingresar">
+
+
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:commandButton value="Buscar Usuario" title="Buscar Usuario" icon="ui-icon-search" 
+                                         actionListener="#{buscarUsuarioAcceso.abrirBuscador()}" id="btnbuscarper"
+                                         style="#{validarAccesoBean.estilosError.get(0)}"
+                                         disabled="#{gestionarAcceso.listaControlReadonly.get(2)}"/>
+
+                    </p:panelGrid>
+                    <p:separator   />
+                    <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
+                                 id="perencontrada">
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                            <p:graphicImage value="#{gestionarAcceso.persona.foto}" height="160" width="140"  title="Foto Usuario"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;text-align: center"
+                                     >
+
+                            <p:outputLabel value="Nombres" style="font-weight:bold;" />
+                            <p:outputLabel value="#{gestionarAcceso.persona.pnombre} #{gestionarAcceso.persona.snombre}" />
+
+                            <p:outputLabel value="Apellidos" style="font-weight:bold;" />
+                            <p:outputLabel value="#{gestionarAcceso.persona.papellido} #{gestionarAcceso.persona.sapellido}" />
+
+                            <p:outputLabel value="N° Identificación" style="font-weight:bold;" />
+                            <p:outputLabel value="#{gestionarAcceso.persona.cedula}" />
+
+                            <p:outputLabel value="Tipo Usuario:" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarAcceso.persona.tipoPersona.nombreTipoPersona}" />
+
+                            <p:outputLabel value="Edad:" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarAcceso.persona.edad}" />
+
+                            <p:outputLabel value="Telefono Movil" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarAcceso.persona.movil}" />
+
+                            <p:outputLabel value="Direccion" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarAcceso.persona.direccion}" />
+
+                            <p:outputLabel value="E-mail" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarAcceso.persona.email}" />
+
+                        </p:panelGrid> 
+                    </p:panelGrid>
+
+
+                </p:tab>
+
+                <p:tab title="Parametros de Acceso">
+
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                        <p:outputLabel value="Rol: " />
+                        <p:selectOneMenu id="cmbrol" value="#{gestionarAcceso.rol.idRol}"  
+                                         validatorMessage="Debe seleccionar Rol" effect="fold" filter="true" 
+                                         filterMatchMode="startsWith" 
+                                         style="width: 150px;#{validarAccesoBean.estilosError.get(1)}"
+                                         disabled="#{gestionarAcceso.listaControlReadonly.get(0)}">  
+                            <f:selectItem itemLabel="...Seleccione..."  />  
+                            <f:selectItems value="#{gestionarAcceso.cargarComboRoles()}"  />
+                            <p:ajax listener="#{gestionarAcceso.cargarRol()}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Login: "  />
+                        <p:inputText value="#{gestionarAcceso.usuario.nomusuario}" 
+                                     validatorMessage="El tamaño del login no debe ser mayor a 44 caracteres."
+                                     id="txtlogin"
+                                     style="#{validarAccesoBean.estilosError.get(2)}"
+                                     disabled="#{gestionarAcceso.listaControlReadonly.get(0)}">
+                            <f:validateLength maximum="45" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Password: " />
+                        <p:password id="passusur" feedback="true" promptLabel="Ingrese Su Contraseña" 
+                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
+                                    strongLabel="Seguridad: Alta" 
+                                    label="Contraseña" value="#{gestionarAcceso.usuario.clave}" 
+                                    style="#{validarAccesoBean.estilosError.get(3)}"
+                                    disabled="#{gestionarAcceso.listaControlReadonly.get(0)}"/>                                    
+
+                        <p:outputLabel value="Password(Repitalo Por favor):" />
+                        <p:password id="passusurvalidacion" feedback="true" promptLabel="Ingrese Su Contraseña" 
+                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
+                                    strongLabel="Seguridad: Alta" 
+                                    label="Contraseña" value="#{gestionarAcceso.verificarPass}" 
+                                    style="#{validarAccesoBean.estilosError.get(3)}"
+                                    disabled="#{gestionarAcceso.listaControlReadonly.get(0)}"/> 
+
+                    </p:panelGrid> 
+                    <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:outputLabel value="Estado Usuario (Activo/Inactivo)" />
+                        <p:selectBooleanCheckbox value="#{gestionarAcceso.usuario.activo}" 
+                                                 disabled="#{gestionarAcceso.listaControlReadonly.get(0)}"/>  
+
+
+                        <p:outputLabel value="Tema Usuario:" />
+                        <p:themeSwitcher id="defaultSwitcher" value="#{gestionarAcceso.usuario.thema}"
+                                         style="width:165px"
+                                         disabled="#{gestionarAcceso.listaControlReadonly.get(0)}">  
+                            <f:selectItem itemLabel="Seleccion Tema" itemValue="" />  
+                            <f:selectItems value="#{themaSwitcherBean.themes}" />  
+                        </p:themeSwitcher>
+
+                    </p:panelGrid>
+
+                </p:tab>
+
+
+
+            </p:accordionPanel>
+
+            <p:spacer width="1%" height="2%" />  
             
-            <ui:define name="titulo">
-                Gestion De Articulos - SICOVI
-            </ui:define>
-            <ui:define name="cuerpo">
-                <h:form>  
-  
-    <p:growl id="growl" sticky="true" showDetail="true"/>  
-  
-    <p:wizard widgetVar="wiz"  
-            flowListener="#{userWizard.onFlowProcess}">  
-      
-        <p:tab id="personal" title="Ubicacion">  
-  
-            <p:panel header="Detalle De La Ubicacion del Articulo">  
-              
-                <h:messages errorClass="error"/>  
-                  
-                <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">  
-                    <h:outputText value="Firstname: *" />  
-                    <p:inputText required="true" label="Firstname"  
-                            value="#{userWizard.user.firstname}" />  
-                      
-                    <h:outputText value="Lastname: *" />  
-                    <p:inputText required="true" label="Lastname"  
-                            value="#{userWizard.user.lastname}" />  
-                      
-                    <h:outputText value="Age: " />  
-                    <p:inputText value="#{userWizard.user.age}" />  
-                      
-                    <h:outputText value="Skip to last: " />  
-                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />  
-                </h:panelGrid>  
-            </p:panel>  
-        </p:tab>  
-              
-        <p:tab id="address" title="Categoria">  
-            <p:panel header="Detalle De La Categoria del Articulo">  
-              
-                <h:messages errorClass="error"/>  
-                  
-                <h:panelGrid columns="2" columnClasses="label, value">  
-                    <h:outputText value="Street: " />  
-                    <p:inputText value="#{userWizard.user.street}" />  
-                      
-                    <h:outputText value="Postal Code: " />  
-                    <p:inputText value="#{userWizard.user.postalCode}" />  
-                      
-                    <h:outputText value="City: " />  
-                    <p:inputText value="#{userWizard.user.city}" />  
-                      
-                    <h:outputText value="Skip to last: " />  
-                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />  
-                </h:panelGrid>  
-            </p:panel>  
-        </p:tab>  
-              
-        <p:tab id="contact" title="Articulo">  
-            <p:panel header="Detalle De La Informacion De Los Articulos">  
-                  
-                <h:messages errorClass="error"/>  
-              
-                <h:panelGrid columns="2" columnClasses="label, value">  
-                    <h:outputText value="Email: *" />  
-                    <p:inputText required="true" label="Email"  
-                            value="#{userWizard.user.email}" />  
-                      
-                    <h:outputText value="Phone: " />  
-                    <p:inputText value="#{userWizard.user.phone}"/>  
-                      
-                    <h:outputText value="Additional Info: " />  
-                    <p:inputText value="#{userWizard.user.info}"/>  
-                </h:panelGrid>  
-            </p:panel>  
-        </p:tab>  
-              
-        <p:tab id="confirm" title="Comfirmacion">  
-            <p:panel header="Comfirmacion De Los Datos Ingresados">  
-              
-                <h:panelGrid id="confirmation" columns="6">  
-                    <h:outputText value="Firstname: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.firstname}" />  
-                      
-                    <h:outputText value="Lastname: " />  
-                    <h:outputText  styleClass="outputLabel"  
-                                value="#{userWizard.user.lastname}"/>  
-                      
-                    <h:outputText value="Age: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.age}" />>  
-                      
-                    <h:outputText value="Street: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.street}" />  
-                      
-                    <h:outputText value="Postal Code: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.postalCode}" />  
-                      
-                    <h:outputText value="City: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.city}" />  
-                      
-                    <h:outputText value="Email: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.email}" />  
-                      
-                    <h:outputText value="Phone " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.phone}"/>  
-                      
-                    <h:outputText value="Info: " />  
-                    <h:outputText styleClass="outputLabel"  
-                                value="#{userWizard.user.info}" />  
-                      
-                    <h:outputText />  
-                    <h:outputText />  
-                </h:panelGrid>  
-                  
-                <p:commandButton value="Submit" update="growl"   
-                            actionListener="#{userWizard.save}"/>  
-              
-            </p:panel>  
-        </p:tab>  
-          
-    </p:wizard>  
-      
-</h:form>  
-            </ui:define>
+            <p:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
+                         id="grupobotonesacceso" >
+                <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarAcceso.nuevo()}" icon="ui-icon-document-b"                                 
+                                 rendered="#{gestionarAcceso.listaControlBotones.get(0)==1}"/>
+                <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarAcceso.editar()}" icon="ui-icon-pencil"                                   
+                                 rendered="#{gestionarAcceso.listaControlBotones.get(1)==1}"/>    
+                <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarAcceso.cancelar()}" icon="ui-icon-cancel"                                  
+                                 rendered="#{gestionarAcceso.listaControlBotones.get(2)==1}"/>
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionarAcceso.buscar()}" icon="ui-icon-search"                                  
+                                 rendered="#{gestionarAcceso.listaControlBotones.get(3)==1}"/>
+                <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarAcceso.guardarAcceso()}" icon="ui-icon-disk"                                  
+                                 rendered="#{gestionarAcceso.listaControlBotones.get(4)==1}"/>
+            </p:panelGrid>
 
-        </ui:composition>
 
-    </body>
-</html>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

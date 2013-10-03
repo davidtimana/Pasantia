@@ -34,15 +34,15 @@
                 </p:dock>
             </p:fieldset>  
 
-        </h:form>    
+        
         <p:spacer width="10" height="5" /><br/>
 
         <p:tabView effect="slide" effectDuration="normal" style="width: 100%">  
 
             <p:tab title="Gestionar Batallones">
-                <h:form id="frmagregarbatallon">            
+                
                     <ui:include src="frmagregarbatallon.xhtml" />  
-                </h:form>
+                
 
 
 
@@ -53,12 +53,31 @@
                     <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.   
                                   In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,   
                                   killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."></h:outputText>  
+                    <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
+                             action="#{batallonControllerBean.guardarBatallon()}" 
+                             icon="ui-icon-disk" style="#{batallonControllerBean.ocultarGuardar}" 
+                             id="btnguardarBatallon"/>           
                 </h:panelGrid>  
             </p:tab>              
 
         </p:tabView> 
+        
+        <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+            <p:commandButton value="Nuevo Batallon" title="Nuevo Batallon" 
+                             action="#{batallonControllerBean.nuevoBatallon()}" 
+                             icon="ui-icon-plusthick" style="#{batallonControllerBean.ocultarNuevo}"
+                             id="btnnuevobat"/>           
+            <p:commandButton value="Editar Batallon" title="Editar Batallon" 
+                             action="#{batallonControllerBean.editarBatallon()}" 
+                             icon="ui-icon-pencil" style="#{batallonControllerBean.ocultarEdit}"
+                             id="btneditarbat"/>           
+            
+            <p:commandButton value="Cancelar" title="Cancelar" icon="ui-icon-cancel"
+                             actionListener="#{batallonControllerBean.cancelarBatallon()}"
+                             id="btncancelarbat" style="#{batallonControllerBean.ocultarCancelar}"/>                               
+        </p:panelGrid>
 
-
+</h:form>    
 
 
 

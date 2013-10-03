@@ -58,7 +58,8 @@
                 <p:panel >
                     <div style="width: 60%;margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
                         <h:panelGrid columns="3" cellpadding="1">
-                            <p:galleria value="#{imagenesControlBean.imagenes}" var="imagen"  showCaption="true" panelWidth="250" panelHeight="200" effect="slide">                              
+                            <p:galleria value="#{imagenesControlBean.imagenes}" var="imagen"  showCaption="true" panelWidth="250" 
+                                        panelHeight="200" effect="slide" id="imagenes">                              
                                 <p:graphicImage value="#{imagen.direccion}" alt="#{imagen.descripcion}" title="#{imagen.titulo}" />  
                             </p:galleria>
                             <p:spacer width="5%" height="5%" />

@@ -26,7 +26,7 @@
     <!-- Tema de Primefaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>pasantia</param-value>
+        <param-value>#{themaSwitcherBean.thema}</param-value>
     </context-param>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>

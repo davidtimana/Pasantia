@@ -103,8 +103,7 @@ public class Navegacion implements Serializable{
         return "gestionaracceso";
     }
     
-    public String ir_a_menu_Principal(){
-        System.out.println("retornare menuprincipal");
+    public String ir_a_menu_Principal(){        
         return "menuprincipal";
     }
     

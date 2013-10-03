@@ -24,6 +24,7 @@ public class ThemaSwitcherBean implements Serializable {
     private static Logger log = Logger.getLogger(ThemaSwitcherBean.class.getName());
 
     private Map<String, String> themes;
+    private String thema;
     
     public void cargarThemas(){        
         themes.put("Sicovi Default", "pasantia");
@@ -64,6 +65,7 @@ public class ThemaSwitcherBean implements Serializable {
     public void Init() {
         log.info("***************Inicializando temas dinamicos.");
         cargarThemas();
+        thema="pasantia";
     }
 
     public ThemaSwitcherBean() {
@@ -77,4 +79,14 @@ public class ThemaSwitcherBean implements Serializable {
     public void setThemes(Map<String, String> themes) {
         this.themes = themes;
     }
+
+    public String getThema() {
+        return thema;
+    }
+
+    public void setThema(String thema) {
+        this.thema = thema;
+    }
+    
+    
 }

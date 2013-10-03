@@ -40,6 +40,10 @@ public class LoginBean implements Serializable {
     CrudDAO<Usuario> crudDAO;
     @Inject
     Navegacion navegacion;
+    @Inject
+    ThemaSwitcherBean themaSwitcherBean;
+    @Inject
+    ImagenesControlBean imagenesControlBean;
 
     public String iniciarSesion() {
 
@@ -84,6 +88,7 @@ public class LoginBean implements Serializable {
                     u.setClave(claveencriptada);
                     u.setSesion(true);
                     crudDAO.editar(u);
+                    themaSwitcherBean.setThema(u.getThema());
                     usuario = u;
                     r=redireccionar(u.getRol());
                 }
@@ -142,6 +147,8 @@ public class LoginBean implements Serializable {
         log.info("Cerrando sesion");
         usuario.setSesion(false);
         crudDAO.editar(usuario);
+        themaSwitcherBean.setThema("pasantia");
+        imagenesControlBean.cargarImagenes();        
         return "cerrarsesionvendedor";
     }
 

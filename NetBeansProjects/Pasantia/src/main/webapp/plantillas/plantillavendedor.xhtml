@@ -91,7 +91,8 @@
                         <p:outputLabel value="Bienvenido: " />                        
                         <p:outputLabel value="#{loginBean.usuario.persona.pnombre} #{loginBean.usuario.persona.papellido}" />
                         <p:separator />                            
-                        <p:commandButton value="Cerrar Sesión" title="Cerrar Sesión" action="#{loginBean.cerrarSesion()}" icon="ui-icon-power" />                             
+                        <p:commandButton value="Cerrar Sesión" title="Cerrar Sesión" action="#{loginBean.cerrarSesion()}" icon="ui-icon-power" 
+                                         onclick="resetearIndex()"/>                             
                     </p:toolbarGroup>  
                 </p:toolbar> 
 

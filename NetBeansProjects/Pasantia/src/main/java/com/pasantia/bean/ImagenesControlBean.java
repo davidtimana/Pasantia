@@ -31,8 +31,7 @@ public class ImagenesControlBean implements Serializable {
     ImagenDAO imagenDAO;
     
     @PostConstruct
-    public void cargarImagenes(){
-        System.out.println("con postconstructu");
+    public void cargarImagenes(){        
         imagenes=new ArrayList<Imagen>();
         imagenes=imagenDAO.buscarImagenesxPrincipal();
     }

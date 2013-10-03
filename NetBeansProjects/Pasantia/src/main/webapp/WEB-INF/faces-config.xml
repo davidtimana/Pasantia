@@ -96,12 +96,13 @@
             <from-outcome>gestionarcasinos</from-outcome>
             <to-view-id>/paginas/configpuntoventa/GestionarCasinos.xhtml</to-view-id>
         </navigation-case>
+        <!--
         <navigation-case>
             <from-action>#{navegacion.retornarPaginaAdministrador()}</from-action> 
             <from-outcome>retornarPaginaAdministrador</from-outcome>
             <to-view-id>/paginas/menu/menuInicial.xhtml</to-view-id>
         </navigation-case>
-        
+        -->
         <navigation-case>
             <from-action>#{navegacion.ir_a_Gestionar_Acceso()}</from-action> 
             <from-outcome>gestionaracceso</from-outcome>
@@ -109,9 +110,56 @@
         </navigation-case>
         
     </navigation-rule>
+    
+    
     <managed-bean>
         <managed-bean-name>UbicacionBean</managed-bean-name>
         <managed-bean-class>com.pasantia.bean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{loginBean.iniciarSesion()}</from-action>
+            <from-outcome>menuvendedorsicovi</from-outcome>
+            <to-view-id>/paginas/menu/menuvendedor.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{loginBean.iniciarSesion()}</from-action>
+            <from-outcome>menuprincipal</from-outcome>
+            <to-view-id>/paginas/menu/menuInicial.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{loginBean.iniciarSesion()}</from-action>
+            <from-outcome>menuadmin</from-outcome>
+            <to-view-id>/paginas/menu/menuadmin.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{loginBean.iniciarSesion()}</from-action>
+            <from-outcome>menucliente</from-outcome>
+            <to-view-id>/paginas/menu/menucliente.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{loginBean.iniciarSesion()}</from-action>
+            <from-outcome>menucomandante</from-outcome>
+            <to-view-id>/paginas/menu/menucomandante.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{loginBean.iniciarSesion()}</from-action>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/paginas/menu/menuvendedor.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{loginBean.cerrarSesion()}</from-action>
+            <from-outcome>cerrarsesionvendedor</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

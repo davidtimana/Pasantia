@@ -83,4 +83,17 @@
     box-shadow: 0 0 6px #f8b9b7 !important;
 }
 
+body,html{
+height:100%; /*Siempre es necesario cuando trabajamos con alturas*/
+}
+ #inferior{
+color: #FFF;
+background: #000;
+position:absolute; /*El div será ubicado con relación a la pantalla*/
+left:0px; /*A la derecha deje un espacio de 0px*/
+right:0px; /*A la izquierda deje un espacio de 0px*/
+bottom:0px; /*Abajo deje un espacio de 0px*/
+height:50px; /*alto del div*/
+z-index:0;
+ }
 

@@ -11,6 +11,9 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="45" not-null="true" />
         </property>
+        <property name="codigo" type="java.lang.Integer">
+            <column name="codigo"  not-null="true" />
+        </property>
         <set name="usuarios" inverse="true">
             <key>
                 <column name="secrol" not-null="true" />

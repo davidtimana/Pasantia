@@ -63,6 +63,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
             session.beginTransaction();
             session.update(entity);
             session.flush();
+            session.refresh(entity);
             session.beginTransaction().commit();
             result = true;            
         }catch(Exception e){
@@ -234,6 +235,48 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
             session.beginTransaction().rollback();
         } finally {
             session.close();
+        }
+        return retornar;
+    }
+
+    @Override
+    public T buscarxCamposString(Class<T> entityClass, List<String> campos, List<String> parametros) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        StringBuilder jpql = new StringBuilder();
+        T retornar = null;
+        if (!campos.isEmpty() && !parametros.isEmpty()) {
+            try {
+                jpql.append("SELECT miEntidad FROM ");
+                jpql.append(entityClass.getSimpleName());
+                jpql.append(" miEntidad ");
+                jpql.append(" WHERE ");
+                for (int i = 0; i < campos.size(); i++) {
+                    jpql.append(" miEntidad.");
+                    jpql.append(campos.get(i));
+                    jpql.append(" = ");
+                    for (int x = 0; x < parametros.size(); x++) {
+                        x = i;
+                        jpql.append(parametros.get(x));
+
+                        if (x < parametros.size() - 1) {
+                            jpql.append(" AND ");
+                        }
+
+                        break;
+                    }
+                }
+                Query q = session.createQuery(jpql.toString());
+                retornar = (T) q.uniqueResult();
+                session.flush();
+            } catch (Exception e) {
+                retornar = null;
+                System.err.println("Error al buscarxCamposString Generico: " + e.getMessage());
+                session.beginTransaction().rollback();
+            } finally {
+                session.close();
+            }
+        } else {
+            retornar = null;
         }
         return retornar;
     }

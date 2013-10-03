@@ -71,6 +71,24 @@ public interface CrudDAO<T> {
      * @author David Timana.
      */
     public T buscarxAlgunCampoString(Class<T> entityClass, Object campo, Object parametro);
+    
+     /**
+     * Metodo generico que busca algun objeto
+     * por algunos parametro del campo de la entidad
+     * por algunos parametros solo String. 
+     * 
+     * @param entityClass
+     *          entidad a buscar.
+     * @param campos
+     *          campos a igualar.
+     * @param parametros
+     *          parametros a buscar
+     * @return <T>
+     *          objeto encontrado.
+     * 
+     * @author David Timana.
+     */
+    public T buscarxCamposString(Class<T> entityClass, List<String> campos, List<String> parametros);
 
     /**
      * Eliminar registros de la base de datos en base a una condicion

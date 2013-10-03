@@ -26,6 +26,7 @@ public class Rol  implements java.io.Serializable {
 
      private Integer idRol;
      private String descripcion;
+     private Integer codigo;
      private Set usuarios = new HashSet(0);
 
     public Rol() {
@@ -67,6 +68,17 @@ public class Rol  implements java.io.Serializable {
     public void setUsuarios(Set usuarios) {
         this.usuarios = usuarios;
     }
+
+    @Column(name="codigo", nullable=false)
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+    
+    
 
 
 

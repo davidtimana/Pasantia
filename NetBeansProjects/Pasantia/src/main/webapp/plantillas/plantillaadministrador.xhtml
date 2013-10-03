@@ -1,22 +1,20 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-
     <h:head>
-        <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
+       <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
         <!--<script src="http://maps.google.com/maps/api/js?sensor=true|false" type="text/javascript"></script>-->
-        <h:outputStylesheet name="css/estilos.css"/>
         <f:facet name="first">
             <h:outputScript library="js" name="../../resources/js/jquery.js"/>
             <h:outputScript library="js" name="../../resources/js/SicoviJquery.js"/>
         </f:facet>
 
-
+   
 
 
         <title><ui:insert name="titulo"></ui:insert></title>
@@ -41,15 +39,10 @@
             }            
 
         </style>
-
     </h:head>
-
 
     <h:body>
 
-
-
-        <!-- Dialog para la espera de las peticiones ajax -->
         <p:ajaxStatus onstart="statusDialog.show();" oncomplete="statusDialog.hide();" onerror="errorDialog.show()"  />          
         <p:dialog modal="false" widgetVar="statusDialog" header="...Cargando..."   
                   draggable="false" closable="false" resizable="false">  
@@ -59,128 +52,7 @@
                   draggable="false" closable="true" resizable="false">  
             Error en el servidor
         </p:dialog>
-
-        <!-- Dialog para comfirmar la eliminacion de los batallones 
-        <h:form id="dialog">        
-            <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" />
-        </h:form>
-        -->
-        <!-- Dialog para buscar los batallones 
-        <h:form id="frmbuscarBatallones">        
-            <ui:include src="../paginas/configpuntoventa/buscadorBatallones.xhtml" />
-        </h:form>
-        -->
-        <!-- Dialog para agregar ubicaciones -->
-        <h:form id="frmnuevaubicacion">   
-            <ui:include src="../paginas/articulos/AgregarUbicaciones.xhtml" />
-        </h:form>
-
-        <!-- Dialog para agregar ubicaciones -->
-        <h:form id="frmeditarubicacion">        
-            <ui:include src="../paginas/articulos/EditarUbicaciones.xhtml" />
-        </h:form>
-
-        <!-- Dialog para agregar ubicaciones -->
-        <h:form id="frmeliminarubicacion">        
-            <ui:include src="../paginas/articulos/EliminarUbicaciones.xhtml" />
-        </h:form>
-
-        <!-- Dialog para buscar ubicaciones -->
-        <h:form id="frmbuscarubicaciones">        
-            <ui:include src="../paginas/articulos/buscarUbicaciones.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Agregar Categorias -->
-        <h:form id="frmagregarcategoria">        
-            <ui:include src="../paginas/articulos/AgregarCategoria.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Editar Categorias -->
-        <h:form id="frmeditarcategoria">        
-            <ui:include src="../paginas/articulos/EditarCategoria.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Eliminar Categorias -->
-        <h:form id="frmeliminarcategoria">        
-            <ui:include src="../paginas/articulos/EliminarCategoria.xhtml" />
-        </h:form>
-
-        <!-- Dialog para buscar Categorias -->
-        <h:form id="frmbuscarcategoria">        
-            <ui:include src="../paginas/articulos/BuscarCategoria.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Agregar Roles -->
-        <h:form id="frmabregarroles">        
-            <ui:include src="../paginas/accesoyseguridad/AgregarRol.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Editar Roles -->
-        <h:form id="frmeditarroles">        
-            <ui:include src="../paginas/accesoyseguridad/EditarRol.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Eliminar Roles -->
-        <h:form id="frmeliminarroles">        
-            <ui:include src="../paginas/accesoyseguridad/EliminarRol.xhtml" />
-        </h:form>
-
-        <!-- Dialog para Editar Roles -->
-        <h:form id="frmbuscarroles">        
-            <ui:include src="../paginas/accesoyseguridad/BuscarRol.xhtml" />
-        </h:form>
-
-        <!--Form: Nuevo Cargo -->          
-        <h:form id="frmnuevadivision">
-            <ui:include src="../paginas/configpuntoventa/frmagregardivision.xhtml" />
-        </h:form>
-
-        <!-- Dialog editar divisiones -->            
-        <h:form id="frmeditardivisiones" >                
-            <ui:include src="../paginas/configpuntoventa/frmeditardivision.xhtml" />                
-        </h:form>
-
-        <!-- Formulario eliminar divisiones -->
-        <h:form id="frmeliminardivisiones">                                
-            <ui:include src="../paginas/configpuntoventa/frmeliminardivision.xhtml"/>
-        </h:form>
-
-        <!--formulario ubicacion en mapa-->
-        <h:form id="frmubicacionMapaDivisiones">
-            <ui:include src="../paginas/configpuntoventa/UbicacionMapa.xhtml"  />           
-        </h:form>
-
-        <!-- Formulario asignar departamentos a division -->
-        <h:form id="asignarDepartamentosaDivision">
-            <ui:include src="../paginas/configpuntoventa/asignarDepartamentosaDivision.xhtml" />
-        </h:form>
-
-        <!-- Formulario subir fotos de usuario -->
-        <h:form id="subirfotoUsuario" enctype="multipart/form-data">
-            <ui:include src="../paginas/usuariossistema/SubirFotoUsuario.xhtml" />
-        </h:form>
-
-        <!-- Formulario subir fotos de usuario -->
-        <h:form id="guardarsinfoto" >
-            <ui:include src="../paginas/usuariossistema/ComfirmarGuardarSinFoto.xhtml" />
-        </h:form>
-
-        <!-- Formulario buscar usuarios -->
-        <h:form id="buscarusuarios" >
-            <ui:include src="../paginas/usuariossistema/BuscarUsuarios.xhtml" />
-        </h:form>
-
-        <!-- Formulario buscar usuarios  acceso-->
-        <h:form id="buscarusuariosacceso" >
-            <ui:include src="../paginas/accesoyseguridad/BuscarUsuarioAcceso.xhtml" />
-        </h:form>
-
-        <!-- Formulario buscar accesos-->
-        <h:form id="buscarusuariosaccesologin" >
-            <ui:include src="../paginas/accesoyseguridad/BuscarAccesos.xhtml" />
-        </h:form>
-
-
+        
         <div style="position: absolute;width: 100%;margin-left: auto;margin-right: auto;z-index: 50000;margin-top: 5%;text-align: center">            
             <!--<p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />       -->
             <h:form>
@@ -188,48 +60,29 @@
             </h:form>
 
         </div>
-
+        
 
 
         <p:layout fullPage="true" >
 
 
-            <p:layoutUnit id="top" position="north"   size="20%">
+            <p:layoutUnit id="top" position="north"   size="17%">
+                
+
+                    
+                    <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;border-style: hidden !important;"  >
+                        <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
+                        <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
+                        <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
+                    </p:panelGrid>
 
 
-
-                <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;border-style: hidden !important;"  >
-                    <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
-                    <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
-                    <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
-                </p:panelGrid>
-
-                <p:separator />                                                    
-                <p:toolbar style="bottom: 0">  
-                    <p:toolbarGroup align="left">                         
-
-                        <p:outputLabel value="Comandante: " />
-                        <p:outputLabel value="David Timana" />
-                        <p:separator />                                                    
-                        <p:outputLabel value="Casino Popayán " />
-                    </p:toolbarGroup>                   
-
-
-                    <p:toolbarGroup align="right">  
-                        <p:outputLabel value="Bienvenido: " />                        
-                        <p:outputLabel value="#{loginBean.usuario.persona.pnombre} #{loginBean.usuario.persona.papellido}" />
-                        <p:separator />                            
-                        <p:commandButton type="button" value="Cerrar Sesion" actionListener="#{loginBean.cerrarSesion()}" icon="ui-icon-power" />                             
-                    </p:toolbarGroup>  
-                </p:toolbar> 
-
-
-
+                
             </p:layoutUnit>
 
 
             <div style="bottom: 0;position: absolute;width: 80%;text-align: center;margin-left: 8%;margin-right: 10%">
-
+                
                 <!--<p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    -->
                 <ui:insert name="abajo">
 
@@ -369,7 +222,7 @@
                     <br />
                     <p:clock pattern="HH:mm:ss dd.MM.yyyy" />  
                 </div>
-
+                
             </p:layoutUnit>
 
             <p:layoutUnit id="center" position="center">                
@@ -396,8 +249,6 @@
 
         </p:layout>
 
-
     </h:body>
-
 
 </html>

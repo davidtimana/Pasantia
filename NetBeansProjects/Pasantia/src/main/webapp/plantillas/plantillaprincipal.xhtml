@@ -60,11 +60,11 @@
             Error en el servidor
         </p:dialog>
 
-        <!-- Dialog para comfirmar la eliminacion de los batallones 
-        <h:form id="dialog">        
+        <!--Dialog para comfirmar la eliminacion de los batallones -->
+        <h:form id="dlgcomfieliminar">        
             <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" />
         </h:form>
-        -->
+        
          <!--Dialog para buscar los batallones -->
         <h:form id="frmbuscarBatallones">        
             <ui:include src="../paginas/configpuntoventa/buscadorBatallones.xhtml" />
@@ -178,6 +178,11 @@
         <!-- Formulario buscar accesos-->
         <h:form id="buscarusuariosaccesologin" >
             <ui:include src="../paginas/accesoyseguridad/BuscarAccesos.xhtml" />
+        </h:form>
+        
+        <!-- Formulario buscar comandantes-->
+        <h:form id="buscarcomandantesbatallon" >
+            <ui:include src="../paginas/configpuntoventa/buscarComandante.xhtml" />
         </h:form>
 
 

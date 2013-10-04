@@ -267,7 +267,7 @@ public class DivisionesUbicacionDAOImpl implements DivisionesUbicacionDAO{
                     + " du.divisiones d "
                     + " WHERE "
                     + " d.idDivisiones=du.divisiones.idDivisiones ";                    
-            Query q = session.createQuery(jpql);            
+            Query q = session.createQuery(jpql);
             divisiones = (List<Divisiones>)q.list();
 
         } catch (Exception e) {

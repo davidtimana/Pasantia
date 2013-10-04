@@ -5,11 +5,15 @@
 package com.pasantia.dao.impl;
 
 import com.pasantia.conexion.ConexionHibernate;
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.PersonaDAO;
 import com.pasantia.entidades.Batallon;
 import com.pasantia.entidades.Persona;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -19,6 +23,9 @@ import org.hibernate.Session;
  */
 @Stateless
 public class PersonaDAOImpl  implements PersonaDAO{
+    
+    @Inject
+    CrudDAO<Persona> crudDAO;
 
     @Override
     public Boolean insertarPersona(Persona persona) {
@@ -66,6 +73,43 @@ public class PersonaDAOImpl  implements PersonaDAO{
             session.close();
         }
         return b;
+    }
+
+    @Override
+    public List<Persona> buscarComandanteSinAsignar() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        List<Persona> personas = new ArrayList<Persona>();
+        List<Object> listaNativa = new ArrayList<Object>();
+        
+        
+        String sql = "";
+
+        try {
+            sql = "SELECT * FROM Persona p "
+                    + "INNER JOIN Tipo_Persona tp on (p.SECTIPO_PERSONA=tp.idTipo_Persona) "
+                    + "RIGHT JOIN Batallon b on (p.idTBLPERSONA<>b.seccoronel) "
+                    + "WHERE tp.nombre_tipo_persona='Comandante Batallon'";
+            Query q = session.createSQLQuery(sql);
+            
+            listaNativa= q.list();
+            Iterator iterator = listaNativa.iterator();
+            while (iterator.hasNext()) {
+                Persona p = new Persona();
+                Object[] obj = (Object[]) iterator.next();                
+                p=crudDAO.buscar(Persona.class,obj[0]);
+                personas.add(p);
+            }            
+            
+
+        } catch (Exception e) {
+            personas = null;
+            System.out.println("Error en buscarComandanteSinAsignar " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return personas;
     }
     
 }

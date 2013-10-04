@@ -10,12 +10,12 @@ and open the template in the editor.
     <ui:composition>
         
         
-        <p:confirmDialog message="Esta seguro que desea eliminar el batallon: #{editarBatallonesBean.batallon.nombreBatallon}?" 
+        <p:confirmDialog message="Esta seguro que desea eliminar el batallon: #{batallonControllerBean.batallon.nombreBatallon}?" 
                              header="Eliminar Batallones" severity="alert" 
-                             widgetVar="dlg1" id="dlg1"
-                             visible="#{editarBatallonesBean.abrirComfirmar}" >	
-                <p:commandButton value="Eliminar" icon="icon-delete"  actionListener="#{editarBatallonesBean.eliminarBatallon()}" update="dlg1"/>	
-                <p:commandButton value="Cancelar" icon="icon-cancel" onclick="dlg1.hide();" immediate="true" actionListener="#{editarBatallonesBean.cancelarEliminado()}" type="button" />
+                             widgetVar="dlg1" id="dlgcomfirbat"
+                             visible="#{eliminarBatallonBean.abrirComfirmar}" closable="false">	
+            <p:commandButton value="Eliminar" icon="ui-icon-trash"  actionListener="#{batallonControllerBean.eliminarBatallon()}" />	
+            <p:commandButton value="Cancelar" icon="ui-icon-cancel"  actionListener="#{eliminarBatallonBean.cerrarComfirmar()}"  />
             </p:confirmDialog>
         
         

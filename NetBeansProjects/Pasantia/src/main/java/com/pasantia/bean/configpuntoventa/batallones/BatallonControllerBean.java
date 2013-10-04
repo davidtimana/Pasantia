@@ -10,6 +10,7 @@ import com.pasantia.dao.DivisionesDAO;
 import com.pasantia.entidades.Batallon;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Divisiones;
+import com.pasantia.entidades.Persona;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
@@ -38,11 +39,12 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
     private Integer divisionSelec, paisSelec, departamentoSelec, ciudadSelec;
     private Boolean deshabilitarAll, deshabilitarCiudad, deshabilitarDepartamento, estaEditando;
     private String ocultarGuardar, ubicacionEdit, ubicacionLoad, ocultarNuevo, ocultarEdit, ocultarCancelar, estErrNombre, estErrDireccion,
-            estErrbarrio, estErrTelefono, estErrDivision, estErrPais, estErrDepartamento, estErrCiudad;
+            estErrbarrio, estErrTelefono, estErrDivision, estErrPais, estErrDepartamento, estErrCiudad,estErrPersona;
     private Double latitud;
     private Double longitud;
     private Integer zoom;
     private MapModel modMapa;
+    private Integer accordion;
     
     @Inject
     BatallonDAO batallonDAO;
@@ -54,6 +56,8 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
     DivisionesDAO divisionesDAO;
     @Inject
     CiudadDAO ciudadDAO;
+    @Inject
+    EliminarBatallonBean eliminarBatallonBean;
     
 
     @PostConstruct
@@ -64,11 +68,28 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         System.out.println("*********************Cargando Combo Divisiones Asociadas*********************************");
         cargarComboDivisionesAsociadas();
         System.out.println("*********************Fin Cargando Combo Divisiones Asociadas*********************************");
-        System.out.println("*********************Cargando Ultimo Batallon Ingresado********************");
+        System.out.println("*********************Cargando Ultimo Batallon Ingresado********************");        
+        cargarUltimo();
+        System.out.println("*********************Fin Ultimo Batallon Ingresado********************");
+
+
+    }
+    public void cargarUltimo(){
         batallon = batallonDAO.buscarUltimo();
+        cargarObjetoBuscado(batallon);
+    }
+    
+    public void cargarObjetoBuscado(Batallon b){
+        System.out.println("la division del batallon buscado es la siguiente-->"+b.getDivisiones().getNombreDivision());
+        accordion = 0;
+        batallon=b;        
         divisionSelec = batallon.getDivisiones().getIdDivisiones();
+        System.out.println("la division del batallon buscado es la siguiente divisionselect-->"+divisionSelec);
+        cargarComboDivisionesAsociadas();
         paisSelec = batallon.getCiudad().getDepartamento().getPais().getIdPais();
+        cargarComboDepartamento(paisSelec);
         departamentoSelec = batallon.getCiudad().getDepartamento().getIdDepartamento();
+        cargarComboCiudad(departamentoSelec);
         ciudadSelec = batallon.getCiudad().getIdCiudad();
         deshabilitarAll = true;
         deshabilitarCiudad = true;
@@ -97,11 +118,14 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
             modMapa.addOverlay(new Marker(coordenadaTemp));
             zoom = 10;
         }
-        System.out.println("*********************Fin Ultimo Batallon Ingresado********************");
-
-
     }
+    
+    public void cargarPersona(Persona Comandante) {        
+        batallon.setPersona(Comandante);
+    }
+    
     public void nuevoBatallon() {
+        accordion=0;
         batallon = new Batallon();
         deshabilitarAll = false;
         estaEditando = false;
@@ -119,6 +143,10 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         LatLng coordenadaTemp = new LatLng(latitud, longitud);
         modMapa.addOverlay(new Marker(coordenadaTemp));
         zoom = 6;
+        divisionSelec=null;
+        paisSelec=null;
+        departamentoSelec=null;
+        ciudadSelec=null;
         Utilidad.actualizarElemento("btncancelarbat");
         Utilidad.actualizarElemento("btnnuevobat");
         Utilidad.actualizarElemento("btneditarbat");
@@ -127,6 +155,7 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         Utilidad.actualizarElemento("btnguardarBatallon");
     }
     public void editarBatallon() {
+        accordion=0;
         deshabilitarAll = false;
         estaEditando = true;
         ocultarEdit = "display:none";
@@ -144,7 +173,9 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         Utilidad.actualizarElemento("btnguardarBatallon");
     }
     public void cancelarBatallon() {
-        System.out.println("*********************Inicia cancelacion de edicion o nueva batallon dejando por defecto********************");
+        cargarUltimo();
+        accordion=0;
+        System.out.println("*********************Inicia cancelacion de edicion o nueva batallon dejando por defecto********************");        
         estErrNombre = "";
         estErrDireccion = "";
         estErrbarrio = "";
@@ -173,6 +204,15 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         System.out.println("*********************Fin cancelacion de edicion o nueva batallon dejando por defecto********************");
 
     }
+    
+    public void eliminarBatallon(){
+        System.out.println("El batallon que mando a eliminar es-->"+batallon.getNombreBatallon());
+        eliminarBatallonBean.eliminarBatallon(batallon);
+        cargarUltimo();
+        Utilidad.actualizarElemento("gesbatallones");
+        eliminarBatallonBean.cerrarComfirmar();
+    }
+    
     public void limpiarObjetos() {
         batallon = new Batallon();
         divisiones = new Divisiones();
@@ -281,7 +321,19 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
                                         estErrCiudad = "";
                                         Utilidad.actualizarElemento("cmbciudadbat");
                                         validador = 0;
-                                        System.out.println("**********Formulario batallon validado correctamente.");
+                                        
+                                        if (Utilidad.cadenaVacia(batallon.getPersona().getPnombre())) {
+                                            estErrPersona = Utilidad.estilosErrorInput();
+                                            Utilidad.actualizarElemento("comencontrada");
+                                            Utilidad.mensajeError("SICOVI", "Sección Asignar Comandante: Seleccion Comandante requerido.");
+                                            System.err.println("****************Error...ciudad batallon vacio");
+                                            validador++;
+                                        } else {
+                                            estErrPersona = "";
+                                            Utilidad.actualizarElemento("comencontrada");
+                                            validador=0;
+                                            System.out.println("**********Formulario batallon validado correctamente.");
+                                        }
                                     }
 
                                 }
@@ -312,6 +364,13 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         Utilidad.actualizarElemento("cmbdepartamentobat");
         Utilidad.actualizarElemento("cmbciudadbat");
         
+    }
+    
+    public void cambioAccordion(){
+        System.out.println("el accordion seleccionado es el siguiente-->"+accordion);
+        if(accordion==5){
+            Utilidad.actualizarElemento("mapbatallones");
+        }
     }
     
     public void cargarCiudadesxDepartamento(){
@@ -350,6 +409,8 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
         estErrPais = "";
         estErrDepartamento = "";
         estErrCiudad = "";
+        estErrPersona="";
+        accordion=0;
     }
 
     public Batallon getBatallon() {
@@ -583,4 +644,24 @@ public class BatallonControllerBean extends CombosComunes implements Serializabl
     public void setEstErrCiudad(String estErrCiudad) {
         this.estErrCiudad = estErrCiudad;
     }
+
+    public String getEstErrPersona() {
+        return estErrPersona;
+    }
+
+    public void setEstErrPersona(String estErrPersona) {
+        this.estErrPersona = estErrPersona;
+    }
+
+    public Integer getAccordion() {
+        return accordion;
+    }
+
+    public void setAccordion(Integer accordion) {
+        this.accordion = accordion;
+    }
+    
+    
+    
+    
 }

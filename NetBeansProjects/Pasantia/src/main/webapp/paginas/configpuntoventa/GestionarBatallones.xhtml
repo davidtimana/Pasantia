@@ -25,13 +25,13 @@
     <ui:define name="cuerpo">
 
 
-        <h:form>    
+        <h:form id="gesbatallones">    
 
 
 
             <ui:include src="frmagregarbatallon.xhtml" />    
             <p:separator />
-            <h:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+            <h:panelGrid columns="6" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
                 <p:commandButton value="Nuevo Batallon" title="Nuevo Batallon" 
                                  action="#{batallonControllerBean.nuevoBatallon()}" 
                                  icon="ui-icon-plusthick" style="#{batallonControllerBean.ocultarNuevo}"
@@ -40,6 +40,10 @@
                                  action="#{batallonControllerBean.editarBatallon()}" 
                                  icon="ui-icon-pencil" style="#{batallonControllerBean.ocultarEdit}"
                                  id="btneditarbat"/> 
+                <p:commandButton value="Eliminar Batallon" title="Eliminar Batallon" 
+                                 action="#{eliminarBatallonBean.abrirComfirmar()}" 
+                                 icon="ui-icon-trash" style="#{batallonControllerBean.ocultarEdit}"
+                                 id="btneliminarbat"/> 
                 <p:commandButton value="Guardar Batallon" title="Guardar Batallon" 
                                  action="#{batallonControllerBean.guardarBatallon()}" 
                                  icon="ui-icon-disk" style="#{batallonControllerBean.ocultarGuardar}" 

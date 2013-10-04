@@ -135,6 +135,7 @@ public class CombosComunes implements Serializable{
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboPais() {
+        comboPais=new ArrayList<SelectItem>();
         cargarPaises();
         for (int i = 0; i < paises.size(); i++) {
             comboPais.add(new SelectItem(paises.get(i).getIdPais(), paises.get(i).getNombrePais()));
@@ -193,7 +194,8 @@ public class CombosComunes implements Serializable{
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboDivisionesAsociadas() {
-        cargaDivisionesAsociadas();
+        comboDivisionesAsociadas=new ArrayList<SelectItem>();
+        cargaDivisionesAsociadas();        
         for (int i = 0; i < divisionesAsociadas.size(); i++) {
             comboDivisionesAsociadas.add(new SelectItem(divisionesAsociadas.get(i).getIdDivisiones(), divisionesAsociadas.get(i).getNombreDivision()));
         }
@@ -201,6 +203,7 @@ public class CombosComunes implements Serializable{
     }
 
     private void cargaDivisionesAsociadas() {
+        divisionesAsociadas=new ArrayList<Divisiones>();
         divisionesAsociadas = divisionesDAO.buscarDivisionesAsociadas();
     }
     

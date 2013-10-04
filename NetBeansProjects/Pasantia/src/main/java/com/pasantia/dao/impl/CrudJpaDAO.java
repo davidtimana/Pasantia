@@ -83,7 +83,7 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
         try {
             session.beginTransaction();
             session.delete(entity);
-            session.flush();
+            session.flush();            
             session.beginTransaction().commit();
             result = true;
         } catch (Exception e) {

@@ -33,6 +33,8 @@ public class BuscarBatallonesBean implements Serializable {
     private Boolean abrirBatallon;
     @Inject
     CrudDAO<Batallon> crudDAO;
+    @Inject
+    BatallonControllerBean batallonControllerBean;
 
     public void abrirBuscador() {
         abrirBatallon = true;
@@ -52,6 +54,8 @@ public class BuscarBatallonesBean implements Serializable {
         log.log(Level.INFO, "El elemento seleccionado es el siguiente-->{0}", batallonSeleccionado.getNombreBatallon());
         abrirBatallon=false;
         Utilidad.actualizarElemento("dlgbuscarBatallon");
+        batallonControllerBean.cargarObjetoBuscado(batallonSeleccionado);
+        Utilidad.actualizarElemento("gesbatallones");
     }
 
     public void cargarBatallones() {

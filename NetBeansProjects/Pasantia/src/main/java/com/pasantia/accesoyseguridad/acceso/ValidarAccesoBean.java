@@ -92,7 +92,7 @@ public class ValidarAccesoBean implements Serializable {
 
     public void validarLoginRepetido(String login) throws LoginException {
         Usuario u = new Usuario();
-        u = crudDAOUsuario.buscarxAlgunCampoString(Usuario.class, "nomusuario", "login");
+        u = crudDAOUsuario.buscarxAlgunCampoString(Usuario.class, "nomusuario", login);
         if (u != null) {
             estilosError.set(2, Utilidad.estilosErrorInput());
             Utilidad.actualizarElemento("txtlogin");

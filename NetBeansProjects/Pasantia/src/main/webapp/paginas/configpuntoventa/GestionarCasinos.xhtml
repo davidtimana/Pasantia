@@ -1,26 +1,174 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../../plantillas/plantillaprincipal.xhtml">
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:define name="titulo">
         Gestion De Casinos - SICOVI
     </ui:define>
 
     <ui:define name="abajo">
-        abajo
-    </ui:define>
 
-    <ui:define name="izquierda">
-        izquierda
     </ui:define>
 
     <ui:define name="derecha">
-        derecha
+
+    </ui:define>
+
+    <ui:define name="tituloInsercion">
+        Registro De Casinos
     </ui:define>
 
     <ui:define name="cuerpo">
-        cuerpo
+
+        <h:form id="frmcasinos"  >
+
+            <p:accordionPanel  id="accordioncasinos" activeIndex="#{gestionarCasinoBean.accordion}" >  
+
+                <p:tab title="Datos Basicos">                    
+
+                    <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;
+                                 margin-top: auto;text-align: center" >
+                        <p:outputLabel value="Nombre Casino: " id="lblnomcasino"
+                                       style="font-weight:bold;#{validarCasinoBean.estilosError.get(0)}" />
+                        <p:inputText value="#{gestionarCasinoBean.casino.nombre}"                                      
+                                     id="txtnomcasino" maxlength="44" 
+                                     style="width: 180px;#{validarCasinoBean.estilosError.get(0)}"
+                                     readonly="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
+
+                        <p:outputLabel value="Nit: " id="lblnit"
+                                       style="font-weight:bold;#{validarCasinoBean.estilosError.get(1)}" />
+                        <p:inputText value="#{gestionarCasinoBean.casino.nit}"                                      
+                                     id="txtnit" maxlength="44"
+                                     style="width: 180px;#{validarCasinoBean.estilosError.get(1)}"
+                                     readonly="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
+                        
+                        <p:outputLabel value="Telefono Movil: " id="lbltel1"
+                                       style="font-weight:bold;#{validarCasinoBean.estilosError.get(2)}" />
+                        <p:inputMask value="#{gestionarCasinoBean.casino.telefono1}"                                      
+                                     id="txttel1" maxlength="44" 
+                                     style="width: 180px;#{validarCasinoBean.estilosError.get(2)}" mask="999-999-9999"
+                                     readonly="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
+
+                        <p:outputLabel value="Telefono Fijo: " id="lbltel2"
+                                       style="font-weight:bold;#{validarCasinoBean.estilosError.get(3)}" />
+                        <p:inputMask value="#{gestionarCasinoBean.casino.telefono2}"                                      
+                                     id="txttel2" maxlength="44"
+                                     style="width: 180px;#{validarCasinoBean.estilosError.get(3)}" mask="(99)-999999"
+                                     readonly="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
+
+
+                    </p:panelGrid>
+
+
+                </p:tab>
+
+                <p:tab title="Comandante a Cargo">
+
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:commandButton value="Buscar Comandante Casino" title="Buscar Comandante Casino" icon="ui-icon-search" 
+                                         actionListener="#{buscarUsuarioAcceso.abrirBuscador()}" id="btnbuscarcomcasi"
+                                         style="#{validarCasinoBean.estilosError.get(4)}"
+                                         disabled="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
+
+                    </p:panelGrid>
+                    <p:separator   />
+                    <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
+                                 id="perencontrada">
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                            <p:graphicImage value="#{gestionarCasinoBean.casino.persona.foto}" height="160" width="140"  title="Foto Usuario"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;
+                                     margin-top: auto;text-align: center">
+
+                            <p:outputLabel value="Nombres" style="font-weight:bold;" />
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.pnombre} #{gestionarCasinoBean.casino.persona.snombre}" />
+
+                            <p:outputLabel value="Apellidos" style="font-weight:bold;" />
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.papellido} #{gestionarCasinoBean.casino.persona.sapellido}" />
+
+                            <p:outputLabel value="N° Identificación" style="font-weight:bold;" />
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.cedula}" />
+
+                            <p:outputLabel value="Tipo Usuario:" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.tipoPersona.nombreTipoPersona}" />
+
+                            <p:outputLabel value="Edad:" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.edad}" />
+
+                            <p:outputLabel value="Telefono Movil" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.movil}" />
+
+                            <p:outputLabel value="Direccion" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.direccion}" />
+
+                            <p:outputLabel value="E-mail" style="font-weight:bold;"/>
+                            <p:outputLabel value="#{gestionarCasinoBean.casino.persona.email}" />
+
+                        </p:panelGrid> 
+                    </p:panelGrid>
+
+
+
+                </p:tab>
+
+                <p:tab title="Batallon al que pertenece">
+
+
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:commandButton value="Buscar Batallón" title="Buscar Batallón" icon="ui-icon-search" 
+                                         actionListener="#{buscarUsuarioAcceso.abrirBuscador()}" id="btnbuscarbat"
+                                         style="#{validarCasinoBean.estilosError.get(5)}"
+                                         disabled="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
+
+                    </p:panelGrid>
+                    <p:separator   />
+
+
+                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;
+                                 margin-top: auto;text-align: center">
+
+                        <p:outputLabel value="Nombre Batallón:" style="font-weight:bold;" />
+                        <p:outputLabel value="#{gestionarCasinoBean.casino.batallon.nombreBatallon}" />
+
+                        <p:outputLabel value="Telefono:" style="font-weight:bold;" />
+                        <p:outputLabel value="#{gestionarCasinoBean.casino.batallon.telefono1}" />
+
+                        <p:outputLabel value="Dirección" style="font-weight:bold;" />
+                        <p:outputLabel value="#{gestionarCasinoBean.casino.batallon.direccion}" />
+
+                        <p:outputLabel value="Barrio:" style="font-weight:bold;"/>
+                        <p:outputLabel value="#{gestionarCasinoBean.casino.batallon.barrio}" />                        
+
+                    </p:panelGrid> 
+
+                </p:tab>
+
+            </p:accordionPanel>
+
+            <p:separator />
+
+            <h:panelGrid columns="6" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
+                         id="grupobotonescasino" >
+                <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarCasinoBean.nuevo()}" icon="ui-icon-document-b"                                 
+                                 rendered="#{gestionarCasinoBean.listaControlBotones.get(0)==1}"/>
+                <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarCasinoBean.editar()}" icon="ui-icon-pencil"                                   
+                                 rendered="#{gestionarCasinoBean.listaControlBotones.get(1)==1}"/>    
+                <p:commandButton value="Eliminar" title="Eliminar" actionListener="#{gestionarCasinoBean.editar()}" icon="ui-icon-trash"                                   
+                                 rendered="#{gestionarCasinoBean.listaControlBotones.get(5)==1}"/>    
+                <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarCasinoBean.cancelar()}" icon="ui-icon-cancel"                                  
+                                 rendered="#{gestionarCasinoBean.listaControlBotones.get(2)==1}"/>
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionarAcceso.buscar()}" icon="ui-icon-search"                                  
+                                 rendered="#{gestionarCasinoBean.listaControlBotones.get(3)==1}"/>
+                <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarCasinoBean.guardar()}" icon="ui-icon-disk"                                  
+                                 rendered="#{gestionarCasinoBean.listaControlBotones.get(4)==1}"/>
+            </h:panelGrid>
+
+
+        </h:form>
     </ui:define>
 
 </ui:composition>

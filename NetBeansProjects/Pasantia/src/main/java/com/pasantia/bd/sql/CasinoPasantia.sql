@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-10-2013 a las 20:44:48
+-- Tiempo de generación: 04-10-2013 a las 18:45:55
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.3.10-1ubuntu3.8
 
@@ -40,18 +40,17 @@ CREATE TABLE IF NOT EXISTS `Batallon` (
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_coronel_idx` (`seccoronel`),
   KEY `fk_ciudad_idx` (`secciudad`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Volcado de datos para la tabla `Batallon`
 --
 
 INSERT INTO `Batallon` (`idBatallon`, `nombre_batallon`, `telefono 1`, `telefono 2`, `direccion`, `barrio`, `secdivision`, `seccoronel`, `secciudad`) VALUES
-(1, 'TERCERA BRIGADA', '2203040', '2203050', 'Calle 5 con carrera 100', 'San fernando', 2, NULL, 76001),
+(1, 'TERCERA BRIGADA', '2203040', '2203050', 'Calle 5 con carrera 100', 'SAN FERNANDO', 16, 21, 76001),
 (2, 'QUINTA BRIGADA', '4502240', '4502241', 'Calle 20 Carrera 40', 'Desconocido', 2, NULL, 68001),
 (8, 'PRIMERA BRIGADA', '8203040', '8905040', 'calle 4 5-50', 'PRIMERA BRIGADA', 39, NULL, 18029),
 (9, 'SEGUN BRIGADA', '8504020', '8603040', 'calle 40 - 30 50', 'SEGUN BRIGADA', 1, NULL, 76248),
-(10, 'CUARTA BRIGADA', '8906040', '5632321', 'calle 15 -30 40', 'CUARTA BRIGADA', 10, NULL, 23162),
 (11, 'SEXTA BRIGADA', '82331', '321321', 'calee 20 - 20 ', 'SEXTA BRIGADA', 85, NULL, 19110),
 (12, 'SEPTIMO BATALLON', '82010450', '513213212', 'calle 90 - 20 - 30', 'SEPTIMO BATALLON', 39, NULL, 52001),
 (13, 'OCTAVA BRIGADA', '212132132', '3213132', 'calle 40 -90', 'OCTAVA BRIGADA', 7, NULL, 20013),
@@ -59,7 +58,7 @@ INSERT INTO `Batallon` (`idBatallon`, `nombre_batallon`, `telefono 1`, `telefono
 (15, 'DECIMA BRIGADA', '8205060', '8205061', 'calle 6 20-50', 'DECIMA BRIGADA', 7, NULL, 76275),
 (16, 'UNDECIMA', '8104050', '906040', 'calle 40 - 20 30', 'SAN RAFAEL', 4, NULL, 25126),
 (17, 'DUODECIMO', '8204050', '6231312', 'carreara 40 - 50', 'VALENCIA', 20, NULL, 20178),
-(18, 'ENESIMA BRIGADA', '812318731', '831321321', 'calle 4 # 5 -30', 'PAJONAL', 4, NULL, 52001);
+(18, 'ENESIMA BRIGADA', '812318731', '831321321', 'calle 4 # 5 -30', 'PAJONAL', 4, 1, 52001);
 
 -- --------------------------------------------------------
 
@@ -13097,19 +13096,21 @@ CREATE TABLE IF NOT EXISTS `Producto` (
 CREATE TABLE IF NOT EXISTS `Rol` (
   `idRol` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
+  `codigo` int(11) NOT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `Rol`
 --
 
-INSERT INTO `Rol` (`idRol`, `descripcion`) VALUES
-(1, 'SUPER ADMINISTRADOR'),
-(2, 'VENDEDOR'),
-(3, 'PROVEEDOR'),
-(4, 'CLIENTE'),
-(12, 'COMANDANTE CASINO');
+INSERT INTO `Rol` (`idRol`, `descripcion`, `codigo`) VALUES
+(1, 'SUPER ADMINISTRADOR', 1),
+(2, 'VENDEDOR', 2),
+(3, 'PROVEEDOR', 3),
+(4, 'CLIENTE', 4),
+(12, 'COMANDANTE CASINO', 5),
+(13, 'ADMINISTRADOR', 6);
 
 -- --------------------------------------------------------
 
@@ -13408,7 +13409,22 @@ CREATE TABLE IF NOT EXISTS `tblunidad` (
   `SECUNIDAD` int(11) NOT NULL AUTO_INCREMENT,
   `UNIDADES` varchar(45) NOT NULL,
   PRIMARY KEY (`SECUNIDAD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `tblunidad`
+--
+
+INSERT INTO `tblunidad` (`SECUNIDAD`, `UNIDADES`) VALUES
+(1, 'GRAMOS'),
+(2, 'LIBRAS'),
+(3, 'KILOGRAMOS'),
+(4, 'ARROBAS'),
+(5, 'BULTO'),
+(6, 'MILILITROS'),
+(7, 'LITROS'),
+(8, 'GALONES'),
+(9, 'UNIDADES');
 
 -- --------------------------------------------------------
 
@@ -13577,9 +13593,9 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 --
 
 INSERT INTO `Usuario` (`idUsuario`, `clave`, `nomusuario`, `secpersona`, `secrol`, `activo`, `sesion`, `Thema`) VALUES
-(1, 'KVoLbvij6FYT4HpFRebOjZRL+cd61SGUyOZenEg0iqY=', 'david1061', 1, 1, 1, 0, 'pasantia'),
-(2, 'yssg4+e2MSJQdUi/4LLVAalgApbzfy4o', 'renetima123', 17, 4, 1, 0, 'pasantia'),
-(3, 'FE0szVtPHS7pabE+HwWV+QocV7WUBHYP', 'mafelu1221', 19, 2, 1, 0, 'pasantia');
+(1, '98Cp79RM37bChNKDnzUrQAmbsk2+3tUv', 'david1061', 1, 1, 1, 1, 'pasantia'),
+(2, 'Od1YSjvKBX2tsKdN4WOvyQ==', 'rene', 17, 4, 1, 0, 'pasantia'),
+(3, 'A2l5f70Wt91O+4KDu1Tiw+ZAn09XCTQt', 'mafelu', 19, 2, 1, 0, 'aristo');
 
 --
 -- Restricciones para tablas volcadas

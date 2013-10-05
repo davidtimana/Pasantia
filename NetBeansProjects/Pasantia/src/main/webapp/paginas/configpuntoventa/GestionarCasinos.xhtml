@@ -70,14 +70,14 @@
 
                     <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
                         <p:commandButton value="Buscar Comandante Casino" title="Buscar Comandante Casino" icon="ui-icon-search" 
-                                         actionListener="#{buscarUsuarioAcceso.abrirBuscador()}" id="btnbuscarcomcasi"
+                                         actionListener="#{buscarComandanteCasinoBean.abrirBuscador()}" id="btnbuscarcomcasi"
                                          style="#{validarCasinoBean.estilosError.get(4)}"
                                          disabled="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
 
                     </p:panelGrid>
                     <p:separator   />
                     <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
-                                 id="perencontrada">
+                                 id="comencontrado">
                         <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
                             <p:graphicImage value="#{gestionarCasinoBean.casino.persona.foto}" height="160" width="140"  title="Foto Usuario"/>
                         </p:panelGrid>
@@ -120,7 +120,7 @@
 
                     <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
                         <p:commandButton value="Buscar Batallón" title="Buscar Batallón" icon="ui-icon-search" 
-                                         actionListener="#{buscarUsuarioAcceso.abrirBuscador()}" id="btnbuscarbat"
+                                         actionListener="#{buscarBatallonCasinoBean.abrirBuscador()}" id="btnbuscarbat"
                                          style="#{validarCasinoBean.estilosError.get(5)}"
                                          disabled="#{gestionarCasinoBean.listaControlReadonly.get(0)}"/>
 
@@ -129,7 +129,7 @@
 
 
                     <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;
-                                 margin-top: auto;text-align: center">
+                                 margin-top: auto;text-align: center" id="pnlbatalloncas">
 
                         <p:outputLabel value="Nombre Batallón:" style="font-weight:bold;" />
                         <p:outputLabel value="#{gestionarCasinoBean.casino.batallon.nombreBatallon}" />

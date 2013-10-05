@@ -111,5 +111,42 @@ public class PersonaDAOImpl  implements PersonaDAO{
 
         return personas;
     }
+
+    @Override
+    public List<Persona> buscarComandanteCasinoSinAsignar() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        List<Persona> personas = new ArrayList<Persona>();
+        List<Object> listaNativa = new ArrayList<Object>();        
+        
+        String sql = "";
+
+        try {
+            sql = "SELECT * FROM Persona p "
+                    + "INNER JOIN Tipo_Persona tp on (p.SECTIPO_PERSONA=tp.idTipo_Persona) "
+                    + "RIGHT JOIN Casino c on (p.idTBLPERSONA<>c.fk_id_persona) "
+                    + "WHERE tp.nombre_tipo_persona='Comandante Batallon' "
+                    + "OR tp.nombre_tipo_persona='Comandante Casino'";
+            Query q = session.createSQLQuery(sql);
+            
+            listaNativa= q.list();
+            Iterator iterator = listaNativa.iterator();
+            while (iterator.hasNext()) {
+                Persona p = new Persona();
+                Object[] obj = (Object[]) iterator.next();                
+                p=crudDAO.buscar(Persona.class,obj[0]);
+                personas.add(p);
+            }            
+            
+
+        } catch (Exception e) {
+            personas = null;
+            System.out.println("Error en buscarComandanteCasinoSinAsignar " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+
+        return personas;
+    }
     
 }

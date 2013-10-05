@@ -65,7 +65,18 @@ public interface PersonaDAO {
      *          lista de Objetos personas encontrados
      * @author David Timana
      */
-    public List<Persona> buscarComandanteSinAsignar();  
+    public List<Persona> buscarComandanteSinAsignar();
+    
+    /**
+     *Metodo que se encarga de listar los
+     * comandantes que no han sido 
+     * asignados a ningun batallon.
+     
+     * @return List<Persona>
+     *          lista de Objetos personas encontrados
+     * @author David Timana
+     */
+    public List<Persona> buscarComandanteCasinoSinAsignar();  
     
     
     

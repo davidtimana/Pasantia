@@ -42,6 +42,16 @@ public class GestionarCasinoBean implements Serializable {
     @Inject
     GuardarCasinoBean guardarCasinoBean;
 
+    public void cargarComandante(Persona p){
+        casino.setPersona(p);
+        log.log(Level.INFO, "**********************el comandante quedo-->{0}", casino.getPersona().getPnombre());
+    }
+    
+    public void cargarBatallon(Batallon b){
+        casino.setBatallon(b);
+        log.log(Level.INFO, "**********************el batallon quedo-->{0}", casino.getBatallon().getNombreBatallon());
+    }
+    
     public void nuevo() {
         estaEditando=false;
         accordion=0;

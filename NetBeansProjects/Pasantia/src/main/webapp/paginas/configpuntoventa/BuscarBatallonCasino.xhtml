@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+        <p:dialog header="Buscador de Batallones" widgetVar="dlgbuscarBatallon" resizable="false" 
+                  id="dlgbuscarbatcas" showEffect="explode" hideEffect="explode"  modal="true"  width="82%" height="82%" 
+                  minimizable="true" visible="#{buscarBatallonCasinoBean.abrir}" closable="false" >
+
+
+
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <p:dataTable id="tblbusbatcas" var="batallon" value="#{buscarBatallonCasinoBean.modeloBatallon}" sortMode="multiple"  emptyMessage="No hay Batallones disponibles"
+                             paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             selection="#{buscarBatallonCasinoBean.batallonSelect}" selectionMode="single">
+
+                    <p:ajax event="rowSelect" listener="#{buscarBatallonCasinoBean.cargarComandanteSeleccionado()}"/> 
+
+                    <f:facet name="header">  
+                        Lista de Batallones
+                    </f:facet>                    
+
+                    <p:column headerText="Nombre" style="text-align: center" sortBy="#{batallon.nombreBatallon}" filterBy="#{batallon.nombreBatallon}" >  
+                        <h:outputText value="#{batallon.nombreBatallon}"  />  
+                    </p:column>
+
+                    <p:column headerText="Telefono" style="text-align: center" sortBy="#{batallon.telefono1}" filterBy="#{batallon.telefono1}" >  
+                        <h:outputText value="#{batallon.telefono1}"  />  
+                    </p:column>
+
+                    <p:column headerText="Dirección" style="text-align: center" sortBy="#{batallon.direccion}" filterBy="#{batallon.direccion}" >  
+                        <h:outputText value="#{batallon.direccion}"  />  
+                    </p:column>
+
+                    <p:column headerText="Barrio" style="text-align: center" sortBy="#{batallon.barrio}" filterBy="#{batallon.barrio}" >  
+                        <h:outputText value="#{batallon.barrio}"  />  
+                    </p:column>                
+
+                    <p:column headerText="Ciudad" style="text-align: center" 
+                              sortBy="#{batallon.ciudad.nombreCiudad}" 
+                              filterBy="#{batallon.ciudad.nombreCiudad}" >  
+                        <h:outputText value="#{batallon.ciudad.nombreCiudad}"  />  
+                    </p:column>
+
+                    <p:column headerText="Division Perteneciente" style="text-align: center" 
+                              sortBy="#{batallon.divisiones.nombreDivision}" 
+                              filterBy="#{batallon.divisiones.nombreDivision}">  
+                        <h:outputText value="#{batallon.divisiones.nombreDivision}"  />  
+                    </p:column>
+
+                    <p:column headerText="Comandante" style="text-align: center" 
+                              sortBy="#{batallon.persona.pnombre}" 
+                              filterBy="#{batallon.persona.pnombre}" >  
+                        <h:outputText value="#{batallon.persona.pnombre} #{batallon.persona.papellido}"  />  
+                    </p:column>
+
+
+                    <f:facet name="footer">  
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{buscarBatallonCasinoBean.cerrarBuscador()}" icon="ui-icon-cancel" />
+                            <p:outputLabel value="En total hay #{buscarBatallonCasinoBean.totalBatallones()} Batallones.  " />                            
+                        </p:panelGrid>
+
+                    </f:facet>
+                </p:dataTable>
+
+                <p:tooltip for="tblbusbatcas" value="Seleccione el batallon que desee gestionar."  />
+
+
+
+            </p:panelGrid>                     
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

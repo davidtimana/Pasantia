@@ -13,23 +13,23 @@ and open the template in the editor.
 
         <p:dialog header="Buscador de Usuarios" widgetVar="dlgcomancasino" resizable="false" 
                   id="dlgcomancasino" showEffect="explode" hideEffect="explode"  modal="true"  width="80%" height="80%" 
-                  minimizable="true" visible="#{buscarComandanteBatallonBean.abrirBuscador}" closable="false" >
+                  minimizable="true" visible="#{buscarComandanteCasinoBean.abrir}" closable="false" >
 
             <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
 
-                <p:dataTable id="tblcomancasino" var="usuarios" value="#{buscarComandanteBatallonBean.modeloUsuarios}" sortMode="multiple"  
+                <p:dataTable id="tblcomancasino" var="usuarios" value="#{buscarComandanteCasinoBean.comandanteCasino}" sortMode="multiple"  
                              emptyMessage="No hay Usuarios disponibles"
                              paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                              {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                             selection="#{buscarComandanteBatallonBean.comandanteSeleccionado}" selectionMode="single">
+                             selection="#{buscarComandanteCasinoBean.comandante}" selectionMode="single">
 
-                    <p:ajax event="rowSelect" listener="#{buscarComandanteBatallonBean.cargarComandanteSeleccionado()}"/> 
+                    <p:ajax event="rowSelect" listener="#{buscarComandanteCasinoBean.cargarComandanteSeleccionado()}"/> 
 
                     <f:facet name="header">  
-                        Lista de Comandantes Disponibles 
+                        Lista de Comandantes Para Casinos Disponibles 
                     </f:facet>
 
-                    <p:column style="width:2%" headerText="Ubicaciones">  
+                    <p:column style="width:2%" headerText="Foto">  
                         <p:rowToggler />  
                     </p:column>                   
 
@@ -78,14 +78,14 @@ and open the template in the editor.
 
                     <f:facet name="footer">  
                         <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{buscarComandanteBatallonBean.cerrarBuscador()}" icon="ui-icon-cancel" />
-                            <p:outputLabel value="En total hay #{buscarComandanteBatallonBean.totalComandantes()} Usuarios.  " />                            
+                            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{buscarComandanteCasinoBean.cerrarBuscador()}" icon="ui-icon-cancel" />
+                            <p:outputLabel value="En total hay #{buscarComandanteCasinoBean.totalComandantesCasino()} Usuarios.  " />                            
                         </p:panelGrid>
 
                     </f:facet>
                 </p:dataTable>
 
-                <p:tooltip for="tblcomancasino" value="Seleccione el comandante que desee seleccionar."  />
+                <p:tooltip for="tblcomancasino" value="Seleccione el comandante que desee gestionar."  />
 
 
 

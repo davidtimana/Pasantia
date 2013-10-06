@@ -40,12 +40,12 @@ public class ValidarCasinoBean implements Serializable {
     
     
     
-    public void validarCasino(Casino c) throws CadenaVaciaException{
+    public void validarCasino(Casino c, Boolean estaEditando) throws CadenaVaciaException{
         
         limpiarEstilos();
         validarCadenasVacias(c.getNombre(), "lblnomcasino", "txtnomcasino", 0, "Nombre del casino requerido.");
         validarCadenasVacias(c.getNit(), "lblnit", "txtnit", 1, "Nit del casino requerido.");
-        validarNit(c.getNit(), "lblnit", "txtnit", 1, "Nit del casino duplicado.");
+        validarNit(c.getNit(), "lblnit", "txtnit", 1, "Nit del casino duplicado.",estaEditando);
         validarCadenasVacias(c.getTelefono1(), "lbltel1", "txttel1", 2, "Telefono Movil del casino requerido.");
         validarCadenasVacias(c.getTelefono2(), "lbltel2", "txttel2", 3, "Telefono del casino requerido.");
         validarObjeto(c.getPersona(),  "btnbuscarcomcasi", 4, "Seleccion comandante Casino requerido.");
@@ -124,10 +124,10 @@ public class ValidarCasinoBean implements Serializable {
     }
     
     public void validarNit(String cadena, String idLbl, String idtxt, 
-            Integer posEstilo, String mensaje) throws CadenaVaciaException {
+            Integer posEstilo, String mensaje,Boolean estaEditando) throws CadenaVaciaException {
         Casino casino=new Casino();
         casino=crudDAO.buscarxAlgunCampoString(Casino.class, "nit", cadena);
-         if (casino!=null) {
+         if (casino!=null && !estaEditando) {
             estilosError.set(posEstilo, Utilidad.estilosErrorInput());
             Utilidad.actualizarElemento(idLbl);
             Utilidad.actualizarElemento(idtxt);

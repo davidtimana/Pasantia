@@ -157,11 +157,11 @@
                                  rendered="#{gestionarCasinoBean.listaControlBotones.get(0)==1}"/>
                 <p:commandButton value="Editar" title="Editar" actionListener="#{gestionarCasinoBean.editar()}" icon="ui-icon-pencil"                                   
                                  rendered="#{gestionarCasinoBean.listaControlBotones.get(1)==1}"/>    
-                <p:commandButton value="Eliminar" title="Eliminar" actionListener="#{gestionarCasinoBean.editar()}" icon="ui-icon-trash"                                   
+                <p:commandButton value="Eliminar" title="Eliminar" actionListener="#{gestionarCasinoBean.eliminarCasino()}" icon="ui-icon-trash"                                   
                                  rendered="#{gestionarCasinoBean.listaControlBotones.get(5)==1}"/>    
                 <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionarCasinoBean.cancelar()}" icon="ui-icon-cancel"                                  
                                  rendered="#{gestionarCasinoBean.listaControlBotones.get(2)==1}"/>
-                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionarAcceso.buscar()}" icon="ui-icon-search"                                  
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{buscarCasinoBean.abrirBuscador()}" icon="ui-icon-search"                                  
                                  rendered="#{gestionarCasinoBean.listaControlBotones.get(3)==1}"/>
                 <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionarCasinoBean.guardar()}" icon="ui-icon-disk"                                  
                                  rendered="#{gestionarCasinoBean.listaControlBotones.get(4)==1}"/>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+        <p:dialog header="Buscador de Casinos" widgetVar="dlgbuscarcasino" resizable="false" 
+                  id="dlgbuscarcasino" showEffect="explode" hideEffect="explode"  modal="true"  width="82%" height="82%" 
+                  minimizable="true" visible="#{buscarCasinoBean.abrir}" closable="false" >
+
+
+
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <p:dataTable id="tblcasinos" var="casino" value="#{buscarCasinoBean.modeloCasino}" sortMode="multiple"  emptyMessage="No hay Casinos disponibles"
+                             paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             selection="#{buscarCasinoBean.casinoSelect}" selectionMode="single">
+
+                    <p:ajax event="rowSelect" listener="#{buscarCasinoBean.cargarCasinoSeleccionado()}"/> 
+
+                    <f:facet name="header">  
+                        Lista de Casinos
+                    </f:facet>                    
+
+                    <p:column headerText="Nombre Casino" style="text-align: center" sortBy="#{casino.nombre}" filterBy="#{casino.nombre}" >  
+                        <h:outputText value="#{casino.nombre}"  />  
+                    </p:column>
+
+                    <p:column headerText="Nit" style="text-align: center" sortBy="#{casino.nit}" filterBy="#{casino.nit}" >  
+                        <h:outputText value="#{casino.nit}"  />  
+                    </p:column>
+
+                    <p:column headerText="Telefono Movil" style="text-align: center" sortBy="#{casino.telefono1}" filterBy="#{casino.telefono1}" >  
+                        <h:outputText value="#{casino.telefono1}"  />  
+                    </p:column>
+
+                    <p:column headerText="Telefono Fijo" style="text-align: center" sortBy="#{casino.telefono2}" filterBy="#{casino.telefono1}" >  
+                        <h:outputText value="#{casino.telefono2}"  />  
+                    </p:column>                
+
+                    <p:column headerText="Batallón" style="text-align: center" 
+                              sortBy="#{casino.batallon.nombreBatallon}" 
+                              filterBy="#{casino.batallon.nombreBatallon}" >  
+                        <h:outputText value="#{casino.batallon.nombreBatallon}"  />  
+                    </p:column>
+
+                    <p:column headerText="Comandante" style="text-align: center" 
+                              sortBy="#{casino.persona.pnombre}" 
+                              filterBy="#{casino.persona.pnombre}">  
+                        <h:outputText value="#{casino.persona.pnombre} #{casino.persona.snombre}"  />  
+                    </p:column>
+
+                    
+
+
+                    <f:facet name="footer">  
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{buscarCasinoBean.cerrarBuscador()}" icon="ui-icon-cancel" />
+                            <p:outputLabel value="En total hay #{buscarCasinoBean.totalCasinos()} Casinos.  " />                            
+                        </p:panelGrid>
+
+                    </f:facet>
+                </p:dataTable>
+
+                <p:tooltip for="tblcasinos" value="Seleccione el casino que desee gestionar."  />
+
+
+
+            </p:panelGrid>                     
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

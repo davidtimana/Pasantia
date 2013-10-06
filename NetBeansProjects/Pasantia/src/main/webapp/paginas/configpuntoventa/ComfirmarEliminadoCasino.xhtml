@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        
+        
+        <p:confirmDialog message="Esta seguro que desea eliminar el casino #{gestionarCasinoBean.casino.nombre}?" 
+                             header="Eliminar Casinos" severity="alert" 
+                             widgetVar="dlg1" id="dlgcomcas"
+                             visible="#{eliminarCasinoBean.abrirComfirmar}" closable="false">	
+            <p:commandButton value="Eliminar" icon="ui-icon-trash"  actionListener="#{gestionarCasinoBean.eliminarCasino()}" />	
+            <p:commandButton value="Cancelar" icon="ui-icon-cancel"  actionListener="#{eliminarCasinoBean.cerrarComfirmar()}"  />
+            </p:confirmDialog>
+        
+        
+    </ui:composition>
+</html>

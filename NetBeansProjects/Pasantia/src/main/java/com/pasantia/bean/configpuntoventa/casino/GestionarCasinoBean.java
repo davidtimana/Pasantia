@@ -4,6 +4,7 @@
  */
 package com.pasantia.bean.configpuntoventa.casino;
 
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.entidades.Batallon;
 import com.pasantia.entidades.Casino;
 import com.pasantia.entidades.Persona;
@@ -41,6 +42,27 @@ public class GestionarCasinoBean implements Serializable {
     ValidarCasinoBean validarCasinoBean;
     @Inject
     GuardarCasinoBean guardarCasinoBean;
+    @Inject
+    CrudDAO<Casino> crudDAO;
+    @Inject
+    EliminarCasinoBean casinoBean;
+    
+    public void eliminarCasino(){
+        System.out.println("El casino que mando a eliminar es-->"+casino.getNombre());
+        casinoBean.eliminarCasino(casino);
+        cargarUltimoCasino();
+        Utilidad.actualizarElemento("frmcasinos");
+        casinoBean.cerrarComfirmar();
+    }
+    
+    public void cargarUltimoCasino(){
+        casino=crudDAO.buscarUltimo(Casino.class);
+        cargarObjetoCasino(casino);
+    }
+    
+    public void cargarObjetoCasino(Casino c){
+        casino=c;
+    }
 
     public void cargarComandante(Persona p){
         casino.setPersona(p);
@@ -52,7 +74,7 @@ public class GestionarCasinoBean implements Serializable {
         log.log(Level.INFO, "**********************el batallon quedo-->{0}", casino.getBatallon().getNombreBatallon());
     }
     
-    public void nuevo() {
+    public void nuevo() {        
         estaEditando=false;
         accordion=0;
         listaControlReadonly.set(0, false);
@@ -70,19 +92,20 @@ public class GestionarCasinoBean implements Serializable {
         deshabilitarBotonesEditaroNuevo();
     }
 
-    public void cancelar() {
+    public void cancelar() {        
         accordion=0;
         listaControlReadonly.set(0, true);
         validarCasinoBean.limpiarEstilos();
         deshabilitarBotonesCancelar();
         casino = new Casino();
+        cargarUltimoCasino();
         Utilidad.actualizarElemento("frmcasinos");
 
     }
 
     public void guardar() {
         try {
-            validarCasinoBean.validarCasino(casino);
+            validarCasinoBean.validarCasino(casino,estaEditando);
             guardarCasinoBean.guardar(casino, estaEditando);
             cancelar();
         } catch (CadenaVaciaException ex) {
@@ -133,6 +156,7 @@ public class GestionarCasinoBean implements Serializable {
         iniciarBotones();
         iniciarReadonly();
         iniciarBotones();
+        cargarUltimoCasino();
     }
 
     public GestionarCasinoBean() {

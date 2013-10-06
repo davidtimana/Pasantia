@@ -123,9 +123,10 @@ public class PersonaDAOImpl  implements PersonaDAO{
         try {
             sql = "SELECT * FROM Persona p "
                     + "INNER JOIN Tipo_Persona tp on (p.SECTIPO_PERSONA=tp.idTipo_Persona) "
-                    + "RIGHT JOIN Casino c on (p.idTBLPERSONA<>c.fk_id_persona) "
-                    + "WHERE tp.nombre_tipo_persona='Comandante Batallon' "
-                    + "OR tp.nombre_tipo_persona='Comandante Casino'";
+                    + "LEFT JOIN Casino c on (p.idTBLPERSONA=c.fk_id_persona) "
+                    + "WHERE (tp.nombre_tipo_persona='Comandante Batallon' "
+                    + "OR tp.nombre_tipo_persona='Comandante Casino') "
+                    + "AND c.fk_id_persona IS NULL";
             Query q = session.createSQLQuery(sql);
             
             listaNativa= q.list();

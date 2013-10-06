@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 6/10/2013 01:37:53 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblventa" table="TBLVENTA" catalog="CasinoPasantia">
         <id name="secventa" type="java.lang.Integer">
@@ -26,8 +26,8 @@
         <property name="observacion" type="string">
             <column name="OBSERVACION" length="45" />
         </property>
-        <property name="total" type="java.lang.Byte">
-            <column name="TOTAL" precision="2" scale="0" />
+        <property name="total" type="java.lang.Long">
+            <column name="TOTAL" precision="10" scale="0" />
         </property>
         <property name="totalCantidad" type="java.lang.Byte">
             <column name="TOTAL_CANTIDAD" precision="2" scale="0" />

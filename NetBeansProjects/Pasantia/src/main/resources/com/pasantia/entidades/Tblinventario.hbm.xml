@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 6/10/2013 01:37:53 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblinventario" table="tblinventario" catalog="CasinoPasantia">
         <id name="secinventario" type="java.lang.Integer">
@@ -14,14 +14,14 @@
         <many-to-one name="tbldetallecompra" class="com.pasantia.entidades.Tbldetallecompra" fetch="select" lazy="false">
             <column name="SECDETALLECOMPRA" not-null="true" />
         </many-to-one>
-        <property name="totalCantidad" type="string">
-            <column name="TOTAL_CANTIDAD" length="45" not-null="true" />
+        <property name="totalCantidad" type="long">
+            <column name="TOTAL_CANTIDAD" precision="10" scale="0" not-null="true" />
         </property>
-        <property name="totalCompra" type="string">
-            <column name="TOTAL_COMPRA" length="45" not-null="true" />
+        <property name="totalCompra" type="long">
+            <column name="TOTAL_COMPRA" precision="10" scale="0" not-null="true" />
         </property>
-        <property name="totalCompras" type="string">
-            <column name="TOTAL_COMPRAS" length="45" not-null="true" />
+        <property name="totalCompras" type="long">
+            <column name="TOTAL_COMPRAS" precision="10" scale="0" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/09/2013 01:53:38 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 6/10/2013 01:37:53 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Tblcaja" table="tblcaja" catalog="CasinoPasantia">
         <id name="seccaja" type="java.lang.Integer">
@@ -14,8 +14,8 @@
         <many-to-one name="tblegreso" class="com.pasantia.entidades.Tblegreso" fetch="select" lazy="false">
             <column name="SECEGRESO" not-null="true" />
         </many-to-one>
-        <property name="total" type="string">
-            <column name="TOTAL" length="45" not-null="true" />
+        <property name="total" type="long">
+            <column name="TOTAL" precision="10" scale="0" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

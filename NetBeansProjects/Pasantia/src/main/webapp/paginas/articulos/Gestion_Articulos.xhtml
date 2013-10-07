@@ -28,120 +28,80 @@
 
             <p:accordionPanel  id="accordioproduc" multiple="true" >  
 
-                <p:tab title="Usuario ha ingresar">
+                <p:tab title="Datos Basicos Articulo">                    
 
-
-                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                        <p:commandButton value="Buscar Usuario" title="Buscar Usuario" icon="ui-icon-search" 
-                                         actionListener="#{buscarUsuarioAcceso.abrirBuscador()}" id="btnbuscarper"
-                                         style="#{validarAccesoBean.estilosError.get(0)}"
-                                         disabled="#{gestionarAcceso.listaControlReadonly.get(2)}"/>
-
-                    </p:panelGrid>
-                    <p:separator   />
                     <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
                                  id="perencontrada">
                         <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
-                            <p:graphicImage value="#{gestionarAcceso.persona.foto}" height="160" width="140"  title="Foto Usuario"/>
+                            <p:graphicImage value="#{gestionArticulosBean.producto.imagen}" height="160" width="140"  title="Foto Usuario"/>
+                            <p:commandButton value="Cargar Foto" title="Cargar Foto" icon="ui-icon ui-icon-arrowthick-1-n" 
+                                             id="btncargarprod" />
                         </p:panelGrid>
-                        <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;text-align: center"
-                                     >
 
-                            <p:outputLabel value="Nombres" style="font-weight:bold;" />
-                            <p:outputLabel value="#{gestionarAcceso.persona.pnombre} #{gestionarAcceso.persona.snombre}" />
+                        <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto
+                                     ;margin-top: auto;text-align: center">
 
-                            <p:outputLabel value="Apellidos" style="font-weight:bold;" />
-                            <p:outputLabel value="#{gestionarAcceso.persona.papellido} #{gestionarAcceso.persona.sapellido}" />
+                            <p:outputLabel value="Descripción Producto: *" style="font-weight:bold;" />
+                            <p:inputText maxlength="99" style="width: 300px" 
+                                         value="#{gestionArticulosBean.producto.descripcion}"/>
 
-                            <p:outputLabel value="N° Identificación" style="font-weight:bold;" />
-                            <p:outputLabel value="#{gestionarAcceso.persona.cedula}" />
+                            <p:outputLabel value="Codigo De Barras: *" style="font-weight:bold;" />
+                            <p:inputText maxlength="45" style="width: 150px"
+                                         value="#{gestionArticulosBean.producto.codigoBarras}"/>
 
-                            <p:outputLabel value="Tipo Usuario:" style="font-weight:bold;"/>
-                            <p:outputLabel value="#{gestionarAcceso.persona.tipoPersona.nombreTipoPersona}" />
+                            <p:outputLabel value="Cantidad Minima: *" style="font-weight:bold;" />
+                            <p:inputText style="width: 150px"
+                                         value="#{gestionArticulosBean.producto.cantidadMinima}"/>
 
-                            <p:outputLabel value="Edad:" style="font-weight:bold;"/>
-                            <p:outputLabel value="#{gestionarAcceso.persona.edad}" />
+                            <p:outputLabel value="Cantidad Actual: *" style="font-weight:bold;" />
+                            <p:inputText style="width: 150px"
+                                         value="#{gestionArticulosBean.producto.cantidadActual}"/>
 
-                            <p:outputLabel value="Telefono Movil" style="font-weight:bold;"/>
-                            <p:outputLabel value="#{gestionarAcceso.persona.movil}" />
+                            <p:outputLabel value="Unidad De Medida: *"  id="lblunidades" style="font-weight:bold;"/>
+                            <p:selectOneMenu id="cmbunidades" value="#{gestionArticulosBean.unidad.secunidad}"  
+                                             effect="fold" filter="true" filterMatchMode="startsWith"
+                                             style="width: 150px">  
+                                <f:selectItem itemLabel="...Seleccione..."  />  
+                                <f:selectItems value="#{gestionArticulosBean.comboUnidades}"  /> 
+                                <p:ajax listener="#{gestionArticulosBean.cargarUnidad()}" />
+                            </p:selectOneMenu>
 
-                            <p:outputLabel value="Direccion" style="font-weight:bold;"/>
-                            <p:outputLabel value="#{gestionarAcceso.persona.direccion}" />
+                            <p:outputLabel value="Categoria: *"  id="lblcategoria" style="font-weight:bold;"/>
+                            <p:selectOneMenu id="txtcategoria" value="#{gestionArticulosBean.categoria.idCategoria}"  
+                                             effect="fold" filter="true" filterMatchMode="startsWith"
+                                             style="width: 150px">  
+                                <f:selectItem itemLabel="...Seleccione..."  />  
+                                <f:selectItems value="#{gestionArticulosBean.comboCategorias}"  />                                                        
+                                <p:ajax listener="#{gestionArticulosBean.cargarCategoria()}" />
+                            </p:selectOneMenu>
 
-                            <p:outputLabel value="E-mail" style="font-weight:bold;"/>
-                            <p:outputLabel value="#{gestionarAcceso.persona.email}" />
+                            <p:outputLabel value="Ubicación: *"  id="lblubicacion" style="font-weight:bold;"/>
+                            <p:selectOneMenu id="txtubicacion" value="#{gestionArticulosBean.ubicacion.idUbicacion}"  
+                                             effect="fold" filter="true" filterMatchMode="startsWith"
+                                             style="width: 150px">  
+                                <f:selectItem itemLabel="...Seleccione..."  />  
+                                <f:selectItems value="#{gestionArticulosBean.comboUbicaciones}"  />                                                        
+                                <p:ajax listener="#{gestionArticulosBean.cargarUbicacion()}" />
+                            </p:selectOneMenu>
 
-                        </p:panelGrid> 
-                    </p:panelGrid>
 
 
+                        </p:panelGrid>
+                    </p:panelGrid> 
                 </p:tab>
 
                 <p:tab title="Parametros de Acceso">
-
                     <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
 
-                        <p:outputLabel value="Rol: " />
-                        <p:selectOneMenu id="cmbrol" value="#{gestionarAcceso.rol.idRol}"  
-                                         validatorMessage="Debe seleccionar Rol" effect="fold" filter="true" 
-                                         filterMatchMode="startsWith" 
-                                         style="width: 150px;#{validarAccesoBean.estilosError.get(1)}"
-                                         disabled="#{gestionarAcceso.listaControlReadonly.get(0)}">  
-                            <f:selectItem itemLabel="...Seleccione..."  />  
-                            <f:selectItems value="#{gestionarAcceso.cargarComboRoles()}"  />
-                            <p:ajax listener="#{gestionarAcceso.cargarRol()}" />
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Login: "  />
-                        <p:inputText value="#{gestionarAcceso.usuario.nomusuario}" 
-                                     validatorMessage="El tamaño del login no debe ser mayor a 44 caracteres."
-                                     id="txtlogin"
-                                     style="#{validarAccesoBean.estilosError.get(2)}"
-                                     disabled="#{gestionarAcceso.listaControlReadonly.get(0)}">
-                            <f:validateLength maximum="45" />
-                        </p:inputText>
-
-                        <p:outputLabel value="Password: " />
-                        <p:password id="passusur" feedback="true" promptLabel="Ingrese Su Contraseña" 
-                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
-                                    strongLabel="Seguridad: Alta" 
-                                    label="Contraseña" value="#{gestionarAcceso.usuario.clave}" 
-                                    style="#{validarAccesoBean.estilosError.get(3)}"
-                                    disabled="#{gestionarAcceso.listaControlReadonly.get(0)}"/>                                    
-
-                        <p:outputLabel value="Password(Repitalo Por favor):" />
-                        <p:password id="passusurvalidacion" feedback="true" promptLabel="Ingrese Su Contraseña" 
-                                    weakLabel="Seguridad: Buena" goodLabel="Seguridad: Media" 
-                                    strongLabel="Seguridad: Alta" 
-                                    label="Contraseña" value="#{gestionarAcceso.verificarPass}" 
-                                    style="#{validarAccesoBean.estilosError.get(3)}"
-                                    disabled="#{gestionarAcceso.listaControlReadonly.get(0)}"/> 
-
-                    </p:panelGrid> 
-                    <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                        <p:outputLabel value="Estado Usuario (Activo/Inactivo)" />
-                        <p:selectBooleanCheckbox value="#{gestionarAcceso.usuario.activo}" 
-                                                 disabled="#{gestionarAcceso.listaControlReadonly.get(0)}"/>  
-
-
-                        <p:outputLabel value="Tema Usuario:" />
-                        <p:themeSwitcher id="defaultSwitcher" value="#{gestionarAcceso.usuario.thema}"
-                                         style="width:165px"
-                                         disabled="#{gestionarAcceso.listaControlReadonly.get(0)}">  
-                            <f:selectItem itemLabel="Seleccion Tema" itemValue="" />  
-                            <f:selectItems value="#{themaSwitcherBean.themes}" />  
-                        </p:themeSwitcher>
 
                     </p:panelGrid>
 
                 </p:tab>
-
-
 
             </p:accordionPanel>
 
             <p:spacer width="1%" height="2%" />  
-            
+
             <p:panelGrid columns="5" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
                          id="grupobotonesacceso" >
                 <p:commandButton value="Nuevo" title="Nuevo" actionListener="#{gestionarAcceso.nuevo()}" icon="ui-icon-document-b"                                 

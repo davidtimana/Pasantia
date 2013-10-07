@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 6/10/2013 01:37:53 PM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 6/10/2013 04:27:26 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.pasantia.entidades.Producto" table="Producto" catalog="CasinoPasantia">
         <id name="idProducto" type="java.lang.Integer">
@@ -23,7 +23,7 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="45" not-null="true" />
         </property>
-        <property name="cantidadActual" type="int">
+        <property name="cantidadActual" type="java.lang.Integer">
             <column name="cantidad_actual" not-null="true" />
         </property>
         <property name="precioVenta1" type="long">
@@ -35,7 +35,7 @@
         <property name="codigoBarras" type="string">
             <column name="codigo_barras" length="45" not-null="true" unique="true" />
         </property>
-        <property name="cantidadMinima" type="int">
+        <property name="cantidadMinima" type="java.lang.Integer">
             <column name="cantidad_minima" not-null="true" />
         </property>
         <property name="imagen" type="string">

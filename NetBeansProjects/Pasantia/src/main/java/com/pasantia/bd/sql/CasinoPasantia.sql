@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
+-- version 3.5.8.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-10-2013 a las 18:45:55
--- Versión del servidor: 5.5.32
--- Versión de PHP: 5.3.10-1ubuntu3.8
+-- Tiempo de generación: 06-10-2013 a las 21:33:34
+-- Versión del servidor: 5.5.32-0ubuntu0.13.04.1
+-- Versión de PHP: 5.4.9-4ubuntu2.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `Batallon` (
   KEY `fk_divisiones_idx` (`secdivision`),
   KEY `fk_coronel_idx` (`seccoronel`),
   KEY `fk_ciudad_idx` (`secciudad`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Volcado de datos para la tabla `Batallon`
@@ -9274,7 +9274,15 @@ CREATE TABLE IF NOT EXISTS `Casino` (
   PRIMARY KEY (`idCasino`),
   KEY `fk_usuario_idx` (`fk_id_persona`),
   KEY `fk_batallon_idx` (`secbatallon`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin5 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin5 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `Casino`
+--
+
+INSERT INTO `Casino` (`idCasino`, `nombre`, `nit`, `fk_id_persona`, `telefono 1`, `telefono 2`, `secbatallon`) VALUES
+(2, 'Casino Oficiales Popayán', '1061734652-5', 1, '318-209-7268', '(28)-315241', 1),
+(3, 'Casino Suboficiales cali', '1061734652-6', 20, '283-052-4012', '(11)-346431', 12);
 
 -- --------------------------------------------------------
 
@@ -13056,7 +13064,9 @@ CREATE TABLE IF NOT EXISTS `Precio_Compra` (
   `fecha` datetime NOT NULL,
   `precio` decimal(10,0) NOT NULL,
   `activo` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`idPrecio_Compra`)
+  `SECPRODUCTO` int(11) NOT NULL,
+  PRIMARY KEY (`idPrecio_Compra`),
+  KEY `fk_Precio_Compra_1` (`SECPRODUCTO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin5 COMMENT='Esta tabla se encarga de guardar el historial de precios de ' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -13067,21 +13077,20 @@ CREATE TABLE IF NOT EXISTS `Precio_Compra` (
 
 CREATE TABLE IF NOT EXISTS `Producto` (
   `idProducto` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(45) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
   `cantidad_actual` int(11) NOT NULL,
   `precio_venta1` decimal(10,0) NOT NULL,
   `precio_venta2` decimal(10,0) DEFAULT NULL,
   `codigo_barras` varchar(45) NOT NULL,
   `cantidad_minima` int(11) NOT NULL,
   `fk_id_categoria` int(11) NOT NULL,
-  `fk_id_precio_compra` int(11) NOT NULL,
   `fk_id_ubicacion` int(11) NOT NULL,
   `fk_id_casino` int(11) NOT NULL,
   `imagen` varchar(255) DEFAULT NULL,
   `secunidad` int(11) NOT NULL,
   PRIMARY KEY (`idProducto`),
+  UNIQUE KEY `codigo_barras_UNIQUE` (`codigo_barras`),
   KEY `fk_categoria` (`fk_id_categoria`),
-  KEY `fk_precio_compra` (`fk_id_precio_compra`),
   KEY `fk_ubicacion` (`fk_id_ubicacion`),
   KEY `fk_casino` (`fk_id_casino`),
   KEY `fk_Producto_1_idx` (`secunidad`)
@@ -13143,7 +13152,7 @@ CREATE TABLE IF NOT EXISTS `tblcaja` (
   `SECCAJA` int(11) NOT NULL AUTO_INCREMENT,
   `SECEGRESO` int(11) NOT NULL,
   `SECINGRESO` int(11) NOT NULL,
-  `TOTAL` varchar(45) NOT NULL,
+  `TOTAL` decimal(10,0) NOT NULL,
   PRIMARY KEY (`SECCAJA`),
   KEY `FK_EGRESO_idx` (`SECEGRESO`),
   KEY `FK_INGRESO_idx` (`SECINGRESO`)
@@ -13328,9 +13337,9 @@ CREATE TABLE IF NOT EXISTS `tblinventario` (
   `SECINVENTARIO` int(11) NOT NULL AUTO_INCREMENT,
   `SECDETALLEVENTA` int(11) NOT NULL,
   `SECDETALLECOMPRA` int(11) NOT NULL,
-  `TOTAL_CANTIDAD` varchar(45) NOT NULL,
-  `TOTAL_COMPRA` varchar(45) NOT NULL,
-  `TOTAL_COMPRAS` varchar(45) NOT NULL,
+  `TOTAL_CANTIDAD` decimal(10,0) NOT NULL,
+  `TOTAL_COMPRA` decimal(10,0) NOT NULL,
+  `TOTAL_COMPRAS` decimal(10,0) NOT NULL,
   PRIMARY KEY (`SECINVENTARIO`),
   KEY `FK_DETALLEVENTA_idx` (`SECDETALLEVENTA`),
   KEY `FK_DETALLECOMPRA_idx` (`SECDETALLECOMPRA`)
@@ -13439,7 +13448,7 @@ CREATE TABLE IF NOT EXISTS `TBLVENTA` (
   `SECCASINO` int(11) NOT NULL,
   `OBSERVACION` varchar(45) DEFAULT NULL,
   `SECVENDEDOR` int(11) NOT NULL,
-  `TOTAL` decimal(2,0) DEFAULT NULL,
+  `TOTAL` decimal(10,0) DEFAULT NULL,
   `TOTAL_CANTIDAD` decimal(2,0) DEFAULT NULL,
   `SECFORMAPAGO` int(11) NOT NULL,
   PRIMARY KEY (`SECVENTA`),
@@ -13647,12 +13656,17 @@ ALTER TABLE `Persona`
   ADD CONSTRAINT `fk_tipo_persona` FOREIGN KEY (`SECTIPO_PERSONA`) REFERENCES `Tipo_Persona` (`idTipo_Persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `Precio_Compra`
+--
+ALTER TABLE `Precio_Compra`
+  ADD CONSTRAINT `fk_Precio_Compra_1` FOREIGN KEY (`SECPRODUCTO`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `Producto`
 --
 ALTER TABLE `Producto`
   ADD CONSTRAINT `fk_casino` FOREIGN KEY (`fk_id_casino`) REFERENCES `Casino` (`idCasino`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_categoria` FOREIGN KEY (`fk_id_categoria`) REFERENCES `Categoria` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_precio_compra` FOREIGN KEY (`fk_id_precio_compra`) REFERENCES `Precio_Compra` (`idPrecio_Compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Producto_1` FOREIGN KEY (`secunidad`) REFERENCES `tblunidad` (`SECUNIDAD`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_ubicacion` FOREIGN KEY (`fk_id_ubicacion`) REFERENCES `Ubicacion` (`idUbicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

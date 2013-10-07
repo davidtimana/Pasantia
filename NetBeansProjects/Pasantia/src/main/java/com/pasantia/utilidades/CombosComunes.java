@@ -7,6 +7,7 @@ package com.pasantia.utilidades;
 import com.pasantia.dao.CargoDAO;
 import com.pasantia.dao.CatalogoVentaDAO;
 import com.pasantia.dao.CiudadDAO;
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.DepartamentoDAO;
 import com.pasantia.dao.DivisionesDAO;
 import com.pasantia.dao.PaisDAO;
@@ -16,17 +17,22 @@ import com.pasantia.dao.TipoIdentificacionDAO;
 import com.pasantia.dao.TipoPersonaDAO;
 import com.pasantia.entidades.Cargo;
 import com.pasantia.entidades.CatalogoVenta;
+import com.pasantia.entidades.Categoria;
 import com.pasantia.entidades.Ciudad;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.Pais;
 import com.pasantia.entidades.Rol;
 import com.pasantia.entidades.Sexo;
+import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
+import com.pasantia.entidades.Ubicacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
@@ -39,6 +45,8 @@ import javax.inject.Inject;
 public class CombosComunes implements Serializable{
     
     private static final long serialVersionUID = 6985371832447944178L;
+    private static final Logger log = Logger.getLogger(CombosComunes.class.getName());
+    
 
     //Atributos Combo Tipo Identificacion
     private List<TipoIdentificacion> tipoIdentificaciones;
@@ -67,9 +75,19 @@ public class CombosComunes implements Serializable{
     //Atributos Combo Catalogo Venta
     private List<CatalogoVenta> catalogosVenta;
     private List<SelectItem> comboCatalogoVenta;
-    //Atributos Combo Ro
+    //Atributos Combo Rol
     private List<Rol> roles;
     private List<SelectItem> comboRoles;
+    //Atributos Combo Unidades
+    private List<Tblunidad> unidades;
+    private List<SelectItem> comboUnidades;
+    //Atributos Combo Categoria
+    private List<Categoria> categorias;
+    private List<SelectItem> comboCategorias;
+    //Atributos Combo Ubicaciones
+    private List<Ubicacion> ubicaciones;
+    private List<SelectItem> comboUbicaciones;
+    
     //Inyecciones
     @Inject
     TipoIdentificacionDAO tipoIdentificacionDAO;
@@ -91,6 +109,12 @@ public class CombosComunes implements Serializable{
     CatalogoVentaDAO catalogoVentaDAO;
     @Inject
     RolDAO rolDAO;
+    @Inject
+    CrudDAO<Tblunidad> unidadDAO;
+    @Inject
+    CrudDAO<Ubicacion> ubicacionDAO;
+    @Inject
+    CrudDAO<Categoria> categoriaDAO;
     
 
     /**
@@ -272,6 +296,59 @@ public class CombosComunes implements Serializable{
         roles=new ArrayList<Rol>();
         roles=rolDAO.buscartodosRoles();
     }
+    
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con las
+     * unidades de medida para los productos de la aplicacion
+     * @return comboRoles
+     */
+     public List<SelectItem> cargarComboUnidades(){
+        cargarUnidades();
+        comboUnidades=new ArrayList<SelectItem>();
+        for (int i = 0; i < unidades.size(); i++) {            
+            comboUnidades.add(new SelectItem(unidades.get(i).getSecunidad(), unidades.get(i).getUnidades()));
+        }
+        return comboUnidades;
+    }
+    private void cargarUnidades(){
+        unidades=new ArrayList<Tblunidad>();
+        unidades=unidadDAO.buscarTodos(Tblunidad.class);
+    }
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con las
+     * ubicaciones de los productos de la aplicacion
+     * @return comboRoles
+     */
+     public List<SelectItem> cargarComboUbicaciones(){
+        cargarUbicaciones();
+        comboUbicaciones=new ArrayList<SelectItem>();
+        for (int i = 0; i < ubicaciones.size(); i++) {
+            comboUbicaciones.add(new SelectItem(ubicaciones.get(i).getIdUbicacion(), ubicaciones.get(i).getDescripcion()));
+        }
+        return comboUbicaciones;
+    }
+    private void cargarUbicaciones(){
+        ubicaciones=new ArrayList<Ubicacion>();
+        ubicaciones=ubicacionDAO.buscarTodos(Ubicacion.class);
+    }
+    
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con las
+     * categorias de los productos de la aplicacion
+     * @return comboRoles
+     */
+     public List<SelectItem> cargarComboCategorias(){
+        cargarCategorias();
+        comboCategorias=new ArrayList<SelectItem>();
+        for (int i = 0; i < categorias.size(); i++) {
+            comboCategorias.add(new SelectItem(categorias.get(i).getIdCategoria(), categorias.get(i).getDescripcion()));
+        }
+        return comboCategorias;
+    }
+    private void cargarCategorias(){
+        categorias=new ArrayList<Categoria>();
+        categorias=categoriaDAO.buscarTodos(Categoria.class);
+    }
 
     //Constructor por Defecto
     public CombosComunes() {
@@ -285,6 +362,9 @@ public class CombosComunes implements Serializable{
         cargos=new ArrayList<Cargo>();
         catalogosVenta = new ArrayList<CatalogoVenta>();
         roles=new ArrayList<Rol>();
+        unidades=new ArrayList<Tblunidad>();
+        ubicaciones=new ArrayList<Ubicacion>();
+        categorias=new ArrayList<Categoria>();
 
         comboSexo = new ArrayList<SelectItem>();
         comboTipoIdentificacion = new ArrayList<SelectItem>();
@@ -296,6 +376,9 @@ public class CombosComunes implements Serializable{
         comboCargos = new ArrayList<SelectItem>();
         comboCatalogoVenta = new ArrayList<SelectItem>();
         comboRoles = new ArrayList<SelectItem>();
+        comboUnidades =new ArrayList<SelectItem>();
+        comboCategorias=new ArrayList<SelectItem>();
+        comboUbicaciones=new ArrayList<SelectItem>();
 
     }
 
@@ -459,6 +542,56 @@ public class CombosComunes implements Serializable{
     public void setComboRoles(List<SelectItem> comboRoles) {
         this.comboRoles = comboRoles;
     }
+
+    public List<Tblunidad> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<Tblunidad> unidades) {
+        this.unidades = unidades;
+    }
+
+    public List<SelectItem> getComboUnidades() {
+        return comboUnidades;
+    }
+
+    public void setComboUnidades(List<SelectItem> comboUnidades) {
+        this.comboUnidades = comboUnidades;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public List<SelectItem> getComboCategorias() {
+        return comboCategorias;
+    }
+
+    public void setComboCategorias(List<SelectItem> comboCategorias) {
+        this.comboCategorias = comboCategorias;
+    }
+
+    public List<Ubicacion> getUbicaciones() {
+        return ubicaciones;
+    }
+
+    public void setUbicaciones(List<Ubicacion> ubicaciones) {
+        this.ubicaciones = ubicaciones;
+    }
+
+    public List<SelectItem> getComboUbicaciones() {
+        return comboUbicaciones;
+    }
+
+    public void setComboUbicaciones(List<SelectItem> comboUbicaciones) {
+        this.comboUbicaciones = comboUbicaciones;
+    }
+    
+    
     
     
     

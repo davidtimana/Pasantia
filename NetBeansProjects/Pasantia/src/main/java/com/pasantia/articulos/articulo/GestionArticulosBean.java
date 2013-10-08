@@ -9,10 +9,15 @@ import com.pasantia.entidades.Categoria;
 import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
+import com.pasantia.excepciones.CadenaVaciaException;
 import com.pasantia.utilidades.CombosComunes;
+import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -26,13 +31,16 @@ import javax.inject.Inject;
 public class GestionArticulosBean extends CombosComunes implements Serializable {
     
     private static final long serialVersionUID = 8930048590380965066L;
-    private static final Logger LOG = Logger.getLogger(GestionArticulosBean.class.getName());
+    private static final Logger log = Logger.getLogger(GestionArticulosBean.class.getName());
     
     
     private Producto producto;
     private Tblunidad unidad;
     private Categoria categoria;
     private Ubicacion ubicacion;
+    private List<Integer> listaControlBotones;
+    private Boolean estaEditando;
+    private Integer accordion;
     
     @Inject
     CrudDAO<Tblunidad> unidadDAO;
@@ -40,8 +48,82 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     CrudDAO<Categoria> categoriaDAO;
     @Inject
     CrudDAO<Ubicacion> ubicacionDAO;
+    @Inject
+    ValidarProductoBean validarProductoBean;
     
 
+    public void guardar(){
+        try {
+            validarProductoBean.validarProducto(producto, unidad, categoria, ubicacion, estaEditando);
+        } catch (CadenaVaciaException ex) {
+            log.info(ex.getMessage());
+            Utilidad.mensajeError("SICOVI", "Datos Basicos Articulo: " + ex.getMessage());
+            accordion=0;
+            Utilidad.actualizarElemento("accordioproduc");
+        }
+    }
+    
+    public void cancelar(){
+        accordion=0;
+        validarProductoBean.limpiarEstilos();
+        deshabilitarBotonesCancelar();
+        producto=new Producto();
+        unidad=new Tblunidad();
+        categoria=new Categoria();
+        ubicacion=new Ubicacion();
+        Utilidad.actualizarElemento("frmproductos");
+    }
+    
+    public void nuevo(){
+        estaEditando=false;
+        accordion=0;
+        producto=new Producto();
+        unidad=new Tblunidad();
+        categoria=new Categoria();
+        ubicacion=new Ubicacion();
+        validarProductoBean.limpiarEstilos();
+        deshabilitarBotonesEditaroNuevo();
+        Utilidad.actualizarElemento("frmproductos");
+    }
+    
+    public void editar(){
+        estaEditando=true;
+        deshabilitarBotonesEditaroNuevo();
+        validarProductoBean.limpiarEstilos();
+        
+    }
+    
+    public void deshabilitarBotonesCancelar() {
+        listaControlBotones.removeAll(listaControlBotones);
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+        Utilidad.actualizarElemento("grupobotonesprod");
+    }
+    
+    public void deshabilitarBotonesEditaroNuevo() {
+        listaControlBotones.removeAll(listaControlBotones);
+        listaControlBotones.add(0);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        listaControlBotones.add(0);
+        Utilidad.actualizarElemento("grupobotonesprod");
+    }
+    
+     public void iniciarBotones() {
+        listaControlBotones.add(1);
+        listaControlBotones.add(1);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+        listaControlBotones.add(0);
+        listaControlBotones.add(1);
+    }
+    
     public void cargarUnidad(){
         if(unidad.getSecunidad()!=null){
             unidad=unidadDAO.buscar(Tblunidad.class, unidad.getSecunidad());
@@ -65,6 +147,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         cargarComboCategorias();
         cargarComboUnidades();
         cargarComboUbicaciones();
+        iniciarBotones();        
     }
     
     public GestionArticulosBean() {
@@ -72,6 +155,9 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
+        listaControlBotones=new ArrayList<Integer>();
+        estaEditando=false;
+        accordion=0;
     }
 
     public Producto getProducto() {
@@ -105,6 +191,36 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
+
+    public List<Integer> getListaControlBotones() {
+        return listaControlBotones;
+    }
+
+    public void setListaControlBotones(List<Integer> listaControlBotones) {
+        this.listaControlBotones = listaControlBotones;
+    }
+
+    public Boolean getEstaEditando() {
+        return estaEditando;
+    }
+
+    public void setEstaEditando(Boolean estaEditando) {
+        this.estaEditando = estaEditando;
+    }
+
+    public Integer getAccordion() {
+        return accordion;
+    }
+
+    public void setAccordion(Integer accordion) {
+        this.accordion = accordion;
+    }
+    
+    
+    
+    
+    
+    
     
     
 

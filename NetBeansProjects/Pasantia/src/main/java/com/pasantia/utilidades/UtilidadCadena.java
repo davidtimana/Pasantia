@@ -33,6 +33,15 @@ public final class UtilidadCadena {
         matcher = pattern.matcher(correo);
         return matcher.matches();
     }
+    
+        public static boolean esUnaExtensionImagen(String ruta) {
+        Pattern pattern = null;
+        Matcher matcher = null;
+        pattern = Pattern
+                .compile("/(\\.|\\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/");
+        matcher = pattern.matcher(ruta);
+        return matcher.matches();
+    }
 
     /**
      * Parte la cadena en las posiciones especificadas

@@ -10,7 +10,7 @@
     <application>
         <resource-bundle>
             <base-name>com.pasantia.propiedades/espanol</base-name>
-            <var>bundle</var>
+            <var>mensajes</var>
         </resource-bundle>
     </application>
     <managed-bean>

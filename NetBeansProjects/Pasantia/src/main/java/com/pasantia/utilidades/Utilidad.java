@@ -25,6 +25,8 @@ import org.primefaces.context.RequestContext;
  * @author David Orlando Timaná
  */
 public class Utilidad implements Serializable {
+    
+    
 
     private static final long serialVersionUID = 4251226551916517595L;
     private static Logger logger = Logger.getLogger(Utilidad.class.getName());
@@ -86,6 +88,7 @@ public class Utilidad implements Serializable {
 
         try {
 
+            logger.log(Level.INFO, "La ruta donde se creara el archivo es la siguiente-->{0}{1}", new Object[]{destination, fileName});
             OutputStream out = new FileOutputStream(new File(destination + fileName));
 
             int read = 0;

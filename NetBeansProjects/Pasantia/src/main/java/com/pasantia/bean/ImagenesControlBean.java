@@ -29,11 +29,14 @@ public class ImagenesControlBean implements Serializable {
     
     @Inject
     ImagenDAO imagenDAO;
+    @Inject
+    ParametrosBean parametrosBean;
     
     @PostConstruct
     public void cargarImagenes(){        
         imagenes=new ArrayList<Imagen>();
         imagenes=imagenDAO.buscarImagenesxPrincipal();
+        parametrosBean.asignarRuta();
     }
     
     public ImagenesControlBean() {

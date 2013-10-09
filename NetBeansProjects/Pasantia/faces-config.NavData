@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only">
-        <Node id="paginas/articulos/Gestion_Articulos.xhtml" x="49" y="90" zoom="true"/>
         <Node id="paginas/menu/menuadmin.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="paginas/articulos/Gestion_Articulos.xhtml" x="49" y="90" zoom="true"/>
         <Node id="paginas/configpuntoventa/GestionarDivisiones.xhtml" x="50" y="290" zoom="true"/>
         <Node id="paginas/menu/menucliente.xhtml" x="400" y="750" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Ubicaciones.xhtml" x="61" y="34" zoom="true"/>
-        <Node id="*" x="866" y="215" zoom="true"/>
         <Node id="paginas/articulos/Listar_Variaciones.xhtml" x="24" y="236" zoom="true"/>
+        <Node id="*" x="866" y="215" zoom="true"/>
         <Node id="paginas/articulos/Listar_Categorias.xhtml" x="1410" y="166" zoom="true"/>
         <Node id="paginas/articulos/Listar_Articulos.xhtml" x="100" y="337" zoom="true"/>
         <Node id="paginas/accesoyseguridad/GestionRoles.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="paginas/configpuntoventa/GestionarBatallones.xhtml" x="1309" y="13" zoom="true"/>
         <Node id="paginas/menu/menucomandante.xhtml" x="1234" y="425" zoom="true"/>
+        <Node id="paginas/configpuntoventa/GestionarBatallones.xhtml" x="1309" y="13" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Categorias.xhtml" x="55" y="110" zoom="true"/>
         <Node id="paginas/usuariossistema/GestionarUsuarios.xhtml" x="70" y="376" zoom="true"/>
         <Node id="index.xhtml" x="1538" y="747" zoom="true"/>
@@ -44,13 +44,12 @@
         <Node id="paginas/articulos/AgregarCategoria.xhtml" x="463" y="69" zoom="true"/>
         <Node id="paginas/configpuntoventa/GestionarDivisiones.xhtml" x="50" y="290" zoom="true"/>
         <Node id="*" x="866" y="215" zoom="true"/>
-        <Node id="paginas/articulos/prueba.xhtml" x="1435" y="1081" zoom="true"/>
         <Node id="paginas/configpuntoventa/frmeliminardivision.xhtml" x="7" y="1148" zoom="true"/>
         <Node id="plantillas/plantillaprincipal.xhtml" x="508" y="1148" zoom="true"/>
         <Node id="paginas/articulos/Listar_Categorias.xhtml" x="1410" y="166" zoom="true"/>
         <Node id="paginas/articulos/Listar_Articulos.xhtml" x="100" y="337" zoom="true"/>
-        <Node id="paginas/accesoyseguridad/EditarRol.xhtml" x="907" y="43" zoom="true"/>
         <Node id="plantillas/plantillacomandante.xhtml" x="64" y="867" zoom="true"/>
+        <Node id="paginas/accesoyseguridad/EditarRol.xhtml" x="907" y="43" zoom="true"/>
         <Node id="paginas/usuariossistema/SubirFotoUsuario.xhtml" x="-19" y="639" zoom="true"/>
         <Node id="paginas/usuariossistema/GestionarUsuarios.xhtml" x="70" y="376" zoom="true"/>
         <Node id="paginas/usuariossistema/FrmconfigurarUsuario.xhtml" x="400" y="600" zoom="true"/>
@@ -65,23 +64,23 @@
         <Node id="paginas/test/responsablet.xhtml" x="1071" y="1083" zoom="true"/>
         <Node id="paginas/articulos/EditarCategoria.xhtml" x="150" y="150" zoom="true"/>
         <Node id="paginas/configpuntoventa/UbicacionMapa.xhtml" x="442" y="1117" zoom="true"/>
+        <Node id="plantillas/plantillacliente.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="paginas/accesoyseguridad/Gestionar_Cargo.xhtml" x="1373" y="301" zoom="true"/>
         <Node id="paginas/articulos/EliminarUbicaciones.xhtml" x="3" y="1114" zoom="true"/>
         <Node id="paginas/configpuntoventa/eliminarUbicaciones.xhtml" x="945" y="1180" zoom="true"/>
-        <Node id="paginas/accesoyseguridad/Gestionar_Cargo.xhtml" x="1373" y="301" zoom="true"/>
-        <Node id="plantillas/plantillacliente.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="paginas/usuariossistema/ComfirmarGuardarSinFoto.xhtml" x="70" y="537" zoom="true"/>
         <Node id="paginas/articulos/BuscarCategoria.xhtml" x="150" y="300" zoom="true"/>
         <Node id="paginas/accesoyseguridad/Listar_Roles.xhtml" x="49" y="181" zoom="true"/>
         <Node id="paginas/menu/menuadmin.xhtml" x="557" y="856" zoom="true"/>
         <Node id="paginas/error/404.xhtml" x="17" y="978" zoom="true"/>
         <Node id="paginas/accesoyseguridad/EliminarRol.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="paginas/articulos/EliminarCategoria.xhtml" x="650" y="300" zoom="true"/>
         <Node id="paginas/accesoyseguridad/BuscarAccesos.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="paginas/articulos/EliminarCategoria.xhtml" x="650" y="300" zoom="true"/>
         <Node id="paginas/articulos/Listar_Variaciones.xhtml" x="24" y="236" zoom="true"/>
         <Node id="paginas/usuariossistema/FrmDatosBasicosUsuario.xhtml" x="5" y="1179" zoom="true"/>
         <Node id="index.xhtml" x="1246" y="974" zoom="false"/>
-        <Node id="plantillas/plantillaadministrador.xhtml" x="900" y="600" zoom="true"/>
         <Node id="paginas/menu/menuvendedor.xhtml" x="1001" y="670" zoom="true"/>
+        <Node id="plantillas/plantillaadministrador.xhtml" x="900" y="600" zoom="true"/>
         <Node id="paginas/menu/menuInicial.xhtml" x="1420" y="617" zoom="true"/>
         <Node id="paginas/articulos/buscarUbicaciones.xhtml" x="529" y="1178" zoom="true"/>
         <Node id="paginas/usuariossistema/BuscarUsuarios.xhtml" x="650" y="600" zoom="true"/>
@@ -90,18 +89,18 @@
         <Node id="paginas/articulos/Listar_Ubicaciones.xhtml" x="1419" y="52" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations">
-        <Node id="paginas/menu/menuadmin.xhtml" x="650" y="750" zoom="true"/>
         <Node id="paginas/articulos/Gestion_Articulos.xhtml" x="49" y="90" zoom="true"/>
+        <Node id="paginas/menu/menuadmin.xhtml" x="650" y="750" zoom="true"/>
         <Node id="paginas/configpuntoventa/GestionarDivisiones.xhtml" x="50" y="290" zoom="true"/>
         <Node id="paginas/menu/menucliente.xhtml" x="400" y="750" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Ubicaciones.xhtml" x="61" y="34" zoom="true"/>
-        <Node id="paginas/articulos/Listar_Variaciones.xhtml" x="24" y="236" zoom="true"/>
         <Node id="*" x="866" y="215" zoom="true"/>
+        <Node id="paginas/articulos/Listar_Variaciones.xhtml" x="24" y="236" zoom="true"/>
         <Node id="paginas/articulos/Listar_Categorias.xhtml" x="1410" y="166" zoom="true"/>
         <Node id="paginas/articulos/Listar_Articulos.xhtml" x="100" y="337" zoom="true"/>
         <Node id="paginas/accesoyseguridad/GestionRoles.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="paginas/menu/menucomandante.xhtml" x="1234" y="425" zoom="true"/>
         <Node id="paginas/configpuntoventa/GestionarBatallones.xhtml" x="1309" y="13" zoom="true"/>
+        <Node id="paginas/menu/menucomandante.xhtml" x="1234" y="425" zoom="true"/>
         <Node id="paginas/articulos/Gestionar_Categorias.xhtml" x="55" y="110" zoom="true"/>
         <Node id="paginas/usuariossistema/GestionarUsuarios.xhtml" x="70" y="376" zoom="true"/>
         <Node id="index.xhtml" x="1538" y="747" zoom="true"/>

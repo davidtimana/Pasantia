@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+
+        <p:dialog header="Subir Foto usuario" widgetVar="dlgsubirFoto" resizable="false" 
+                  id="dlgsubirFotoProducto" showEffect="explode" hideEffect="explode"  modal="true"  width="40%" 
+                  minimizable="true" visible="#{subirFotoProductoBean.abrir}" closable="false" >             
+            <h:panelGrid columns="1" cellpadding="1" style="width: 100%">
+
+                <p:fileUpload fileUploadListener="#{subirFotoProductoBean.subirFoto}" mode="advanced"  
+                              auto="true" sizeLimit="51200"  allowTypes="/(\.|\/)(gif|jpg|jpeg|gif|png|PNG|GIF|JPG|JPEG)$/" 
+                              label="Seleccionar Foto" invalidSizeMessage="El tamaño maximo de la imagen es 10 Megabytes."
+                              invalidFileMessage="Solo se permite subir imagenes con extension gif, jpeg, jpeg y png."
+                              dragDropSupport="true" uploadLabel="Subir" cancelLabel="Cancelar" multiple="false" />  
+
+
+            </h:panelGrid>   
+            <p:commandButton                                                   
+                actionListener="#{subirFotoProductoBean.cancelarSubir()}"  value="Cancelar" 
+                title="Cancelar" image="ui-icon-cancel" />       
+            
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

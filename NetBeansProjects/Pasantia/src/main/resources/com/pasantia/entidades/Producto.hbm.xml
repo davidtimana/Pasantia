@@ -26,11 +26,11 @@
         <property name="cantidadActual" type="java.lang.Integer">
             <column name="cantidad_actual" not-null="true" />
         </property>
-        <property name="precioVenta1" type="long">
-            <column name="precio_venta1" precision="10" scale="0" not-null="true" />
+        <property name="precioVenta1" type="java.math.BigDecimal">
+            <column name="precio_venta1" precision="19" scale="4" not-null="true" />
         </property>
-        <property name="precioVenta2" type="java.lang.Long">
-            <column name="precio_venta2" precision="10" scale="0" />
+        <property name="precioVenta2" type="java.math.BigDecimal">
+            <column name="precio_venta2" precision="19" scale="4" />
         </property>
         <property name="codigoBarras" type="string">
             <column name="codigo_barras" length="45" not-null="true" unique="true" />

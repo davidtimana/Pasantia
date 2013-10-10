@@ -43,6 +43,8 @@ public class SubirFotoProductoBean implements Serializable {
     
     @Inject
     ParametrosBean parametrosBean;
+    @Inject
+    GestionArticulosBean articulosBean;
 
     public void abrirSubir() {
         abrir = true;
@@ -90,10 +92,9 @@ public class SubirFotoProductoBean implements Serializable {
                 
                 log.info("**************Fin seleccion foto");
                 abrir = false;
-
                 Utilidad.actualizarElemento("dlgsubirFotoProducto");
-                Thread.sleep(4000);
-                Utilidad.actualizarElemento("imgfotousuario");
+                articulosBean.cargarFoto(foto);
+                
             } catch (FotoNoCopiadaException e) {
 
                 log.info("*************Error al copiar el archivo");

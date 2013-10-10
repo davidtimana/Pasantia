@@ -104,12 +104,70 @@
                     </p:panelGrid> 
                 </p:tab>
 
-                <p:tab title="Parametros de Acceso">
-                    <p:panelGrid columns="8" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                <p:tab title="Precios de compra y venta">
+
+                    <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                        <p:outputLabel value="Precio de venta principal: *" style="font-weight:bold;#{validarProductoBean.estilosError.get(8)}" 
+                                       id="lblprec1"
+                                       />
+                        <p:inputText maxlength="15" style="width: 150px;#{validarProductoBean.estilosError.get(8)}" 
+                                     value="#{gestionArticulosBean.producto.precioVenta1}"
+                                     id="txtprec1" onkeypress="return permitirSoloNumeros(event);"/>
+
+                        <p:outputLabel value="Precio de venta secundario *" style="font-weight:bold;#{validarProductoBean.estilosError.get(9)}"
+                                       id="lblprec2"/>
+                        <p:inputText maxlength="15" style="width: 150px;#{validarProductoBean.estilosError.get(9)}"
+                                     value="#{gestionArticulosBean.producto.precioVenta2}"
+                                     id="txtprec2" onkeypress="return permitirSoloNumeros(event);"/>
+
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:outputLabel value="Precio de Compra: *" style="font-weight:bold;#{validarProductoBean.estilosError.get(10)}" 
+                                       id="lblpreccompra"
+                                       />
+                        <p:inputText maxlength="15" style="width: 150px;#{validarProductoBean.estilosError.get(10)}" 
+                                     value="#{controlPreciosBean.precioCompra.precio}"
+                                     id="txtpreccompra" onkeypress="return permitirSoloNumeros(event);"/>
+                        <p:commandButton value="Agregar Precio" title="Agregar Precio" icon="ui-icon ui-icon-arrowthick-1-n" 
+                                         id="btnpreccompra" actionListener="#{controlPreciosBean.agregar()}" 
+                                             />
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                        <p:dataTable id="tblprecios" var="precio" value="#{controlPreciosBean.modeloPrecioCompra}" sortMode="multiple"  emptyMessage="No hay Precios de Compra Agregados."
+                                     paginator="true" rows="5" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     selection="#{controlPreciosBean.precioSeleccionado}">                           
+
+                            <f:facet name="header">  
+                                Historial de precios de compra para el producto: #{gestionArticulosBean.producto.descripcion} 
+                            </f:facet>         
+
+                            <p:column selectionMode="single" style="width:2%" headerText="Activo"/>
+
+                            <p:column headerText="Precio" style="text-align: center" sortBy="#{precio.precio}" filterBy="#{precio.precio}" >  
+                                <h:outputText value="#{precio.precio}"  />  
+                            </p:column>
+
+                            <p:column headerText="Fecha" style="text-align: center" sortBy="#{precio.fecha}"  >  
+                                <h:outputText value="#{precio.fecha}"  />  
+                            </p:column>
+
+
+
+                            <f:facet name="footer">  
+                                <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >                                    
+                                    <p:outputLabel value="En total se han agregado #{controlPreciosBean.totalPrecios()} precios de compra.  " />                            
+                                </p:panelGrid>
+
+                            </f:facet>
+                        </p:dataTable>
 
 
                     </p:panelGrid>
-
                 </p:tab>
 
             </p:accordionPanel>

@@ -2,6 +2,7 @@ package com.pasantia.entidades;
 // Generated 6/10/2013 04:27:25 PM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,19 +29,19 @@ public class PrecioCompra  implements java.io.Serializable {
      private Integer idPrecioCompra;
      private Producto producto;
      private Date fecha;
-     private long precio;
+     private BigDecimal precio;
      private Boolean activo;
 
     public PrecioCompra() {
     }
 
 	
-    public PrecioCompra(Producto producto, Date fecha, long precio) {
+    public PrecioCompra(Producto producto, Date fecha, BigDecimal precio) {
         this.producto = producto;
         this.fecha = fecha;
         this.precio = precio;
     }
-    public PrecioCompra(Producto producto, Date fecha, long precio, Boolean activo) {
+    public PrecioCompra(Producto producto, Date fecha, BigDecimal precio, Boolean activo) {
        this.producto = producto;
        this.fecha = fecha;
        this.precio = precio;
@@ -76,12 +77,12 @@ public class PrecioCompra  implements java.io.Serializable {
         this.fecha = fecha;
     }
     
-    @Column(name="precio", nullable=false, precision=10, scale=0)
-    public long getPrecio() {
+    @Column(name="precio", nullable=false, precision=19, scale=4)
+    public BigDecimal getPrecio() {
         return this.precio;
     }
     
-    public void setPrecio(long precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
     

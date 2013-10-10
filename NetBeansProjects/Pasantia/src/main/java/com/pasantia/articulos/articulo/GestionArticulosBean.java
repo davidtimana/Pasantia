@@ -10,6 +10,7 @@ import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
 import com.pasantia.excepciones.CadenaVaciaException;
+import com.pasantia.excepciones.PreciosArticuloException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
@@ -52,6 +53,12 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     ValidarProductoBean validarProductoBean;
     
 
+    public void cargarFoto(String foto) throws InterruptedException {
+        producto.setImagen(foto);
+        Thread.sleep(4000);
+        Utilidad.actualizarElemento("imgfotousuario");
+    }
+    
     public void guardar(){
         try {
             validarProductoBean.validarProducto(producto, unidad, categoria, ubicacion, estaEditando);
@@ -60,6 +67,11 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
             Utilidad.mensajeError("SICOVI", "Datos Basicos Articulo: " + ex.getMessage());
             accordion=0;
             Utilidad.actualizarElemento("accordioproduc");
+        }catch(PreciosArticuloException ex){
+            log.info(ex.getMessage());
+            Utilidad.mensajeError("SICOVI", "Precios de compra y venta: " + ex.getMessage());
+            accordion=1;
+            Utilidad.actualizarElemento("accordioproduc");
         }
     }
     
@@ -67,7 +79,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         accordion=0;
         validarProductoBean.limpiarEstilos();
         deshabilitarBotonesCancelar();
-        producto=new Producto();
+        reiniciarProducto();
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
@@ -77,13 +89,21 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     public void nuevo(){
         estaEditando=false;
         accordion=0;
-        producto=new Producto();
+        reiniciarProducto();
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
         validarProductoBean.limpiarEstilos();
         deshabilitarBotonesEditaroNuevo();
         Utilidad.actualizarElemento("frmproductos");
+    }
+    
+    public void reiniciarProducto(){
+        producto.setCantidadActual(null);
+        producto.setCantidadMinima(null);
+        producto.setCodigoBarras("");  
+        producto.setDescripcion("");
+        producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
     }
     
     public void editar(){
@@ -147,7 +167,8 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         cargarComboCategorias();
         cargarComboUnidades();
         cargarComboUbicaciones();
-        iniciarBotones();        
+        iniciarBotones();
+        producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
     }
     
     public GestionArticulosBean() {

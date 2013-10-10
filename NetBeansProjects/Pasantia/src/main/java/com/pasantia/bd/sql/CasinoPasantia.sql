@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-10-2013 a las 21:33:34
--- Versión del servidor: 5.5.32-0ubuntu0.13.04.1
--- Versión de PHP: 5.4.9-4ubuntu2.3
+-- Tiempo de generación: 10-10-2013 a las 11:00:13
+-- Versión del servidor: 5.5.32
+-- Versión de PHP: 5.3.10-1ubuntu3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -13062,7 +13062,7 @@ INSERT INTO `Persona` (`idTBLPERSONA`, `PNOMBRE`, `SNOMBRE`, `PAPELLIDO`, `SAPEL
 CREATE TABLE IF NOT EXISTS `Precio_Compra` (
   `idPrecio_Compra` int(11) NOT NULL AUTO_INCREMENT COMMENT '		',
   `fecha` datetime NOT NULL,
-  `precio` decimal(10,0) NOT NULL,
+  `precio` decimal(19,4) NOT NULL,
   `activo` tinyint(1) DEFAULT NULL,
   `SECPRODUCTO` int(11) NOT NULL,
   PRIMARY KEY (`idPrecio_Compra`),
@@ -13079,8 +13079,8 @@ CREATE TABLE IF NOT EXISTS `Producto` (
   `idProducto` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(100) NOT NULL,
   `cantidad_actual` int(11) NOT NULL,
-  `precio_venta1` decimal(10,0) NOT NULL,
-  `precio_venta2` decimal(10,0) DEFAULT NULL,
+  `precio_venta1` decimal(19,4) NOT NULL,
+  `precio_venta2` decimal(19,4) DEFAULT NULL,
   `codigo_barras` varchar(45) NOT NULL,
   `cantidad_minima` int(11) NOT NULL,
   `fk_id_categoria` int(11) NOT NULL,

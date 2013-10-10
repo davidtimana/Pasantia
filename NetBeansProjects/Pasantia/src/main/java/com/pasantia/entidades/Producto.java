@@ -2,6 +2,7 @@ package com.pasantia.entidades;
 // Generated 6/10/2013 04:27:25 PM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -36,8 +37,8 @@ public class Producto  implements java.io.Serializable {
      private Tblunidad tblunidad;
      private String descripcion;
      private Integer cantidadActual;
-     private long precioVenta1;
-     private Long precioVenta2;
+     private BigDecimal precioVenta1;
+     private BigDecimal precioVenta2;
      private String codigoBarras;
      private Integer cantidadMinima;
      private String imagen;
@@ -50,7 +51,7 @@ public class Producto  implements java.io.Serializable {
     }
 
 	
-    public Producto(Casino casino, Categoria categoria, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, Integer cantidadActual, long precioVenta1, String codigoBarras, Integer cantidadMinima) {
+    public Producto(Casino casino, Categoria categoria, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, Integer cantidadActual, BigDecimal precioVenta1, String codigoBarras, Integer cantidadMinima) {
         this.casino = casino;
         this.categoria = categoria;
         this.ubicacion = ubicacion;
@@ -61,7 +62,7 @@ public class Producto  implements java.io.Serializable {
         this.codigoBarras = codigoBarras;
         this.cantidadMinima = cantidadMinima;
     }
-    public Producto(Casino casino, Categoria categoria, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, Integer cantidadActual, long precioVenta1, Long precioVenta2, String codigoBarras, Integer cantidadMinima, String imagen, Set tbldetalleVentas, Set tbldetallepedidos, Set tbldetallecompras, Set precioCompras) {
+    public Producto(Casino casino, Categoria categoria, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, Integer cantidadActual, BigDecimal precioVenta1, BigDecimal precioVenta2, String codigoBarras, Integer cantidadMinima, String imagen, Set tbldetalleVentas, Set tbldetallepedidos, Set tbldetallecompras, Set precioCompras) {
        this.casino = casino;
        this.categoria = categoria;
        this.ubicacion = ubicacion;
@@ -144,21 +145,21 @@ public class Producto  implements java.io.Serializable {
         this.cantidadActual = cantidadActual;
     }
     
-    @Column(name="precio_venta1", nullable=false, precision=10, scale=0)
-    public long getPrecioVenta1() {
+    @Column(name="precio_venta1", nullable=false, precision=19, scale=4)
+    public BigDecimal getPrecioVenta1() {
         return this.precioVenta1;
     }
     
-    public void setPrecioVenta1(long precioVenta1) {
+    public void setPrecioVenta1(BigDecimal precioVenta1) {
         this.precioVenta1 = precioVenta1;
     }
     
-    @Column(name="precio_venta2", precision=10, scale=0)
-    public Long getPrecioVenta2() {
+    @Column(name="precio_venta2", precision=19, scale=4)
+    public BigDecimal getPrecioVenta2() {
         return this.precioVenta2;
     }
     
-    public void setPrecioVenta2(Long precioVenta2) {
+    public void setPrecioVenta2(BigDecimal precioVenta2) {
         this.precioVenta2 = precioVenta2;
     }
     

@@ -14,8 +14,8 @@
         <property name="fecha" type="timestamp">
             <column name="fecha" length="19" not-null="true" />
         </property>
-        <property name="precio" type="long">
-            <column name="precio" precision="10" scale="0" not-null="true" />
+        <property name="precio" type="java.math.BigDecimal">
+            <column name="precio" precision="19" scale="4" not-null="true" />
         </property>
         <property name="activo" type="java.lang.Boolean">
             <column name="activo" />

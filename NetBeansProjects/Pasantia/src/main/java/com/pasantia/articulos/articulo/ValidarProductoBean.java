@@ -4,11 +4,13 @@
  */
 package com.pasantia.articulos.articulo;
 
+import com.pasantia.dao.CrudDAO;
 import com.pasantia.entidades.Categoria;
 import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
 import com.pasantia.excepciones.CadenaVaciaException;
+import com.pasantia.excepciones.PreciosArticuloException;
 import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
  *
@@ -31,17 +34,24 @@ public class ValidarProductoBean implements Serializable {
     
     private List<String> estilosError;
     
+    @Inject
+    CrudDAO<Producto> crudDAO;
+    
 
     public void validarProducto(Producto p, Tblunidad un, Categoria c, Ubicacion u,Boolean estaEditando) 
-            throws CadenaVaciaException{
+            throws CadenaVaciaException, PreciosArticuloException{
         limpiarEstilos();
         validarCadenasVacias(p.getDescripcion(), "lbldesprodu", "txtdesprodu", 1, "Descripción del producto requerida.");
         validarCadenasVacias(p.getCodigoBarras(), "lblcodbarras", "txtcodbarras", 2, "Codigo de barras del producto requerido.");
+        validarCodigoBarrasSinRepetir(p.getCodigoBarras(),estaEditando);
         validarObjeto(p.getCantidadMinima(), "lblcantmin", "txtcantmin", 3, "Cantidad Minima del producto requerida.");
         validarObjeto(p.getCantidadActual(), "lblcantact", "txtcantactu", 4, "Cantidad Actual del producto requerida.");
+        validarCantidades(p.getCantidadMinima(), p.getCantidadActual());
         validarObjeto(un.getSecunidad(), "lblunidades", "cmbunidades", 5, "Seleccion de la unidad de medida para este producto requerida.");
         validarObjeto(c.getIdCategoria(), "lblcategoria", "cmbcategoria", 6, "Seleccion de la categoria del producto requerida.");
         validarObjeto(u.getIdUbicacion(), "lblubicacion", "cmbubicacion", 7, "Seleccion de la ubicación de este producto requerida.");
+        validarObjetoPrecio(p.getPrecioVenta1(), "lblprec1", "txtprec1", 8, "Tarifa de venta principal para este producto requerido.");
+        //validarObjetoPrecio(p.getPrecioVenta1(), "lblprec1", "txtprec1", 10, "Tarifa de venta principal para este producto requerido.");
     }
     
     public void limpiarEstilos(){
@@ -53,7 +63,46 @@ public class ValidarProductoBean implements Serializable {
         estilosError.set(5,"");
         estilosError.set(6,"");
         estilosError.set(7,"");
+        estilosError.set(8,"");
+        estilosError.set(9,"");
+        estilosError.set(10,"");
         Utilidad.actualizarElemento("accordioproduc");
+    }
+    
+    public void validarCantidades(Integer cantidadMinima,Integer cantidadActual) throws CadenaVaciaException{
+        if(cantidadMinima>cantidadActual){
+            estilosError.set(3, Utilidad.estilosErrorInput());
+            estilosError.set(4, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento("lblcantmin");
+            Utilidad.actualizarElemento("txtcantmin");
+            Utilidad.actualizarElemento("lblcantact");
+            Utilidad.actualizarElemento("txtcantactu");
+            throw new CadenaVaciaException("La cantidad minima no puede ser mayor a la cantidad actual.");
+        }else{
+            estilosError.set(3, "");
+            estilosError.set(4, "");
+            Utilidad.actualizarElemento("lblcantmin");
+            Utilidad.actualizarElemento("txtcantmin");
+            Utilidad.actualizarElemento("lblcantact");
+            Utilidad.actualizarElemento("txtcantactu");
+        }
+    }
+    
+    public void validarCodigoBarrasSinRepetir(String codigoBarras,Boolean estaEditando) throws CadenaVaciaException{
+        Producto p=new Producto();
+        p=crudDAO.buscarxAlgunCampoString(Producto.class, "codigoBarras", codigoBarras);
+        if(p!=null && !estaEditando){
+            estilosError.set(2, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento("lblcodbarras");
+            Utilidad.actualizarElemento("txtcodbarras");
+            throw new CadenaVaciaException("El codigo de barras ingresado ya existe.");
+        } else {
+            estilosError.set(2, "");            
+            Utilidad.actualizarElemento("lblcodbarras");
+            Utilidad.actualizarElemento("txtcodbarras");
+        }
+        
+        
     }
     
     public void validarObjeto(Object objeto, String idLbl,String idtxt, Integer posEstilo, String mensaje) throws CadenaVaciaException {
@@ -62,6 +111,19 @@ public class ValidarProductoBean implements Serializable {
             Utilidad.actualizarElemento(idLbl);            
             Utilidad.actualizarElemento(idtxt);            
             throw new CadenaVaciaException(mensaje);
+        } else {
+            estilosError.set(posEstilo, "");            
+            Utilidad.actualizarElemento(idLbl);            
+            Utilidad.actualizarElemento(idtxt);            
+        }
+    }
+    
+      public void validarObjetoPrecio(Object objeto, String idLbl,String idtxt, Integer posEstilo, String mensaje) throws PreciosArticuloException  {
+        if (objeto==null) {
+            estilosError.set(posEstilo, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento(idLbl);            
+            Utilidad.actualizarElemento(idtxt);            
+            throw new PreciosArticuloException(mensaje);
         } else {
             estilosError.set(posEstilo, "");            
             Utilidad.actualizarElemento(idLbl);            
@@ -109,14 +171,17 @@ public class ValidarProductoBean implements Serializable {
     }
     
     public void cargarEstilosError(){
-        estilosError.add("");
-        estilosError.add("");
-        estilosError.add("");
-        estilosError.add("");
-        estilosError.add("");
-        estilosError.add("");
-        estilosError.add("");
-        estilosError.add("");
+        estilosError.add("");//0
+        estilosError.add("");//1
+        estilosError.add("");//2
+        estilosError.add("");//3
+        estilosError.add("");//4
+        estilosError.add("");//5
+        estilosError.add("");//6
+        estilosError.add("");//7
+        estilosError.add("");//8
+        estilosError.add("");//9
+        estilosError.add("");//10
     }
     
     @PostConstruct

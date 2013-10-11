@@ -31,9 +31,8 @@ public class PrecioCompra  implements java.io.Serializable {
      private Producto producto;
      private Date fecha;
      private BigDecimal precio;
-     private Boolean activo;
-     
-     private Integer porcentajeVenta;
+     private Boolean activo;     
+     private BigDecimal porcentajeVenta;
      private BigDecimal valorGanacia;
 
     public PrecioCompra() {
@@ -99,19 +98,18 @@ public class PrecioCompra  implements java.io.Serializable {
         this.activo = activo;
     }
 
-    @Transient
-    public Integer getPorcentajeVenta() {
-        
+    @Column(name="porcentaje_ganacia",precision=19, scale=4)
+    public BigDecimal getPorcentajeVenta() {        
         return porcentajeVenta;
     }
 
-    public void setPorcentajeVenta(Integer porcentajeVenta) {
+    public void setPorcentajeVenta(BigDecimal porcentajeVenta) {
         this.porcentajeVenta = porcentajeVenta;
     }
 
-    @Transient
+    @Column(name="valor_ganancia",precision=19, scale=4)
     public BigDecimal getValorGanacia() {        
-        return this.producto.getPrecioVenta1().subtract(this.precio);
+        return valorGanacia;
     }
 
     public void setValorGanacia(BigDecimal valorGanacia) {

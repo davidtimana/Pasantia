@@ -20,5 +20,11 @@
         <property name="activo" type="java.lang.Boolean">
             <column name="activo" />
         </property>
+        <property name="porcentajeVenta" type="java.math.BigDecimal">
+            <column name="porcentajeVenta" />
+        </property>
+        <property name="valorGanacia" type="java.math.BigDecimal">
+            <column name="valorGanacia" />
+        </property>
     </class>
 </hibernate-mapping>

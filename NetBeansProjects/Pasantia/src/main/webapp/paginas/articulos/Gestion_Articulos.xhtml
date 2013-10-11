@@ -105,6 +105,17 @@
                 </p:tab>
 
                 <p:tab title="Precios de compra y venta">
+                    
+                    <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        <p:outputLabel value="Precio de Compra: *" style="font-weight:bold;#{validarProductoBean.estilosError.get(10)}" 
+                                       id="lblpreccompra"
+                                       />
+                        <p:inputText maxlength="15" style="width: 150px;#{validarProductoBean.estilosError.get(10)}" 
+                                     value="#{controlPreciosBean.precioCompra.precio}"
+                                     id="txtpreccompra" onkeypress="return permitirSoloNumeros(event);"/>                        
+                    </p:panelGrid>
+                    
+                    <p:separator />
 
                     <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
 
@@ -122,42 +133,62 @@
                                      id="txtprec2" onkeypress="return permitirSoloNumeros(event);"/>
 
                     </p:panelGrid>
+                    
+                    
                     <p:separator />
-                    <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                        <p:outputLabel value="Precio de Compra: *" style="font-weight:bold;#{validarProductoBean.estilosError.get(10)}" 
-                                       id="lblpreccompra"
-                                       />
-                        <p:inputText maxlength="15" style="width: 150px;#{validarProductoBean.estilosError.get(10)}" 
-                                     value="#{controlPreciosBean.precioCompra.precio}"
-                                     id="txtpreccompra" onkeypress="return permitirSoloNumeros(event);"/>
-                        <p:commandButton value="Agregar Precio" title="Agregar Precio" icon="ui-icon ui-icon-arrowthick-1-n" 
+                    
+                    <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                        
+                        <p:commandButton value="Agregar Precio" title="Agregar Precio" icon="ui-icon ui-icon-plusthick" 
                                          id="btnpreccompra" actionListener="#{controlPreciosBean.agregar()}" 
                                          />
                     </p:panelGrid>
                     <p:separator />
                     <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
 
-                        <p:dataTable id="tblprecios" var="precio" value="#{controlPreciosBean.modeloPrecioCompra}" sortMode="multiple"  emptyMessage="No hay Precios de Compra Agregados."
+                        <p:dataTable id="tblprecios" var="precio" value="#{controlPreciosBean.precios}" sortMode="multiple"  emptyMessage="No hay Precios de Compra Agregados."
                                      paginator="true" rows="5" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                                      {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                     selection="#{controlPreciosBean.precioSeleccionado}">                           
+                                     selection="#{controlPreciosBean.precioSeleccionado}" editable="true" editMode="cell">                           
+
+                            <p:ajax event="cellEdit" listener="#{controlPreciosBean.editar}"  />  
+                            <p:ajax event="rowSelectRadio" listener="#{controlPreciosBean.prueba}"  />  
+                             
 
                             <f:facet name="header">  
                                 Historial de precios de compra para el producto: #{gestionArticulosBean.producto.descripcion} 
                             </f:facet>         
 
-                            <p:column selectionMode="single" style="width:2%" headerText="Activo"/>
+                            <p:column headerText="Activo" style="width:2%"   >  
+                                <h:outputText value="$ #{precio.activo}"  />  
+                            </p:column>                          
+                            
 
-                            <p:column headerText="Precio" style="text-align: center" sortBy="#{precio.precio}" filterBy="#{precio.precio}" >  
-                                <h:outputText value="#{precio.precio}"  />  
+                            <p:column headerText="Precio" style="text-align: center" sortBy="#{precio.precio}" filterBy="#{precio.precio}" >                                  
+                                <p:cellEditor>  
+                                    <f:facet name="output"><h:outputText value="$ #{precio.precio}"  /></f:facet>  
+                                    <f:facet name="input"><p:inputText value="#{precio.precio}" >
+                                            <f:validator validatorId="PrecioRepetidoValidator" />
+                                        </p:inputText></f:facet>  
+                                </p:cellEditor> 
                             </p:column>
                             
-                            <p:column headerText="Ganacia" style="text-align: center" sortBy="#{precio.valorGanacia}"  >  
-                                <h:outputText value="#{precio.valorGanacia}"  />  
+                            <p:column headerText="Ganancia" style="text-align: center" sortBy="#{precio.valorGanacia}" filterBy="#{precio.valorGanacia}"  >  
+                                <h:outputText value="$ #{precio.valorGanacia}"  />  
+                            </p:column>
+                            
+                            <p:column headerText="%" style="text-align: center" sortBy="#{precio.porcentajeVenta}" filterBy="#{precio.porcentajeVenta}" >  
+                                <h:outputText value="#{precio.porcentajeVenta}%"  />  
                             </p:column>
 
                             <p:column headerText="Fecha" style="text-align: center" sortBy="#{precio.fecha}"  >  
-                                <h:outputText value="#{precio.fecha}"  />  
+                                <h:outputText value="#{precio.fecha}"  >  
+                                    <f:convertDateTime pattern="EEEE dd-MMMM-yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            
+                            <p:column headerText="Acciones" style="text-align: center"   >  
+                                <p:commandButton icon="ui-icon-trash" title="Eliminar" actionListener="#{controlPreciosBean.eliminar(precio)}" />
                             </p:column>
 
 

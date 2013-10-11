@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
  *
@@ -28,16 +29,34 @@ public class ControlPreciosBean implements Serializable {
     private PrecioCompra precioSeleccionado;
     private PrecioCompra precioCompra;
     
+    @Inject
+    GestionArticulosBean articulosBean;
+    
     public Integer totalPrecios(){
         return precios.size();
     }
     
-    public void agregar(){
-        Date fechaActual = new Date();
-        precioCompra.setFecha(fechaActual);
-        precios.add(precioCompra);
-        modeloPrecioCompra = new ModeloPrecioCompra(precios);
-        Utilidad.actualizarElemento("tblprecios");
+    public void agregar() {
+        if (precioCompra.getPrecio() != null && precioCompra.getPrecio().intValue() > 0) {
+            if (articulosBean.getProducto().getPrecioVenta1() != null
+                    && articulosBean.getProducto().getPrecioVenta1().intValue() > 0
+                    && articulosBean.getProducto().getPrecioVenta1().intValue() > precioCompra.getPrecio().intValue()) {
+
+                Date fechaActual = new Date();
+                precioCompra.setFecha(fechaActual);
+                precios.add(precioCompra);
+                modeloPrecioCompra = new ModeloPrecioCompra(precios);
+                Utilidad.actualizarElemento("tblprecios");
+                precioCompra = new PrecioCompra();
+            } else {
+                Utilidad.mensajeError("SICOVI", "El precio de venta principal es requerido, t"
+                        + "iene que ser mayor que cero (0) y mayor que el precio de compra.");
+            }
+        } else {
+            Utilidad.mensajeError("SICOVI", "El precio de compra es requerido y tiene que ser mayor que cero (0).");
+        }
+
+
     }
 
     @PostConstruct

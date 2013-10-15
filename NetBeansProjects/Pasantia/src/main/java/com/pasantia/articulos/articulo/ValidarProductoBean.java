@@ -6,6 +6,7 @@ package com.pasantia.articulos.articulo;
 
 import com.pasantia.dao.CrudDAO;
 import com.pasantia.entidades.Categoria;
+import com.pasantia.entidades.PrecioCompra;
 import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
@@ -36,6 +37,8 @@ public class ValidarProductoBean implements Serializable {
     
     @Inject
     CrudDAO<Producto> crudDAO;
+    @Inject
+    ControlPreciosBean preciosBean;
     
 
     public void validarProducto(Producto p, Tblunidad un, Categoria c, Ubicacion u,Boolean estaEditando) 
@@ -51,7 +54,7 @@ public class ValidarProductoBean implements Serializable {
         validarObjeto(c.getIdCategoria(), "lblcategoria", "cmbcategoria", 6, "Seleccion de la categoria del producto requerida.");
         validarObjeto(u.getIdUbicacion(), "lblubicacion", "cmbubicacion", 7, "Seleccion de la ubicación de este producto requerida.");
         validarObjetoPrecio(p.getPrecioVenta1(), "lblprec1", "txtprec1", 8, "Tarifa de venta principal para este producto requerido.");
-        //validarObjetoPrecio(p.getPrecioVenta1(), "lblprec1", "txtprec1", 10, "Tarifa de venta principal para este producto requerido.");
+        validarPreciosCompra(preciosBean.getPrecios());
     }
     
     public void limpiarEstilos(){
@@ -67,6 +70,12 @@ public class ValidarProductoBean implements Serializable {
         estilosError.set(9,"");
         estilosError.set(10,"");
         Utilidad.actualizarElemento("accordioproduc");
+    }
+    
+    public void validarPreciosCompra(List<PrecioCompra> precios) throws PreciosArticuloException {
+        if(precios.isEmpty()){
+          throw new PreciosArticuloException("La gestion de los precios de compra es obligatoria.");
+        }
     }
     
     public void validarCantidades(Integer cantidadMinima,Integer cantidadActual) throws CadenaVaciaException{

@@ -42,6 +42,7 @@ public class ControlPreciosBean implements Serializable {
     private List<PrecioCompra> precios;    
     private PrecioCompra precioSeleccionado;
     private PrecioCompra precioCompra;
+    private Boolean desHabiAdd;
     
     @Inject
     GestionArticulosBean articulosBean;
@@ -101,6 +102,8 @@ public class ControlPreciosBean implements Serializable {
             log.log(Level.INFO, "el resultado de la comparacion es-->{0}", precioCompra1.getPrecio().compareTo(p.getPrecio()));
             if (precioCompra1.getPrecio().compareTo(p.getPrecio()) == 0) {
                 precios.remove(cont);
+                desHabiAdd=false;
+                    Utilidad.actualizarElemento("btnpreccompra");
                 log.info("Objeto eliminado correctamente");
                 Utilidad.actualizarElemento("tblprecios");
                 Utilidad.mensajeInfo("SICOVI", "Precio de compra eliminado correctamente.");
@@ -118,7 +121,8 @@ public class ControlPreciosBean implements Serializable {
                 if (articulosBean.getProducto().getPrecioVenta1() != null
                         && articulosBean.getProducto().getPrecioVenta1().intValue() > 0
                         && articulosBean.getProducto().getPrecioVenta1().intValue() > precioCompra.getPrecio().intValue()) {
-
+                    desHabiAdd=true;
+                    Utilidad.actualizarElemento("btnpreccompra");
                     Date fechaActual = new Date();                    
                     precioCompra.setFecha(fechaActual);
                     precioCompra.setValorGanacia(calcularGanancia(precioCompra.getPrecio(), articulosBean.getProducto().getPrecioVenta1()));
@@ -203,6 +207,8 @@ public class ControlPreciosBean implements Serializable {
         precios = new ArrayList<PrecioCompra>();        
         precioSeleccionado = new PrecioCompra();
         precioCompra = new PrecioCompra();
+        desHabiAdd=false;
+        
     }
     
     public List<PrecioCompra> getPrecios() {
@@ -229,4 +235,14 @@ public class ControlPreciosBean implements Serializable {
     public void setPrecioCompra(PrecioCompra precioCompra) {
         this.precioCompra = precioCompra;
     }
+
+    public Boolean getDesHabiAdd() {
+        return desHabiAdd;
+    }
+
+    public void setDesHabiAdd(Boolean desHabiAdd) {
+        this.desHabiAdd = desHabiAdd;
+    }
+    
+    
 }

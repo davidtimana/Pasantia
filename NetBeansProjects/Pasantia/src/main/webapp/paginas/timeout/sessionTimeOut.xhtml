@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="1000000" />
+        <p:dialog header="Caduco session actual" widgetVar="sessionTimeOutDialog"
+                  modal="true" closable="false" width="350" visible="false">     
+
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                <h:outputText value="Su sesión ha caducado por favor haga clic para recargar la aplicación" />
+                <p:commandLink id="confirmBackToLogin" value="Recargar" title="Recargar"
+                                 onclick="window.location = '#{facesContext.externalContext.requestContextPath}';"
+                                 
+                                 style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto"/>
+            </p:panelGrid>
+        </p:dialog>
+
+    </ui:composition>
+</html>

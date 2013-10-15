@@ -39,7 +39,8 @@ public class ValidarAccesoBean implements Serializable {
     @Inject
     CrudDAO<Usuario> crudDAOUsuario;
 
-    public void validarAcceso(Persona p, Integer rolSelect, String login, String pass1, String pass2) throws PersonaNoSeleccionadaException,
+    public void validarAcceso(Persona p, Integer rolSelect, String login, String pass1, String pass2,Boolean estaEditando) 
+            throws PersonaNoSeleccionadaException,
             ComboNoSeleccionadoException,
             CadenaVaciaException,
             LoginException,
@@ -48,7 +49,7 @@ public class ValidarAccesoBean implements Serializable {
         validarPersonaSeleccionada(p);
         validarComboRol(rolSelect);
         log.log(Level.INFO, "llegue a validar acceso llega con-->{0}", login);
-        validarLoginVacio(login);
+        validarLoginVacio(login,estaEditando);
         validarPass(pass1, pass2);
         validarPassDiferente(pass1, pass2);
     }
@@ -77,7 +78,7 @@ public class ValidarAccesoBean implements Serializable {
 
     }
 
-    public void validarLoginVacio(String login) throws CadenaVaciaException, LoginException {
+    public void validarLoginVacio(String login,Boolean estaEditando) throws CadenaVaciaException, LoginException {
         log.log(Level.INFO, "llegue a login vacio llega con-->{0}", login);
         if (Utilidad.cadenaVacia(login)) {
             estilosError.set(2, Utilidad.estilosErrorInput());
@@ -86,14 +87,14 @@ public class ValidarAccesoBean implements Serializable {
         } else {
             estilosError.set(2, "");
             Utilidad.actualizarElemento("txtlogin");
-            validarLoginRepetido(login);
+            validarLoginRepetido(login,estaEditando);
         }
     }
 
-    public void validarLoginRepetido(String login) throws LoginException {
+    public void validarLoginRepetido(String login,Boolean estaEditando) throws LoginException {
         Usuario u = new Usuario();
         u = crudDAOUsuario.buscarxAlgunCampoString(Usuario.class, "nomusuario", login);
-        if (u != null) {
+        if (u != null && !estaEditando) {
             estilosError.set(2, Utilidad.estilosErrorInput());
             Utilidad.actualizarElemento("txtlogin");
             throw new LoginException("El login ingresado ya existe.");

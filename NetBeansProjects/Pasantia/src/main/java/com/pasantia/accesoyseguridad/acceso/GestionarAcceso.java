@@ -151,7 +151,7 @@ public class GestionarAcceso extends CombosComunes implements Serializable {
         log.log(Level.INFO, "el thema seleccionado es el siguiente-->{0}", usuario.getThema());
         try {
             validaraccesoBean.validarAcceso(persona, rol.getIdRol(), usuario.getNomusuario(),
-                    usuario.getClave(), verificarPass);
+                    usuario.getClave(), verificarPass,estaEditando);
             accesoBean.guardar(usuario, rol, persona, estaEditando);
         } catch (PersonaNoSeleccionadaException ex) {
             log.info("Persona no seleccionada.");

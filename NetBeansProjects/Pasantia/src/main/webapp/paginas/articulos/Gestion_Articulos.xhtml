@@ -141,7 +141,7 @@
                         
                         <p:commandButton value="Agregar Precio" title="Agregar Precio" icon="ui-icon ui-icon-plusthick" 
                                          id="btnpreccompra" actionListener="#{controlPreciosBean.agregar()}" 
-                                         />
+                                         disabled="#{controlPreciosBean.desHabiAdd}" />
                     </p:panelGrid>
                     <p:separator />
                     <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
@@ -151,17 +151,12 @@
                                      {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                      selection="#{controlPreciosBean.precioSeleccionado}" editable="true" editMode="cell">                           
 
-                            <p:ajax event="cellEdit" listener="#{controlPreciosBean.editar}"  />  
-                            <p:ajax event="rowSelectRadio" listener="#{controlPreciosBean.prueba}"  />  
+                            <p:ajax event="cellEdit" listener="#{controlPreciosBean.editar}"  />                             
                              
 
                             <f:facet name="header">  
                                 Historial de precios de compra para el producto: #{gestionArticulosBean.producto.descripcion} 
-                            </f:facet>         
-
-                            <p:column headerText="Activo" style="width:2%"   >  
-                                <h:outputText value="$ #{precio.activo}"  />  
-                            </p:column>                          
+                            </f:facet>                                             
                             
 
                             <p:column headerText="Precio" style="text-align: center" sortBy="#{precio.precio}" filterBy="#{precio.precio}" >                                  

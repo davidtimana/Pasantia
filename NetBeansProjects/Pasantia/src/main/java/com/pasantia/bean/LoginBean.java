@@ -11,6 +11,7 @@ import com.pasantia.entidades.Usuario;
 import com.pasantia.excepciones.CadenaVaciaException;
 import com.pasantia.excepciones.IntentosSuperadosException;
 import com.pasantia.utilidades.Utilidad;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -20,7 +21,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,12 +49,12 @@ public class LoginBean implements Serializable {
     @Inject
     ImagenesControlBean imagenesControlBean;
 
-    public String iniciarSesion() {
+    public String iniciarSesion() throws IOException {
 
         String r="";
         try {
             validarLoginBean.validar(usuario, intentos);
-            r=buscarUsuario();
+            buscarUsuario();
 
         } catch (CadenaVaciaException ex) {
             Utilidad.mensajeError("SICOVI", ex.getMessage());
@@ -66,7 +70,7 @@ public class LoginBean implements Serializable {
         return r;
     }
 
-    public String buscarUsuario() {
+    public String buscarUsuario() throws IOException {
         Usuario u = new Usuario();
         String claveencriptada = "";
         String clavetemp = usuario.getClave();
@@ -90,7 +94,7 @@ public class LoginBean implements Serializable {
                     crudDAO.editar(u);
                     themaSwitcherBean.setThema(u.getThema());
                     usuario = u;
-                    r=redireccionar(u.getRol());
+                    redireccionar(u.getRol());
                 }
 
             } else {
@@ -115,12 +119,18 @@ public class LoginBean implements Serializable {
 
     }
 
-    public String redireccionar(Rol rol) {
+    public void redireccionar(Rol rol) throws IOException {
+        
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        FacesContext fCtx = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
         log.log(Level.INFO, "El rol del usuario ingresado es el siguiente-->{0}", rol.getDescripcion());
         String redireccion = "";
         switch (rol.getCodigo()) {
             case 1:
-                redireccion = navegacion.ir_a_menu_Principal();
+                //redireccion = navegacion.ir_a_menu_Principal();
+                FacesContext.getCurrentInstance().getExternalContext().
+                        redirect("faces/paginas/menu/menuInicial.xhtml;"+session.getId());
                 break;
             case 2:
                 redireccion = navegacion.ir_a_menu_Vendedor();
@@ -140,7 +150,7 @@ public class LoginBean implements Serializable {
                         + "permisos para entrar al sistema.");
                 break;
         }        
-        return redireccion;
+        //return redireccion;
     }
     
     public String cerrarSesion(){

@@ -64,12 +64,12 @@
         <h:form id="dlgcomfieliminar">        
             <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" />
         </h:form>
-        
-         <!--Dialog para buscar los batallones -->
+
+        <!--Dialog para buscar los batallones -->
         <h:form id="frmbuscarBatallones">        
             <ui:include src="../paginas/configpuntoventa/buscadorBatallones.xhtml" />
         </h:form>
-        
+
         <!-- Dialog para agregar ubicaciones -->
         <h:form id="frmnuevaubicacion">   
             <ui:include src="../paginas/articulos/AgregarUbicaciones.xhtml" />
@@ -179,38 +179,38 @@
         <h:form id="buscarusuariosaccesologin" >
             <ui:include src="../paginas/accesoyseguridad/BuscarAccesos.xhtml" />
         </h:form>
-        
+
         <!-- Formulario buscar comandantes-->
         <h:form id="buscarcomandantesbatallon" >
             <ui:include src="../paginas/configpuntoventa/buscarComandante.xhtml" />
         </h:form>
-        
+
         <!-- Formulario buscar comandantes para casino-->
         <h:form id="buscarcomandantescasino" >
             <ui:include src="../paginas/configpuntoventa/BuscarComadanteCasino.xhtml" />
         </h:form>
-        
-         <!-- Formulario buscar batallon para casino-->
+
+        <!-- Formulario buscar batallon para casino-->
         <h:form id="buscarbatalloncasino" >
             <ui:include src="../paginas/configpuntoventa/BuscarBatallonCasino.xhtml" />
         </h:form>
-         
-         <!-- Formulario buscar casino-->
+
+        <!-- Formulario buscar casino-->
         <h:form id="buscarcasino" >
             <ui:include src="../paginas/configpuntoventa/BuscarCasino.xhtml" />
         </h:form>
-         
-          <!-- Formulario eliminar casino-->
+
+        <!-- Formulario eliminar casino-->
         <h:form id="eliminarcasino" >
             <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoCasino.xhtml" />
         </h:form>
-          
-          <!-- Formulario subir fotos de producto -->
+
+        <!-- Formulario subir fotos de producto -->
         <h:form id="subirfotoProducto" enctype="multipart/form-data">
             <ui:include src="../paginas/articulos/SubirFotoProducto.xhtml" />
         </h:form>
-          
-            <!-- Formulario time out -->
+
+        <!-- Formulario time out -->
         <h:form id="timeout" >
             <ui:include src="../paginas/timeout/sessionTimeOut.xhtml" />
         </h:form>
@@ -229,7 +229,7 @@
         <p:layout fullPage="true" >
 
 
-            
+
 
 
             <p:layoutUnit id="top" position="north"   size="17%" >
@@ -240,32 +240,38 @@
                     <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
                     <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
                 </p:panelGrid>               
-                
+
                 <div style="position: fixed;bottom: 0;width: 100%">
-                <p:toolbar >  
-                    <p:toolbarGroup align="left" >                                                 
-                        <p:outputLabel value="Comandante: " />
-                        <p:outputLabel value="David Timana" />
-                        <p:separator />                                                    
-                        <p:outputLabel value="Casino Popayán " />
-                    </p:toolbarGroup>                   
+
+                    <p:toolbar >  
+                        <p:toolbarGroup align="left" >                                                 
+                            <p:outputLabel value="Comandante: " />
+                            <p:outputLabel value="David Timana" />
+                            <p:separator />                                                    
+                            <p:outputLabel value="Casino Popayán " />
+                        </p:toolbarGroup>                   
 
 
-                    <p:toolbarGroup align="right">  
-                        <p:outputLabel value="Bienvenido: " />                        
-                        <p:outputLabel value="#{loginBean.usuario.persona.pnombre} #{loginBean.usuario.persona.papellido}" />
-                        <p:separator />                            
-                        <p:commandButton type="button" value="Cerrar Sesion" actionListener="#{loginBean.cerrarSesion()}" icon="ui-icon-power" />                             
-                    </p:toolbarGroup>  
-                </p:toolbar> 
-</div>
+                        <p:toolbarGroup align="right">  
+                            <h:form>
+                            <p:outputLabel value="Bienvenido: " />                        
+                            <p:outputLabel value="#{loginBean.usuario.persona.pnombre} #{loginBean.usuario.persona.papellido}" />
+                            <p:separator />  
+                            
+                                <p:commandButton value="Cerrar Sesión" title="Cerrar Sesión" actionListener="#{loginBean.cerrarSesion()}" 
+                                                 icon="ui-icon-power" oncomplete="resetearIndex()" />                             
+                            </h:form>
+                        </p:toolbarGroup>  
+                    </p:toolbar> 
+
+                </div>
 
             </p:layoutUnit>
-            
-            
-                
 
-           
+
+
+
+
 
 
             <div style="bottom: 0;position: absolute;width: 80%;text-align: center;margin-left: 8%;margin-right: 10%">
@@ -275,12 +281,12 @@
 
 
                 </ui:insert>
-           
+
 
             </div>                
 
 
-          
+
 
 
             <p:layoutUnit id="right" position="east" size="17%" header="Menu" resizable="true" collapsible="true" >

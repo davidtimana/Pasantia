@@ -1,20 +1,22 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
+
     <h:head>
-       <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
         <!--<script src="http://maps.google.com/maps/api/js?sensor=true|false" type="text/javascript"></script>-->
+        <h:outputStylesheet name="css/estilos.css"/>
         <f:facet name="first">
             <h:outputScript library="js" name="../../resources/js/jquery.js"/>
             <h:outputScript library="js" name="../../resources/js/SicoviJquery.js"/>
         </f:facet>
 
-   
+
 
 
         <title><ui:insert name="titulo"></ui:insert></title>
@@ -39,10 +41,15 @@
             }            
 
         </style>
+
     </h:head>
+
 
     <h:body>
 
+
+
+        <!-- Dialog para la espera de las peticiones ajax -->
         <p:ajaxStatus onstart="statusDialog.show();" oncomplete="statusDialog.hide();" onerror="errorDialog.show()"  />          
         <p:dialog modal="false" widgetVar="statusDialog" header="...Cargando..."   
                   draggable="false" closable="false" resizable="false">  
@@ -52,7 +59,163 @@
                   draggable="false" closable="true" resizable="false">  
             Error en el servidor
         </p:dialog>
-        
+
+        <!--Dialog para comfirmar la eliminacion de los batallones -->
+        <h:form id="dlgcomfieliminar">        
+            <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoBatallon.xhtml" />
+        </h:form>
+
+        <!--Dialog para buscar los batallones -->
+        <h:form id="frmbuscarBatallones">        
+            <ui:include src="../paginas/configpuntoventa/buscadorBatallones.xhtml" />
+        </h:form>
+
+        <!-- Dialog para agregar ubicaciones -->
+        <h:form id="frmnuevaubicacion">   
+            <ui:include src="../paginas/articulos/AgregarUbicaciones.xhtml" />
+        </h:form>
+
+        <!-- Dialog para agregar ubicaciones -->
+        <h:form id="frmeditarubicacion">        
+            <ui:include src="../paginas/articulos/EditarUbicaciones.xhtml" />
+        </h:form>
+
+        <!-- Dialog para agregar ubicaciones -->
+        <h:form id="frmeliminarubicacion">        
+            <ui:include src="../paginas/articulos/EliminarUbicaciones.xhtml" />
+        </h:form>
+
+        <!-- Dialog para buscar ubicaciones -->
+        <h:form id="frmbuscarubicaciones">        
+            <ui:include src="../paginas/articulos/buscarUbicaciones.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Agregar Categorias -->
+        <h:form id="frmagregarcategoria">        
+            <ui:include src="../paginas/articulos/AgregarCategoria.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Editar Categorias -->
+        <h:form id="frmeditarcategoria">        
+            <ui:include src="../paginas/articulos/EditarCategoria.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Eliminar Categorias -->
+        <h:form id="frmeliminarcategoria">        
+            <ui:include src="../paginas/articulos/EliminarCategoria.xhtml" />
+        </h:form>
+
+        <!-- Dialog para buscar Categorias -->
+        <h:form id="frmbuscarcategoria">        
+            <ui:include src="../paginas/articulos/BuscarCategoria.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Agregar Roles -->
+        <h:form id="frmabregarroles">        
+            <ui:include src="../paginas/accesoyseguridad/AgregarRol.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Editar Roles -->
+        <h:form id="frmeditarroles">        
+            <ui:include src="../paginas/accesoyseguridad/EditarRol.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Eliminar Roles -->
+        <h:form id="frmeliminarroles">        
+            <ui:include src="../paginas/accesoyseguridad/EliminarRol.xhtml" />
+        </h:form>
+
+        <!-- Dialog para Editar Roles -->
+        <h:form id="frmbuscarroles">        
+            <ui:include src="../paginas/accesoyseguridad/BuscarRol.xhtml" />
+        </h:form>
+
+        <!--Form: Nuevo Cargo -->          
+        <h:form id="frmnuevadivision">
+            <ui:include src="../paginas/configpuntoventa/frmagregardivision.xhtml" />
+        </h:form>
+
+        <!-- Dialog editar divisiones -->            
+        <h:form id="frmeditardivisiones" >                
+            <ui:include src="../paginas/configpuntoventa/frmeditardivision.xhtml" />                
+        </h:form>
+
+        <!-- Formulario eliminar divisiones -->
+        <h:form id="frmeliminardivisiones">                                
+            <ui:include src="../paginas/configpuntoventa/frmeliminardivision.xhtml"/>
+        </h:form>
+
+        <!--formulario ubicacion en mapa-->
+        <h:form id="frmubicacionMapaDivisiones">
+            <ui:include src="../paginas/configpuntoventa/UbicacionMapa.xhtml"  />           
+        </h:form>
+
+        <!-- Formulario asignar departamentos a division -->
+        <h:form id="asignarDepartamentosaDivision">
+            <ui:include src="../paginas/configpuntoventa/asignarDepartamentosaDivision.xhtml" />
+        </h:form>
+
+        <!-- Formulario subir fotos de usuario -->
+        <h:form id="subirfotoUsuario" enctype="multipart/form-data">
+            <ui:include src="../paginas/usuariossistema/SubirFotoUsuario.xhtml" />
+        </h:form>
+
+        <!-- Formulario subir fotos de usuario -->
+        <h:form id="guardarsinfoto" >
+            <ui:include src="../paginas/usuariossistema/ComfirmarGuardarSinFoto.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar usuarios -->
+        <h:form id="buscarusuarios" >
+            <ui:include src="../paginas/usuariossistema/BuscarUsuarios.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar usuarios  acceso-->
+        <h:form id="buscarusuariosacceso" >
+            <ui:include src="../paginas/accesoyseguridad/BuscarUsuarioAcceso.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar accesos-->
+        <h:form id="buscarusuariosaccesologin" >
+            <ui:include src="../paginas/accesoyseguridad/BuscarAccesos.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar comandantes-->
+        <h:form id="buscarcomandantesbatallon" >
+            <ui:include src="../paginas/configpuntoventa/buscarComandante.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar comandantes para casino-->
+        <h:form id="buscarcomandantescasino" >
+            <ui:include src="../paginas/configpuntoventa/BuscarComadanteCasino.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar batallon para casino-->
+        <h:form id="buscarbatalloncasino" >
+            <ui:include src="../paginas/configpuntoventa/BuscarBatallonCasino.xhtml" />
+        </h:form>
+
+        <!-- Formulario buscar casino-->
+        <h:form id="buscarcasino" >
+            <ui:include src="../paginas/configpuntoventa/BuscarCasino.xhtml" />
+        </h:form>
+
+        <!-- Formulario eliminar casino-->
+        <h:form id="eliminarcasino" >
+            <ui:include src="../paginas/configpuntoventa/ComfirmarEliminadoCasino.xhtml" />
+        </h:form>
+
+        <!-- Formulario subir fotos de producto -->
+        <h:form id="subirfotoProducto" enctype="multipart/form-data">
+            <ui:include src="../paginas/articulos/SubirFotoProducto.xhtml" />
+        </h:form>
+
+        <!-- Formulario time out -->
+        <h:form id="timeout" >
+            <ui:include src="../paginas/timeout/sessionTimeOut.xhtml" />
+        </h:form>
+
+
         <div style="position: absolute;width: 100%;margin-left: auto;margin-right: auto;z-index: 50000;margin-top: 5%;text-align: center">            
             <!--<p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true"  />       -->
             <h:form>
@@ -60,34 +223,65 @@
             </h:form>
 
         </div>
-        
+
 
 
         <p:layout fullPage="true" >
 
 
-            <p:layoutUnit id="top" position="north"   size="17%">
-                
-
-                    
-                    <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;border-style: hidden !important;"  >
-                        <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
-                        <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
-                        <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
-                    </p:panelGrid>
 
 
-                
+
+            <p:layoutUnit id="top" position="north"   size="17%" >
+
+
+                <p:panelGrid columns="3" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto;border-style: hidden !important"  >
+                    <p:graphicImage value="/resources/img/Escudo-Ejercito-Nuevo.png" alt="Ejercito De Colombia" title="Ejercito De Colombia" />  
+                    <p:graphicImage value="/resources/img/banner3.png" alt="SICOVI" title="SICOVI" />  
+                    <p:graphicImage value="/resources/img/escudo_colombia.png" alt="Colombia" title="Colombia" />  
+                </p:panelGrid>               
+
+                <div style="position: fixed;bottom: 0;width: 100%">
+
+                    <p:toolbar >  
+                        <p:toolbarGroup align="left" >                                                 
+                            <p:outputLabel value="Comandante: " />
+                            <p:outputLabel value="David Timana" />
+                            <p:separator />                                                    
+                            <p:outputLabel value="Casino Popayán " />
+                        </p:toolbarGroup>                   
+
+
+                        <p:toolbarGroup align="right">  
+                            <h:form>
+                            <p:outputLabel value="Bienvenido: " />                        
+                            <p:outputLabel value="#{loginBean.usuario.persona.pnombre} #{loginBean.usuario.persona.papellido}" />
+                            <p:separator />  
+                            
+                                <p:commandButton value="Cerrar Sesión" title="Cerrar Sesión" actionListener="#{loginBean.cerrarSesion()}" 
+                                                 icon="ui-icon-power" oncomplete="resetearIndex()" />                             
+                            </h:form>
+                        </p:toolbarGroup>  
+                    </p:toolbar> 
+
+                </div>
+
             </p:layoutUnit>
 
 
+
+
+
+
+
             <div style="bottom: 0;position: absolute;width: 80%;text-align: center;margin-left: 8%;margin-right: 10%">
-                
+
                 <!--<p:messages id="messagesnuevo" showDetail="true" autoUpdate="true" closable="true" />    -->
                 <ui:insert name="abajo">
 
 
                 </ui:insert>
+
 
             </div>                
 
@@ -102,94 +296,14 @@
                         <p:spacer width="5%" />
                         <p:slideMenu style="width: 100%" backLabel="Regresar"  >  
 
-                            <p:separator />  
+                                                      
 
-                            <p:submenu label="Productos" icon="ui-icon-cart">  
-                                <p:submenu label="Articulos" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Articulos" action="#{navegacion.ir_a_Gestion_Articulos()}" />
-                                    <p:menuitem value="Listar Articulos" action="#{navegacion.ir_a_Listar_Articulos()}" />
-                                </p:submenu>
-                                <p:submenu label="Ubicaciones" icon="ui-icon-pin-s">
-                                    <p:menuitem value="Gestion De Ubicaciones" action="#{navegacion.ir_a_Gestion_Ubicaciones()}" />
-                                    <p:menuitem value="Listar Ubicaciones" action="#{navegacion.ir_a_Listar_Ubicaciones()}" />
-                                </p:submenu>
-                                <p:submenu label="Categorias" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Categorias" action="#{navegacion.ir_a_Gestion_Categorias()}" />
-                                    <p:menuitem value="Listar Categorias" action="#{navegacion.ir_a_Listar_Categorias()}" />
-                                </p:submenu>
-                                <p:submenu label="Precios De Compra" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Precios" action="#{navegacion.ir_a_Gestion_Precios_Compra()}" />
-                                    <p:menuitem value="Listar Variaciones" action="#{navegacion.ir_a_Listar_Variaciones()}" />
-                                </p:submenu>  
-                            </p:submenu>
+
+
 
                             <p:separator />  
 
-                            <p:submenu label="Ventas" icon="ui-icon-shuffle">
-                                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
-                                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
-                            </p:submenu>  
-
-                            <p:separator />  
-
-                            <p:submenu label="Inventario" icon="ui-icon-folder-open">  
-                                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
-                                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
-                            </p:submenu>
-
-                            <p:separator />  
-
-                            <p:submenu label="Compras" icon="ui-icon-suitcase">  
-                                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
-                                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
-                            </p:submenu>
-
-                            <p:separator />  
-
-                            <p:submenu label="Acceso y Seguridad" icon="ui-icon-locked">  
-                                <p:submenu label="Acceso al sistema" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Acceso" action="#{navegacion.ir_a_Gestionar_Acceso()}" />
-                                    <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Roles()}" />
-                                </p:submenu>
-                                <p:submenu label="Roles" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Roles" action="#{navegacion.ir_a_Gestionar_Roles()}" />
-                                    <p:menuitem value="Listar Roles" action="#{navegacion.ir_a_Listar_Roles()}" />
-                                </p:submenu>
-                                <p:submenu label="Cargo" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Cargos" action="#{navegacion.ir_a_Gestionar_Cargos()}" />
-                                    <p:menuitem value="Listar Cargos" action="#{navegacion.ir_a_Listar_Roles()}" />
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:separator />  
-
-                            <p:submenu label="Configuración Punto De Venta" icon="ui-icon-wrench">  
-                                <p:submenu label="Divisiones" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestionar De Divisiones" action="#{navegacion.ir_a_Gestionar_Divisiones()}" />
-                                    <p:menuitem value="Listar Divisiones" action="#{navegacion.ir_a_Listar_Roles()}" />
-                                </p:submenu>
-                                <p:submenu label="Batallones" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestionar Batallones" action="#{navegacion.ir_a_Gestionar_Batallones()}" />
-                                    <p:menuitem value="Listar Batallones" action="#{navegacion.ir_a_Listar_Roles()}" />
-                                </p:submenu>
-                                <p:submenu label="Casinos" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestionar Casinos" action="#{navegacion.ir_a_Gestionar_Casinos()}" />
-                                    <p:menuitem value="Listar Casinos" action="#{navegacion.ir_a_Listar_Roles()}" />
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:separator />  
-
-                            <p:submenu label="Usuarios Del Sistema" icon="ui-icon-person">  
-                                <p:submenu label="Usuarios" icon="ui-icon-contact">
-                                    <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
-                                    <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
-                                </p:submenu>
-                            </p:submenu>
-
-                            <p:separator />  
-
-                            <p:submenu label="Parametros" icon="ui-icon-gear">  
+                            <p:submenu label="Reportes" icon="ui-icon-gear">  
                                 <p:submenu label="Usuarios" icon="ui-icon-contact">
                                     <p:menuitem value="Gestion De Usuarios" action="#{navegacion.ir_a_Gestionar_Usuario()}" />
                                     <p:menuitem value="Listar Usuarios" action="#{navegacion.ir_a_Listar_Usuario()}" />
@@ -222,7 +336,7 @@
                     <br />
                     <p:clock pattern="HH:mm:ss dd.MM.yyyy" />  
                 </div>
-                
+
             </p:layoutUnit>
 
             <p:layoutUnit id="center" position="center">                
@@ -249,6 +363,8 @@
 
         </p:layout>
 
+
     </h:body>
+
 
 </html>

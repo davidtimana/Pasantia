@@ -127,39 +127,41 @@ public class LoginBean implements Serializable {
         log.log(Level.INFO, "El rol del usuario ingresado es el siguiente-->{0}", rol.getDescripcion());
         String redireccion = "";
         switch (rol.getCodigo()) {
-            case 1:
-                //redireccion = navegacion.ir_a_menu_Principal();
+            case 1:                
                 FacesContext.getCurrentInstance().getExternalContext().
-                        redirect("faces/paginas/menu/menuInicial.xhtml;"+session.getId());
+                        redirect("faces/paginas/menu/menuInicial.xhtml;jsessionid="+session.getId());
                 break;
             case 2:
-                redireccion = navegacion.ir_a_menu_Vendedor();
+                FacesContext.getCurrentInstance().getExternalContext().
+                        redirect("faces/paginas/menu/menuvendedor.xhtml;jsessionid="+session.getId());                
                 break;
             case 4:
-                redireccion = navegacion.ir_a_menu_Cliente();
+                FacesContext.getCurrentInstance().getExternalContext().
+                        redirect("faces/paginas/menu/menucliente.xhtml;jsessionid="+session.getId());                
                 break;
             case 5:
-                redireccion = navegacion.ir_a_menu_Comandante();
+                FacesContext.getCurrentInstance().getExternalContext().
+                        redirect("faces/paginas/menu/menucomandante.xhtml;jsessionid="+session.getId());                
                 break;
             case 6:
-                redireccion = navegacion.ir_a_menu_Admin();
+                FacesContext.getCurrentInstance().getExternalContext().
+                        redirect("faces/paginas/menu/menuadmin.xhtml;jsessionid="+session.getId());                
                 break;
             default:
                 redireccion="error";
                 Utilidad.mensajeError("SICOVI", "El usuario no tiene los suficientes "
                         + "permisos para entrar al sistema.");
                 break;
-        }        
-        //return redireccion;
+        }                
     }
     
-    public String cerrarSesion(){
-        log.info("Cerrando sesion");
+    public void cerrarSesion() throws IOException{
+        log.info("--------------------------Cerrando sesion-------------------------------");
         usuario.setSesion(false);
         crudDAO.editar(usuario);
         themaSwitcherBean.setThema("pasantia");
-        imagenesControlBean.cargarImagenes();        
-        return "cerrarsesionvendedor";
+        imagenesControlBean.cargarImagenes();      
+                       
     }
 
     @PostConstruct

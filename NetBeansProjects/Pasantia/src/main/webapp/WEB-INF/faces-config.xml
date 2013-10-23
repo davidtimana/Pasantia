@@ -109,6 +109,12 @@
             <to-view-id>/paginas/accesoyseguridad/GestionarAcceso.xhtml</to-view-id>
         </navigation-case>
         
+        <navigation-case>
+            <from-action>#{navegacion.ir_a_gestionar_Ventas()}</from-action> 
+            <from-outcome>gestionarventas</from-outcome>
+            <to-view-id>/paginas/venta/administrar.xhtml</to-view-id>
+        </navigation-case>
+        
     </navigation-rule>
     
     

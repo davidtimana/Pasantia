@@ -123,6 +123,10 @@ public class Navegacion implements Serializable{
         return "menuvendedorsicovi";
     }
     
+    public String ir_a_gestionar_Ventas(){
+        return "gestionarventas";
+    }
+    
     
     
 }

@@ -25,6 +25,8 @@ import javax.persistence.Transient;
     ,catalog="CasinoPasantia"
 )
 public class PrecioCompra  implements java.io.Serializable {
+    
+    private static final long serialVersionUID = 4640667073128658666L;
 
 
      private Integer idPrecioCompra;

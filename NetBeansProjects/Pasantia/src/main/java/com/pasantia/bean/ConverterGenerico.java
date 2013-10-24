@@ -16,6 +16,8 @@ import javax.faces.convert.Converter;
  */
 
 public abstract class ConverterGenerico<T> implements Converter, Serializable {
+    
+    private static final long serialVersionUID = 1750498704531878734L;
 
 	@Override
 	public Object getAsObject(FacesContext fc, UIComponent uic, String key) {

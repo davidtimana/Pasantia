@@ -11,6 +11,7 @@ import javax.inject.Inject;
 @ManagedBean
 @ViewScoped
 public class ProductoConverter extends ConverterGenerico<Producto> implements Serializable {
+    private static final long serialVersionUID = -4949878181991026553L;
 
     @Inject
     private ProductoDAO productoDAO;

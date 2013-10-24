@@ -5,7 +5,9 @@
 package com.pasantia.articulos.articulo;
 
 import com.pasantia.dao.CrudDAO;
+import com.pasantia.entidades.Casino;
 import com.pasantia.entidades.Categoria;
+import com.pasantia.entidades.PrecioCompra;
 import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
@@ -16,6 +18,7 @@ import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,6 +45,9 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     private List<Integer> listaControlBotones;
     private Boolean estaEditando;
     private Integer accordion;
+    private Casino casino;
+    
+    private List<Casino> casinos;
     
     @Inject
     CrudDAO<Tblunidad> unidadDAO;
@@ -51,6 +57,12 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     CrudDAO<Ubicacion> ubicacionDAO;
     @Inject
     ValidarProductoBean validarProductoBean;
+    @Inject
+    ControlPreciosBean controlPreciosBean;
+    @Inject
+    GuardarArticuloBean guardarArticuloBean;
+    @Inject
+    CrudDAO<Casino> crudDAO;
     
 
     public void cargarFoto(String foto) throws InterruptedException {
@@ -62,6 +74,9 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     public void guardar(){
         try {
             validarProductoBean.validarProducto(producto, unidad, categoria, ubicacion, estaEditando);
+            List<PrecioCompra> precios=new ArrayList<PrecioCompra>();
+            precios=controlPreciosBean.getPrecios();
+            guardarArticuloBean.guardar(producto, unidad, categoria, ubicacion, precios,estaEditando);
         } catch (CadenaVaciaException ex) {
             log.info(ex.getMessage());
             Utilidad.mensajeError("SICOVI", "Datos Basicos Articulo: " + ex.getMessage());
@@ -95,12 +110,17 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         ubicacion=new Ubicacion();
         validarProductoBean.limpiarEstilos();
         deshabilitarBotonesEditaroNuevo();
+        List<PrecioCompra> precios=new ArrayList<PrecioCompra>();
+        controlPreciosBean.setPrecios(precios);
+        controlPreciosBean.setDesHabiAdd(false);
         Utilidad.actualizarElemento("frmproductos");
     }
     
     public void reiniciarProducto(){
         producto.setCantidadActual(null);
         producto.setCantidadMinima(null);
+        producto.setPrecioVenta1(BigDecimal.ZERO);
+        producto.setPrecioVenta2(BigDecimal.ZERO);
         producto.setCodigoBarras("");  
         producto.setDescripcion("");
         producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
@@ -162,8 +182,31 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         }
     }
     
+    public List<Casino> completeCasinos(String query) {
+        List<Casino> suggestions = new ArrayList<Casino>();
+        log.log(Level.INFO, "query  autocomplete : {0}", query);
+        log.log(Level.INFO, " tam lista  : {0}", casinos.size());
+        if (query != null && query.length() > 0) {
+            for (Casino c : casinos) {
+                if (c.getNombre().toUpperCase().startsWith(query.toUpperCase())) {
+                    suggestions.add(c);
+                }
+            }
+        } else {
+            // productoSeleccionado = null;
+        }
+        if (suggestions.isEmpty()) {
+            Utilidad.mensajeError("No encontrado", "Producto no encontrado");
+        }
+        for (Casino casinos : suggestions) {
+            log.log(Level.INFO, "medicamento {0}", casinos.getNombre());
+        }
+        return suggestions;
+    }
+    
     @PostConstruct
     public void Init(){
+        casinos=crudDAO.buscarTodos(Casino.class);
         cargarComboCategorias();
         cargarComboUnidades();
         cargarComboUbicaciones();
@@ -172,11 +215,13 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     }
     
     public GestionArticulosBean() {
+        casino=new Casino();
         producto = new Producto();
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
         listaControlBotones=new ArrayList<Integer>();
+        casinos=new ArrayList<Casino>();
         estaEditando=false;
         accordion=0;
     }
@@ -236,6 +281,16 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     public void setAccordion(Integer accordion) {
         this.accordion = accordion;
     }
+
+    public Casino getCasino() {
+        return casino;
+    }
+
+    public void setCasino(Casino casino) {
+        this.casino = casino;
+    }
+    
+    
     
     
     

@@ -104,8 +104,23 @@
                     </p:panelGrid> 
                 </p:tab>
 
+                <p:tab title="Selección de casino">
+
+                    <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                        <h:outputLabel value="Casino: " for="casino"/>  
+                        <p:autoComplete value="#{gestionArticulosBean.casino}" id="casino"
+                                        maxlength="10"
+                                        completeMethod="#{gestionArticulosBean.completeCasinos}"  
+                                        var="p" itemLabel="#{p.nombre}" itemValue="#{p}" converter="#{casinoConverter}"
+                                        forceSelection="true"/>  
+
+
+                    </p:panelGrid>
+                </p:tab>
+
                 <p:tab title="Precios de compra y venta">
-                    
+
                     <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
                         <p:outputLabel value="Precio de Compra: *" style="font-weight:bold;#{validarProductoBean.estilosError.get(10)}" 
                                        id="lblpreccompra"
@@ -114,7 +129,7 @@
                                      value="#{controlPreciosBean.precioCompra.precio}"
                                      id="txtpreccompra" onkeypress="return permitirSoloNumeros(event);"/>                        
                     </p:panelGrid>
-                    
+
                     <p:separator />
 
                     <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
@@ -133,12 +148,12 @@
                                      id="txtprec2" onkeypress="return permitirSoloNumeros(event);"/>
 
                     </p:panelGrid>
-                    
-                    
+
+
                     <p:separator />
-                    
+
                     <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
-                        
+
                         <p:commandButton value="Agregar Precio" title="Agregar Precio" icon="ui-icon ui-icon-plusthick" 
                                          id="btnpreccompra" actionListener="#{controlPreciosBean.agregar()}" 
                                          disabled="#{controlPreciosBean.desHabiAdd}" />
@@ -152,12 +167,12 @@
                                      selection="#{controlPreciosBean.precioSeleccionado}" editable="true" editMode="cell">                           
 
                             <p:ajax event="cellEdit" listener="#{controlPreciosBean.editar}"  />                             
-                             
+
 
                             <f:facet name="header">  
                                 Historial de precios de compra para el producto: #{gestionArticulosBean.producto.descripcion} 
                             </f:facet>                                             
-                            
+
 
                             <p:column headerText="Precio" style="text-align: center" sortBy="#{precio.precio}" filterBy="#{precio.precio}" >                                  
                                 <p:cellEditor>  
@@ -167,11 +182,11 @@
                                         </p:inputText></f:facet>  
                                 </p:cellEditor> 
                             </p:column>
-                            
+
                             <p:column headerText="Ganancia" style="text-align: center" sortBy="#{precio.valorGanacia}" filterBy="#{precio.valorGanacia}"  >  
                                 <h:outputText value="$ #{precio.valorGanacia}"  />  
                             </p:column>
-                            
+
                             <p:column headerText="%" style="text-align: center" sortBy="#{precio.porcentajeVenta}" filterBy="#{precio.porcentajeVenta}" >  
                                 <h:outputText value="#{precio.porcentajeVenta}%"  />  
                             </p:column>
@@ -181,7 +196,7 @@
                                     <f:convertDateTime pattern="EEEE dd-MMMM-yyyy" />
                                 </h:outputText>
                             </p:column>
-                            
+
                             <p:column headerText="Acciones" style="text-align: center"   >  
                                 <p:commandButton icon="ui-icon-trash" title="Eliminar" actionListener="#{controlPreciosBean.eliminar(precio)}" />
                             </p:column>

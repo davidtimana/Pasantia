@@ -123,7 +123,8 @@ public class ControlPreciosBean implements Serializable {
                         && articulosBean.getProducto().getPrecioVenta1().intValue() > precioCompra.getPrecio().intValue()) {
                     desHabiAdd=true;
                     Utilidad.actualizarElemento("btnpreccompra");
-                    Date fechaActual = new Date();                    
+                    Date fechaActual = new Date(); 
+                    precioCompra.setActivo(true);
                     precioCompra.setFecha(fechaActual);
                     precioCompra.setValorGanacia(calcularGanancia(precioCompra.getPrecio(), articulosBean.getProducto().getPrecioVenta1()));
                     log.log(Level.INFO, "***El valor de la ganancia para este precio de venta es -->{0}", precioCompra.getValorGanacia());

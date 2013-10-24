@@ -7,7 +7,6 @@ package com.pasantia.dao.impl;
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.dao.CrudDAO;
 import com.pasantia.dao.PersonaDAO;
-import com.pasantia.entidades.Batallon;
 import com.pasantia.entidades.Persona;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,8 +21,8 @@ import org.hibernate.Session;
  * @author David Timana
  */
 @Stateless
-public class PersonaDAOImpl  implements PersonaDAO{
-    
+public class PersonaDAOImpl implements PersonaDAO {
+
     @Inject
     CrudDAO<Persona> crudDAO;
 
@@ -48,26 +47,31 @@ public class PersonaDAOImpl  implements PersonaDAO{
     }
 
     @Override
-    public List<Persona> buscartodosPersona() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Persona> buscar() {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        try {
+            final Query q = session.createQuery("from Persona");
+            return q.list();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public Persona buscarUltimoIngresado() {
         Session session = ConexionHibernate.getSessionFactory().openSession();
-        Persona b=null;
-        String jpql="";
-        try{
-            jpql="SELECT MAX(b) FROM Persona b";
-            Query q=session.createQuery(jpql);            
-            b=(Persona)q.uniqueResult();
-            
-        }catch(Exception e){
-            System.err.println("Error en buscarUltimoIngresado "+e.getMessage());
+        Persona b = null;
+        String jpql = "";
+        try {
+            jpql = "SELECT MAX(b) FROM Persona b";
+            Query q = session.createQuery(jpql);
+            b = (Persona) q.uniqueResult();
+
+        } catch (Exception e) {
+            System.err.println("Error en buscarUltimoIngresado " + e.getMessage());
             session.beginTransaction().rollback();
-            b= null;
-        }
-        finally{
+            b = null;
+        } finally {
             System.out.println("cerrando la sesion en buscarUltimoIngresado");
             session.flush();
             session.close();
@@ -80,8 +84,7 @@ public class PersonaDAOImpl  implements PersonaDAO{
         Session session = ConexionHibernate.getSessionFactory().openSession();
         List<Persona> personas = new ArrayList<Persona>();
         List<Object> listaNativa = new ArrayList<Object>();
-        
-        
+
         String sql = "";
 
         try {
@@ -90,16 +93,15 @@ public class PersonaDAOImpl  implements PersonaDAO{
                     + "RIGHT JOIN Batallon b on (p.idTBLPERSONA<>b.seccoronel) "
                     + "WHERE tp.nombre_tipo_persona='Comandante Batallon'";
             Query q = session.createSQLQuery(sql);
-            
-            listaNativa= q.list();
+
+            listaNativa = q.list();
             Iterator iterator = listaNativa.iterator();
             while (iterator.hasNext()) {
                 Persona p = new Persona();
-                Object[] obj = (Object[]) iterator.next();                
-                p=crudDAO.buscar(Persona.class,obj[0]);
+                Object[] obj = (Object[]) iterator.next();
+                p = crudDAO.buscar(Persona.class, obj[0]);
                 personas.add(p);
-            }            
-            
+            }
 
         } catch (Exception e) {
             personas = null;
@@ -116,8 +118,8 @@ public class PersonaDAOImpl  implements PersonaDAO{
     public List<Persona> buscarComandanteCasinoSinAsignar() {
         Session session = ConexionHibernate.getSessionFactory().openSession();
         List<Persona> personas = new ArrayList<Persona>();
-        List<Object> listaNativa = new ArrayList<Object>();        
-        
+        List<Object> listaNativa = new ArrayList<Object>();
+
         String sql = "";
 
         try {
@@ -128,16 +130,15 @@ public class PersonaDAOImpl  implements PersonaDAO{
                     + "OR tp.nombre_tipo_persona='Comandante Casino') "
                     + "AND c.fk_id_persona IS NULL";
             Query q = session.createSQLQuery(sql);
-            
-            listaNativa= q.list();
+
+            listaNativa = q.list();
             Iterator iterator = listaNativa.iterator();
             while (iterator.hasNext()) {
                 Persona p = new Persona();
-                Object[] obj = (Object[]) iterator.next();                
-                p=crudDAO.buscar(Persona.class,obj[0]);
+                Object[] obj = (Object[]) iterator.next();
+                p = crudDAO.buscar(Persona.class, obj[0]);
                 personas.add(p);
-            }            
-            
+            }
 
         } catch (Exception e) {
             personas = null;
@@ -149,5 +150,18 @@ public class PersonaDAOImpl  implements PersonaDAO{
 
         return personas;
     }
-    
+
+    @Override
+    public Persona buscarPersonaPorCedula(String cedula) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        String query = "SELECT p FROM Persona p WHERE p.cedula = :cedula";
+        try {
+            Query q = session.createQuery(query);
+            q.setString("cedula", cedula);
+            return (Persona) q.uniqueResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

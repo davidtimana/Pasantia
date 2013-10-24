@@ -14,71 +14,77 @@ import javax.ejb.Local;
  */
 @Local
 public interface PersonaDAO {
-    
+
     /**
-     *Metodo que se encarga de la
-     * insercion de un nuev persona
-     * @param persona 
+     * Metodo que se encarga de la insercion de un nuev persona
+     *
+     * @param persona
      */
     public Boolean insertarPersona(Persona persona);
+
     /**
-     *Metodo que se encarga de la
-     * actualizacion de un nueva persona
-     * @param persona 
+     * Metodo que se encarga de la actualizacion de un nueva persona
+     *
+     * @param persona
      */
     public void actualizarPersona(Persona persona);
+
     /**
-     *Metodo que se encarga de 
-     * eliminar una persona
+     * Metodo que se encarga de eliminar una persona
+     *
      * @param persona
      */
     public boolean eliminarPersona(Persona persona);
+
     /**
-     *Metodo que se encarga de buscar
-     * una persona por su id
+     * Metodo que se encarga de buscar una persona por su id
+     *
      * @param id
      * @return persona
      */
     public Persona buscarPersonaporId(Integer id);
+
     /**
-     *Metodo que se encarga de
-     * listar las personas
-     * @return lista de usuarios
+     * Metodo que se encarga de listar las personas
+     *
+     * @return lista de personas
      */
-    public List<Persona> buscartodosPersona();
-    
+    public List<Persona> buscar();
+
     /**
-     *Metodo que se encarga de
-     * listar las personas
-     * @return Persona
-     *          Objeto persona encontrado
+     * Metodo que se encarga de listar las personas
+     *
+     * @return Persona Objeto persona encontrado
      * @author David Timana
      */
-    public Persona buscarUltimoIngresado();  
-    
+    public Persona buscarUltimoIngresado();
+
     /**
-     *Metodo que se encarga de listar los
-     * comandantes que no han sido 
-     * asignados a ningun batallon.
-     
+     * Metodo que se encarga de listar los comandantes que no han sido asignados
+     * a ningun batallon.
+     *
      * @return List<Persona>
-     *          lista de Objetos personas encontrados
+     * lista de Objetos personas encontrados
      * @author David Timana
      */
     public List<Persona> buscarComandanteSinAsignar();
-    
+
     /**
-     *Metodo que se encarga de listar los
-     * comandantes que no han sido 
-     * asignados a ningun batallon.
-     
+     * Metodo que se encarga de listar los comandantes que no han sido asignados
+     * a ningun batallon.
+     *
      * @return List<Persona>
-     *          lista de Objetos personas encontrados
+     * lista de Objetos personas encontrados
      * @author David Timana
      */
-    public List<Persona> buscarComandanteCasinoSinAsignar();  
-    
-    
-    
-    
+    public List<Persona> buscarComandanteCasinoSinAsignar();
+
+    /**
+     * Función que se encarga de buscar una persona por cedula.
+     *
+     * @param cedula
+     * @return Persona Objeto persona encontrado
+     */
+    public Persona buscarPersonaPorCedula(String cedula);
+
 }

@@ -6,6 +6,7 @@
 package com.pasantia.bean;
 
 import com.pasantia.dao.DetalleVentaDAO;
+import com.pasantia.dao.PersonaDAO;
 import com.pasantia.dao.ProductoDAO;
 import com.pasantia.dao.VentaDAO;
 import com.pasantia.entidades.Persona;
@@ -14,7 +15,6 @@ import com.pasantia.entidades.TbldetalleVenta;
 import com.pasantia.entidades.Tblventa;
 import com.pasantia.utilidades.Utilidad;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,28 +39,66 @@ public class VentaBean implements Serializable {
     private VentaDAO ventaDAO;
     @Inject
     private DetalleVentaDAO detalleVentaDAO;
+    @Inject
+    private PersonaDAO personaDAO;
+    //@Inject
+    //private LoginBean loginBean;
 
-    //Listas
-    List<Producto> listaProducto;
-    List<TbldetalleVenta> listaDetalleVenta;
-    List<Producto> listaCarrito;
+    //Listas    
+    private List<TbldetalleVenta> listaDetalleVenta;
+    private List<Producto> listaCarrito;
+    private List<Producto> listaProducto;
+    private List<Persona> listaPersona;
 
     //Entidades
     private Producto producto;
+    private Persona persona;
 
     //Variables
-    private BigDecimal total;
+    //private BigDecimal total;
+    private Double total;
 
     @PostConstruct
     public void init() {
         logger.info("init() venta");
+        //logger.log(Level.INFO, "vendedor ---------------------------> {0}", loginBean.getUsuario().getPersona().getIdTblpersona());
         listaProducto = productoDAO.buscar();
+        listaPersona = personaDAO.buscar();
         listaDetalleVenta = new ArrayList<TbldetalleVenta>();
         listaCarrito = new ArrayList<Producto>();
-        producto = new Producto();       
+        producto = new Producto();
+        persona = new Persona();
+        total = 0.0;
+    }
+
+    public <T> boolean comparaNulos(T entidad) {
+        logger.info("-----------------------------Entro a comparaNulos -----------------------------");
+        if (entidad == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean comparaVacios(String cadena) {
+        logger.info("-----------------------------Entro a comparaVacios -----------------------------");
+        if (cadena.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public void buscarPersonaPorCedula() {
+        logger.info("-----------------------------Entro a buscar persona-----------------------------");
+        logger.log(Level.INFO, "cedula -> {0}", persona.getCedula());
+        persona = personaDAO.buscarPersonaPorCedula(persona.getCedula());
+        if (persona == null) {
+            persona = new Persona();
+            Utilidad.mensajeError("No encontrado", "Persona no encontrada.");
+        }
     }
 
     public void buscarProductoPorCodigoBarras() {
+        logger.info("-----------------------------Entro a buscar producto-----------------------------");
         logger.log(Level.INFO, "codigo de barras -> {0}", producto.getCodigoBarras());
         producto = productoDAO.buscarPorCodigoBarras(producto.getCodigoBarras());
         if (null == producto) {
@@ -79,14 +117,26 @@ public class VentaBean implements Serializable {
                     suggestions.add(p);
                 }
             }
-        } else {
-            // productoSeleccionado = null;
         }
         if (suggestions.isEmpty()) {
             Utilidad.mensajeError("No encontrado", "Producto no encontrado");
         }
-        for (Producto productos : suggestions) {
-            logger.log(Level.INFO, "medicamento {0}", productos.getDescripcion());
+        return suggestions;
+    }
+
+    public List<Persona> completePersona(String query) {
+        List<Persona> suggestions = new ArrayList<Persona>();
+        logger.log(Level.INFO, " query  autocomplete : {0}", query);
+        logger.log(Level.INFO, " tam lista persona  : {0}", listaPersona.size());
+        if (query != null && query.length() > 0) {
+            for (Persona p : listaPersona) {
+                if (p.getCedula().toUpperCase().startsWith(query.toUpperCase())) {
+                    suggestions.add(p);
+                }
+            }
+        }
+        if (suggestions.isEmpty()) {
+            Utilidad.mensajeError("No encontrado", "Persona no encontrada");
         }
         return suggestions;
     }
@@ -97,6 +147,14 @@ public class VentaBean implements Serializable {
         logger.info("[Fijando el producto seleccionado desde el autocomplete");
         logger.log(Level.INFO, "producto nombre**************{0}", producto.getDescripcion());
         logger.log(Level.INFO, "casino para producto**************{0}", producto.getCasino().getNombre());
+    }
+
+    public void handleSelectPersona(SelectEvent event) {
+        logger.info("--------------------------------- Entro a handleSelect");
+        persona = (Persona) event.getObject();
+        logger.info("[Fijando la persona seleccionada desde el autocomplete");
+        logger.log(Level.INFO, "persona nombre**************{0}", persona.getPnombre());
+        logger.log(Level.INFO, "tipo persona para cliente**************{0}", persona.getTipoPersona().getNombreTipoPersona());
     }
 
     public void agregarACarrito() {
@@ -110,11 +168,14 @@ public class VentaBean implements Serializable {
         producto = new Producto();
     }
 
-    public void calcularValorVenta() {
+    public double calcularValorVenta() {
         for (Producto prod : listaCarrito) {
-            total = prod.getPrecioVenta1().add(total);
+            //total = prod.getPrecioVenta1().add(total);
+            total = total + prod.getPrecioVenta1().doubleValue();
         }
         logger.log(Level.INFO, "total: {0}", total);
+        return total;
+
     }
 
     public void guardar() {
@@ -123,7 +184,7 @@ public class VentaBean implements Serializable {
         } else {
             Tblventa venta = new Tblventa();
             Date fecha = new Date();
-            Persona persona = new Persona();
+            //Persona persona = new Persona();
 
             venta.setFecha(fecha);
             persona.setIdTblpersona(0);
@@ -167,4 +228,21 @@ public class VentaBean implements Serializable {
     public void setListaCarrito(List<Producto> listaCarrito) {
         this.listaCarrito = listaCarrito;
     }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
 }

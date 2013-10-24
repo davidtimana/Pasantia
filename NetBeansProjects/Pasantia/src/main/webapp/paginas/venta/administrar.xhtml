@@ -26,87 +26,155 @@
         <!-- Aqui el cuerpo de la pagina -->
         <h:form id="frmProducto">
             <h:panelGrid id="pnlProducto" columns="1">
-                <h:panelGrid columns="3">
-                    <p:outputLabel value="Codigo" for="txtCodigo" />
-                    <p:outputLabel value="Nombre" for="txtNombre" />
-                    <p:outputLabel value="Cantidad" for="txtCantidad" />
-                    <h:panelGroup>
-                        <p:inputText id="txtCodigo" rendered="true"			
-                                     value="#{venta.producto.codigoBarras}"
-                                     required="true"
-                                     requiredMessage="Este campo es obligatorio">
-                            <p:ajax event="keyup" update="pnlProducto" process="txtCodigo"
-                                    listener="#{venta.buscarProductoPorCodigoBarras()}" />                            
-                        </p:inputText>
-                        <p:message for="txtCodigo" />
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:autoComplete id="txtNombre"
-                                        value="#{venta.producto}" required="true"
+                <p:fieldset legend="Cliente">
+                    <h:panelGrid columns="8">
+                        <p:outputLabel value="Cedula" for="txtCedula" />
+                        <p:outputLabel value="Primer nombre" for="txtPnombre" />
+                        <p:outputLabel value="Segundo nombre" for="txtSnombre" />
+                        <p:outputLabel value="Primer apellido" for="txtPapellido" />
+                        <p:outputLabel value="Segundo apellido" for="txtSapellido" />
+                        <p:outputLabel value="Telefono" for="txtTelefono" />
+                        <p:outputLabel value="Movil" for="txtMovil"/>
+                        <p:outputLabel value="E-mail" for="txtMail"/>
+                        <p:autoComplete id="txtCedula"
+                                        value="#{venta.persona}" required="true"
                                         maxlength="10"
-                                        completeMethod="#{venta.completeProductos}"
-                                        var="producto"
-                                        itemLabel="#{producto.descripcion}"
-                                        itemValue="#{producto}"
-                                        converter="#{productoConverter}">
+                                        completeMethod="#{venta.completePersona}"
+                                        var="persona"
+                                        itemLabel="#{persona.cedula}"
+                                        itemValue="#{persona}"
+                                        converter="#{personaConverter}">
                             <p:ajax event="itemSelect"
-                                    listener="#{venta.handleSelect}"
+                                    listener="#{venta.handleSelectPersona}"
                                     update="pnlProducto" />
                         </p:autoComplete>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:inputText id="txtCantidad" rendered="true"				
-                                     value="#{venta.producto.cantidadActual}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                </h:panelGrid>                
-                <h:panelGrid columns="3">
-                    <p:outputLabel value="Precio venta 1" for="txtPrecioVenta1" />
-                    <p:outputLabel value="Precion venta 2" for="txtPrecioVenta2" />
-                    <p:outputLabel value="Cantidad Minima" for="txtCantidadMinima" />
-                    <h:panelGroup>
-                        <p:inputText id="txtPrecioVenta1" rendered="true"				
-                                     value="#{venta.producto.precioVenta1}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:inputText id="txtPrecioVenta2" rendered="true"				
-                                     value="#{venta.producto.precioVenta2}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:inputText id="txtCantidadMinima" rendered="true"				
-                                     value="#{venta.producto.cantidadMinima}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                </h:panelGrid>
-                <h:panelGrid columns="3">
-                    <p:outputLabel value="Categoria" for="txtCategoria"/>
-                    <p:outputLabel value="Ubicacion" for="txtUbicacion"/>
-                    <p:outputLabel value="Casino" for="txtCasino"/>
-                    <h:panelGroup>
-                        <p:inputText id="txtCategoria" rendered="true"				
-                                     value="#{venta.producto.categoria.descripcion}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:inputText id="txtUbicacion" rendered="true"				
-                                     value="#{venta.producto.ubicacion.descripcion}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                    <h:panelGroup>
-                        <p:inputText id="txtCasino" rendered="true"				
-                                     value="#{venta.producto.casino.nombre}"
-                                     disabled="true">                                                                       
-                        </p:inputText>
-                    </h:panelGroup>
-                </h:panelGrid>
+                        <h:panelGroup>
+                            <p:inputText id="txtPnombre" rendered="true"				
+                                         value="#{venta.persona.pnombre}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtSnombre" rendered="true"				
+                                         value="#{venta.persona.snombre}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtPapellido" rendered="true"				
+                                         value="#{venta.persona.papellido}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtSapellido" rendered="true"				
+                                         value="#{venta.persona.sapellido}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtTelefono" rendered="true"				
+                                         value="#{venta.persona.telefono}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtMovil" rendered="true"				
+                                         value="#{venta.persona.movil}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtMail" rendered="true"				
+                                         value="#{venta.persona.email}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:fieldset>
+                <br />
+                <p:fieldset legend="Producto">
+                    <h:panelGrid columns="8">
+                        <p:outputLabel value="Codigo" for="txtCodigo" />
+                        <p:outputLabel value="Nombre" for="txtNombre" />
+                        <p:outputLabel value="Cantidad" for="txtCantidad" />
+                        <p:outputLabel value="Precio venta 1" for="txtPrecioVenta1" />
+                        <p:outputLabel value="Precion venta 2" for="txtPrecioVenta2" />
+                        <p:outputLabel value="Cantidad Minima" for="txtCantidadMinima" />
+                        <p:outputLabel value="Categoria" for="txtCategoria"/>
+                        <p:outputLabel value="Ubicacion" for="txtUbicacion"/>                    
+                        <h:panelGroup>
+                            <p:inputText id="txtCodigo" rendered="true"			
+                                         value="#{venta.producto.codigoBarras}"
+                                         required="true"
+                                         requiredMessage="Este campo es obligatorio">
+                                <p:ajax event="keyup" update="pnlProducto" process="txtCodigo"
+                                        listener="#{venta.buscarProductoPorCodigoBarras()}" />                            
+                            </p:inputText>
+                            <p:message for="txtCodigo" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:autoComplete id="txtNombre"
+                                            value="#{venta.producto}" required="true"
+                                            maxlength="10"
+                                            completeMethod="#{venta.completeProductos}"
+                                            var="producto"
+                                            itemLabel="#{producto.descripcion}"
+                                            itemValue="#{producto}"
+                                            converter="#{productoConverter}">
+                                <p:ajax event="itemSelect"
+                                        listener="#{venta.handleSelect}"
+                                        update="pnlProducto" />
+                            </p:autoComplete>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtCantidad" rendered="true"				
+                                         value="#{venta.producto.cantidadActual}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtPrecioVenta1" rendered="true"				
+                                         value="#{venta.producto.precioVenta1}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtCantidadMinima" rendered="true"				
+                                         value="#{venta.producto.cantidadMinima}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtPrecioVenta2" rendered="true"				
+                                         value="#{venta.producto.precioVenta2}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtCategoria" rendered="true"				
+                                         value="#{venta.producto.categoria.descripcion}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText id="txtUbicacion" rendered="true"				
+                                         value="#{venta.producto.ubicacion.descripcion}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                    </h:panelGrid>                                
+                    <h:panelGrid columns="1">
+                        <p:outputLabel value="Casino" for="txtCasino"/>                    
+                        <h:panelGroup>
+                            <p:inputText id="txtCasino" rendered="true"				
+                                         value="#{venta.producto.casino.nombre}"
+                                         disabled="true">                                                                       
+                            </p:inputText>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:fieldset>
+                <br />
             </h:panelGrid>
             <p:commandButton id="idAgregar"
                              value="Incluir"                
@@ -151,7 +219,7 @@
             <p:panelGrid columns="2">
                 <p:outputLabel for="txtTotal" value="Total"  />
                 <p:inputText id="txtTotal" disabled="true"
-                             value="#{venta.total}">
+                             value="#{venta.calcularValorVenta()}">
                 </p:inputText>
             </p:panelGrid>
             <br />

@@ -106,14 +106,24 @@
 
                 <p:tab title="Selección de casino">
 
-                    <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                    <p:panelGrid columns="6" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto"
+                                 id="pnlcasino">
 
-                        <h:outputLabel value="Casino: " for="casino"/>  
-                        <p:autoComplete value="#{gestionArticulosBean.casino}" id="casino"
-                                        maxlength="10"
-                                        completeMethod="#{gestionArticulosBean.completeCasinos}"  
-                                        var="p" itemLabel="#{p.nombre}" itemValue="#{p}" converter="#{casinoConverter}"
-                                        forceSelection="true"/>  
+                        <h:outputLabel value="Casino: " id="lblcasino" style="#{validarProductoBean.estilosError.get(11)}"/>  
+                        <p:autoComplete value="#{gestionArticulosBean.casinoBuscar}"   
+                                        completeMethod="#{gestionArticulosBean.completeCasinos}"
+                                        size="60" id="autcasino">  
+                            <p:ajax event="itemSelect"
+                                    listener="#{gestionArticulosBean.cargarCasino}"
+                                    update="pnlcasino" />
+                        </p:autoComplete>
+                        
+                        <h:outputLabel value="Nit: " /> 
+                        <p:inputText value="#{gestionArticulosBean.casino.nit}" readonly="true"/>
+                        
+                        <h:outputLabel value="Dirección: " /> 
+                        <p:inputText value="#{gestionArticulosBean.casino.batallon.direccion}" 
+                                     readonly="true"/>
 
 
                     </p:panelGrid>

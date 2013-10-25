@@ -12,6 +12,7 @@ import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
 import com.pasantia.excepciones.CadenaVaciaException;
+import com.pasantia.excepciones.CasinoNoSeleccionadoException;
 import com.pasantia.excepciones.PreciosArticuloException;
 import com.pasantia.utilidades.CombosComunes;
 import com.pasantia.utilidades.Utilidad;
@@ -25,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -46,8 +48,9 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     private Boolean estaEditando;
     private Integer accordion;
     private Casino casino;
+    private String casinoBuscar;
     
-    private List<Casino> casinos;
+    
     
     @Inject
     CrudDAO<Tblunidad> unidadDAO;
@@ -73,7 +76,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     
     public void guardar(){
         try {
-            validarProductoBean.validarProducto(producto, unidad, categoria, ubicacion, estaEditando);
+            validarProductoBean.validarProducto(producto, unidad, categoria, ubicacion, estaEditando,casino);
             List<PrecioCompra> precios=new ArrayList<PrecioCompra>();
             precios=controlPreciosBean.getPrecios();
             guardarArticuloBean.guardar(producto, unidad, categoria, ubicacion, precios,estaEditando);
@@ -85,6 +88,11 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         }catch(PreciosArticuloException ex){
             log.info(ex.getMessage());
             Utilidad.mensajeError("SICOVI", "Precios de compra y venta: " + ex.getMessage());
+            accordion=2;
+            Utilidad.actualizarElemento("accordioproduc");
+        } catch (CasinoNoSeleccionadoException ex) {
+            log.info(ex.getMessage());
+            Utilidad.mensajeError("SICOVI", "Selección casino: : " + ex.getMessage());
             accordion=1;
             Utilidad.actualizarElemento("accordioproduc");
         }
@@ -117,6 +125,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     }
     
     public void reiniciarProducto(){
+        casino=new Casino();
         producto.setCantidadActual(null);
         producto.setCantidadMinima(null);
         producto.setPrecioVenta1(BigDecimal.ZERO);
@@ -167,46 +176,67 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     public void cargarUnidad(){
         if(unidad.getSecunidad()!=null){
             unidad=unidadDAO.buscar(Tblunidad.class, unidad.getSecunidad());
+            if(unidad.getSecunidad()!=null){
+                producto.setTblunidad(unidad);
+            }
         }
     }
     
     public void cargarCategoria(){
         if(categoria.getIdCategoria()!=null){
             categoria=categoriaDAO.buscar(Categoria.class, categoria.getIdCategoria());
+            if(categoria.getIdCategoria()!=null){
+                producto.setCategoria(categoria);
+            }
         }
     }
     
     public void cargarUbicacion(){
         if(ubicacion.getIdUbicacion()!=null){
             ubicacion=ubicacionDAO.buscar(Ubicacion.class, ubicacion.getIdUbicacion());
+            if(ubicacion.getIdUbicacion()!=null){
+                producto.setUbicacion(ubicacion);
+            }
         }
     }
     
-    public List<Casino> completeCasinos(String query) {
-        List<Casino> suggestions = new ArrayList<Casino>();
-        log.log(Level.INFO, "query  autocomplete : {0}", query);
-        log.log(Level.INFO, " tam lista  : {0}", casinos.size());
-        if (query != null && query.length() > 0) {
-            for (Casino c : casinos) {
-                if (c.getNombre().toUpperCase().startsWith(query.toUpperCase())) {
-                    suggestions.add(c);
-                }
-            }
-        } else {
-            // productoSeleccionado = null;
+    public List<String> completeCasinos(String s) {
+       List<Casino> casinos = new ArrayList<Casino>();
+       List<String> nomcasinos=new ArrayList<String>();
+          
+       if(Utilidad.cadenaVacia(s)){
+           casinos=crudDAO.buscarTodos(Casino.class);
+       }else{
+           casinos=crudDAO.buscarxAlgunCampoStringLike(Casino.class, "nombre", s);
+       }
+       
+       if(Utilidad.listaEstaVacia(casinos)){
+           Utilidad.mensajePeligro("SICOVI", "No hay casinos con el parametro digitado");
+       }else{
+           for (Casino casi : casinos) {
+               nomcasinos.add(casi.getNombre());
+           }
+           
+       }      
+          
+        return nomcasinos;  
+    }
+    
+    public void cargarCasino(SelectEvent event) {
+        log.info("--------------------------------- Entro a cargarCasino");
+        String texto="";
+        texto = (String) event.getObject();
+        casino=crudDAO.buscarxAlgunCampoString(Casino.class, "nombre", texto);        
+        if(casino.getIdCasino()!=null){
+            producto.setCasino(casino);
         }
-        if (suggestions.isEmpty()) {
-            Utilidad.mensajeError("No encontrado", "Producto no encontrado");
-        }
-        for (Casino casinos : suggestions) {
-            log.log(Level.INFO, "medicamento {0}", casinos.getNombre());
-        }
-        return suggestions;
+        log.info("[Fijando el casino seleccionado desde el autocomplete");
+        log.log(Level.INFO, "casino nombre**************{0}", casino.getNombre());
+        
     }
     
     @PostConstruct
-    public void Init(){
-        casinos=crudDAO.buscarTodos(Casino.class);
+    public void Init(){         
         cargarComboCategorias();
         cargarComboUnidades();
         cargarComboUbicaciones();
@@ -214,16 +244,17 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
     }
     
-    public GestionArticulosBean() {
+    public GestionArticulosBean() {  
         casino=new Casino();
         producto = new Producto();
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
-        listaControlBotones=new ArrayList<Integer>();
-        casinos=new ArrayList<Casino>();
+        listaControlBotones=new ArrayList<Integer>();       
         estaEditando=false;
         accordion=0;
+        casinoBuscar="";
+        
     }
 
     public Producto getProducto() {
@@ -289,6 +320,16 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     public void setCasino(Casino casino) {
         this.casino = casino;
     }
+
+    public String getCasinoBuscar() {
+        return casinoBuscar;
+    }
+
+    public void setCasinoBuscar(String casinoBuscar) {
+        this.casinoBuscar = casinoBuscar;
+    }
+    
+    
     
     
     

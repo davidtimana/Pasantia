@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -153,5 +154,10 @@ public class Utilidad implements Serializable {
         } catch (Exception e) {
         }
         return devuelve;
+    }
+    
+     @SuppressWarnings("rawtypes")
+    public static boolean listaEstaVacia(List lista) {
+        return (lista == null || lista.isEmpty());
     }
 }

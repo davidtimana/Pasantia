@@ -5,12 +5,14 @@
 package com.pasantia.articulos.articulo;
 
 import com.pasantia.dao.CrudDAO;
+import com.pasantia.entidades.Casino;
 import com.pasantia.entidades.Categoria;
 import com.pasantia.entidades.PrecioCompra;
 import com.pasantia.entidades.Producto;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.Ubicacion;
 import com.pasantia.excepciones.CadenaVaciaException;
+import com.pasantia.excepciones.CasinoNoSeleccionadoException;
 import com.pasantia.excepciones.PreciosArticuloException;
 import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
@@ -18,6 +20,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -41,8 +44,9 @@ public class ValidarProductoBean implements Serializable {
     ControlPreciosBean preciosBean;
     
 
-    public void validarProducto(Producto p, Tblunidad un, Categoria c, Ubicacion u,Boolean estaEditando) 
-            throws CadenaVaciaException, PreciosArticuloException{
+    public void validarProducto(Producto p, Tblunidad un, Categoria c, Ubicacion u,Boolean estaEditando,Casino ca) 
+            throws CadenaVaciaException, PreciosArticuloException, CasinoNoSeleccionadoException{
+        log.log(Level.INFO, ">>>>>>>>>>>>>>>><el casino quedo de la siguiente manera--> {0}", ca.getNombre());
         limpiarEstilos();
         validarCadenasVacias(p.getDescripcion(), "lbldesprodu", "txtdesprodu", 1, "Descripción del producto requerida.");
         validarCadenasVacias(p.getCodigoBarras(), "lblcodbarras", "txtcodbarras", 2, "Codigo de barras del producto requerido.");
@@ -53,6 +57,7 @@ public class ValidarProductoBean implements Serializable {
         validarObjeto(un.getSecunidad(), "lblunidades", "cmbunidades", 5, "Seleccion de la unidad de medida para este producto requerida.");
         validarObjeto(c.getIdCategoria(), "lblcategoria", "cmbcategoria", 6, "Seleccion de la categoria del producto requerida.");
         validarObjeto(u.getIdUbicacion(), "lblubicacion", "cmbubicacion", 7, "Seleccion de la ubicación de este producto requerida.");
+        validarObjetoCasino(ca.getIdCasino(), "lblcasino", "autcasino", 11, "Seleccion de casino requerido.");
         validarObjetoPrecio(p.getPrecioVenta1(), "lblprec1", "txtprec1", 8, "Tarifa de venta principal para este producto requerido.");
         validarPreciosCompra(preciosBean.getPrecios());
     }
@@ -69,6 +74,7 @@ public class ValidarProductoBean implements Serializable {
         estilosError.set(8,"");
         estilosError.set(9,"");
         estilosError.set(10,"");
+        estilosError.set(11,"");
         Utilidad.actualizarElemento("accordioproduc");
     }
     
@@ -120,6 +126,19 @@ public class ValidarProductoBean implements Serializable {
             Utilidad.actualizarElemento(idLbl);            
             Utilidad.actualizarElemento(idtxt);            
             throw new CadenaVaciaException(mensaje);
+        } else {
+            estilosError.set(posEstilo, "");            
+            Utilidad.actualizarElemento(idLbl);            
+            Utilidad.actualizarElemento(idtxt);            
+        }
+    }
+    
+    public void validarObjetoCasino(Object objeto, String idLbl,String idtxt, Integer posEstilo, String mensaje) throws CasinoNoSeleccionadoException {
+        if (objeto==null) {
+            estilosError.set(posEstilo, Utilidad.estilosErrorInput());
+            Utilidad.actualizarElemento(idLbl);            
+            Utilidad.actualizarElemento(idtxt);            
+            throw new CasinoNoSeleccionadoException(mensaje);
         } else {
             estilosError.set(posEstilo, "");            
             Utilidad.actualizarElemento(idLbl);            
@@ -191,6 +210,7 @@ public class ValidarProductoBean implements Serializable {
         estilosError.add("");//8
         estilosError.add("");//9
         estilosError.add("");//10
+        estilosError.add("");//11
     }
     
     @PostConstruct

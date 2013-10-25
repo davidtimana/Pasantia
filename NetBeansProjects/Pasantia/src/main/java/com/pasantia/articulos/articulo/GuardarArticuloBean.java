@@ -59,9 +59,10 @@ public class GuardarArticuloBean implements Serializable {
             if(crudDAOProduc.crear(p)){
                 Producto ultimo=crudDAOProduc.buscarUltimo(Producto.class);
                 if(ultimo!=null){
-                    log.info("el ultimo producto es el siguente-->"+ultimo.getDescripcion());
+                    log.log(Level.INFO, "el ultimo producto es el siguente-->{0}", ultimo.getDescripcion());
                     for (PrecioCompra pre : listaPreciosCompra) {
                         if(pre.getActivo()){
+                            pre.setProducto(ultimo);
                             if(crudDAOPrCom.crear(pre)){
                                 Utilidad.mensajeInfo("SICOVI", "Producto: "+p.getDescripcion()+". Creado con exito.");
                             }

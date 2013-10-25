@@ -280,6 +280,36 @@ public class CrudJpaDAO<T> implements CrudDAO<T>{
         }
         return retornar;
     }
+
+    @Override
+    public List<T> buscarxAlgunCampoStringLike(Class<T> entityClass, Object campo, Object parametro) {
+        Session session = ConexionHibernate.getSessionFactory().openSession();
+        StringBuilder jpql = new StringBuilder();
+        List<T> listaEntidad = null;
+        try {
+            jpql.append("SELECT miEntidad FROM ");
+            jpql.append(entityClass.getSimpleName());
+            jpql.append(" miEntidad ");
+            jpql.append(" WHERE ");
+            jpql.append(" UPPER(miEntidad.");
+            jpql.append(campo.toString());
+            jpql.append(") ");
+            jpql.append(" LIKE ");
+            jpql.append("'");            
+            jpql.append(parametro.toString());
+            jpql.append("%'");            
+            Query q = session.createQuery(jpql.toString());            
+            listaEntidad = (List<T>) q.list();
+            session.flush();
+        } catch (Exception e) {
+            listaEntidad=null;
+            System.err.println("Error al buscarxAlgunCampoStringLike Generico: " + e.getMessage());
+            session.beginTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return listaEntidad;
+    }
     
     
     

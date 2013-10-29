@@ -23,6 +23,19 @@
     </ui:define>
 
     <ui:define name="cuerpo">
+        <style>
+            .scrollObservaciones {
+                width: 820px;
+                height: 80px;
+            }
+
+            .textAreaObservaciones {
+                width: 780px;
+                margin-left: 12px;
+                margin-top: 10px;
+                margin-bottom: 10px
+            }
+        </style>
         <!-- Aqui el cuerpo de la pagina -->
         <h:form id="frmProducto">
             <h:panelGrid id="pnlProducto" columns="1">
@@ -222,16 +235,33 @@
                              value="#{venta.calcularValorVenta()}">
                 </p:inputText>
             </p:panelGrid>
-            <br />
-            <br />
+            <br />                        
+            <h:panelGrid columns="1">
+                <p:outputLabel value="Forma pago: *"  for="formaPagos" />
+                <h:panelGroup>
+                    <p:selectOneMenu id="formaPagos" value="#{venta.formaPago.secformaPago}">                                  >  
+                        <f:selectItem itemLabel="...Seleccione..."  />  
+                        <f:selectItems value="#{venta.comboFormaPagos}"  />                                                                                       
+                    </p:selectOneMenu>
+                </h:panelGroup>               
+                <p:outputLabel value="Observacion: *" for="txtObservaciones" />                                                                   
+                <h:panelGroup>
+                    <p:scrollPanel styleClass="scrollObservaciones" mode="native">
+                        <p:inputTextarea styleClass="textAreaObservaciones" maxlength="300" id="txtObservaciones"
+                                         value="#{venta.venta.observacion}" >
+                            <p:ajax partialSubmit="true" />
+                        </p:inputTextarea>
+                    </p:scrollPanel>  
+                </h:panelGroup>                
+            </h:panelGrid>
             <br />
             <p:commandButton id="idguardar"
                              value="Guardar"                
                              title="Guardar" 
                              actionListener="#{venta.guardar()}" 
-                             update=":frmCarrito"
+                             update=":frmCarrito :frmProducto"
                              process="@this">
             </p:commandButton>
-        </h:form>
+        </h:form>      
     </ui:define>
 </ui:composition>

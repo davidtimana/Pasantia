@@ -14,7 +14,11 @@ import com.pasantia.utilidades.Utilidad;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -31,14 +35,14 @@ public class GuardarArticuloBean implements Serializable {
     private static final Logger log = Logger.getLogger(GuardarArticuloBean.class.getName());
     
 
-    /**
-     * Creates a new instance of GuardarArticuloBean
-     */
+    private Producto producto;
     
     @Inject
     CrudDAO<Producto> crudDAOProduc;
     @Inject
     CrudDAO<PrecioCompra> crudDAOPrCom;
+    @Inject
+    SubirFotoProductoBean subirFotoProductoBean;
     
     public void guardar(Producto p, Tblunidad u, Categoria c, Ubicacion ub, 
             List<PrecioCompra> listaPreciosCompra,Boolean estaEditando){
@@ -47,9 +51,17 @@ public class GuardarArticuloBean implements Serializable {
         log.log(Level.INFO, "la categoria que se va a guardar es la siguiente--->{0}", c.getDescripcion());
         log.log(Level.INFO, "la ubicacion que se va a guardar es la siguiente--->{0}", ub.getDescripcion());
         
+        Set precioCompras = new HashSet(0);
+        Map<Boolean, String> fotosSinGuardar=new TreeMap<Boolean,String>();
+        fotosSinGuardar=subirFotoProductoBean.getFotosSinGuardar();
+        
+        
         for (PrecioCompra precioCompra : listaPreciosCompra) {
             log.log(Level.INFO, "los precios de compra son los siguientes-->{0}", precioCompra.getPrecio());
+            precioCompras.add(precioCompra);
         }
+        
+        p.setPrecioCompras(precioCompras);
         
         if(estaEditando){
             //Aqui editamos
@@ -57,18 +69,29 @@ public class GuardarArticuloBean implements Serializable {
             //Aqui guardamos
             
             if(crudDAOProduc.crear(p)){
-                Producto ultimo=crudDAOProduc.buscarUltimo(Producto.class);
-                if(ultimo!=null){
-                    log.log(Level.INFO, "el ultimo producto es el siguente-->{0}", ultimo.getDescripcion());
+                producto=crudDAOProduc.buscarUltimo(Producto.class);
+                
+                
+                
+                if(producto!=null){
+                    log.log(Level.INFO, "el ultimo producto es el siguente-->{0}", producto.getDescripcion());
                     for (PrecioCompra pre : listaPreciosCompra) {
                         if(pre.getActivo()){
-                            pre.setProducto(ultimo);
+                            pre.setProducto(producto);
                             if(crudDAOPrCom.crear(pre)){
+                                for (Map.Entry e : fotosSinGuardar.entrySet()) {
+                                    Boolean llave = (Boolean) e.getKey();
+                                    String valor = (String) e.getValue();
+                                    if(valor.equals(producto.getImagen())){
+                                        llave=true;
+                                    }
+                                }
                                 Utilidad.mensajeInfo("SICOVI", "Producto: "+p.getDescripcion()+". Creado con exito.");
                             }
                         }
                     }
                 }
+                
             }else{
                 Utilidad.mensajeFatal("SICOVI", "Ocurrio un error al ejecutar la operación.");
             }
@@ -77,5 +100,16 @@ public class GuardarArticuloBean implements Serializable {
     }
     
     public GuardarArticuloBean() {
+        producto=new Producto();
     }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+    
+    
 }

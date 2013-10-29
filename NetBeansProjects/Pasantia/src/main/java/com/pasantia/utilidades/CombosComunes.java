@@ -24,6 +24,7 @@ import com.pasantia.entidades.Divisiones;
 import com.pasantia.entidades.Pais;
 import com.pasantia.entidades.Rol;
 import com.pasantia.entidades.Sexo;
+import com.pasantia.entidades.TblformaPago;
 import com.pasantia.entidades.Tblunidad;
 import com.pasantia.entidades.TipoIdentificacion;
 import com.pasantia.entidades.TipoPersona;
@@ -42,11 +43,10 @@ import javax.inject.Inject;
  *
  * @author David Timana
  */
-public class CombosComunes implements Serializable{
-    
+public class CombosComunes implements Serializable {
+
     private static final long serialVersionUID = 6985371832447944178L;
     private static final Logger log = Logger.getLogger(CombosComunes.class.getName());
-    
 
     //Atributos Combo Tipo Identificacion
     private List<TipoIdentificacion> tipoIdentificaciones;
@@ -87,7 +87,10 @@ public class CombosComunes implements Serializable{
     //Atributos Combo Ubicaciones
     private List<Ubicacion> ubicaciones;
     private List<SelectItem> comboUbicaciones;
-    
+    //Atribuos Combo Foma pago
+    private List<TblformaPago> formaPagos;
+    private List<SelectItem> comboFormaPagos;
+
     //Inyecciones
     @Inject
     TipoIdentificacionDAO tipoIdentificacionDAO;
@@ -115,7 +118,8 @@ public class CombosComunes implements Serializable{
     CrudDAO<Ubicacion> ubicacionDAO;
     @Inject
     CrudDAO<Categoria> categoriaDAO;
-    
+    @Inject
+    CrudDAO<TblformaPago> formaPagoDAO;
 
     /**
      * Metodo que se encarga de buscar y cargar un combo con Tipo
@@ -125,8 +129,8 @@ public class CombosComunes implements Serializable{
      */
     public List<SelectItem> cargarComboTipoIdentificacion() {
         cargarTipoIdentificaciones();
-        
-        for (int i = 0; i < tipoIdentificaciones.size(); i++) {            
+
+        for (int i = 0; i < tipoIdentificaciones.size(); i++) {
             comboTipoIdentificacion.add(new SelectItem(tipoIdentificaciones.get(i).getIdTipoIdentificacion(), tipoIdentificaciones.get(i).getNombreTipoIdentificacion()));
         }
         return comboTipoIdentificacion;
@@ -159,7 +163,7 @@ public class CombosComunes implements Serializable{
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboPais() {
-        comboPais=new ArrayList<SelectItem>();
+        comboPais = new ArrayList<SelectItem>();
         cargarPaises();
         for (int i = 0; i < paises.size(); i++) {
             comboPais.add(new SelectItem(paises.get(i).getIdPais(), paises.get(i).getNombrePais()));
@@ -178,17 +182,17 @@ public class CombosComunes implements Serializable{
      * @param Integer idPais
      * @return List<SelecItem>
      */
-    public List<SelectItem> cargarComboDepartamento(Integer idPais) {        
-        comboDepartamento=new ArrayList<SelectItem>();
-        cargarDepartamentos(idPais);        
-        for (int i = 0; i < departamentos.size(); i++) {            
+    public List<SelectItem> cargarComboDepartamento(Integer idPais) {
+        comboDepartamento = new ArrayList<SelectItem>();
+        cargarDepartamentos(idPais);
+        for (int i = 0; i < departamentos.size(); i++) {
             comboDepartamento.add(new SelectItem(departamentos.get(i).getIdDepartamento(), departamentos.get(i).getNombreDepartamento()));
-        }        
+        }
         return comboDepartamento;
     }
 
-    private void cargarDepartamentos(Integer idPais) {        
-        departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);        
+    private void cargarDepartamentos(Integer idPais) {
+        departamentos = departamentoDAO.buscarDepartamentoporIdPais(idPais);
     }
 
     /**
@@ -199,7 +203,7 @@ public class CombosComunes implements Serializable{
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboCiudad(Integer idDepartamento) {
-        comboCiudades=new ArrayList<SelectItem>();
+        comboCiudades = new ArrayList<SelectItem>();
         cargaCiudades(idDepartamento);
         for (int i = 0; i < ciudades.size(); i++) {
             comboCiudades.add(new SelectItem(ciudades.get(i).getIdCiudad(), ciudades.get(i).getNombreCiudad()));
@@ -218,8 +222,8 @@ public class CombosComunes implements Serializable{
      * @return List<SelecItem>
      */
     public List<SelectItem> cargarComboDivisionesAsociadas() {
-        comboDivisionesAsociadas=new ArrayList<SelectItem>();
-        cargaDivisionesAsociadas();        
+        comboDivisionesAsociadas = new ArrayList<SelectItem>();
+        cargaDivisionesAsociadas();
         for (int i = 0; i < divisionesAsociadas.size(); i++) {
             comboDivisionesAsociadas.add(new SelectItem(divisionesAsociadas.get(i).getIdDivisiones(), divisionesAsociadas.get(i).getNombreDivision()));
         }
@@ -227,127 +231,163 @@ public class CombosComunes implements Serializable{
     }
 
     private void cargaDivisionesAsociadas() {
-        divisionesAsociadas=new ArrayList<Divisiones>();
+        divisionesAsociadas = new ArrayList<Divisiones>();
         divisionesAsociadas = divisionesDAO.buscarDivisionesAsociadas();
     }
-    
+
     /**
      * Metodo que se encarga de buscar y cargar un combo con Tipo
-     * Identificaciones     *
+     * Identificaciones
+     *
+     *
      * @return List<SelecItem>
      */
-    public List<SelectItem> cargarComboTiposPersonas(){
+    public List<SelectItem> cargarComboTiposPersonas() {
         cargaTiposPersonas();
         for (int i = 0; i < tipoPersonas.size(); i++) {
             comboTipoPersonas.add(new SelectItem(tipoPersonas.get(i).getIdTipoPersona(), tipoPersonas.get(i).getNombreTipoPersona()));
         }
         return comboTipoPersonas;
     }
-    private void cargaTiposPersonas(){
-        tipoPersonas=tipoPersonaDAO.buscarTiposPersona();
+
+    private void cargaTiposPersonas() {
+        tipoPersonas = tipoPersonaDAO.buscarTiposPersona();
     }
-    
+
     /**
-     * Metodo que se encarga de buscar y cargar un combo con los
-     * cargos de las personas militares
+     * Metodo que se encarga de buscar y cargar un combo con los cargos de las
+     * personas militares
+     *
      * @return List<SelecItem>
      */
-     public List<SelectItem> cargarComboCargo(){
+    public List<SelectItem> cargarComboCargo() {
         cargaCargos();
         for (int i = 0; i < cargos.size(); i++) {
             comboCargos.add(new SelectItem(cargos.get(i).getIdCargo(), cargos.get(i).getDescripcion()));
         }
         return comboCargos;
     }
-    private void cargaCargos(){
-        cargos=cargoDAO.buscartodosCargos();
+
+    private void cargaCargos() {
+        cargos = cargoDAO.buscartodosCargos();
     }
-    
-     /**
-     * Metodo que se encarga de buscar y cargar un combo con los
-     * catalogos para los vendedores proveedores
+
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con los catalogos para
+     * los vendedores proveedores
+     *
      * @return List<SelecItem>
      */
-     public List<SelectItem> cargarComboCatalogosVenta(){
+    public List<SelectItem> cargarComboCatalogosVenta() {
         cargarCatalogos();
         for (int i = 0; i < catalogosVenta.size(); i++) {
             comboCatalogoVenta.add(new SelectItem(catalogosVenta.get(i).getIdCatalogoVenta(), catalogosVenta.get(i).getDescripcion()));
         }
         return comboCatalogoVenta;
     }
-    private void cargarCatalogos(){
-        catalogosVenta=catalogoVentaDAO.buscarCatalogos();
+
+    private void cargarCatalogos() {
+        catalogosVenta = catalogoVentaDAO.buscarCatalogos();
     }
-    
+
     /**
-     * Metodo que se encarga de buscar y cargar un combo con los
-     * roles para los usuarios de la aplicacion
+     * Metodo que se encarga de buscar y cargar un combo con los roles para los
+     * usuarios de la aplicacion
+     *
      * @return comboRoles
      */
-     public List<SelectItem> cargarComboRoles(){
+    public List<SelectItem> cargarComboRoles() {
         cargarRoles();
-        comboRoles=new ArrayList<SelectItem>();
+        comboRoles = new ArrayList<SelectItem>();
         for (int i = 0; i < roles.size(); i++) {
             comboRoles.add(new SelectItem(roles.get(i).getIdRol(), roles.get(i).getDescripcion()));
         }
         return comboRoles;
     }
-    private void cargarRoles(){
-        roles=new ArrayList<Rol>();
-        roles=rolDAO.buscartodosRoles();
+
+    private void cargarRoles() {
+        roles = new ArrayList<Rol>();
+        roles = rolDAO.buscartodosRoles();
     }
-    
+
     /**
-     * Metodo que se encarga de buscar y cargar un combo con las
-     * unidades de medida para los productos de la aplicacion
+     * Metodo que se encarga de buscar y cargar un combo con las unidades de
+     * medida para los productos de la aplicacion
+     *
      * @return comboRoles
      */
-     public List<SelectItem> cargarComboUnidades(){
+    public List<SelectItem> cargarComboUnidades() {
         cargarUnidades();
-        comboUnidades=new ArrayList<SelectItem>();
-        for (int i = 0; i < unidades.size(); i++) {            
+        comboUnidades = new ArrayList<SelectItem>();
+        for (int i = 0; i < unidades.size(); i++) {
             comboUnidades.add(new SelectItem(unidades.get(i).getSecunidad(), unidades.get(i).getUnidades()));
         }
         return comboUnidades;
     }
-    private void cargarUnidades(){
-        unidades=new ArrayList<Tblunidad>();
-        unidades=unidadDAO.buscarTodos(Tblunidad.class);
+
+    private void cargarUnidades() {
+        unidades = new ArrayList<Tblunidad>();
+        unidades = unidadDAO.buscarTodos(Tblunidad.class);
     }
+
     /**
-     * Metodo que se encarga de buscar y cargar un combo con las
-     * ubicaciones de los productos de la aplicacion
+     * Metodo que se encarga de buscar y cargar un combo con las ubicaciones de
+     * los productos de la aplicacion
+     *
      * @return comboRoles
      */
-     public List<SelectItem> cargarComboUbicaciones(){
+    public List<SelectItem> cargarComboUbicaciones() {
         cargarUbicaciones();
-        comboUbicaciones=new ArrayList<SelectItem>();
+        comboUbicaciones = new ArrayList<SelectItem>();
         for (int i = 0; i < ubicaciones.size(); i++) {
             comboUbicaciones.add(new SelectItem(ubicaciones.get(i).getIdUbicacion(), ubicaciones.get(i).getDescripcion()));
         }
         return comboUbicaciones;
     }
-    private void cargarUbicaciones(){
-        ubicaciones=new ArrayList<Ubicacion>();
-        ubicaciones=ubicacionDAO.buscarTodos(Ubicacion.class);
+
+    private void cargarUbicaciones() {
+        ubicaciones = new ArrayList<Ubicacion>();
+        ubicaciones = ubicacionDAO.buscarTodos(Ubicacion.class);
     }
-    
+
     /**
-     * Metodo que se encarga de buscar y cargar un combo con las
-     * categorias de los productos de la aplicacion
+     * Metodo que se encarga de buscar y cargar un combo con las categorias de
+     * los productos de la aplicacion
+     *
      * @return comboRoles
      */
-     public List<SelectItem> cargarComboCategorias(){
+    public List<SelectItem> cargarComboCategorias() {
         cargarCategorias();
-        comboCategorias=new ArrayList<SelectItem>();
+        comboCategorias = new ArrayList<SelectItem>();
         for (int i = 0; i < categorias.size(); i++) {
             comboCategorias.add(new SelectItem(categorias.get(i).getIdCategoria(), categorias.get(i).getDescripcion()));
         }
         return comboCategorias;
     }
-    private void cargarCategorias(){
-        categorias=new ArrayList<Categoria>();
-        categorias=categoriaDAO.buscarTodos(Categoria.class);
+
+    private void cargarCategorias() {
+        categorias = new ArrayList<Categoria>();
+        categorias = categoriaDAO.buscarTodos(Categoria.class);
+    }
+
+    /**
+     * Metodo que se encarga de buscar y cargar un combo con las formas de de
+     * pago
+     *
+     * @return comboformaPagos
+     */
+    public List<SelectItem> cargarComboFormaPagos() {
+        cargarFormaPagos();
+        comboFormaPagos = new ArrayList<SelectItem>();
+        for (int i = 0; i < formaPagos.size(); i++) {
+            comboFormaPagos.add(new SelectItem(formaPagos.get(i).getSecformaPago(), formaPagos.get(i).getDescripcion()));
+        }
+        return comboFormaPagos;
+    }
+
+    private void cargarFormaPagos() {
+        formaPagos = new ArrayList<TblformaPago>();
+        formaPagos = formaPagoDAO.buscarTodos(TblformaPago.class);
     }
 
     //Constructor por Defecto
@@ -359,12 +399,13 @@ public class CombosComunes implements Serializable{
         ciudades = new ArrayList<Ciudad>();
         divisionesAsociadas = new ArrayList<Divisiones>();
         tipoPersonas = new ArrayList<TipoPersona>();
-        cargos=new ArrayList<Cargo>();
+        cargos = new ArrayList<Cargo>();
         catalogosVenta = new ArrayList<CatalogoVenta>();
-        roles=new ArrayList<Rol>();
-        unidades=new ArrayList<Tblunidad>();
-        ubicaciones=new ArrayList<Ubicacion>();
-        categorias=new ArrayList<Categoria>();
+        roles = new ArrayList<Rol>();
+        unidades = new ArrayList<Tblunidad>();
+        ubicaciones = new ArrayList<Ubicacion>();
+        categorias = new ArrayList<Categoria>();
+        formaPagos = new ArrayList<TblformaPago>();
 
         comboSexo = new ArrayList<SelectItem>();
         comboTipoIdentificacion = new ArrayList<SelectItem>();
@@ -376,9 +417,10 @@ public class CombosComunes implements Serializable{
         comboCargos = new ArrayList<SelectItem>();
         comboCatalogoVenta = new ArrayList<SelectItem>();
         comboRoles = new ArrayList<SelectItem>();
-        comboUnidades =new ArrayList<SelectItem>();
-        comboCategorias=new ArrayList<SelectItem>();
-        comboUbicaciones=new ArrayList<SelectItem>();
+        comboUnidades = new ArrayList<SelectItem>();
+        comboCategorias = new ArrayList<SelectItem>();
+        comboUbicaciones = new ArrayList<SelectItem>();
+        comboFormaPagos = new ArrayList<SelectItem>();
 
     }
 
@@ -391,7 +433,7 @@ public class CombosComunes implements Serializable{
         this.tipoIdentificaciones = tipoIdentificaciones;
     }
 
-    public List<SelectItem> getComboTipoIdentificacion() {        
+    public List<SelectItem> getComboTipoIdentificacion() {
         return comboTipoIdentificacion;
     }
 
@@ -407,7 +449,7 @@ public class CombosComunes implements Serializable{
         this.sexos = sexos;
     }
 
-    public List<SelectItem> getComboSexo() {        
+    public List<SelectItem> getComboSexo() {
         return comboSexo;
     }
 
@@ -590,12 +632,21 @@ public class CombosComunes implements Serializable{
     public void setComboUbicaciones(List<SelectItem> comboUbicaciones) {
         this.comboUbicaciones = comboUbicaciones;
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public List<TblformaPago> getFormaPagos() {
+        return formaPagos;
+    }
+
+    public void setFormaPagos(List<TblformaPago> formaPagos) {
+        this.formaPagos = formaPagos;
+    }
+
+    public List<SelectItem> getComboFormaPagos() {
+        return comboFormaPagos;
+    }
+
+    public void setComboFormaPagos(List<SelectItem> comboFormaPagos) {
+        this.comboFormaPagos = comboFormaPagos;
+    }
+
 }

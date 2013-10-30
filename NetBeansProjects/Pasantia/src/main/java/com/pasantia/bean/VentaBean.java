@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import com.pasantia.utilidades.CombosComunes;
+import org.primefaces.event.CellEditEvent;
 
 @Named("venta")
 @SessionScoped
@@ -67,12 +68,12 @@ public class VentaBean extends CombosComunes implements Serializable {
         listaPersona = personaDAO.buscar();
         cargarComboFormaPagos();
         listaDetalleVenta = new ArrayList<TbldetalleVenta>();
-        listaCarrito = new ArrayList<Producto>();
-        producto = new Producto();
+        listaCarrito = new ArrayList<Producto>();        
+        producto = new Producto();        
         persona = new Persona();
         venta = new Tblventa();
         formaPago = new TblformaPago();
-        total = new BigDecimal(0.0);
+        total = new BigDecimal(0);
     }
     
     public <T> boolean comparaNulos(T entidad) {
@@ -164,35 +165,48 @@ public class VentaBean extends CombosComunes implements Serializable {
     public void agregarACarrito() {
         logger.info("Hola desde agregarCarrito()");
         if (listaCarrito.contains(producto)) {
-            Utilidad.mensajeInfo("", "El producto ya se encuentra en el carrito!");
+            Utilidad.mensajeInfo("Información", "El producto ya se encuentra en el carrito!");
             logger.info("El producto ya se encuentra en el carrito!");
         } else {
             listaCarrito.add(producto);
+            calcularValorVenta();
         }
         producto = new Producto();
     }
     
-    public BigDecimal calcularValorVenta() {
+    public void calcularValorVenta() {
         for (Producto prod : listaCarrito) {
-            //total = prod.getPrecioVenta1().add(total);
-            total = total.add(prod.getPrecioVenta1());
+            if (prod.getCantidad() == null) {
+                logger.log(Level.INFO, "cantidad de cada producto--------------->{0}", prod.getCantidad());
+                total = total.add(prod.getPrecioVenta1());
+            } else {
+                total = total.add(prod.getPrecioVenta1()).multiply(prod.getCantidad());
+            }
         }
         logger.log(Level.INFO, "total: {0}", total);
-        return total;
-        
     }
     
     public void eliminarDCarrito(Producto item) {
         if (item != null) {
             listaCarrito.remove(item);
+            calcularValorVenta();
+            logger.log(Level.INFO, "total despues de eliminar------------------------------->{0}", total);
         } else {
             Utilidad.mensajeError("ERROR", "No se pudo eliminar el producto");
         }
     }
     
+    public void cellEdit(CellEditEvent event) {
+        logger.info("<-------------------ENTRO A cellEdit----------------->");
+        calcularValorVenta();
+    }
+    
     public void guardar() {
+        
+        logger.log(Level.INFO, "<------------------------CLIENTE------------------------------>{0}", persona.getCedula());
+        
         if (getListaCarrito().isEmpty()) {
-            Utilidad.mensajeInfo("Debe Agregar", "Debe agregar almenos un producto.");
+            Utilidad.mensajeInfo("Información", "Debe agregar almenos un producto.");
         } else {
             Casino casino = new Casino();
             Date fecha = new Date();
@@ -205,7 +219,8 @@ public class VentaBean extends CombosComunes implements Serializable {
             vendedor.setIdTblpersona(1);
             venta.setPersonaBySecvendedor(vendedor);
             venta.setTotal(getTotal().longValue());
-            venta.setTotalCantidad(null);
+            byte totalCantidad = (byte) listaCarrito.size();
+            venta.setTotalCantidad(totalCantidad);
             if (formaPago.getSecformaPago() != null) {
                 venta.setTblformaPago(formaPago);
             } else {
@@ -231,7 +246,7 @@ public class VentaBean extends CombosComunes implements Serializable {
             detalleVentaDAO.guardar(listaDetalleVenta);
             init();
             
-            Utilidad.mensajeInfo("Guardo", "Venta realizada con exito.");
+            Utilidad.mensajeInfo("Información", "Venta realizada con exito.");
         }
     }
 

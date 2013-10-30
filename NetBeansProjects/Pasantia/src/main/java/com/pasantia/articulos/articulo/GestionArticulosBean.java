@@ -66,8 +66,14 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     GuardarArticuloBean guardarArticuloBean;
     @Inject
     CrudDAO<Casino> crudDAO;
+    @Inject
+    BuscarProductoBean buscarProductoBean;
     
 
+    public void cargarBuscador(){
+        buscarProductoBean.abrirBuscador();
+    }
+    
     public void cargarFoto(String foto) throws InterruptedException {
         producto.setImagen(foto);
         Thread.sleep(4000);

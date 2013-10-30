@@ -237,7 +237,7 @@
                                  rendered="#{gestionArticulosBean.listaControlBotones.get(1)==1}"/>    
                 <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{gestionArticulosBean.cancelar()}" icon="ui-icon-cancel"                                  
                                  rendered="#{gestionArticulosBean.listaControlBotones.get(2)==1}"/>
-                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionarAcceso.buscar()}" icon="ui-icon-search"                                  
+                <p:commandButton value="Buscar" title="Buscar" actionListener="#{gestionArticulosBean.cargarBuscador()}" icon="ui-icon-search"                                  
                                  rendered="#{gestionArticulosBean.listaControlBotones.get(3)==1}"/>
                 <p:commandButton value="Guardar" title="Guardar" actionListener="#{gestionArticulosBean.guardar()}" icon="ui-icon-disk"                                  
                                  rendered="#{gestionArticulosBean.listaControlBotones.get(4)==1}"/>

@@ -200,39 +200,59 @@
         <br />
         <br />
         <h:form id="frmCarrito">
-            <p:dataTable value="#{venta.listaCarrito}" var="item" id="tbllistaC"
-                         paginator="true"
-                         paginatorPosition="bottom"
-                         rows="10" styleClass="tabla">
-                <p:column filterBy="#{item.codigoBarras}" sortBy="#{item.codigoBarras}">
+            <p:dataTable value="#{venta.listaCarrito}" 
+                         var="item" 
+                         id="tbllistaC"                         
+                         rows="10" 
+                         styleClass="tabla"
+                         editable="true" 
+                         editMode="cell"
+                         paginator="true"                          
+                         paginatorPosition="bottom" 
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         emptyMessage="No hay Productos de Venta Agregados.">
+
+                <p:ajax event="cellEdit" listener="#{venta.cellEdit}" update=":frmCarrito"/>
+
+                <p:column style="text-align: center" filterBy="#{item.codigoBarras}" sortBy="#{item.codigoBarras}">
                     <f:facet name="header">
                         <h:outputText value="Codigo"/>
                     </f:facet>
                     <h:outputText value="#{item.codigoBarras}"/>
                 </p:column>
-                <p:column filterBy="#{item.descripcion}" sortBy="#{item.descripcion}">
+                <p:column style="text-align: center" filterBy="#{item.descripcion}" sortBy="#{item.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="Nombre"/>
                     </f:facet>
                     <h:outputText value="#{item.descripcion}"/>
                 </p:column>
-                <p:column filterBy="#{item.categoria.descripcion}" sortBy="#{item.categoria.descripcion}">
+                <p:column style="text-align: center" filterBy="#{item.categoria.descripcion}" sortBy="#{item.categoria.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="Tipo producto"/>
                     </f:facet>
                     <h:outputText value="#{item.categoria.descripcion}"/>
                 </p:column>
-                <p:column>
+                <p:column sortBy="#{item.cantidad}" filterBy="#{item.cantidad}" style="text-align: center" headerText="Cantidad">
+                    <p:cellEditor>                        
+                        <f:facet name="output"><h:outputText value="#{item.cantidad}"/></f:facet>  
+                        <f:facet name="input"><p:inputText value="#{item.cantidad}"/></f:facet>                                                                    
+                    </p:cellEditor>                      
+                </p:column>
+                <p:column sortBy="#{item.precioVenta1}" filterBy="#{item.precioVenta1}" style="text-align: center">
                     <f:facet name="header">
                         <h:outputText value="Precio"/>
                     </f:facet>
-                    <h:outputText value="#{item.precioVenta1}"/>
-                </p:column>                                                                                                                                
+                    <h:outputText value="$ #{item.precioVenta1}"/>
+                </p:column>
+                <p:column headerText="Acciones" style="text-align: center"   >  
+                    <p:commandButton update=":frmCarrito" icon="ui-icon-trash" title="Eliminar" actionListener="#{venta.eliminarDCarrito(item)}" />
+                </p:column>
             </p:dataTable>
             <p:panelGrid columns="2">
                 <p:outputLabel for="txtTotal" value="Total"  />
                 <p:inputText id="txtTotal" disabled="true"
-                             value="#{venta.calcularValorVenta()}">
+                             value="#{venta.total}">
                 </p:inputText>
             </p:panelGrid>
             <br />                        

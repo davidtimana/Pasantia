@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+
+        <p:dialog header="Precios De Compra" widgetVar="dlgpreciosprod" resizable="false" 
+                  id="dlgpreciosprod" showEffect="explode" hideEffect="explode"  modal="true"  width="50%" height="50%" 
+                  minimizable="true" visible="#{guardarArticuloBean.abrir}" closable="false" >
+
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <p:outputLabel value="Seleccione el precio con que desea facturar: " />  
+                <p:selectOneRadio id="sorprecios" value="#{guardarArticuloBean.valorSelect}" layout="sorprecios" >  
+                    <f:selectItems value="#{guardarArticuloBean.selPrecios}"/>  
+                    <p:ajax listener="#{guardarArticuloBean.enviaraEditar()}" />
+                </p:selectOneRadio> 
+
+                
+
+            </p:panelGrid>                     
+
+
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

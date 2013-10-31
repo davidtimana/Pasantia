@@ -68,9 +68,31 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     CrudDAO<Casino> crudDAO;
     @Inject
     BuscarProductoBean buscarProductoBean;
+    @Inject
+    CrudDAO<Producto> crudDAOprod;
+    
+    
     
 
+    public void cargarUltimo(){
+        producto=crudDAOprod.buscarUltimo(Producto.class);
+        cargarObjeto(producto);
+    }
+    
+    public void cargarObjeto(Producto p){
+        producto=p;
+        casinoBuscar=p.getCasino().getNombre();
+        unidad=p.getTblunidad();
+        categoria=p.getCategoria();
+        ubicacion=p.getUbicacion();
+        casino=p.getCasino();
+        controlPreciosBean.cargarPrecios(producto);
+        
+    }
+    
     public void cargarBuscador(){
+        controlPreciosBean.setDesHabiAdd(true);        
+        Utilidad.actualizarElemento("btnpreccompra");
         buscarProductoBean.abrirBuscador();
     }
     
@@ -85,7 +107,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
             validarProductoBean.validarProducto(producto, unidad, categoria, ubicacion, estaEditando,casino);
             List<PrecioCompra> precios=new ArrayList<PrecioCompra>();
             precios=controlPreciosBean.getPrecios();
-            guardarArticuloBean.guardar(producto, unidad, categoria, ubicacion, precios,estaEditando);
+            guardarArticuloBean.prepararGuardado(producto, unidad, categoria, ubicacion, precios,estaEditando);
         } catch (CadenaVaciaException ex) {
             log.info(ex.getMessage());
             Utilidad.mensajeError("SICOVI", "Datos Basicos Articulo: " + ex.getMessage());
@@ -112,10 +134,12 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
+        cargarUltimo();
         Utilidad.actualizarElemento("frmproductos");
     }
     
     public void nuevo(){
+        controlPreciosBean.setDesHabiAdd(false);        
         estaEditando=false;
         accordion=0;
         reiniciarProducto();
@@ -131,18 +155,25 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     }
     
     public void reiniciarProducto(){
+        controlPreciosBean.setDesHabiAdd(true);
+        Utilidad.actualizarElemento("btnpreccompra");
+        casinoBuscar="";
         casino=new Casino();
         producto.setCantidadActual(null);
         producto.setCantidadMinima(null);
         producto.setPrecioVenta1(BigDecimal.ZERO);
         producto.setPrecioVenta2(BigDecimal.ZERO);
         producto.setCodigoBarras("");  
-        producto.setDescripcion("");
+        producto.setDescripcion("");        
         producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
+        PrecioCompra p=new PrecioCompra();
+        controlPreciosBean.setPrecioCompra(p);
     }
     
     public void editar(){
         estaEditando=true;
+        controlPreciosBean.setDesHabiAdd(false);
+        Utilidad.actualizarElemento("btnpreccompra");
         deshabilitarBotonesEditaroNuevo();
         validarProductoBean.limpiarEstilos();
         
@@ -248,6 +279,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         cargarComboUbicaciones();
         iniciarBotones();
         producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
+        cargarUltimo();
     }
     
     public GestionArticulosBean() {  

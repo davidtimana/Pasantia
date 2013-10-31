@@ -4,26 +4,29 @@
  */
 package com.pasantia.articulos.articulo;
 
+import com.pasantia.dao.CrudDAO;
+import com.pasantia.dao.impl.PreciosCompraDAO;
 import com.pasantia.entidades.PrecioCompra;
+import com.pasantia.entidades.Producto;
 import com.pasantia.excepciones.CadenaVaciaException;
 import com.pasantia.utilidades.Utilidad;
-import com.pasantia.utilidades.UtilidadNumero;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
-import org.hibernate.engine.RowSelection;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 
@@ -46,6 +49,24 @@ public class ControlPreciosBean implements Serializable {
     
     @Inject
     GestionArticulosBean articulosBean;
+    @Inject
+    PreciosCompraDAO  preciosCompraDAO;
+    
+    public void cargarPrecios(Producto p){        
+        
+        if(p!=null){
+            precios=preciosCompraDAO.buscarPreciosporProducto(p.getIdProducto());
+            if(!Utilidad.listaEstaVacia(precios)){
+                for (PrecioCompra precioCompra1 : precios) {
+                    if(precioCompra1.getActivo()){
+                        precioCompra=precioCompra1;
+                    }
+                }
+            }
+	}
+            
+        
+    }
     
     public void prueba(SelectEvent event){
         PrecioCompra p=(PrecioCompra)event.getObject();

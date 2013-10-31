@@ -11,6 +11,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -22,9 +24,14 @@ import javax.inject.Inject;
 @SessionScoped
 public class BuscarProductoBean implements Serializable {
     private static final long serialVersionUID = -1329251589059324222L;
+    private static final Logger log = Logger.getLogger(BuscarProductoBean.class.getName());
 
+    
     @Inject
     CrudDAO<Producto> crudDAO;
+    @Inject
+    GestionArticulosBean articulosBean;
+    
     
     private Boolean buscador;
     private List<Producto> productos;
@@ -46,7 +53,11 @@ public class BuscarProductoBean implements Serializable {
     }
     
     public void cargarSeleccionado(){
-        
+        log.log(Level.INFO, ">>>>>>>>>>>>>>>>> El producto cargado es el siguiente-->{0}", productoSeleccionado.getDescripcion());
+        buscador=false;
+        Utilidad.actualizarElemento("dlgbuscarproductos");
+        articulosBean.cargarObjeto(productoSeleccionado);
+        Utilidad.actualizarElemento("frmproductos");
     }
     
     public void cargarBuscador(){

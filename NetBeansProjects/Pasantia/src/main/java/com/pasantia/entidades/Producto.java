@@ -48,8 +48,7 @@ public class Producto implements java.io.Serializable {
     // transient
     private BigDecimal cantidad;
 
-    public Producto() {
-        this.cantidad = new BigDecimal(0);
+    public Producto() {        
     }
 
     public Producto(Casino casino, Categoria categoria, Ubicacion ubicacion, Tblunidad tblunidad, String descripcion, Integer cantidadActual, BigDecimal precioVenta1, String codigoBarras, Integer cantidadMinima) {

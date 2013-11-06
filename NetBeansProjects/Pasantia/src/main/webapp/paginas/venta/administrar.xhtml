@@ -109,13 +109,13 @@
                 <p:fieldset legend="Producto">
                     <h:panelGrid columns="8">
                         <p:outputLabel value="Codigo" for="txtCodigo" />
-                        <p:outputLabel value="Nombre" for="txtNombre" />
-                        <p:outputLabel value="Cantidad" for="txtCantidad" />
+                        <p:outputLabel value="Nombre" for="txtNombre" />                      
                         <p:outputLabel value="Precio venta 1" for="txtPrecioVenta1" />
                         <p:outputLabel value="Precion venta 2" for="txtPrecioVenta2" />
                         <p:outputLabel value="Cantidad Minima" for="txtCantidadMinima" />
                         <p:outputLabel value="Categoria" for="txtCategoria"/>
-                        <p:outputLabel value="Ubicacion" for="txtUbicacion"/>                    
+                        <p:outputLabel value="Ubicacion" for="txtUbicacion"/>
+                        <p:outputLabel value="Casino" for="txtCasino"/>                    
                         <h:panelGroup>
                             <p:inputText id="txtCodigo" rendered="true"			
                                          value="#{venta.producto.codigoBarras}"
@@ -139,13 +139,7 @@
                                         listener="#{venta.handleSelect}"
                                         update="pnlProducto" />
                             </p:autoComplete>
-                        </h:panelGroup>
-                        <h:panelGroup>
-                            <p:inputText id="txtCantidad" rendered="true"				
-                                         value="#{venta.producto.cantidadActual}"
-                                         disabled="true">                                                                       
-                            </p:inputText>
-                        </h:panelGroup>
+                        </h:panelGroup>                        
                         <h:panelGroup>
                             <p:inputText id="txtPrecioVenta1" rendered="true"				
                                          value="#{venta.producto.precioVenta1}"
@@ -176,14 +170,21 @@
                                          disabled="true">                                                                       
                             </p:inputText>
                         </h:panelGroup>
-                    </h:panelGrid>                                
-                    <h:panelGrid columns="1">
-                        <p:outputLabel value="Casino" for="txtCasino"/>                    
                         <h:panelGroup>
                             <p:inputText id="txtCasino" rendered="true"				
                                          value="#{venta.producto.casino.nombre}"
                                          disabled="true">                                                                       
                             </p:inputText>
+                        </h:panelGroup>
+                    </h:panelGrid>                                
+                    <h:panelGrid columns="1">                        
+                        <p:outputLabel value="Cantidad" for="txtCantidad"/>                    
+
+                        <h:panelGroup>
+                            <p:inputText id="txtCantidad" rendered="true"
+                                         requiredMessage="Minimo una unidad"
+                                         value="#{venta.producto.cantidad}">                                                                       
+                            </p:inputText>                                                                                    
                         </h:panelGroup>
                     </h:panelGrid>
                 </p:fieldset>
@@ -205,15 +206,11 @@
                          id="tbllistaC"                         
                          rows="10" 
                          styleClass="tabla"
-                         editable="true" 
-                         editMode="cell"
                          paginator="true"                          
                          paginatorPosition="bottom" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
                          {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         emptyMessage="No hay Productos de Venta Agregados.">
-
-                <p:ajax event="cellEdit" listener="#{venta.cellEdit}" update=":frmCarrito"/>
+                         emptyMessage="No hay Productos de Venta Agregados.">               
 
                 <p:column style="text-align: center" filterBy="#{item.codigoBarras}" sortBy="#{item.codigoBarras}">
                     <f:facet name="header">
@@ -234,10 +231,10 @@
                     <h:outputText value="#{item.categoria.descripcion}"/>
                 </p:column>
                 <p:column sortBy="#{item.cantidad}" filterBy="#{item.cantidad}" style="text-align: center" headerText="Cantidad">
-                    <p:cellEditor>                        
-                        <f:facet name="output"><h:outputText value="#{item.cantidad}"/></f:facet>  
-                        <f:facet name="input"><p:inputText value="#{item.cantidad}"/></f:facet>                                                                    
-                    </p:cellEditor>                      
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidad}"/>                                        
                 </p:column>
                 <p:column sortBy="#{item.precioVenta1}" filterBy="#{item.precioVenta1}" style="text-align: center">
                     <f:facet name="header">

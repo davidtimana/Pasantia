@@ -29,7 +29,7 @@ import org.primefaces.event.CellEditEvent;
 @Named("venta")
 @SessionScoped
 public class VentaBean extends CombosComunes implements Serializable {
-    
+
     static final Logger logger = Logger.getLogger(VentaBean.class.getSimpleName());
 
     //EJBs
@@ -59,7 +59,7 @@ public class VentaBean extends CombosComunes implements Serializable {
     //Variables
     //private BigDecimal total;
     private BigDecimal total;
-    
+
     @PostConstruct
     public void init() {
         logger.info("init() venta");
@@ -68,14 +68,14 @@ public class VentaBean extends CombosComunes implements Serializable {
         listaPersona = personaDAO.buscar();
         cargarComboFormaPagos();
         listaDetalleVenta = new ArrayList<TbldetalleVenta>();
-        listaCarrito = new ArrayList<Producto>();        
-        producto = new Producto();        
+        listaCarrito = new ArrayList<Producto>();
+        producto = new Producto();
         persona = new Persona();
         venta = new Tblventa();
         formaPago = new TblformaPago();
-        total = new BigDecimal(0);
+        total = new BigDecimal(0.0);
     }
-    
+
     public <T> boolean comparaNulos(T entidad) {
         logger.info("-----------------------------Entro a comparaNulos -----------------------------");
         if (entidad == null) {
@@ -83,7 +83,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         }
         return true;
     }
-    
+
     public boolean comparaVacios(String cadena) {
         logger.info("-----------------------------Entro a comparaVacios -----------------------------");
         if (cadena.isEmpty()) {
@@ -91,7 +91,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         }
         return true;
     }
-    
+
     public void buscarPersonaPorCedula() {
         logger.info("-----------------------------Entro a buscar persona-----------------------------");
         logger.log(Level.INFO, "cedula -> {0}", persona.getCedula());
@@ -101,7 +101,7 @@ public class VentaBean extends CombosComunes implements Serializable {
             Utilidad.mensajeError("ERROR", "Persona no encontrada.");
         }
     }
-    
+
     public void buscarProductoPorCodigoBarras() {
         logger.info("-----------------------------Entro a buscar producto-----------------------------");
         logger.log(Level.INFO, "codigo de barras -> {0}", producto.getCodigoBarras());
@@ -111,7 +111,7 @@ public class VentaBean extends CombosComunes implements Serializable {
             Utilidad.mensajeError("ERROR", "Producto no encontrado.");
         }
     }
-    
+
     public List<Producto> completeProductos(String query) {
         List<Producto> suggestions = new ArrayList<Producto>();
         logger.log(Level.INFO, "query  autocomplete : {0}", query);
@@ -128,7 +128,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         }
         return suggestions;
     }
-    
+
     public List<Persona> completePersona(String query) {
         List<Persona> suggestions = new ArrayList<Persona>();
         logger.log(Level.INFO, " query  autocomplete : {0}", query);
@@ -145,7 +145,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         }
         return suggestions;
     }
-    
+
     public void handleSelect(SelectEvent event) {
         logger.info("--------------------------------- Entro a handleSelect");
         producto = (Producto) event.getObject();
@@ -153,7 +153,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         logger.log(Level.INFO, "producto nombre**************{0}", producto.getDescripcion());
         logger.log(Level.INFO, "casino para producto**************{0}", producto.getCasino().getNombre());
     }
-    
+
     public void handleSelectPersona(SelectEvent event) {
         logger.info("--------------------------------- Entro a handleSelect");
         persona = (Persona) event.getObject();
@@ -161,7 +161,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         logger.log(Level.INFO, "persona nombre**************{0}", persona.getPnombre());
         logger.log(Level.INFO, "tipo persona para cliente**************{0}", persona.getTipoPersona().getNombreTipoPersona());
     }
-    
+
     public void agregarACarrito() {
         logger.info("Hola desde agregarCarrito()");
         if (listaCarrito.contains(producto)) {
@@ -173,45 +173,45 @@ public class VentaBean extends CombosComunes implements Serializable {
         }
         producto = new Producto();
     }
-    
+
     public void calcularValorVenta() {
         for (Producto prod : listaCarrito) {
-            if (prod.getCantidad() == null) {
-                logger.log(Level.INFO, "cantidad de cada producto--------------->{0}", prod.getCantidad());
-                total = total.add(prod.getPrecioVenta1());
-            } else {
-                total = total.add(prod.getPrecioVenta1()).multiply(prod.getCantidad());
-            }
+            //if (prod.getCantidad() == null) {
+            logger.log(Level.INFO, "cantidad de cada producto--------------->{0}", prod.getCantidad());
+            total = total.add(prod.getPrecioVenta1());
+            //} else {
+            //    total = total.add(prod.getPrecioVenta1()).multiply(prod.getCantidad());
+            //}
         }
         logger.log(Level.INFO, "total: {0}", total);
     }
-    
+
     public void eliminarDCarrito(Producto item) {
-        if (item != null) {
+        if (item == null) {
+            Utilidad.mensajeError("ERROR", "No se pudo eliminar el producto");
+        } else {
             listaCarrito.remove(item);
             calcularValorVenta();
             logger.log(Level.INFO, "total despues de eliminar------------------------------->{0}", total);
-        } else {
-            Utilidad.mensajeError("ERROR", "No se pudo eliminar el producto");
         }
     }
-    
+
     public void cellEdit(CellEditEvent event) {
         logger.info("<-------------------ENTRO A cellEdit----------------->");
         calcularValorVenta();
     }
-    
+
     public void guardar() {
-        
+
         logger.log(Level.INFO, "<------------------------CLIENTE------------------------------>{0}", persona.getCedula());
-        
+
         if (getListaCarrito().isEmpty()) {
             Utilidad.mensajeInfo("Información", "Debe agregar almenos un producto.");
         } else {
             Casino casino = new Casino();
             Date fecha = new Date();
             Persona vendedor = new Persona();
-            
+
             venta.setFecha(fecha);
             venta.setPersonaBySeccliente(persona);
             casino.setIdCasino(2);
@@ -229,7 +229,7 @@ public class VentaBean extends CombosComunes implements Serializable {
             }
             venta = ventaDAO.guardar(venta);
             logger.log(Level.SEVERE, " id venta:--------------------- {0}", venta.getSecventa());
-            
+
             for (Producto pto : listaCarrito) {
                 TbldetalleVenta dtv = new TbldetalleVenta();
                 dtv.setCantidad(5);
@@ -245,7 +245,7 @@ public class VentaBean extends CombosComunes implements Serializable {
             }
             detalleVentaDAO.guardar(listaDetalleVenta);
             init();
-            
+
             Utilidad.mensajeInfo("Información", "Venta realizada con exito.");
         }
     }
@@ -254,49 +254,49 @@ public class VentaBean extends CombosComunes implements Serializable {
     public Producto getProducto() {
         return producto;
     }
-    
+
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
-    
+
     public List<Producto> getListaCarrito() {
         return listaCarrito;
     }
-    
+
     public void setListaCarrito(List<Producto> listaCarrito) {
         this.listaCarrito = listaCarrito;
     }
-    
+
     public BigDecimal getTotal() {
         return total;
     }
-    
+
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    
+
     public Persona getPersona() {
         return persona;
     }
-    
+
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    
+
     public Tblventa getVenta() {
         return venta;
     }
-    
+
     public void setVenta(Tblventa venta) {
         this.venta = venta;
     }
-    
+
     public TblformaPago getFormaPago() {
         return formaPago;
     }
-    
+
     public void setFormaPago(TblformaPago formaPago) {
         this.formaPago = formaPago;
     }
-    
+
 }

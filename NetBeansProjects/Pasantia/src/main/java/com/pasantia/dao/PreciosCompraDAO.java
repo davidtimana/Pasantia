@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pasantia.dao.impl;
+package com.pasantia.dao;
 
 import com.pasantia.entidades.PrecioCompra;
 import java.util.List;

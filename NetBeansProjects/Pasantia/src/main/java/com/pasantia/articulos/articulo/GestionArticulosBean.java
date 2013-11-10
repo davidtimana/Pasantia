@@ -144,10 +144,16 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
     }
     
     public void nuevo(){
+        log.info("1");
         controlPreciosBean.setDesHabiAdd(false);        
+        log.info("2");
         estaEditando=false;
+        log.info("3");
         accordion=0;
+        log.info("4");
+        log.info("antes de reiniciar producto");
         reiniciarProducto();
+        log.info("despues de reiniciar producto");
         unidad=new Tblunidad();
         categoria=new Categoria();
         ubicacion=new Ubicacion();
@@ -169,6 +175,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         producto.setPrecioVenta1(BigDecimal.ZERO);
         producto.setPrecioVenta2(BigDecimal.ZERO);
         producto.setCodigoBarras("");  
+        log.info("aqui aparecera el error");
         producto.setDescripcion("");        
         producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
         PrecioCompra p=new PrecioCompra();
@@ -283,7 +290,7 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
         cargarComboUnidades();
         cargarComboUbicaciones();
         iniciarBotones();
-        producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");
+        producto.setImagen("../../FotosUsuarios/Sin_imagen_disponible.jpg");        
         cargarUltimo();
     }
     

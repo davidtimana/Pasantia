@@ -4,6 +4,7 @@
  */
 package com.pasantia.dao.impl;
 
+import com.pasantia.dao.PreciosCompraDAO;
 import com.pasantia.conexion.ConexionHibernate;
 import com.pasantia.entidades.Departamento;
 import com.pasantia.entidades.PrecioCompra;

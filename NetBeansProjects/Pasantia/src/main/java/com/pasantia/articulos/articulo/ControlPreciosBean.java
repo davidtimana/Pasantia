@@ -5,7 +5,7 @@
 package com.pasantia.articulos.articulo;
 
 import com.pasantia.dao.CrudDAO;
-import com.pasantia.dao.impl.PreciosCompraDAO;
+import com.pasantia.dao.PreciosCompraDAO;
 import com.pasantia.entidades.PrecioCompra;
 import com.pasantia.entidades.Producto;
 import com.pasantia.excepciones.CadenaVaciaException;
@@ -97,10 +97,10 @@ public class ControlPreciosBean implements Serializable {
                                 pr.setPrecio(nuevoValor);
                                 Date fechaActual = new Date();
                                 pr.setFecha(fechaActual);
-                                pr.setValor_ganancia(calcularGanancia(nuevoValor, articulosBean.getProducto().getPrecioVenta1()));
-                                log.log(Level.INFO, "***El valor de la ganancia para este precio de venta es -->{0}", precioCompra.getValor_ganancia());
-                                pr.setPorcentaje_ganacia(calcularPorcentaje(nuevoValor, articulosBean.getProducto().getPrecioVenta1()));
-                                log.log(Level.INFO, "el porcentaje de venta para este precio de venta es el siguiente-->{0}", precioCompra.getPorcentaje_ganacia());
+                               // pr.setValor_ganancia(calcularGanancia(nuevoValor, articulosBean.getProducto().getPrecioVenta1()));
+                                //log.log(Level.INFO, "***El valor de la ganancia para este precio de venta es -->{0}", precioCompra.getValor_ganancia());
+                                //pr.setPorcentaje_ganacia(calcularPorcentaje(nuevoValor, articulosBean.getProducto().getPrecioVenta1()));
+                                //log.log(Level.INFO, "el porcentaje de venta para este precio de venta es el siguiente-->{0}", precioCompra.getPorcentaje_ganacia());
                                 precios.set(cont, pr);
                                 break;
                             }
@@ -147,10 +147,10 @@ public class ControlPreciosBean implements Serializable {
                     Date fechaActual = new Date(); 
                     precioCompra.setActivo(true);
                     precioCompra.setFecha(fechaActual);
-                    precioCompra.setValor_ganancia(calcularGanancia(precioCompra.getPrecio(), articulosBean.getProducto().getPrecioVenta1()));
-                    log.log(Level.INFO, "***El valor de la ganancia para este precio de venta es -->{0}", precioCompra.getValor_ganancia());
-                    precioCompra.setPorcentaje_ganacia(calcularPorcentaje(precioCompra.getPrecio(), articulosBean.getProducto().getPrecioVenta1()));
-                    log.log(Level.INFO, "el porcenteja de venta para este precio de venta es el siguiente-->{0}", precioCompra.getPorcentaje_ganacia());
+                    //precioCompra.setValor_ganancia(calcularGanancia(precioCompra.getPrecio(), articulosBean.getProducto().getPrecioVenta1()));
+                    //log.log(Level.INFO, "***El valor de la ganancia para este precio de venta es -->{0}", precioCompra.getValor_ganancia());
+                    //precioCompra.setPorcentaje_ganacia(calcularPorcentaje(precioCompra.getPrecio(), articulosBean.getProducto().getPrecioVenta1()));
+                    //log.log(Level.INFO, "el porcenteja de venta para este precio de venta es el siguiente-->{0}", precioCompra.getPorcentaje_ganacia());
                     precios.add(precioCompra);                    
                     Utilidad.actualizarElemento("tblprecios");
                     precioCompra = new PrecioCompra();

@@ -1,33 +1,73 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../plantillas/plantillaprincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
 
-    <body>
+    <ui:define name="titulo">
+        Historial De Precios - SICOVI
+    </ui:define>
 
-        <ui:composition template="./../../plantillas/plantillaprincipal.xhtml">
+    <ui:define name="abajo">
 
-            <ui:define name="titulo">
-                Gestion De Precios - SICOVI
-            </ui:define>
+    </ui:define>
 
-            <ui:define name="abajo">
-                abajo
-            </ui:define>
+    <ui:define name="derecha">
 
-            <ui:define name="izquierda">
-                izquierda
-            </ui:define>
+    </ui:define>
 
-            <ui:define name="derecha">
-                derecha
-            </ui:define>
+    <ui:define name="tituloInsercion">
+        Historial De Precios
+    </ui:define>
 
-            <ui:define name="cuerpo">
-                cuerpo
-            </ui:define>
+    <ui:define name="cuerpo">
 
-        </ui:composition>
+        <h:form id="producencontrado">
 
-    </body>
-</html>
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+                <p:commandButton value="Buscar Producto" title="Buscar Producto" icon="ui-icon-search" 
+                                 actionListener="#{gestionPreciosBean.abrirBuscadorProductos()}" />
+            </p:panelGrid>
+
+            <p:panelGrid columns="2" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" 
+                         >
+                <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto">
+
+                    <p:graphicImage value="#{gestionPreciosBean.producto.imagen}" height="160" width="140"  title="Foto Producto"
+                                            />
+                </p:panelGrid>
+
+                <p:panelGrid columns="4" style="margin-left: auto;margin-right: auto;margin-bottom: auto
+                             ;margin-top: auto;text-align: center">
+
+                    <p:outputLabel value="Descripción Producto: " style="font-weight:bold;" 
+
+                                   />
+                    <p:outputLabel  style="width: 300px;" 
+                                    value="#{gestionPreciosBean.producto.descripcion}"
+                                    />
+
+                    <p:outputLabel value="Codigo De Barras: " style="font-weight:bold;"
+                                   id="lblcodbarras"/>
+                    <p:outputLabel style="width: 150px;"
+                                   value="#{gestionPreciosBean.producto.codigoBarras}"
+                                   />
+
+
+                    <p:outputLabel value="Categoria: "  
+                                   style="font-weight:bold;"/>
+                    <p:outputLabel value="#{gestionArticulosBean.producto.categoria.descripcion}"  
+                                   style="font-weight:bold;"/>                          
+
+
+                    <p:outputLabel value="Ubicación: "   style="font-weight:bold;" />
+                    <p:outputLabel value="#{gestionArticulosBean.producto.ubicacion.descripcion}"   />
+                </p:panelGrid>
+            </p:panelGrid> 
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

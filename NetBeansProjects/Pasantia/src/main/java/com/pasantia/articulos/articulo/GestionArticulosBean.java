@@ -76,7 +76,12 @@ public class GestionArticulosBean extends CombosComunes implements Serializable 
 
     public void cargarUltimo(){
         producto=crudDAOprod.buscarUltimo(Producto.class);
-        cargarObjeto(producto);
+        if(producto!=null){
+            cargarObjeto(producto);
+        }else{
+            Utilidad.mensajePeligro("SICOVI", "No hay un ultimo producto que cargar.");
+        }
+        
     }
     
     public void cargarObjeto(Producto p){

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+
+        <p:dialog header="Buscador de Productos" widgetVar="dlgbuscarproductosReporte" resizable="false" 
+                  id="dlgbuscarproductosReporte" showEffect="explode" hideEffect="explode"  modal="true"  width="80%" height="80%" 
+                  minimizable="true" visible="#{buscarProductoReporteBean.buscador}" closable="false" >
+
+            <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+
+                <p:dataTable id="tblproductosreporte" var="p" value="#{buscarProductoReporteBean.modeloProductos}" sortMode="multiple"  emptyMessage="No hay Productos disponibles"
+                             paginator="true" rows="10" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             selection="#{buscarProductoReporteBean.productoSeleccionado}" selectionMode="single">
+
+                    <p:ajax event="rowSelect" listener="#{buscarProductoReporteBean.cargarSeleccionado()}"/> 
+
+                    <f:facet name="header">  
+                        Lista de Productos
+                    </f:facet>
+
+                    <p:column style="width:2%" headerText="Foto">  
+                        <p:rowToggler />  
+                    </p:column>                   
+
+                    <p:column headerText="Descripción" style="text-align: center" sortBy="#{p.descripcion}" filterBy="#{p.descripcion}" >  
+                        <h:outputText value="#{p.descripcion}"  />  
+                    </p:column>
+
+                    <p:column headerText="Cod Barras" style="text-align: center" sortBy="#{p.codigoBarras}" filterBy="#{p.codigoBarras}" >  
+                        <h:outputText value="#{p.codigoBarras}"  />  
+                    </p:column>
+
+                    <p:column headerText="Precio" style="text-align: center" sortBy="#{p.precioVenta1}" filterBy="#{p.precioVenta1}" >  
+                        <h:outputText value="$ #{p.precioVenta1}"  />  
+                    </p:column>
+
+                    <p:column headerText="Casino" style="text-align: center" sortBy="#{p.casino.nombre}" filterBy="#{p.casino.nombre}" >  
+                        <h:outputText value="#{p.casino.nombre}"  />  
+                    </p:column>                
+
+                    
+
+                    <p:rowExpansion>
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <p:graphicImage value="#{p.imagen}" height="120" width="100" title="Foto Producto"/>                        
+                        </p:panelGrid>
+                    </p:rowExpansion> 
+
+                    <f:facet name="footer">  
+                        <p:panelGrid columns="1" style="margin-left: auto;margin-right: auto;margin-bottom: auto;margin-top: auto" >
+                            <p:commandButton value="Cancelar" title="Cancelar" actionListener="#{buscarProductoReporteBean.cerrarBuscador()}" icon="ui-icon-cancel" />
+                            <p:outputLabel value="En total hay #{buscarProductoReporteBean.totalProductos()} Productos.  " />                            
+                        </p:panelGrid>
+
+                    </f:facet>
+                </p:dataTable>
+
+                <p:tooltip for="tblproductosreporte" value="Seleccione el producto que desee gestionar."  />
+
+
+
+            </p:panelGrid>                     
+
+
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

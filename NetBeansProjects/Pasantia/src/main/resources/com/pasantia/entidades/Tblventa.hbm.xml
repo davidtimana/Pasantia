@@ -26,7 +26,7 @@
         <property name="observacion" type="string">
             <column name="OBSERVACION" length="45" />
         </property>
-        <property name="total" type="java.lang.Long">
+        <property name="total" type="java.math.BigDecimal">
             <column name="TOTAL" precision="10" scale="0" />
         </property>
         <property name="totalCantidad" type="java.lang.Byte">

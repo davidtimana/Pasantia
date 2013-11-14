@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import com.pasantia.utilidades.CombosComunes;
+import java.math.MathContext;
 import org.primefaces.event.CellEditEvent;
 
 @Named("venta")
@@ -57,9 +58,8 @@ public class VentaBean extends CombosComunes implements Serializable {
     private TblformaPago formaPago;
 
     //Variables
-    //private BigDecimal total;
     private BigDecimal total;
-
+    
     @PostConstruct
     public void init() {
         logger.info("init() venta");
@@ -73,7 +73,7 @@ public class VentaBean extends CombosComunes implements Serializable {
         persona = new Persona();
         venta = new Tblventa();
         formaPago = new TblformaPago();
-        total = new BigDecimal(0.0);
+        total = BigDecimal.ZERO;
     }
 
     public <T> boolean comparaNulos(T entidad) {
@@ -175,15 +175,16 @@ public class VentaBean extends CombosComunes implements Serializable {
     }
 
     public void calcularValorVenta() {
+           double totalTemp=0.0;
         for (Producto prod : listaCarrito) {
-            //if (prod.getCantidad() == null) {
-            logger.log(Level.INFO, "cantidad de cada producto--------------->{0}", prod.getCantidad());
-            total = total.add(prod.getPrecioVenta1());
-            //} else {
-            //    total = total.add(prod.getPrecioVenta1()).multiply(prod.getCantidad());
-            //}
+            Double precio=new Double(prod.getPrecioVenta1().doubleValue());
+            logger.log(Level.INFO, "cantidad de cada producto--------------->{0}", prod.getPrecioVenta1());            
+            totalTemp = totalTemp+precio;            
+            logger.log(Level.INFO, "el total va quedando de la siguiente manera:  -->{0}", totalTemp);
+            
         }
-        logger.log(Level.INFO, "total: {0}", total);
+        total=new BigDecimal(totalTemp);
+        logger.log(Level.INFO, "total: {0}", totalTemp);
     }
 
     public void eliminarDCarrito(Producto item) {
@@ -205,48 +206,52 @@ public class VentaBean extends CombosComunes implements Serializable {
 
         logger.log(Level.INFO, "<------------------------CLIENTE------------------------------>{0}", persona.getCedula());
 
-        if (getListaCarrito().isEmpty()) {
+        if (getListaCarrito().isEmpty() || getListaCarrito()==null) {
             Utilidad.mensajeInfo("Información", "Debe agregar almenos un producto.");
         } else {
-            Casino casino = new Casino();
-            Date fecha = new Date();
-            Persona vendedor = new Persona();
-
-            venta.setFecha(fecha);
-            venta.setPersonaBySeccliente(persona);
-            casino.setIdCasino(2);
-            venta.setCasino(casino);
-            vendedor.setIdTblpersona(1);
-            venta.setPersonaBySecvendedor(vendedor);
-            venta.setTotal(getTotal().longValue());
-            byte totalCantidad = (byte) listaCarrito.size();
-            venta.setTotalCantidad(totalCantidad);
-            if (formaPago.getSecformaPago() != null) {
-                venta.setTblformaPago(formaPago);
+            if (persona.getCedula() == null) {
+                Utilidad.mensajeInfo("Información", "Debe buscar un  cliente.");
             } else {
-                formaPago.setSecformaPago(1);
-                venta.setTblformaPago(formaPago);
-            }
-            venta = ventaDAO.guardar(venta);
-            logger.log(Level.SEVERE, " id venta:--------------------- {0}", venta.getSecventa());
+                Casino casino = new Casino();
+                Date fecha = new Date();
+                Persona vendedor = new Persona();
 
-            for (Producto pto : listaCarrito) {
-                TbldetalleVenta dtv = new TbldetalleVenta();
-                dtv.setCantidad(5);
-                dtv.setSubtotal(null);
-                dtv.setProducto(pto);
-                dtv.setTblventa(venta);
-                listaDetalleVenta.add(dtv);
-            }
-            for (TbldetalleVenta dt : listaDetalleVenta) {
-                logger.log(Level.WARNING, "======={0}", dt.getProducto().getIdProducto());
-                logger.log(Level.WARNING, "======={0}", dt.getTblventa().getSecventa());
-                logger.log(Level.WARNING, "======={0}", dt.getSubtotal());
-            }
-            detalleVentaDAO.guardar(listaDetalleVenta);
-            init();
+                venta.setFecha(fecha);
+                venta.setPersonaBySeccliente(persona);
+                casino.setIdCasino(2);
+                venta.setCasino(casino);
+                vendedor.setIdTblpersona(1);
+                venta.setPersonaBySecvendedor(vendedor);
+                venta.setTotal(total);
+                byte totalCantidad = (byte) listaCarrito.size();
+                venta.setTotalCantidad(totalCantidad);
+                if (formaPago.getSecformaPago() == null) {
+                    formaPago.setSecformaPago(1);
+                    venta.setTblformaPago(formaPago);                     
+                } else {
+                    venta.setTblformaPago(formaPago);
+                }
+                venta = ventaDAO.guardar(venta);
+                logger.log(Level.SEVERE, " id venta:--------------------- {0}", venta.getSecventa());
 
-            Utilidad.mensajeInfo("Información", "Venta realizada con exito.");
+                for (Producto pto : listaCarrito) {
+                    TbldetalleVenta dtv = new TbldetalleVenta();
+                    dtv.setCantidad(10000);
+                    dtv.setSubtotal(null);
+                    dtv.setProducto(pto);
+                    dtv.setTblventa(venta);
+                    listaDetalleVenta.add(dtv);
+                }
+                for (TbldetalleVenta dt : listaDetalleVenta) {
+                    logger.log(Level.WARNING, "======={0}", dt.getProducto().getIdProducto());
+                    logger.log(Level.WARNING, "======={0}", dt.getTblventa().getSecventa());
+                    logger.log(Level.WARNING, "======={0}", dt.getSubtotal());
+                }
+                detalleVentaDAO.guardar(listaDetalleVenta);
+                init();
+
+                Utilidad.mensajeInfo("Información", "Venta realizada con exito.");
+            }
         }
     }
 
@@ -273,7 +278,7 @@ public class VentaBean extends CombosComunes implements Serializable {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
-    }
+    }   
 
     public Persona getPersona() {
         return persona;

@@ -180,11 +180,12 @@
                     <h:panelGrid columns="1">                        
                         <p:outputLabel value="Cantidad" for="txtCantidad"/>                    
 
-                        <h:panelGroup>
-                            <p:inputText id="txtCantidad" rendered="true"
-                                         requiredMessage="Minimo una unidad"
-                                         value="#{venta.producto.cantidad}">                                                                       
-                            </p:inputText>                                                                                    
+                        <h:panelGroup>                           
+                            <p:inputText id="txtCantidad" required="true"
+                                         value="#{venta.producto.cantidad}"
+                                         requiredMessage="Este campo es obligatorio">                                                                                                                
+                            </p:inputText>
+                            <p:message for="txtCantidad" />
                         </h:panelGroup>
                     </h:panelGrid>
                 </p:fieldset>
@@ -254,12 +255,14 @@
             </p:panelGrid>
             <br />                        
             <h:panelGrid columns="1">
-                <p:outputLabel value="Forma pago: *"  for="formaPagos" />
+                <p:outputLabel value="Forma pago: "  for="formaPagos" />
                 <h:panelGroup>
-                    <p:selectOneMenu id="formaPagos" value="#{venta.formaPago.secformaPago}">                                  >  
+                    <p:selectOneMenu id="formaPagos" value="#{venta.formaPago.secformaPago}" required="true"
+                                     requiredMessage="Este campo es obligatorio">                                
                         <f:selectItem itemLabel="...Seleccione..."  />  
-                        <f:selectItems value="#{venta.comboFormaPagos}"  />                                                                                       
+                        <f:selectItems value="#{venta.comboFormaPagos}"  />                                                                                                          
                     </p:selectOneMenu>
+                    <p:message for="formaPagos" />
                 </h:panelGroup>               
                 <p:outputLabel value="Observacion: *" for="txtObservaciones" />                                                                   
                 <h:panelGroup>
